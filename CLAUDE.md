@@ -29,7 +29,7 @@ Le client ne veut pas toucher à l'informatique : Claudiu s'occupe de tout (logo
 - **Ne pas écrire « un seul interlocuteur »** (ni équivalents).
 - **Aucun code mort** : à chaque changement, supprimer images, textes FR/NL et code devenus inutiles.
 - Pas de « Rejoindre l'équipe » : ils ne recrutent pas.
-- À la fin de chaque changement : `npm run build` sans erreur, puis **toujours commit et push** (message clair). **Aucune collaboration de Claude** : jamais de ligne Co-Authored-By ni de mention de Claude dans les commits. Git : celui de GitHub Desktop (`/Applications/GitHub Desktop.app/Contents/Resources/app/git/bin/git`), jamais Xcode.
+- À la fin de chaque changement : `npm run build` sans erreur, puis **toujours commit et push** (message clair). **Aucune collaboration de Claude** : jamais de ligne Co-Authored-By ni de mention de Claude dans les commits. Git : celui de GitHub Desktop (`/Applications/GitHub Desktop.app/Contents/Resources/app/git/bin/git`), jamais Xcode. Pour que le push marche malgré la licence Xcode : `GIT_EXEC_PATH="/Applications/GitHub Desktop.app/Contents/Resources/app/git/libexec/git-core"` devant la commande git.
 - Réponses courtes et directes, sans jargon.
 - **README** : il présente le site (ce qu'il offre, captures, design, crédits), jamais la façon dont il a été développé ni les détails internes. Rappeler à l'utilisateur de le mettre à jour quand le projet approche d'une fin.
 
