@@ -4,14 +4,13 @@ Hors site. Ce qui manque, ce qui est à faire valider, ce qui est livré.
 
 ## Étape en cours
 
-Logo : 8 pistes dans `design/logo/pistes.html`, à montrer à Elisei et Simi.
+Logo : 26 pistes dans `design/logo/pistes.html` (les 8 premières n'ont pas plu). Claudiu choisit, puis on montre une sélection à Elisei et Simi.
 
 ## Informations manquantes (rien n'est affiché tant qu'elles manquent)
 
 - Photos avant / pendant / après (promises par Elisei).
 - Photo d'équipe (8 personnes).
 - Email professionnel (nom et fournisseur).
-- Nom d'usage : « Ely Facade » ou « Ely Façade » (BCE).
 - Détail de ce qui est compris dans le prix au mètre (matériaux, isolation, profilés, treillis, sous-couche, finition) : à valider avec Elisei.
 
 ## À valider avec eux

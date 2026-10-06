@@ -141,5 +141,4 @@ Formulaires : envoyés pour l'instant à l'email d'Elisei, à changer pour l'adr
 
 - Numéro de téléphone fixe ou horaires de contact à afficher ? (non : fixés à l'appel)
 - Email professionnel : nom choisi (par exemple contact@elyfacade.be) et fournisseur.
-- Nom d'usage à écrire partout : « Ely Facade » (sans cédille, plus simple à écrire et à chercher) ou « Ely Façade » comme à la BCE ?
 - Les photos : réception, tri, masquage.

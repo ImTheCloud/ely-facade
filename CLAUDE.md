@@ -29,9 +29,15 @@ Le client ne veut pas toucher à l'informatique : Claudiu s'occupe de tout (logo
 - **Ne pas écrire « un seul interlocuteur »** (ni équivalents).
 - **Aucun code mort** : à chaque changement, supprimer images, textes FR/NL et code devenus inutiles.
 - Pas de « Rejoindre l'équipe » : ils ne recrutent pas.
-- À la fin de chaque changement : `npm run build` sans erreur, commit clair, push. **Ne jamais ajouter Claude en co-auteur** des commits. Git : celui de GitHub Desktop (voir mémoire), jamais Xcode.
+- À la fin de chaque changement : `npm run build` sans erreur, puis **toujours commit et push** (message clair). **Aucune collaboration de Claude** : jamais de ligne Co-Authored-By ni de mention de Claude dans les commits. Git : celui de GitHub Desktop (`/Applications/GitHub Desktop.app/Contents/Resources/app/git/bin/git`), jamais Xcode.
 - Réponses courtes et directes, sans jargon.
 - **README** : il présente le site (ce qu'il offre, captures, design, crédits), jamais la façon dont il a été développé ni les détails internes. Rappeler à l'utilisateur de le mettre à jour quand le projet approche d'une fin.
+
+- **Nom écrit partout : « Ely Facade »** (sans cédille), y compris dans les logos. Exception : les mentions légales donnent la raison sociale exacte de la BCE, « ELY FAÇADE BV ». Le mot courant « façade » garde sa cédille dans les textes français.
+
+## Outils à disposition (connecteurs Claude de Claudiu)
+
+Figma, Netlify, Vercel (domaines), Notion, Supabase, Resend (email), Expo. Si un connecteur manque ou doit être autorisé, le noter ici et le dire à Claudiu.
 
 ## Stack
 
