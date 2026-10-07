@@ -22,7 +22,7 @@ await sharp(icone, { density: 300 })
 
 // Image de partage 1200 × 630 : le logo centré sur le crème.
 const logoPng = await sharp(logo, { density: 300 }).resize({ height: 440 }).png().toBuffer();
-await sharp({ create: { width: 1200, height: 630, channels: 3, background: '#f4f1ec' } })
+await sharp({ create: { width: 1200, height: 630, channels: 3, background: '#ffffff' } })
   .composite([{ input: logoPng, gravity: 'center' }])
   .png()
   .toFile('src/assets/partage.png');

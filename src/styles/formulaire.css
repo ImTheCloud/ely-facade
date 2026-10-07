@@ -1,0 +1,527 @@
+/* ==========================================================================
+   Le formulaire de devis en étapes. Toutes les règles sont rangées sous
+   .formulaire, pour ne rien toucher ailleurs dans le site.
+   Le comportement est dans src/scripts/formulaire-etapes.ts.
+   ========================================================================== */
+
+.formulaire {
+  position: relative;
+  padding: 24px 20px;
+  background: #fff;
+  border: 2px solid var(--color-ink);
+  border-radius: var(--radius-card);
+  color: var(--color-text);
+  box-shadow: 10px 10px 0 var(--color-accent);
+}
+
+/* --- Progression --- */
+.formulaire .formulaire__progression {
+  display: none;
+}
+
+.formulaire.formulaire--js .formulaire__progression {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  margin-bottom: 24px;
+}
+
+.formulaire .formulaire__etape-texte {
+  font-size: 13px;
+  font-weight: 650;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--color-muted);
+}
+
+.formulaire .formulaire__etape-texte strong {
+  color: var(--color-ink);
+}
+
+.formulaire .formulaire__segments {
+  display: grid;
+  grid-auto-flow: column;
+  grid-auto-columns: 1fr;
+  gap: 6px;
+}
+
+.formulaire .formulaire__segments span {
+  position: relative;
+  height: 4px;
+  overflow: hidden;
+  border-radius: 4px;
+  background: var(--color-border);
+}
+
+.formulaire .formulaire__segments span::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: var(--color-accent);
+  transform: scaleX(0);
+  transform-origin: left;
+  transition: transform 600ms var(--ease-out);
+}
+
+.formulaire .formulaire__segments span.actif::after {
+  transform: scaleX(1);
+}
+
+/* --- Étapes --- */
+.formulaire .etape {
+  min-width: 0;
+  margin: 0 0 28px;
+  padding: 0;
+  border: 0;
+}
+
+.formulaire.formulaire--js .etape {
+  margin-bottom: 8px;
+}
+
+.formulaire .etape > legend {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  margin-bottom: 20px;
+  padding: 0;
+  outline: none;
+}
+
+.formulaire .etape__question {
+  font-family: var(--font-title);
+  font-size: clamp(24px, 2.4vw, 32px);
+  line-height: 1.05;
+  text-transform: uppercase;
+  color: var(--color-ink);
+}
+
+.formulaire .etape__aide {
+  font-size: var(--size-small);
+  color: var(--color-muted);
+}
+
+@media (prefers-reduced-motion: no-preference) {
+  .formulaire .etape.entre {
+    animation: formulaire-etape-entre 500ms var(--ease-out);
+  }
+
+  @keyframes formulaire-etape-entre {
+    from {
+      opacity: 0;
+      transform: translateX(24px);
+    }
+  }
+}
+
+/* --- Tuiles (plusieurs choix, avec icône) --- */
+.formulaire .tuiles {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 8px;
+}
+
+.formulaire .tuile {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 10px;
+  min-height: 96px;
+  padding: 14px;
+  border: 1.5px solid var(--color-border);
+  border-radius: var(--radius-small);
+  background: #fff;
+  cursor: pointer;
+  transition:
+    border-color 200ms var(--ease),
+    background-color 200ms var(--ease),
+    transform 200ms var(--ease);
+}
+
+.formulaire .tuile:hover {
+  border-color: var(--color-ink);
+}
+
+.formulaire .tuile:active {
+  transform: scale(0.98);
+}
+
+.formulaire .tuile input {
+  position: absolute;
+  opacity: 0;
+  pointer-events: none;
+}
+
+.formulaire .tuile__icone {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  background: var(--color-surface);
+  color: var(--color-ink);
+  transition: background-color 200ms var(--ease);
+}
+
+.formulaire .tuile__nom {
+  padding-right: 18px;
+  font-size: 15px;
+  font-weight: 650;
+  line-height: 1.25;
+  color: var(--color-ink);
+}
+
+.formulaire .tuile__coche {
+  position: absolute;
+  top: 10px;
+  right: 10px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 22px;
+  height: 22px;
+  border: 1.5px solid var(--color-border);
+  border-radius: 50%;
+  color: transparent;
+  transition: all 200ms var(--ease);
+}
+
+.formulaire .tuile:has(input:checked) {
+  border-color: var(--color-ink);
+  background: #fff3f3;
+}
+
+.formulaire .tuile:has(input:checked) .tuile__icone {
+  background: var(--color-accent);
+  color: #fff;
+}
+
+.formulaire .tuile:has(input:checked) .tuile__coche {
+  background: var(--color-accent);
+  border-color: var(--color-accent);
+  color: #fff;
+}
+
+.formulaire .tuile:has(input:focus-visible),
+.formulaire .pastille:has(input:focus-visible) {
+  outline: 3px solid var(--color-accent);
+  outline-offset: 2px;
+}
+
+/* --- Petites questions à pastilles (un ou plusieurs choix) --- */
+.formulaire .question {
+  min-width: 0;
+  margin: 0 0 20px;
+  padding: 0;
+  border: 0;
+}
+
+.formulaire .question__label {
+  margin-bottom: 10px;
+  padding: 0;
+  font-size: var(--size-small);
+  font-weight: 650;
+  color: var(--color-ink);
+}
+
+.formulaire .pastilles {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+}
+
+.formulaire .pastille {
+  position: relative;
+  cursor: pointer;
+}
+
+.formulaire .pastille input {
+  position: absolute;
+  opacity: 0;
+  pointer-events: none;
+}
+
+.formulaire .pastille span {
+  display: inline-flex;
+  align-items: center;
+  min-height: 44px;
+  padding: 0 18px;
+  border: 1.5px solid var(--color-border);
+  border-radius: var(--radius-pill);
+  background: #fff;
+  font-size: 15px;
+  font-weight: 600;
+  color: var(--color-ink);
+  transition:
+    background-color 200ms var(--ease),
+    border-color 200ms var(--ease),
+    color 200ms var(--ease);
+}
+
+.formulaire .pastille:hover span {
+  border-color: var(--color-ink);
+}
+
+.formulaire .pastille input:checked + span {
+  background: var(--color-ink);
+  border-color: var(--color-ink);
+  color: var(--color-on-ink);
+}
+
+/* --- Champs --- */
+.formulaire .champ {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  margin-bottom: 18px;
+}
+
+.formulaire .champ label {
+  font-size: var(--size-small);
+  font-weight: 650;
+  color: var(--color-ink);
+}
+
+.formulaire .champ__aide {
+  font-size: 14px;
+  color: var(--color-muted);
+}
+
+.formulaire .champ__facultatif {
+  font-weight: 500;
+  color: var(--color-muted);
+}
+
+.formulaire .champ input,
+.formulaire .champ textarea {
+  width: 100%;
+  min-height: 50px;
+  padding: 12px 16px;
+  border: 1.5px solid var(--color-border-field);
+  border-radius: var(--radius-small);
+  background: #fff;
+  font: inherit;
+  font-size: 17px;
+  color: var(--color-ink);
+  transition:
+    border-color 200ms var(--ease),
+    box-shadow 200ms var(--ease);
+}
+
+.formulaire .champ textarea {
+  min-height: 96px;
+  line-height: 1.5;
+  resize: vertical;
+}
+
+.formulaire .champ input::placeholder,
+.formulaire .champ textarea::placeholder {
+  color: #8a8d94;
+}
+
+.formulaire .champ input:focus,
+.formulaire .champ textarea:focus {
+  outline: none;
+  border-color: var(--color-ink);
+  box-shadow: 0 0 0 4px rgba(200, 32, 43, 0.25);
+}
+
+.formulaire .champ [aria-invalid='true'] {
+  border-color: var(--color-erreur);
+}
+
+.formulaire .champ__paire {
+  display: grid;
+  gap: 0 14px;
+}
+
+/* --- Consentement --- */
+.formulaire .consentement {
+  position: relative;
+  display: grid;
+  grid-template-columns: auto 1fr;
+  align-items: start;
+  gap: 12px;
+  margin-top: 6px;
+  font-size: 15px;
+  line-height: 1.45;
+  cursor: pointer;
+}
+
+.formulaire .consentement input {
+  position: absolute;
+  width: 24px;
+  height: 24px;
+  margin: 0;
+  opacity: 0;
+}
+
+.formulaire .consentement__case {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 24px;
+  height: 24px;
+  border: 1.5px solid var(--color-border-field);
+  border-radius: 7px;
+  background: #fff;
+  color: transparent;
+  transition: all 200ms var(--ease);
+}
+
+.formulaire .consentement input:checked + .consentement__case {
+  background: var(--color-accent);
+  border-color: var(--color-accent);
+  color: #fff;
+}
+
+.formulaire .consentement input:focus-visible + .consentement__case {
+  outline: 3px solid var(--color-accent);
+  outline-offset: 2px;
+}
+
+.formulaire .consentement input[aria-invalid='true'] + .consentement__case {
+  border-color: var(--color-erreur);
+}
+
+.formulaire .consentement a {
+  color: var(--color-ink);
+}
+
+/* --- Navigation --- */
+.formulaire .formulaire__erreur {
+  min-height: 1.4em;
+  margin: 0 0 8px;
+  font-size: 15px;
+  font-weight: 600;
+  color: var(--color-erreur);
+}
+
+.formulaire .formulaire__nav {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+}
+
+.formulaire .formulaire__nav .formulaire__suivant,
+.formulaire .formulaire__nav .formulaire__envoyer {
+  margin-left: auto;
+}
+
+@media (max-width: 420px) {
+  .formulaire .formulaire__nav .bouton--large {
+    min-height: 56px;
+    padding-left: 22px;
+    font-size: 16px;
+    gap: 12px;
+  }
+}
+
+/* Sans JavaScript : pas de bouton « Continuer », on envoie tout d'un coup. */
+.formulaire:not(.formulaire--js) .formulaire__suivant {
+  display: none;
+}
+
+.formulaire .formulaire__retour {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  min-height: 48px;
+  padding: 0 6px;
+  background: none;
+  border: 0;
+  font: inherit;
+  font-size: 15px;
+  font-weight: 650;
+  color: var(--color-ink);
+  cursor: pointer;
+  text-decoration: underline;
+  text-decoration-color: var(--color-border);
+  text-underline-offset: 5px;
+}
+
+.formulaire .formulaire__retour:hover {
+  text-decoration-color: var(--color-ink);
+}
+
+/* --- Fin --- */
+.formulaire .formulaire__fin {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 16px;
+  padding: 12px 0;
+  outline: none;
+}
+
+.formulaire .formulaire__fin[hidden] {
+  display: none;
+}
+
+.formulaire .formulaire__fin-titre {
+  font-size: clamp(28px, 3vw, 40px);
+  text-transform: uppercase;
+}
+
+.formulaire .formulaire__fin-actions {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 12px;
+  margin-top: 8px;
+}
+
+.formulaire .formulaire__coche {
+  width: 72px;
+  height: 72px;
+  fill: none;
+  stroke-width: 4;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+}
+
+.formulaire .formulaire__coche circle {
+  fill: var(--color-accent);
+  stroke: var(--color-accent);
+}
+
+.formulaire .formulaire__coche path {
+  stroke: #fff;
+}
+
+@media (prefers-reduced-motion: no-preference) {
+  .formulaire .formulaire__coche circle,
+  .formulaire .formulaire__coche path {
+    stroke-dasharray: 1;
+    stroke-dashoffset: 1;
+    animation: formulaire-coche 800ms var(--ease-out) forwards;
+  }
+
+  .formulaire .formulaire__coche path {
+    animation-delay: 400ms;
+  }
+
+  @keyframes formulaire-coche {
+    to {
+      stroke-dashoffset: 0;
+    }
+  }
+}
+
+@media (min-width: 600px) {
+  .formulaire {
+    padding: 36px;
+  }
+
+  .formulaire .tuiles {
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+  }
+
+  .formulaire .champ__paire {
+    grid-template-columns: 1fr 1fr;
+  }
+}

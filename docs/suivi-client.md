@@ -4,7 +4,14 @@ Hors site. Ce qui manque, ce qui est à faire valider, ce qui est livré.
 
 ## Étape en cours
 
-Logo option 1 : en attente de validation par Elisei et Simi (fichiers dans `design/logo/`). Site : base posée (accueil FR/NL, en-tête, pied de page). Reste : pages Services, Réalisations, À propos, Contact (formulaire de devis), mentions légales, vie privée, 404.
+Logo option 1 : en attente de validation par Elisei et Simi (fichiers dans `design/logo/`). Site : base posée (accueil FR/NL, en-tête, pied de page). Page Contact et formulaire de devis faits. Reste : pages Services (5 métiers), Réalisations, À propos, mentions légales, vie privée, 404.
+
+## Réglages Netlify (côté Claudiu)
+
+- Site de test : ely-facade.netlify.app (projet ely-facade, équipe ELI4IT).
+- Relier le dépôt GitHub (Project configuration → Build & deploy → Link repository).
+- Désactiver le badge « Powered by Netlify » (Project configuration → General).
+- Forms → Form notifications : choisir l'adresse qui reçoit les devis (celle d'Elisei pour l'instant, puis l'adresse pro).
 
 ## Informations manquantes (rien n'est affiché tant qu'elles manquent)
 

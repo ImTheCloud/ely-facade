@@ -1,30 +1,30 @@
 /* ==========================================================================
    Les réglages du site, au même endroit.
-   Couleurs du logo : noir encre, rouge, crème. Changer une valeur ici la change partout.
+   Couleurs du logo : noir encre et rouge, sur fond blanc. Changer une valeur ici la change partout.
    ========================================================================== */
 
 :root {
   /* --- Couleurs -------------------------------------------------------- */
-  --color-bg: #f4f1ec;          /* crème du logo : fond de page */
-  --color-surface: #ebe6de;     /* cartes, pastilles */
-  --color-surface-2: #e2dcd2;   /* conteneurs secondaires */
+  --color-bg: #ffffff;          /* blanc : fond de page (les façades terminées) */
+  --color-surface: #f3f3f1;     /* cartes, pastilles */
+  --color-surface-2: #e4e4e0;   /* conteneurs secondaires */
   --color-ink: #141414;         /* noir du logo : titres, boutons, sections sombres */
   --color-accent: #c8202b;      /* rouge du logo : détails, liens */
   --color-accent-dark: #a31923; /* rouge au survol */
   --color-accent-vif: #ff5a63;  /* le même rouge, lisible sur fond sombre */
-  --color-text: #3a3836;        /* texte courant */
-  --color-muted: #5e5a55;       /* texte secondaire */
-  --color-border: #d9d2c6;      /* bordures */
+  --color-text: #383838;        /* texte courant */
+  --color-muted: #5a5a5a;       /* texte secondaire */
+  --color-border: #dcdcd8;      /* bordures */
   --color-border-field: #8a857c; /* bordure des champs : lisible */
   --color-erreur: #b3261e;
   --color-whatsapp: #0e8449;     /* vert sobre, 4,76:1 avec le blanc */
   --color-whatsapp-dark: #0b6b3b;
 
   /* Sur fond encre */
-  --color-on-ink: #f4f1ec;
+  --color-on-ink: #f6f6f4;
   --color-on-ink-soft: #c9c5be;
   --color-on-ink-label: #a09b93;
-  --color-line-on-ink: rgba(244, 241, 236, 0.16);
+  --color-line-on-ink: rgba(246, 246, 244, 0.16);
 
   /* --- Polices --------------------------------------------------------- */
   --font-title: 'Anton', 'Impact', 'Arial Narrow', sans-serif;

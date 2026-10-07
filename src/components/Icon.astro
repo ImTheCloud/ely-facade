@@ -3,7 +3,11 @@
  * Icônes SVG au trait. Toutes au même endroit pour garder un style unique.
  */
 export type NomIcone =
+  | 'fleche'
   | 'fleche-diag'
+  | 'fleche-gauche'
+  | 'check'
+  | 'autre'
   | 'telephone'
   | 'email'
   | 'whatsapp'
@@ -23,7 +27,11 @@ interface Props {
 const { nom, taille = 20, epaisseur = 1.8, class: classe } = Astro.props;
 
 const chemins: Record<NomIcone, string> = {
+  fleche: '<path d="M5 12h14"/><path d="M13 6l6 6-6 6"/>',
   'fleche-diag': '<path d="M7 17L17 7"/><path d="M8 7h9v9"/>',
+  'fleche-gauche': '<path d="M19 12H5"/><path d="M11 6l-6 6 6 6"/>',
+  check: '<path d="M5 12.5l4.5 4.5L19 7.5"/>',
+  autre: '<circle cx="6" cy="12" r="1.2"/><circle cx="12" cy="12" r="1.2"/><circle cx="18" cy="12" r="1.2"/>',
   telephone:
     '<path d="M6 3h3.5l1.8 4.6-2.3 1.5a11.5 11.5 0 0 0 5.9 5.9l1.5-2.3L21 14.5V18a2 2 0 0 1-2 2A16 16 0 0 1 4 5a2 2 0 0 1 2-2z"/>',
   email: '<rect x="3" y="5" width="18" height="14" rx="3"/><path d="M4 7.5l8 5.5 8-5.5"/>',

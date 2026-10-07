@@ -16,6 +16,8 @@ export const nl = {
     appeler: 'Bel ons',
   },
 
+  deuxPoints: ': ',
+
   whatsappMessage: 'Goedendag, ik wil graag een offerte voor mijn gevel.',
 
   entete: {
@@ -53,6 +55,11 @@ export const nl = {
       description:
         'Gevelpleister, schilderwerk, gevelreiniging, voegwerk en herstel van bakstenen: Ely Facade renoveert uw gevel overal in België. Gratis plaatsbezoek zonder verplichting.',
     },
+    contact: {
+      titre: 'Contact en offerte | Ely Facade',
+      description:
+        'Vraag uw offerte voor gevelrenovatie aan: formulier in drie stappen, telefoon of WhatsApp. Gratis plaatsbezoek zonder verplichting, overal in België.',
+    },
   },
 
   accueil: {
@@ -63,7 +70,9 @@ export const nl = {
       texte:
         'Gevelpleister, schilderwerk, reiniging, voegwerk, herstel van bakstenen: wij brengen uw gevel weer in orde, van het kleine huis tot het appartementsgebouw.',
       note: 'Gratis plaatsbezoek, zonder verplichting.',
-      illustrationAria: 'Tekening van gebouwen van verschillende hoogte, waarvan één met een steiger',
+      illustrationAria: 'Tekening van een rij gebouwen: vuile gevels onder een steiger worden wit en schoon',
+      avant: 'Voor',
+      apres: 'Na',
     },
 
     chiffres: {
@@ -83,26 +92,31 @@ export const nl = {
       liste: [
         {
           icone: 'truelle',
+          cle: 'crepi',
           titre: 'Gevelpleister',
           texte: 'Nieuwe of te vernieuwen gevel, alle afwerkingen en systemen, inclusief isolatie langs buiten.',
         },
         {
           icone: 'rouleau',
+          cle: 'peinture',
           titre: 'Gevelschilderwerk',
           texte: 'Een opgefriste gevel, in de kleur van uw keuze.',
         },
         {
           icone: 'goutte',
+          cle: 'nettoyage',
           titre: 'Gevelreiniging',
           texte: 'Alle methodes, alle ondergronden.',
         },
         {
           icone: 'joint',
+          cle: 'rejointoiement',
           titre: 'Voegwerk',
           texte: 'Netjes vernieuwde voegen, alle methodes en alle ondergronden.',
         },
         {
           icone: 'brique',
+          cle: 'briques',
           titre: 'Herstel van bakstenen',
           texte: 'Beschadigde bakstenen vervangen, voegen vernieuwd, scheuren behandeld, gevelstenen.',
         },
@@ -173,6 +187,77 @@ export const nl = {
     appel: {
       titre: 'Laten we praten over uw gevel.',
       texte: 'Gratis plaatsbezoek, zonder verplichting. Schrijf of bel ons.',
+    },
+    contact: {
+      surtitre: 'Contact en offerte',
+      titre: 'Uw offerte, zonder verplichting.',
+      texte:
+        'Beschrijf uw werken in drie stappen. Elisei komt gratis bij u langs en stuurt u daarna uiterlijk enkele dagen later de offerte.',
+      direct: 'Of rechtstreeks',
+      telephone: 'Telefoon',
+      email: 'E-mail',
+      zone: 'Kantoor in Halle · Overal in België',
+    },
+  },
+
+  formulaire: {
+    etape: 'Stap',
+    sur: 'van',
+    etapes: ['Uw werken', 'Uw gebouw', 'Uw gegevens'],
+
+    q1: 'Welke werken hebt u in gedachten?',
+    q1Aide: 'Meerdere keuzes mogelijk',
+    autre: 'Iets anders',
+
+    q2: 'Vertel ons over uw gevel',
+    batiment: 'Type gebouw',
+    batiments: ['Huis', 'Appartementsgebouw', 'Handelspand', 'Ander'],
+    surface: 'Geveloppervlakte (m²)',
+    surfaceExemple: 'Bv.: 120',
+    surfaceAide: 'Een schatting volstaat. Weet u het niet? Laat het leeg, Elisei meet ter plaatse.',
+
+    q3: 'Waar kunnen we u antwoorden?',
+    nom: 'Uw naam',
+    telephone: 'Telefoon',
+    email: 'E-mail',
+    message: 'Een woordje over uw project',
+    messageExemple: 'Bv.: voorgevel van een gesloten bebouwing, pleisterwerk hier en daar beschadigd…',
+    consentement: 'Ik ga ermee akkoord dat mijn gegevens worden gebruikt om op mijn aanvraag te antwoorden.',
+    consentementLien: 'Privacy',
+
+    suivant: 'Verder',
+    precedent: 'Terug',
+    envoyer: 'Mijn aanvraag versturen',
+    envoiEnCours: 'Bezig met verzenden…',
+    facultatif: 'optioneel',
+
+    erreurChoix: 'Kies minstens één soort werken.',
+    erreurChamp: 'Dit veld is verplicht.',
+    erreurEmail: 'Dit e-mailadres lijkt niet volledig.',
+    erreurConsentement: 'Vink het vakje aan zodat we u kunnen antwoorden.',
+
+    merciTitre: 'Verzonden!',
+    merciTexte:
+      'Uw aanvraag is goed aangekomen. Om sneller te gaan, kunt u dezelfde aanvraag via WhatsApp sturen, met enkele foto’s van uw gevel: ze is al geschreven.',
+    merciWhatsApp: 'Via WhatsApp sturen',
+    merciEmail: 'Per e-mail',
+    recommencer: 'Nieuwe aanvraag',
+    suiteIntro: 'Goedendag, hierbij mijn offerteaanvraag via de website:',
+    suiteSujet: 'Mijn offerteaanvraag',
+
+    erreurTitre: 'Het verzenden is mislukt.',
+    erreurTexte: 'U kunt het opnieuw proberen, of ons rechtstreeks bellen op',
+    reessayer: 'Opnieuw proberen',
+
+    sujetFormulaire: 'Nieuwe offerteaanvraag · website Ely Facade',
+    recap: {
+      travaux: 'Werken',
+      batiment: 'Gebouw',
+      surface: 'Geveloppervlakte (m²)',
+      message: 'Project',
+      nom: 'Naam',
+      telephone: 'Telefoon',
+      email: 'E-mail',
     },
   },
 } as const;

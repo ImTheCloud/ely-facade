@@ -16,6 +16,8 @@ export const fr = {
     appeler: 'Appeler',
   },
 
+  deuxPoints: ' : ',
+
   whatsappMessage: 'Bonjour, je souhaiterais un devis pour ma façade.',
 
   entete: {
@@ -53,6 +55,11 @@ export const fr = {
       description:
         'Crépi, peinture, nettoyage, rejointoiement et réparation de briques : Ely Facade rénove votre façade partout en Belgique. Visite sur place gratuite et sans engagement.',
     },
+    contact: {
+      titre: 'Contact et devis | Ely Facade',
+      description:
+        'Demandez votre devis de rénovation de façade : formulaire en trois étapes, téléphone ou WhatsApp. Visite sur place gratuite et sans engagement, partout en Belgique.',
+    },
   },
 
   accueil: {
@@ -63,7 +70,9 @@ export const fr = {
       texte:
         'Crépi, peinture, nettoyage, rejointoiement, réparation de briques : nous remettons votre façade en état, de la petite maison à l’immeuble.',
       note: 'Visite sur place gratuite, sans engagement.',
-      illustrationAria: 'Dessin d’immeubles de hauteurs différentes, l’un d’eux sous échafaudage',
+      illustrationAria: 'Dessin d’une rangée d’immeubles : des façades sales sous échafaudage deviennent blanches et propres',
+      avant: 'Avant',
+      apres: 'Après',
     },
 
     chiffres: {
@@ -83,26 +92,31 @@ export const fr = {
       liste: [
         {
           icone: 'truelle',
+          cle: 'crepi',
           titre: 'Crépi et enduit',
           texte: 'Façade neuve ou à refaire, tous types de finitions et de systèmes, isolation par l’extérieur comprise.',
         },
         {
           icone: 'rouleau',
+          cle: 'peinture',
           titre: 'Peinture de façade',
           texte: 'Une façade rafraîchie, dans la teinte de votre choix.',
         },
         {
           icone: 'goutte',
+          cle: 'nettoyage',
           titre: 'Nettoyage de façade',
           texte: 'Toutes méthodes, tous supports.',
         },
         {
           icone: 'joint',
+          cle: 'rejointoiement',
           titre: 'Rejointoiement',
           texte: 'Des joints refaits proprement, toutes méthodes et tous supports.',
         },
         {
           icone: 'brique',
+          cle: 'briques',
           titre: 'Réparation de briques',
           texte: 'Briques abîmées remplacées, joints refaits, fissures traitées, plaquettes de parement.',
         },
@@ -173,6 +187,77 @@ export const fr = {
     appel: {
       titre: 'Parlons de votre façade.',
       texte: 'Visite sur place gratuite, sans engagement. Écrivez-nous ou appelez-nous.',
+    },
+    contact: {
+      surtitre: 'Contact et devis',
+      titre: 'Votre devis, sans engagement.',
+      texte:
+        'Décrivez-nous vos travaux en trois étapes. Elisei se déplace gratuitement chez vous, puis vous envoie le devis en quelques jours maximum.',
+      direct: 'Ou directement',
+      telephone: 'Téléphone',
+      email: 'Email',
+      zone: 'Bureau à Halle · Partout en Belgique',
+    },
+  },
+
+  formulaire: {
+    etape: 'Étape',
+    sur: 'sur',
+    etapes: ['Vos travaux', 'Votre bâtiment', 'Vos coordonnées'],
+
+    q1: 'Quels travaux avez-vous en tête ?',
+    q1Aide: 'Plusieurs choix possibles',
+    autre: 'Autre chose',
+
+    q2: 'Parlez-nous de votre façade',
+    batiment: 'Type de bâtiment',
+    batiments: ['Maison', 'Immeuble', 'Commerce', 'Autre'],
+    surface: 'Surface de façade (m²)',
+    surfaceExemple: 'Ex. : 120',
+    surfaceAide: 'Une estimation suffit. Vous ne savez pas ? Laissez vide, Elisei mesurera sur place.',
+
+    q3: 'Où pouvons-nous vous répondre ?',
+    nom: 'Votre nom',
+    telephone: 'Téléphone',
+    email: 'Email',
+    message: 'Un mot sur votre projet',
+    messageExemple: 'Ex. : façade avant d’une maison mitoyenne, crépi abîmé par endroits…',
+    consentement: 'J’accepte que mes données soient utilisées pour répondre à ma demande.',
+    consentementLien: 'Vie privée',
+
+    suivant: 'Continuer',
+    precedent: 'Retour',
+    envoyer: 'Envoyer ma demande',
+    envoiEnCours: 'Envoi…',
+    facultatif: 'facultatif',
+
+    erreurChoix: 'Choisissez au moins un type de travaux.',
+    erreurChamp: 'Ce champ est obligatoire.',
+    erreurEmail: 'Cette adresse email ne semble pas complète.',
+    erreurConsentement: 'Cochez la case pour que nous puissions vous répondre.',
+
+    merciTitre: 'C’est envoyé !',
+    merciTexte:
+      'Votre demande nous est bien parvenue. Pour aller plus vite, vous pouvez nous envoyer la même demande sur WhatsApp, avec quelques photos de votre façade : elle est déjà écrite.',
+    merciWhatsApp: 'Envoyer sur WhatsApp',
+    merciEmail: 'Par email',
+    recommencer: 'Nouvelle demande',
+    suiteIntro: 'Bonjour, voici ma demande de devis envoyée sur le site :',
+    suiteSujet: 'Ma demande de devis',
+
+    erreurTitre: 'L’envoi n’a pas fonctionné.',
+    erreurTexte: 'Vous pouvez réessayer, ou nous appeler directement au',
+    reessayer: 'Réessayer',
+
+    sujetFormulaire: 'Nouvelle demande de devis · site Ely Facade',
+    recap: {
+      travaux: 'Travaux',
+      batiment: 'Bâtiment',
+      surface: 'Surface de façade (m²)',
+      message: 'Projet',
+      nom: 'Nom',
+      telephone: 'Téléphone',
+      email: 'Email',
     },
   },
 } as const;

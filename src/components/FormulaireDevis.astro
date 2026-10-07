@@ -1,0 +1,198 @@
+---
+/**
+ * Demande de devis en trois étapes : les travaux, le bâtiment, puis les coordonnées.
+ *
+ * Envoi par Netlify Forms (formulaire « devis ») : Netlify reçoit la demande et
+ * l'envoie par email aux adresses réglées dans Netlify (Forms → notifications).
+ * Sans JavaScript, les trois étapes s'affichent l'une sous l'autre et le
+ * navigateur envoie le formulaire lui-même.
+ *
+ * Le champ caché « bot-field » sert de piège à robots : un humain ne le remplit jamais.
+ * Le moteur des étapes est dans src/scripts/formulaire-etapes.ts, le style dans src/styles/formulaire.css.
+ */
+import Bouton from './Bouton.astro';
+import Icon from './Icon.astro';
+import { entreprise, lienWhatsApp } from '~/data/entreprise';
+import { chemin, t, type Langue } from '~/i18n';
+import '~/styles/formulaire.css';
+
+interface Props {
+  langue: Langue;
+}
+
+const { langue } = Astro.props;
+const textes = t(langue);
+const f = textes.formulaire;
+const id = 'devis-form';
+
+/** Les travaux proposés : les 5 métiers de façade, plus « autre ». */
+const choix = [
+  ...textes.accueil.metiers.liste.map((metier) => ({ nom: metier.titre, icone: metier.icone, cle: metier.cle })),
+  { nom: f.autre, icone: 'autre' as const, cle: 'autre' },
+];
+---
+
+<div
+  class="formulaire"
+  data-formulaire
+  data-param="travaux"
+  data-email={entreprise.email}
+  data-whatsapp={entreprise.whatsappNumero}
+  data-intro-suite={f.suiteIntro}
+  data-sujet-suite={f.suiteSujet}
+  data-recap={JSON.stringify([['travaux', f.recap.travaux], ['batiment', f.recap.batiment], ['surface', f.recap.surface], ['message', f.recap.message], '', ['nom', f.recap.nom], ['telephone', f.recap.telephone], ['email', f.recap.email]])}
+  data-deux-points={textes.deuxPoints}
+  data-noms-etapes={JSON.stringify(f.etapes)}
+  data-erreur-choix={f.erreurChoix}
+  data-erreur-champ={f.erreurChamp}
+  data-erreur-email={f.erreurEmail}
+  data-erreur-consentement={f.erreurConsentement}
+  data-en-cours={f.envoiEnCours}
+>
+  <form class="formulaire__form" id={id} name="devis" method="POST" data-netlify="true" netlify-honeypot="bot-field" novalidate data-form>
+    <input type="hidden" name="form-name" value="devis" />
+    <input type="hidden" name="subject" value={f.sujetFormulaire} />
+    <input type="hidden" name="langue" value={langue.toUpperCase()} />
+    <input type="text" name="bot-field" class="sr-only" tabindex="-1" autocomplete="off" aria-hidden="true" />
+
+    <!-- Progression -->
+    <div class="formulaire__progression" aria-hidden="true">
+      <span class="formulaire__etape-texte">
+        {f.etape} <strong data-num>1</strong> {f.sur} {f.etapes.length} · <span data-nom-etape>{f.etapes[0]}</span>
+      </span>
+      <span class="formulaire__segments">
+        {f.etapes.map((_, i) => <span class:list={[{ actif: i === 0 }]} data-segment />)}
+      </span>
+    </div>
+
+    <!-- Étape 1 : les travaux -->
+    <fieldset class="etape" data-etape="0" data-choix-requis="travaux">
+      <legend tabindex="-1">
+        <span class="etape__question">{f.q1}</span>
+        <span class="etape__aide">{f.q1Aide}</span>
+      </legend>
+      <div class="tuiles">
+        {
+          choix.map((option) => (
+            <label class="tuile">
+              <input type="checkbox" name="travaux" value={option.nom} data-cles={option.cle} />
+              <span class="tuile__icone"><Icon nom={option.icone} taille={24} /></span>
+              <span class="tuile__nom">{option.nom}</span>
+              <span class="tuile__coche" aria-hidden="true"><Icon nom="check" taille={14} epaisseur={3} /></span>
+            </label>
+          ))
+        }
+      </div>
+    </fieldset>
+
+    <!-- Étape 2 : le bâtiment -->
+    <fieldset class="etape" data-etape="1">
+      <legend tabindex="-1">
+        <span class="etape__question">{f.q2}</span>
+      </legend>
+
+      <fieldset class="question">
+        <legend class="question__label">{f.batiment}</legend>
+        <div class="pastilles">
+          {
+            f.batiments.map((batiment) => (
+              <label class="pastille">
+                <input type="radio" name="batiment" value={batiment} />
+                <span>{batiment}</span>
+              </label>
+            ))
+          }
+        </div>
+      </fieldset>
+
+      <div class="champ">
+        <label for={`${id}-surface`}>{f.surface} <span class="champ__facultatif">({f.facultatif})</span></label>
+        <input type="text" id={`${id}-surface`} name="surface" inputmode="numeric" placeholder={f.surfaceExemple} />
+        <span class="champ__aide">{f.surfaceAide}</span>
+      </div>
+    </fieldset>
+
+    <!-- Étape 3 : les coordonnées -->
+    <fieldset class="etape" data-etape="2">
+      <legend tabindex="-1">
+        <span class="etape__question">{f.q3}</span>
+      </legend>
+
+      <div class="champ">
+        <label for={`${id}-nom`}>{f.nom}</label>
+        <input type="text" id={`${id}-nom`} name="nom" required autocomplete="name" />
+      </div>
+
+      <div class="champ__paire">
+        <div class="champ">
+          <label for={`${id}-tel`}>{f.telephone}</label>
+          <input type="tel" id={`${id}-tel`} name="telephone" required autocomplete="tel" inputmode="tel" />
+        </div>
+        <div class="champ">
+          <label for={`${id}-email`}>{f.email} <span class="champ__facultatif">({f.facultatif})</span></label>
+          <input type="email" id={`${id}-email`} name="email" autocomplete="email" inputmode="email" />
+        </div>
+      </div>
+
+      <div class="champ">
+        <label for={`${id}-message`}>{f.message} <span class="champ__facultatif">({f.facultatif})</span></label>
+        <textarea id={`${id}-message`} name="message" rows="3" placeholder={f.messageExemple}></textarea>
+      </div>
+
+      <label class="consentement">
+        <input type="checkbox" name="consentement" value="oui" required />
+        <span class="consentement__case" aria-hidden="true"><Icon nom="check" taille={14} epaisseur={3} /></span>
+        <span>
+          {f.consentement}{' '}
+          <a href={chemin('viePrivee', langue)}>{f.consentementLien}</a>
+        </span>
+      </label>
+    </fieldset>
+
+    <p class="formulaire__erreur" role="alert" data-erreur></p>
+
+    <div class="formulaire__nav">
+      <button type="button" class="formulaire__retour" data-precedent hidden>
+        <Icon nom="fleche-gauche" taille={18} />
+        {f.precedent}
+      </button>
+      <Bouton type="button" variante="accent" iconeApres="fleche" large class="formulaire__suivant" data-suivant>
+        {f.suivant}
+      </Bouton>
+      <Bouton type="submit" variante="accent" iconeApres="fleche-diag" large class="formulaire__envoyer" data-envoyer>
+        {f.envoyer}
+      </Bouton>
+    </div>
+  </form>
+
+  <!-- Après l'envoi -->
+  <div class="formulaire__fin" data-merci hidden tabindex="-1">
+    <svg class="formulaire__coche" viewBox="0 0 80 80" aria-hidden="true">
+      <circle cx="40" cy="40" r="36" pathLength="1" />
+      <path d="M24 41l11 11 21-24" pathLength="1" />
+    </svg>
+    <h3 class="formulaire__fin-titre">{f.merciTitre}</h3>
+    <p>{f.merciTexte}</p>
+    <div class="formulaire__fin-actions">
+      <Bouton href={lienWhatsApp(textes.whatsappMessage)} variante="whatsapp" icone="whatsapp" target="_blank" rel="noopener" data-suite-whatsapp>
+        {f.merciWhatsApp}
+      </Bouton>
+      <Bouton href={`mailto:${entreprise.email}`} variante="secondaire" icone="email" data-suite-email>
+        {f.merciEmail}
+      </Bouton>
+      <button type="button" class="formulaire__retour" data-recommencer>{f.recommencer}</button>
+    </div>
+  </div>
+
+  <div class="formulaire__fin" data-echec hidden tabindex="-1">
+    <h3 class="formulaire__fin-titre">{f.erreurTitre}</h3>
+    <p>
+      {f.erreurTexte} <a href={`tel:${entreprise.telephoneLien}`}>{entreprise.telephoneAffiche}</a>.
+    </p>
+    <button type="button" class="formulaire__retour" data-reessayer>{f.reessayer}</button>
+  </div>
+</div>
+
+<script>
+  import '~/scripts/formulaire-etapes';
+</script>

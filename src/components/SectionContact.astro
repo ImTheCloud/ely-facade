@@ -1,0 +1,171 @@
+---
+/**
+ * La page Contact : titre et contacts directs à gauche, formulaire de devis à droite.
+ * Les boutons « Demander un devis » du site mènent tous ici (#devis).
+ */
+import FormulaireDevis from './FormulaireDevis.astro';
+import Icon from './Icon.astro';
+import { entreprise, lienWhatsApp } from '~/data/entreprise';
+import { t, type Langue } from '~/i18n';
+
+interface Props {
+  langue: Langue;
+}
+
+const { langue } = Astro.props;
+const textes = t(langue);
+const contact = textes.accueil.contact;
+---
+
+<section class="contact" aria-labelledby="contact-titre">
+  <div class="wrap contact__grille">
+    <div class="contact__texte">
+      <p class="surtitre">{contact.surtitre}</p>
+      <h1 id="contact-titre">{contact.titre}</h1>
+      <p class="contact__intro">{contact.texte}</p>
+
+      <div class="direct">
+        <span class="direct__label">{contact.direct}</span>
+        <a class="direct__lien" href={`tel:${entreprise.telephoneLien}`}>
+          <span class="direct__rond"><Icon nom="telephone" taille={20} /></span>
+          <span>
+            <span class="direct__type">{contact.telephone}</span>
+            <span class="direct__valeur">{entreprise.telephoneAffiche}</span>
+          </span>
+        </a>
+        <a class="direct__lien" href={lienWhatsApp(textes.whatsappMessage)} target="_blank" rel="noopener">
+          <span class="direct__rond direct__rond--wa"><Icon nom="whatsapp" taille={20} /></span>
+          <span>
+            <span class="direct__type">WhatsApp</span>
+            <span class="direct__valeur">{entreprise.telephoneAffiche}</span>
+          </span>
+        </a>
+        <a class="direct__lien" href={`mailto:${entreprise.email}`}>
+          <span class="direct__rond"><Icon nom="email" taille={20} /></span>
+          <span>
+            <span class="direct__type">{contact.email}</span>
+            <span class="direct__valeur direct__valeur--email">{entreprise.email}</span>
+          </span>
+        </a>
+        <p class="direct__zone">{contact.zone}</p>
+      </div>
+    </div>
+
+    <div class="contact__formulaire" id="devis">
+      <FormulaireDevis langue={langue} />
+    </div>
+  </div>
+</section>
+
+<style>
+  .contact {
+    padding-top: calc(var(--header-h) + 40px);
+  }
+
+  .contact__grille {
+    display: grid;
+    gap: 48px;
+    align-items: start;
+  }
+
+  .contact__texte {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 24px;
+  }
+
+  .contact h1 {
+    font-size: var(--size-h2);
+  }
+
+  .contact__intro {
+    max-width: 48ch;
+    font-size: var(--size-lead);
+    line-height: 1.5;
+  }
+
+  .direct {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 14px;
+    margin-top: 8px;
+  }
+
+  .direct__label {
+    font-size: 12px;
+    font-weight: 700;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+    color: var(--color-muted);
+  }
+
+  .direct__lien {
+    display: flex;
+    align-items: center;
+    gap: 14px;
+    min-height: var(--tap-min);
+    color: var(--color-ink);
+    text-decoration: none;
+  }
+
+  .direct__rond {
+    display: inline-flex;
+    flex-shrink: 0;
+    align-items: center;
+    justify-content: center;
+    width: 48px;
+    height: 48px;
+    border-radius: 50%;
+    background: var(--color-ink);
+    color: #fff;
+  }
+
+  .direct__rond--wa {
+    background: var(--color-whatsapp);
+  }
+
+  .direct__lien:hover .direct__rond:not(.direct__rond--wa) {
+    background: var(--color-accent);
+  }
+
+  .direct__type {
+    display: block;
+    font-size: 13px;
+    color: var(--color-muted);
+  }
+
+  .direct__valeur {
+    display: block;
+    font-size: 20px;
+    font-weight: 700;
+  }
+
+  .direct__valeur--email {
+    font-size: 17px;
+    overflow-wrap: anywhere;
+  }
+
+  .direct__zone {
+    margin-top: 6px;
+    font-size: var(--size-small);
+    color: var(--color-muted);
+  }
+
+  @media (min-width: 960px) {
+    .contact {
+      padding-top: calc(var(--header-h) + 72px);
+    }
+
+    .contact__grille {
+      grid-template-columns: 0.9fr 1.1fr;
+      gap: 72px;
+    }
+
+    .contact__texte {
+      position: sticky;
+      top: calc(var(--header-h) + 24px);
+    }
+  }
+</style>

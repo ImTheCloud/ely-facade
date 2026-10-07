@@ -19,6 +19,13 @@ if (!calme) {
   requestAnimationFrame(boucle);
 }
 
+/** Fait défiler la page jusqu'à un élément (sous l'en-tête), avec ou sans Lenis. */
+export function defilerVers(element: HTMLElement, decalage = 100) {
+  const y = element.getBoundingClientRect().top + window.scrollY - decalage;
+  if (lenis) lenis.scrollTo(y, { duration: 0.8 });
+  else window.scrollTo({ top: y });
+}
+
 /** Bloque le défilement de la page (menu ouvert). */
 export function bloquerDefilement(bloque: boolean) {
   if (!lenis) return;
