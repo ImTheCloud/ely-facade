@@ -59,12 +59,12 @@ const contact = textes.accueil.contact;
 
 <style>
   .contact {
-    padding-top: calc(var(--header-h) + 48px);
+    padding-top: calc(var(--header-h) + 32px);
   }
 
   .contact__grille {
     display: grid;
-    gap: 48px;
+    gap: 40px;
     align-items: start;
   }
 
@@ -82,22 +82,21 @@ const contact = textes.accueil.contact;
   .contact__intro {
     max-width: 48ch;
     font-size: var(--size-lead);
-    line-height: 1.5;
+    line-height: 1.55;
   }
 
   .direct {
     display: flex;
     flex-direction: column;
     align-items: flex-start;
-    gap: 14px;
+    gap: 6px;
     margin-top: 8px;
   }
 
   .direct__label {
-    font-size: 12px;
+    margin-bottom: 6px;
+    font-size: 14px;
     font-weight: 700;
-    letter-spacing: 0.14em;
-    text-transform: uppercase;
     color: var(--color-muted);
   }
 
@@ -117,16 +116,19 @@ const contact = textes.accueil.contact;
     justify-content: center;
     width: 48px;
     height: 48px;
-    background: var(--color-ink);
-    color: #fff;
+    border-radius: 50%;
+    background: var(--color-accent-soft);
+    color: var(--color-accent);
+    transition: transform var(--speed) var(--ease);
   }
 
   .direct__rond--wa {
-    background: var(--color-whatsapp);
+    background: #e6f4ec;
+    color: var(--color-whatsapp);
   }
 
-  .direct__lien:hover .direct__rond:not(.direct__rond--wa) {
-    background: var(--color-accent);
+  .direct__lien:hover .direct__rond {
+    transform: scale(1.08);
   }
 
   .direct__type {
@@ -137,24 +139,24 @@ const contact = textes.accueil.contact;
 
   .direct__valeur {
     display: block;
-    font-size: 20px;
-    font-weight: 800;
+    font-size: 19px;
+    font-weight: 700;
   }
 
   .direct__valeur--email {
-    font-size: 17px;
+    font-size: 16px;
     overflow-wrap: anywhere;
   }
 
   .direct__zone {
-    margin-top: 6px;
+    margin-top: 10px;
     font-size: var(--size-small);
     color: var(--color-muted);
   }
 
   @media (min-width: 960px) {
     .contact {
-      padding-top: calc(var(--header-h) + 72px);
+      padding-top: calc(var(--header-h) + 64px);
     }
 
     .contact__grille {

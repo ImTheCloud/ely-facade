@@ -46,21 +46,25 @@ const options = LANGUES.map((code) => ({
 <style>
   .langues {
     display: inline-flex;
-    align-items: stretch;
-    border: 3px solid var(--color-ink);
+    align-items: center;
+    padding: 3px;
+    background: var(--color-card);
+    border: 1px solid var(--color-border);
+    border-radius: var(--radius-pill);
   }
 
   .langues__lien {
     display: inline-flex;
     align-items: center;
     justify-content: center;
-    min-width: 46px;
+    min-width: 44px;
     min-height: 44px;
     padding: 0 10px;
+    border-radius: var(--radius-pill);
     font-size: 13px;
-    font-weight: 800;
-    letter-spacing: 0.08em;
-    color: var(--color-ink);
+    font-weight: 700;
+    letter-spacing: 0.04em;
+    color: var(--color-muted);
     text-decoration: none;
     transition:
       background-color var(--speed) var(--ease),
@@ -68,7 +72,7 @@ const options = LANGUES.map((code) => ({
   }
 
   .langues__lien:hover {
-    background: var(--color-paper);
+    color: var(--color-ink);
   }
 
   .langues__lien--actif,
@@ -77,8 +81,12 @@ const options = LANGUES.map((code) => ({
     color: #fff;
   }
 
+  .langues--compact {
+    padding: 2px;
+  }
+
   .langues--compact .langues__lien {
-    min-width: 40px;
+    min-width: 38px;
     padding: 0 6px;
     font-size: 12px;
   }

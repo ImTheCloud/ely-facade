@@ -1,53 +1,61 @@
 /* ==========================================================================
    Les réglages du site, au même endroit.
-   Direction « chantier » en thème clair : blanc et béton clair, avec quelques touches
-   de noir et de rouge (celles du logo), angles droits, gros traits. Changer une valeur ici la change partout.
+   Direction « bento » : fond clair, grandes tuiles arrondies, ombres douces.
+   Le rouge du logo n'apparaît qu'en petites touches ; le texte est un gris ardoise.
+   Changer une valeur ici la change partout.
    ========================================================================== */
 
 :root {
   /* --- Couleurs -------------------------------------------------------- */
-  --color-bg: #ffffff;           /* blanc : fond de page (les façades terminées) */
-  --color-paper: #eeeeea;        /* béton clair : bandes et fonds de blocs */
-  --color-ink: #111111;          /* noir du logo : titres, sections sombres */
-  --color-accent: #c8202b;       /* rouge du logo */
+  --color-bg: #fbfbfa;           /* fond de page : blanc légèrement chaud */
+  --color-card: #ffffff;         /* tuiles */
+  --color-surface: #f2f2ef;      /* tuiles teintées, pastilles */
+  --color-ink: #1f2429;          /* ardoise : titres, bouton principal (jamais de noir pur) */
+  --color-text: #4a5058;         /* texte courant */
+  --color-muted: #666d75;        /* texte secondaire */
+  --color-accent: #c8202b;       /* rouge du logo : touches seulement */
   --color-accent-dark: #a31923;  /* rouge au survol */
-    --color-text: #333333;         /* texte courant */
-  --color-muted: #595959;        /* texte secondaire */
-  --color-border: #d4d4cf;       /* bordures légères */
-  --color-border-field: #7d7d78; /* bordure des champs : lisible */
+  --color-accent-soft: #fceeee;  /* fond rosé très pâle */
+  --color-border: #e6e6e2;       /* bordures des tuiles */
+  --color-border-field: #8b9097; /* bordure des champs : lisible */
   --color-erreur: #b3261e;
   --color-whatsapp: #0e8449;     /* vert sobre, 4,76:1 avec le blanc */
   --color-whatsapp-dark: #0b6b3b;
 
-
-  /* --- Polices --------------------------------------------------------- */
-  --font-title: 'Anton', 'Impact', 'Arial Narrow', sans-serif;
-  --font-text: 'Archivo Variable', 'Helvetica Neue', Arial, sans-serif;
+  /* --- Police ---------------------------------------------------------- */
+  --font-text: 'DM Sans Variable', 'Helvetica Neue', Arial, sans-serif;
 
   /* --- Tailles de texte : elles grandissent avec l'écran --------------- */
-  --size-h1: clamp(64px, 11.5vw, 188px);
-  --size-h2: clamp(46px, 7vw, 116px);
-  --size-h3: clamp(26px, 2.4vw, 38px);
-  --size-lead: clamp(18px, 1.5vw, 23px);
+  --size-h1: clamp(44px, 7vw, 108px);
+  --size-h2: clamp(34px, 4.6vw, 68px);
+  --size-h3: clamp(20px, 1.7vw, 26px);
+  --size-lead: clamp(18px, 1.4vw, 21px);
   --size-body: 17px;
   --size-small: 15px;
   --size-tiny: 13px;
 
-  /* --- Traits : épais, droits ------------------------------------------ */
-  --trait: 4px;
-  --radius: 0;
+  /* --- Arrondis -------------------------------------------------------- */
+  --radius-tile: 28px;
+  --radius-md: 18px;
+  --radius-pill: 999px;
+
+  /* --- Ombres ---------------------------------------------------------- */
+  --shadow-tile: 0 1px 2px rgba(31, 36, 41, 0.04), 0 12px 32px -16px rgba(31, 36, 41, 0.14);
+  --shadow-lift: 0 2px 4px rgba(31, 36, 41, 0.05), 0 22px 44px -18px rgba(31, 36, 41, 0.22);
+  --shadow-accent: 0 10px 24px -10px rgba(200, 32, 43, 0.55);
 
   /* --- Gabarit --------------------------------------------------------- */
-  --content-max: 1400px;
+  --content-max: 1280px;
   --gutter: 20px;
-  --section-gap: 88px;
+  --section-gap: 72px;
+  --tile-gap: 16px;
   --tap-min: 48px;
-  --header-h: 68px;
+  --header-h: 72px;
 
   /* --- Mouvement ------------------------------------------------------- */
   --ease: cubic-bezier(0.22, 0.61, 0.36, 1);
   --ease-out: cubic-bezier(0.16, 1, 0.3, 1);
-  --speed: 200ms;
+  --speed: 220ms;
 }
 
 @media (min-width: 900px) {
@@ -56,7 +64,8 @@
     --size-small: 16px;
     --size-tiny: 14px;
     --gutter: 40px;
-    --section-gap: 144px;
+    --section-gap: 120px;
+    --tile-gap: 20px;
     --header-h: 84px;
   }
 }

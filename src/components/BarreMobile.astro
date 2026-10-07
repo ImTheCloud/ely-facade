@@ -1,7 +1,7 @@
 ---
 /**
- * Petit dock flottant en bas de l'écran, sur mobile uniquement.
- * Il apparaît dès qu'on a quitté le haut de la page : appeler, WhatsApp
+ * Barre collée en bas de l'écran, sur mobile uniquement.
+ * Elle apparaît dès qu'on a quitté le haut de la page : appeler, WhatsApp
  * et devis restent toujours au pouce.
  */
 import Icon from './Icon.astro';
@@ -17,15 +17,17 @@ const textes = t(langue);
 ---
 
 <div class="dock" data-dock>
-  <a href={`tel:${entreprise.telephoneLien}`} class="dock__bouton" aria-label={`${textes.actions.appeler} ${entreprise.telephoneAffiche}`}>
+  <a href={`tel:${entreprise.telephoneLien}`} class="dock__lien" aria-label={`${textes.actions.appeler} ${entreprise.telephoneAffiche}`}>
     <Icon nom="telephone" taille={22} />
+    <span>{textes.actions.appeler}</span>
   </a>
-  <a href={lienWhatsApp(textes.whatsappMessage)} class="dock__bouton dock__bouton--whatsapp" target="_blank" rel="noopener" aria-label={textes.actions.whatsapp}>
+  <a href={lienWhatsApp(textes.whatsappMessage)} class="dock__lien dock__lien--whatsapp" target="_blank" rel="noopener" aria-label={textes.actions.whatsapp}>
     <Icon nom="whatsapp" taille={22} />
+    <span>WhatsApp</span>
   </a>
   <a href={lienDevis(langue)} class="dock__devis">
     {textes.actions.devis}
-    <Icon nom="fleche-diag" taille={18} epaisseur={2.4} />
+    <Icon nom="fleche-diag" taille={18} epaisseur={2.2} />
   </a>
 </div>
 
@@ -54,54 +56,61 @@ const textes = t(langue);
 </script>
 
 <style>
-  /* Une barre pleine largeur collée en bas : appeler, WhatsApp, devis. */
   .dock {
     position: fixed;
     inset: auto 0 0;
     z-index: 55;
     display: flex;
-    align-items: stretch;
-    padding-bottom: env(safe-area-inset-bottom, 0px);
-    background: #fff;
-    border-top: var(--trait) solid var(--color-ink);
+    align-items: center;
+    gap: 6px;
+    padding: 10px 12px calc(10px + env(safe-area-inset-bottom, 0px));
+    background: rgba(255, 255, 255, 0.88);
+    border-top: 1px solid var(--color-border);
+    border-radius: 24px 24px 0 0;
+    box-shadow: 0 -12px 32px -16px rgba(31, 36, 41, 0.25);
+    backdrop-filter: blur(18px) saturate(1.5);
+    -webkit-backdrop-filter: blur(18px) saturate(1.5);
     transform: translateY(110%);
-    transition: transform 400ms var(--ease-out);
+    transition: transform 450ms var(--ease-out);
   }
 
   .dock--visible {
     transform: none;
   }
 
-  .dock__bouton {
-    display: inline-flex;
+  .dock__lien {
+    display: flex;
+    flex-direction: column;
     align-items: center;
     justify-content: center;
-    width: 64px;
-    min-height: 60px;
+    gap: 3px;
+    min-width: 64px;
+    min-height: 52px;
+    border-radius: 16px;
     color: var(--color-ink);
-    border-right: 3px solid var(--color-ink);
+    font-size: 11px;
+    font-weight: 650;
+    text-decoration: none;
   }
 
-  .dock__bouton--whatsapp {
-    background: var(--color-whatsapp);
-    color: #fff;
-    border-right: 0;
+  .dock__lien--whatsapp {
+    color: var(--color-whatsapp);
   }
 
   .dock__devis {
     flex: 1;
     display: inline-flex;
     align-items: center;
-    justify-content: space-between;
-    gap: 12px;
-    min-height: 60px;
-    padding: 0 20px;
+    justify-content: center;
+    gap: 8px;
+    min-height: 52px;
+    padding: 0 16px;
+    border-radius: var(--radius-pill);
     background: var(--color-accent);
+    box-shadow: var(--shadow-accent);
     color: #fff;
     font-size: 15px;
-    font-weight: 800;
-    letter-spacing: 0.06em;
-    text-transform: uppercase;
+    font-weight: 700;
     text-decoration: none;
     white-space: nowrap;
   }

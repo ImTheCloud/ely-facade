@@ -2,13 +2,12 @@
 /** Gabarit commun à toutes les pages du site. */
 
 // Polices hébergées sur le site : aucun appel à Google Fonts.
-import '@fontsource/anton/400.css';
-import '@fontsource-variable/archivo';
+
+import '@fontsource-variable/dm-sans';
 import '../styles/global.css';
 
 // Préchargées : sinon le navigateur ne les découvre qu'après avoir lu le CSS.
-import policeTitre from '@fontsource/anton/files/anton-latin-400-normal.woff2?url';
-import policeTexte from '@fontsource-variable/archivo/files/archivo-latin-wght-normal.woff2?url';
+import policeTexte from '@fontsource-variable/dm-sans/files/dm-sans-latin-wght-normal.woff2?url';
 import imagePartage from '../assets/partage.png';
 import BarreMobile from '../components/BarreMobile.astro';
 import DonneesStructurees from '../components/DonneesStructurees.astro';
@@ -85,7 +84,6 @@ const urlPartage = new URL(imagePartage.src, Astro.site).href;
       })();
     </script>
 
-    <link rel="preload" href={policeTitre} as="font" type="font/woff2" crossorigin />
     <link rel="preload" href={policeTexte} as="font" type="font/woff2" crossorigin />
 
     <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
@@ -117,7 +115,7 @@ const urlPartage = new URL(imagePartage.src, Astro.site).href;
     <meta name="twitter:card" content="summary_large_image" />
     <meta name="twitter:image" content={urlPartage} />
 
-    <meta name="theme-color" content="#111111" />
+    <meta name="theme-color" content="#fbfbfa" />
 
     {(cheminActuel === '/' || cheminActuel === '/nl/') && <DonneesStructurees langue={langue} image={urlPartage} />}
   </head>

@@ -11,12 +11,24 @@ const equipe = t(langue).accueil.equipe;
 
 <section class="equipe">
   <div class="wrap">
-    <div class="equipe__grille" data-reveal>
-    <div class="equipe__titre">
-      <p class="surtitre">{equipe.surtitre}</p>
-      <h2>{equipe.titre}</h2>
-    </div>
-    <p class="equipe__texte">{equipe.texte}</p>
+    <div class="equipe__tuile tuile-bento" data-reveal>
+      <div class="equipe__texte">
+        <p class="surtitre">{equipe.surtitre}</p>
+        <h2>{equipe.titre}</h2>
+        <p>{equipe.texte}</p>
+      </div>
+
+      <ul class="equipe__personnes">
+        {
+          equipe.personnes.map((personne) => (
+            <li>
+              <span class="equipe__avatar" aria-hidden="true">{personne.initiale}</span>
+              <span class="equipe__nom">{personne.prenom} Ungureanu</span>
+              <span class="equipe__role">{personne.role}</span>
+            </li>
+          ))
+        }
+      </ul>
     </div>
   </div>
 </section>
@@ -26,34 +38,76 @@ const equipe = t(langue).accueil.equipe;
     margin-top: var(--section-gap);
   }
 
-  .equipe__grille {
+  .equipe__tuile {
     display: grid;
-    gap: 32px;
-    align-items: end;
-    padding-block: 8px;
-    padding-left: 28px;
-    border-left: 14px solid var(--color-accent);
-  }
-
-  .equipe__titre {
-    display: flex;
-    flex-direction: column;
-    align-items: flex-start;
-    gap: 24px;
+    gap: 36px;
+    padding: 28px;
+    background: linear-gradient(160deg, #ffffff 0%, var(--color-surface) 100%);
   }
 
   .equipe__texte {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 20px;
+  }
+
+  .equipe__texte p:last-child {
     max-width: 52ch;
     font-size: var(--size-lead);
-    line-height: 1.5;
+    line-height: 1.55;
+  }
+
+  .equipe__personnes {
+    display: grid;
+    gap: var(--tile-gap);
+    margin: 0;
+    padding: 0;
+    list-style: none;
+  }
+
+  .equipe__personnes li {
+    display: grid;
+    grid-template-columns: auto 1fr;
+    column-gap: 16px;
+    align-items: center;
+    padding: 20px;
+    background: var(--color-card);
+    border: 1px solid var(--color-border);
+    border-radius: var(--radius-md);
+  }
+
+  .equipe__avatar {
+    grid-row: span 2;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 56px;
+    height: 56px;
+    border-radius: 50%;
+    background: var(--color-accent-soft);
+    color: var(--color-accent);
+    font-size: 24px;
+    font-weight: 800;
+  }
+
+  .equipe__nom {
+    font-size: 18px;
+    font-weight: 700;
+    color: var(--color-ink);
+  }
+
+  .equipe__role {
+    font-size: var(--size-small);
+    color: var(--color-muted);
   }
 
   @media (min-width: 900px) {
-    .equipe__grille {
-      grid-template-columns: 1.2fr 1fr;
-      gap: 72px;
-      padding-left: 48px;
+    .equipe__tuile {
+      grid-template-columns: 1.3fr 1fr;
+      align-items: center;
+      gap: 64px;
+      padding: 64px;
     }
   }
-
 </style>

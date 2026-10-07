@@ -1,6 +1,7 @@
 ---
 import Bouton from '../Bouton.astro';
 import Briques from './Briques.astro';
+import Chiffres from './Chiffres.astro';
 import { entreprise, lienDevis } from '../../data/entreprise';
 import { t, type Langue } from '../../i18n';
 
@@ -14,7 +15,7 @@ const hero = textes.accueil.hero;
 ---
 
 <section class="hero">
-  <div class="wrap hero__grille">
+  <div class="wrap">
     <div class="hero__texte">
       <p class="surtitre" style="--i: 0">{hero.surtitre}</p>
       <h1 style="--i: 1">{hero.titreDebut} <span class="hero__rouge">{hero.titreFin}</span></h1>
@@ -28,30 +29,26 @@ const hero = textes.accueil.hero;
       <p class="hero__note" style="--i: 4">{hero.note}</p>
     </div>
 
-    <div class="hero__briques"><Briques /></div>
+    <!-- Les tuiles « bento » : le motif du logo et les chiffres. Une photo prendra la place du motif. -->
+    <div class="bento">
+      <div class="bento__visuel tuile-bento" aria-hidden="true"><Briques /></div>
+      <Chiffres langue={langue} />
+    </div>
   </div>
 </section>
 
 <style>
   .hero {
-    padding: calc(var(--header-h) + 48px) 0 0;
-  }
-
-  .hero__grille {
-    display: grid;
-    gap: 48px;
-    align-items: center;
+    padding-top: calc(var(--header-h) + 40px);
   }
 
   .hero__texte {
     display: flex;
     flex-direction: column;
     align-items: flex-start;
-    gap: 28px;
-  }
-
-  .hero h1 {
-    font-size: clamp(60px, 8.4vw, 136px);
+    gap: 24px;
+    max-width: 920px;
+    margin-bottom: 56px;
   }
 
   .hero__rouge {
@@ -59,26 +56,40 @@ const hero = textes.accueil.hero;
   }
 
   .hero__lead {
-    max-width: 50ch;
+    max-width: 52ch;
     font-size: var(--size-lead);
-    line-height: 1.5;
+    line-height: 1.55;
   }
 
   .hero__actions {
     display: flex;
     flex-wrap: wrap;
-    gap: 16px;
+    gap: 12px;
   }
 
   .hero__note {
     font-size: var(--size-small);
-    font-weight: 700;
-    color: var(--color-ink);
+    font-weight: 600;
+    color: var(--color-muted);
   }
 
-  .hero__briques {
-    width: min(70%, 320px);
-    margin-inline: auto;
+  .bento {
+    display: grid;
+    gap: var(--tile-gap);
+  }
+
+  .bento__visuel {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    min-height: 300px;
+    padding: 36px;
+    background: linear-gradient(160deg, #ffffff 0%, var(--color-surface) 100%);
+    overflow: hidden;
+  }
+
+  .bento__visuel :global(.briques) {
+    width: min(100%, 240px);
   }
 
   /* Le texte monte au chargement, sans JavaScript. */
@@ -88,28 +99,37 @@ const hero = textes.accueil.hero;
       animation-delay: calc(var(--i, 0) * 90ms + 100ms);
     }
 
+    .bento > * {
+      animation: monte 900ms var(--ease-out) 450ms backwards;
+    }
+
     @keyframes monte {
       from {
         opacity: 0;
-        transform: translateY(32px);
+        transform: translateY(28px);
       }
     }
   }
 
-  @media (min-width: 960px) {
+  @media (min-width: 900px) {
     .hero {
-      padding-top: calc(var(--header-h) + 88px);
+      padding-top: calc(var(--header-h) + 72px);
     }
 
-    .hero__grille {
-      grid-template-columns: 1.7fr 1fr;
-      gap: 72px;
+    .hero__texte {
+      margin-bottom: 72px;
     }
 
-    .hero__briques {
-      width: 100%;
-      max-width: 460px;
-      margin-inline: 0 auto;
+    .bento {
+      grid-template-columns: 7fr 5fr;
+    }
+
+    .bento__visuel {
+      min-height: 460px;
+    }
+
+    .bento__visuel :global(.briques) {
+      width: min(100%, 300px);
     }
   }
 </style>

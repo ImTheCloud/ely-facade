@@ -10,22 +10,24 @@ const faq = t(langue).accueil.faq;
 ---
 
 <section class="faq">
-  <div class="wrap faq__grille">
-    <div class="faq__tete" data-reveal>
-      <p class="surtitre">{faq.surtitre}</p>
-      <h2>{faq.titre}</h2>
-    </div>
+  <div class="wrap">
+    <div class="faq__tuile tuile-bento" data-reveal>
+      <div class="faq__tete">
+        <p class="surtitre">{faq.surtitre}</p>
+        <h2>{faq.titre}</h2>
+      </div>
 
-    <!-- <details> natif : ça marche au clavier et sans JavaScript. -->
-    <div class="faq__liste" data-reveal>
-      {
-        faq.liste.map((element) => (
-          <details>
-            <summary>{element.question}</summary>
-            <p>{element.reponse}</p>
-          </details>
-        ))
-      }
+      <!-- <details> natif : ça marche au clavier et sans JavaScript. -->
+      <div class="faq__liste">
+        {
+          faq.liste.map((element) => (
+            <details>
+              <summary>{element.question}</summary>
+              <p>{element.reponse}</p>
+            </details>
+          ))
+        }
+      </div>
     </div>
   </div>
 </section>
@@ -35,24 +37,25 @@ const faq = t(langue).accueil.faq;
     margin-top: var(--section-gap);
   }
 
-  .faq__grille {
+  .faq__tuile {
     display: grid;
-    gap: 40px;
+    gap: 32px;
+    padding: 28px 24px;
   }
 
   .faq__tete {
     display: flex;
     flex-direction: column;
     align-items: flex-start;
-    gap: 24px;
-  }
-
-  .faq__liste {
-    border-bottom: var(--trait) solid var(--color-ink);
+    gap: 20px;
   }
 
   details {
-    border-top: var(--trait) solid var(--color-ink);
+    border-top: 1px solid var(--color-border);
+  }
+
+  details:first-child {
+    border-top: 0;
   }
 
   summary {
@@ -60,11 +63,11 @@ const faq = t(langue).accueil.faq;
     align-items: center;
     justify-content: space-between;
     gap: 20px;
-    min-height: 76px;
-    padding-block: 14px;
+    min-height: 72px;
+    padding-block: 12px;
     font-size: var(--size-lead);
-    font-weight: 800;
-    line-height: 1.25;
+    font-weight: 650;
+    line-height: 1.3;
     color: var(--color-ink);
     cursor: pointer;
     list-style: none;
@@ -74,36 +77,40 @@ const faq = t(langue).accueil.faq;
     display: none;
   }
 
-  /* Le « + » rouge devient « − » quand la réponse est ouverte. */
+  /* Le « + » devient « − » quand la réponse est ouverte. */
   summary::after {
     content: '+';
     flex-shrink: 0;
-    width: 44px;
-    height: 44px;
+    width: 40px;
+    height: 40px;
     display: inline-flex;
     align-items: center;
     justify-content: center;
-    background: var(--color-accent);
-    color: #fff;
-    font-size: 30px;
+    border-radius: 50%;
+    background: var(--color-surface);
+    color: var(--color-ink);
+    font-size: 24px;
     font-weight: 500;
     line-height: 1;
+    transition: background-color var(--speed) var(--ease), color var(--speed) var(--ease);
   }
 
   details[open] summary::after {
     content: '−';
-    background: var(--color-ink);
+    background: var(--color-accent);
+    color: #fff;
   }
 
   details p {
     max-width: 62ch;
-    padding-bottom: 28px;
+    padding-bottom: 24px;
   }
 
   @media (min-width: 900px) {
-    .faq__grille {
+    .faq__tuile {
       grid-template-columns: 0.8fr 1.2fr;
-      gap: 72px;
+      gap: 64px;
+      padding: 64px;
     }
   }
 </style>

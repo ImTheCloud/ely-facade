@@ -18,18 +18,17 @@ const metiers = t(langue).accueil.metiers;
       <p class="metiers__texte">{metiers.texte}</p>
     </div>
 
-    <ol class="metiers__liste">
+    <ul class="metiers__liste">
       {
         metiers.liste.map((metier, i) => (
-          <li class="ligne" data-reveal>
-            <span class="ligne__num" aria-hidden="true">0{i + 1}</span>
+          <li class="carte tuile-bento" data-reveal style={`--delai: ${i * 70}ms`}>
+            <span class="carte__icone"><Icon nom={metier.icone} taille={28} /></span>
             <h3>{metier.titre}</h3>
             <p>{metier.texte}</p>
-            <span class="ligne__icone"><Icon nom={metier.icone} taille={32} /></span>
           </li>
         ))
       }
-    </ol>
+    </ul>
   </div>
 </section>
 
@@ -42,9 +41,9 @@ const metiers = t(langue).accueil.metiers;
     display: flex;
     flex-direction: column;
     align-items: flex-start;
-    gap: 24px;
-    max-width: 1000px;
-    margin-bottom: 56px;
+    gap: 20px;
+    max-width: 760px;
+    margin-bottom: 40px;
   }
 
   .metiers__texte {
@@ -52,63 +51,60 @@ const metiers = t(langue).accueil.metiers;
   }
 
   .metiers__liste {
+    display: grid;
+    gap: var(--tile-gap);
     margin: 0;
     padding: 0;
     list-style: none;
-    border-bottom: var(--trait) solid var(--color-ink);
   }
 
-  .ligne {
-    position: relative;
-    display: grid;
-    grid-template-columns: auto 1fr;
-    column-gap: 20px;
-    row-gap: 10px;
-    padding: 28px 0;
-    border-top: var(--trait) solid var(--color-ink);
+  .carte {
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+    padding: 28px;
+    transition:
+      transform var(--speed) var(--ease),
+      box-shadow var(--speed) var(--ease);
   }
 
-  .ligne__num {
-    grid-row: span 2;
-    font-family: var(--font-title);
-    font-size: clamp(32px, 4vw, 48px);
-    line-height: 1;
+  .carte:hover {
+    transform: translateY(-4px);
+    box-shadow: var(--shadow-lift);
+  }
+
+  .carte__icone {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 56px;
+    height: 56px;
+    margin-bottom: 12px;
+    border-radius: 18px;
+    background: var(--color-accent-soft);
     color: var(--color-accent);
   }
 
-  .ligne h3 {
-    font-size: clamp(34px, 5vw, 72px);
-    line-height: 0.98;
+  @media (min-width: 700px) {
+    .metiers__liste {
+      grid-template-columns: repeat(2, 1fr);
+    }
   }
 
-  .ligne p {
-    max-width: 52ch;
-  }
-
-  .ligne__icone {
-    display: none;
-  }
-
-  @media (min-width: 900px) {
-    .ligne {
-      grid-template-columns: 88px 1.1fr 1fr 72px;
-      align-items: center;
-      column-gap: 32px;
-      padding: 40px 0;
+  @media (min-width: 1100px) {
+    .metiers__liste {
+      grid-template-columns: repeat(6, 1fr);
     }
 
-    .ligne__num {
-      grid-row: auto;
+    .carte {
+      grid-column: span 2;
+      min-height: 280px;
     }
 
-    .ligne__icone {
-      display: inline-flex;
-      align-items: center;
-      justify-content: center;
-      width: 72px;
-      height: 72px;
-      background: var(--color-ink);
-      color: #fff;
+    /* Cinq tuiles : trois en haut, deux plus larges en bas. */
+    .carte:nth-child(n + 4) {
+      grid-column: span 3;
+      min-height: 0;
     }
   }
 </style>

@@ -48,16 +48,33 @@ body {
   color: #fff;
 }
 
-/* Les titres reprennent la capitale condensée du logo. */
 h1,
 h2,
 h3 {
-  font-family: var(--font-title);
-  font-weight: 400;
-  text-transform: uppercase;
+  font-family: var(--font-text);
+  font-weight: 700;
   color: var(--color-ink);
   margin: 0;
   text-wrap: balance;
+}
+
+h1 {
+  font-size: var(--size-h1);
+  line-height: 1.02;
+  letter-spacing: -0.04em;
+  font-weight: 800;
+}
+
+h2 {
+  font-size: var(--size-h2);
+  line-height: 1.05;
+  letter-spacing: -0.035em;
+}
+
+h3 {
+  font-size: var(--size-h3);
+  line-height: 1.2;
+  letter-spacing: -0.02em;
 }
 
 h1 {
@@ -97,6 +114,7 @@ img {
 :focus-visible {
   outline: 3px solid var(--color-accent);
   outline-offset: 3px;
+  border-radius: 6px;
 }
 
 .sr-only {
@@ -119,6 +137,7 @@ img {
   background: var(--color-ink);
   color: #fff;
   padding: 12px 20px;
+  border-radius: var(--radius-pill);
   font-weight: 700;
   text-decoration: none;
   transition: top var(--speed) var(--ease);
@@ -135,24 +154,35 @@ img {
   padding-inline: var(--gutter);
 }
 
-/* Le petit libellé au-dessus des titres : un carré rouge devant des capitales. */
+/* Le petit libellé au-dessus des titres : une pastille avec un point rouge. */
 .surtitre {
   display: inline-flex;
   align-items: center;
-  gap: 12px;
+  gap: 10px;
+  padding: 8px 16px 8px 14px;
+  background: var(--color-card);
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-pill);
   font-size: var(--size-tiny);
-  font-weight: 800;
-  letter-spacing: 0.16em;
-  text-transform: uppercase;
-  color: var(--color-ink);
+  font-weight: 600;
+  color: var(--color-text);
 }
 
 .surtitre::before {
   content: '';
   flex-shrink: 0;
-  width: 14px;
-  height: 14px;
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
   background: var(--color-accent);
+}
+
+/* Une tuile : le bloc de base du site. */
+.tuile-bento {
+  background: var(--color-card);
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-tile);
+  box-shadow: var(--shadow-tile);
 }
 
 

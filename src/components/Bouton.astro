@@ -1,8 +1,8 @@
 ---
 /**
  * Bouton en forme de pilule. Toujours un vrai <a> (lien) ou <button> (action).
- * La flèche finale vit dans une pastille ronde qui s'anime au survol.
- * Variantes : principal (noir), accent (rouge), secondaire (contour), whatsapp (vert).
+ * La flèche finale glisse vers la droite au survol.
+ * Variantes : principal (ardoise), accent (rouge), secondaire (contour), whatsapp (vert).
  */
 import Icon, { type NomIcone } from './Icon.astro';
 
@@ -35,103 +35,76 @@ const attributs = href ? { href } : { type };
 ---
 
 <Element
-  class:list={['bouton', `bouton--${variante}`, large && 'bouton--large', iconeApres && 'bouton--pastille', classe]}
+  class:list={['bouton', `bouton--${variante}`, large && 'bouton--large', classe]}
   {...attributs}
   {...reste}
 >
   {icone && <Icon nom={icone} taille={20} />}
   <span class="bouton__texte"><slot /></span>
-  {
-    iconeApres && (
-      <span class="bouton__pastille" aria-hidden="true">
-        <Icon nom={iconeApres} taille={18} epaisseur={2} />
-      </span>
-    )
-  }
+  {iconeApres && <Icon nom={iconeApres} taille={18} epaisseur={2.2} class="bouton__fleche" />}
 </Element>
 
 <style>
   .bouton {
-    --ombre: var(--color-ink);
-    position: relative;
     display: inline-flex;
-    align-items: stretch;
+    align-items: center;
     justify-content: center;
-    gap: 12px;
-    min-height: 56px;
-    padding: 0 24px;
-    border: 3px solid var(--color-ink);
+    gap: 10px;
+    min-height: 52px;
+    padding: 0 26px;
+    border: 1.5px solid transparent;
+    border-radius: var(--radius-pill);
     font-family: var(--font-text);
     font-size: var(--size-small);
-    font-weight: 800;
+    font-weight: 650;
     line-height: 1;
-    letter-spacing: 0.06em;
-    text-transform: uppercase;
     text-decoration: none;
     max-width: 100%;
     text-align: left;
     cursor: pointer;
     transition:
       background-color var(--speed) var(--ease),
+      border-color var(--speed) var(--ease),
       color var(--speed) var(--ease),
       box-shadow var(--speed) var(--ease),
       transform var(--speed) var(--ease);
   }
 
-  .bouton > :global(svg),
-  .bouton__texte {
-    align-self: center;
-  }
-
-  .bouton__texte {
-    padding-block: 12px;
-  }
-
-  @media (min-width: 500px) {
-    .bouton__texte {
-      white-space: nowrap;
-    }
-  }
-
   .bouton:hover {
-    transform: translate(-3px, -3px);
-    box-shadow: 6px 6px 0 var(--ombre);
+    transform: translateY(-2px);
   }
 
   .bouton:active {
     transform: none;
-    box-shadow: none;
-  }
-
-  .bouton--pastille {
-    padding-right: 0;
   }
 
   .bouton--large {
-    min-height: 64px;
-    padding-inline: 28px;
+    min-height: 60px;
+    padding-inline: 32px;
     font-size: var(--size-body);
   }
 
-  .bouton--large.bouton--pastille {
-    padding-right: 0;
+  .bouton :global(.bouton__fleche) {
+    transition: transform var(--speed) var(--ease);
   }
 
-  .bouton--large .bouton__pastille {
-    width: 64px;
+  .bouton:hover :global(.bouton__fleche) {
+    transform: translate(2px, -2px);
   }
 
-  /* La flèche vit dans un carré qui prend toute la hauteur du bouton. */
-  .bouton__pastille {
-    flex-shrink: 0;
-    display: inline-flex;
-    align-items: center;
-    justify-content: center;
-    align-self: stretch;
-    width: 56px;
-    margin: -3px -3px -3px 8px;
-    background: var(--color-ink);
+  .bouton__texte {
+    padding-block: 2px;
+  }
+
+  /* Le bouton rouge : l'action principale (blanc sur #c8202b = 5,6:1). */
+  .bouton--accent {
+    background: var(--color-accent);
     color: #fff;
+    box-shadow: var(--shadow-accent);
+  }
+
+  .bouton--accent:hover {
+    background: var(--color-accent-dark);
   }
 
   .bouton--principal {
@@ -139,33 +112,23 @@ const attributs = href ? { href } : { type };
     color: #fff;
   }
 
-  .bouton--principal .bouton__pastille {
-    background: var(--color-accent);
-  }
-
-  .bouton--accent {
-    background: var(--color-accent);
-    border-color: var(--color-accent);
-    color: #fff;
-  }
-
-  .bouton--accent .bouton__pastille {
-    background: var(--color-ink);
+  .bouton--principal:hover {
+    background: #343b42;
   }
 
   .bouton--secondaire {
-    background: transparent;
+    background: var(--color-card);
+    border-color: var(--color-border);
     color: var(--color-ink);
+    box-shadow: var(--shadow-tile);
   }
 
   .bouton--secondaire:hover {
-    background: var(--color-ink);
-    color: #fff;
+    border-color: var(--color-ink);
   }
 
   .bouton--whatsapp {
     background: var(--color-whatsapp);
-    border-color: var(--color-whatsapp);
     color: #fff;
   }
 

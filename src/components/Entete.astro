@@ -102,6 +102,7 @@ const estActif = (href: string) => cheminActuel.startsWith(href);
     let dernier = window.scrollY;
     const mettreAJour = () => {
       const y = window.scrollY;
+      entete.classList.toggle('entete--defile', y > 8);
       if (!document.body.classList.contains('menu-ouvert')) {
         entete.classList.toggle('entete--cache', y > dernier && y > 320);
       }
@@ -162,13 +163,30 @@ const estActif = (href: string) => cheminActuel.startsWith(href);
     position: fixed;
     inset: 0 0 auto;
     z-index: 60;
-    background: #fff;
-    border-bottom: var(--trait) solid var(--color-ink);
-    transition: transform 400ms var(--ease-out);
+    border-bottom: 1px solid transparent;
+    transition:
+      transform 400ms var(--ease-out),
+      background-color 300ms var(--ease),
+      border-color 300ms var(--ease);
+  }
+
+  /* Dès qu'on défile : un voile blanc flouté, comme du verre. */
+  .entete--defile {
+    background: rgba(251, 251, 250, 0.82);
+    border-bottom-color: var(--color-border);
+    backdrop-filter: blur(18px) saturate(1.5);
+    -webkit-backdrop-filter: blur(18px) saturate(1.5);
   }
 
   .entete--cache {
     transform: translateY(-110%);
+  }
+
+  :global(body.menu-ouvert) .entete.entete {
+    background: transparent;
+    border-bottom-color: transparent;
+    backdrop-filter: none;
+    -webkit-backdrop-filter: none;
   }
 
   /* Toujours au-dessus du panneau du menu (z-index 1). */
@@ -202,35 +220,35 @@ const estActif = (href: string) => cheminActuel.startsWith(href);
     margin-left: auto;
   }
 
-  /* --- Bouton menu : carré rouge --- */
+  /* --- Bouton menu --- */
   .entete__burger {
     display: inline-flex;
     align-items: center;
     flex-shrink: 0;
     gap: 10px;
-    height: 48px;
-    padding: 0 14px;
-    background: var(--color-accent);
+    height: 46px;
+    padding: 0 18px;
+    background: var(--color-ink);
     border: 0;
+    border-radius: var(--radius-pill);
     color: #fff;
-    font: 800 14px/1 var(--font-text);
-    letter-spacing: 0.1em;
-    text-transform: uppercase;
+    font: 650 14px/1 var(--font-text);
     cursor: pointer;
   }
 
   .entete__burger-traits {
     position: relative;
     display: inline-block;
-    width: 22px;
-    height: 16px;
+    width: 18px;
+    height: 12px;
   }
 
   .entete__burger-traits span {
     position: absolute;
     left: 0;
     right: 0;
-    height: 3px;
+    height: 2px;
+    border-radius: 2px;
     background: #fff;
     transition: transform 300ms var(--ease-out);
   }
@@ -240,18 +258,18 @@ const estActif = (href: string) => cheminActuel.startsWith(href);
   }
 
   .entete__burger-traits span:last-child {
-    top: 11px;
+    top: 8px;
   }
 
   .entete__burger[aria-expanded='true'] .entete__burger-traits span:first-child {
-    transform: translateY(4.5px) rotate(45deg);
+    transform: translateY(3px) rotate(45deg);
   }
 
   .entete__burger[aria-expanded='true'] .entete__burger-traits span:last-child {
-    transform: translateY(-4.5px) rotate(-45deg);
+    transform: translateY(-3px) rotate(-45deg);
   }
 
-  /* --- Panneau plein écran, noir --- */
+  /* --- Panneau plein écran --- */
   .panneau {
     position: fixed;
     inset: 0;
@@ -260,38 +278,46 @@ const estActif = (href: string) => cheminActuel.startsWith(href);
     flex-direction: column;
     justify-content: space-between;
     gap: 32px;
-    padding: calc(var(--header-h) + 24px) var(--gutter) calc(28px + env(safe-area-inset-bottom, 0px));
+    padding: calc(var(--header-h) + 16px) var(--gutter) calc(28px + env(safe-area-inset-bottom, 0px));
     overscroll-behavior: contain;
-    background: #fff;
+    background: var(--color-bg);
     color: var(--color-ink);
     overflow-y: auto;
-    clip-path: inset(0 0 100% 0);
-    transition: clip-path 500ms var(--ease-out);
+    opacity: 0;
+    transform: translateY(-12px);
+    transition:
+      opacity 300ms var(--ease),
+      transform 400ms var(--ease-out);
   }
 
   .panneau--ouvert {
-    clip-path: inset(0);
+    opacity: 1;
+    transform: none;
   }
 
   .panneau__nav {
     display: flex;
     flex-direction: column;
+    gap: 8px;
   }
 
   .panneau__nav a {
     display: flex;
-    align-items: baseline;
+    align-items: center;
     gap: 16px;
-    padding: 10px 0;
-    border-bottom: 3px solid var(--color-ink);
+    padding: 18px 20px;
+    background: var(--color-card);
+    border: 1px solid var(--color-border);
+    border-radius: var(--radius-md);
+    box-shadow: var(--shadow-tile);
     color: var(--color-ink);
     text-decoration: none;
     opacity: 0;
-    transform: translateX(-24px);
+    transform: translateY(16px);
     transition:
-      opacity 500ms var(--ease-out),
-      transform 500ms var(--ease-out);
-    transition-delay: calc(150ms + var(--i) * 60ms);
+      opacity 450ms var(--ease-out),
+      transform 450ms var(--ease-out);
+    transition-delay: calc(100ms + var(--i) * 50ms);
   }
 
   .panneau--ouvert .panneau__nav a {
@@ -300,16 +326,15 @@ const estActif = (href: string) => cheminActuel.startsWith(href);
   }
 
   .panneau__num {
-    font-size: 14px;
-    font-weight: 800;
+    font-size: 13px;
+    font-weight: 700;
     color: var(--color-accent);
   }
 
   .panneau__lien {
-    font-family: var(--font-title);
-    font-size: clamp(48px, 13vw, 76px);
-    line-height: 1.05;
-    text-transform: uppercase;
+    font-size: 26px;
+    font-weight: 700;
+    letter-spacing: -0.03em;
   }
 
   .panneau__bas {
@@ -321,26 +346,25 @@ const estActif = (href: string) => cheminActuel.startsWith(href);
 
   .panneau__bas :global(.bouton) {
     width: 100%;
-    justify-content: space-between;
   }
 
   .panneau__contact {
     display: flex;
     flex-direction: column;
-    gap: 4px;
+    gap: 2px;
   }
 
   .panneau__label {
-    font-size: 12px;
-    font-weight: 800;
-    letter-spacing: 0.16em;
-    text-transform: uppercase;
+    margin-bottom: 4px;
+    font-size: 13px;
+    font-weight: 600;
     color: var(--color-muted);
   }
 
   .panneau__contact a {
     color: var(--color-ink);
     font-size: 18px;
+    font-weight: 600;
     text-decoration: none;
     padding: 6px 0;
   }
@@ -355,7 +379,7 @@ const estActif = (href: string) => cheminActuel.startsWith(href);
     }
 
     .entete__burger {
-      padding: 0 10px;
+      padding: 0 14px;
       gap: 8px;
       font-size: 13px;
     }
@@ -368,42 +392,32 @@ const estActif = (href: string) => cheminActuel.startsWith(href);
   @media (min-width: 1024px) {
     .entete__nav {
       display: flex;
-      gap: 6px;
+      gap: 4px;
     }
 
     .entete__nav a {
       position: relative;
-      padding: 12px 16px;
-      font-size: 14px;
-      font-weight: 800;
-      letter-spacing: 0.1em;
-      text-transform: uppercase;
+      padding: 10px 16px;
+      border-radius: var(--radius-pill);
+      font-size: 15px;
+      font-weight: 600;
       color: var(--color-ink);
       text-decoration: none;
+      transition: background-color var(--speed) var(--ease);
     }
 
-    .entete__nav a::after {
-      content: '';
-      position: absolute;
-      left: 16px;
-      right: 16px;
-      bottom: 4px;
-      height: 3px;
-      background: var(--color-accent);
-      transform: scaleX(0);
-      transform-origin: left;
-      transition: transform var(--speed) var(--ease);
+    .entete__nav a:hover {
+      background: var(--color-surface);
     }
 
-    .entete__nav a:hover::after,
-    .entete__nav a[aria-current='page']::after {
-      transform: scaleX(1);
+    .entete__nav a[aria-current='page'] {
+      background: var(--color-surface);
     }
 
     .entete__actions {
       display: flex;
       align-items: center;
-      gap: 14px;
+      gap: 12px;
     }
 
     .entete__burger,

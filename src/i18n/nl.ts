@@ -40,7 +40,6 @@ export const nl = {
     mentionsLegales: 'Juridische informatie',
     viePrivee: 'Privacy',
     droits: 'Alle rechten voorbehouden',
-    projet: 'Een gevelproject?',
     zone: 'Kantoor in Halle · Overal in België',
     entreprise: 'Het bedrijf',
   },
@@ -125,6 +124,10 @@ export const nl = {
       titre: 'Twee broers, één team.',
       texte:
         'Elisei en Simi Ungureanu leiden Ely Facade. Elisei zorgt voor het bezoek en de offerte. Simi leidt de werken op de werf. Ze werken met een team van 8 personen, zelfstandigen.',
+      personnes: [
+        { prenom: 'Elisei', initiale: 'E', role: 'Bezoek en offerte' },
+        { prenom: 'Simi', initiale: 'S', role: 'Leiding van de werven' },
+      ],
     },
 
     methode: {
@@ -179,6 +182,11 @@ export const nl = {
           reponse: 'Nee. We doen enkel de gevel: gevelpleister, schilderwerk, reiniging, voegwerk en herstel van bakstenen. We metselen geen muren.',
         },
       ],
+    },
+
+    appel: {
+      titre: 'Laten we praten over uw gevel.',
+      texte: 'Gratis plaatsbezoek, zonder verplichting. Schrijf of bel ons.',
     },
 
     contact: {

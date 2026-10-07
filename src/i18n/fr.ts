@@ -40,7 +40,6 @@ export const fr = {
     mentionsLegales: 'Mentions légales',
     viePrivee: 'Vie privée',
     droits: 'Tous droits réservés',
-    projet: 'Un projet de façade ?',
     zone: 'Bureau à Halle · Partout en Belgique',
     entreprise: 'L’entreprise',
   },
@@ -125,6 +124,10 @@ export const fr = {
       titre: 'Deux frères, une équipe.',
       texte:
         'Elisei et Simi Ungureanu dirigent Ely Facade. Elisei s’occupe de la visite et du devis. Simi dirige les travaux sur le chantier. Ils travaillent avec une équipe de 8 personnes, des indépendants.',
+      personnes: [
+        { prenom: 'Elisei', initiale: 'E', role: 'Visite et devis' },
+        { prenom: 'Simi', initiale: 'S', role: 'Direction des chantiers' },
+      ],
     },
 
     methode: {
@@ -179,6 +182,11 @@ export const fr = {
           reponse: 'Non. Nous ne faisons que la façade : crépi, peinture, nettoyage, rejointoiement et réparation de briques. Nous ne montons pas de murs.',
         },
       ],
+    },
+
+    appel: {
+      titre: 'Parlons de votre façade.',
+      texte: 'Visite sur place gratuite, sans engagement. Écrivez-nous ou appelez-nous.',
     },
 
     contact: {

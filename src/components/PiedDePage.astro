@@ -1,12 +1,11 @@
 ---
 /**
- * Pied de page sur fond noir : un appel au contact, les colonnes d'infos,
- * puis le logo et les mentions légales.
+ * Pied de page : un grand bloc gris perle aux coins du haut arrondis, avec
+ * les coordonnées, la navigation, le sélecteur de langue et les mentions légales.
  */
-import Bouton from './Bouton.astro';
 import Logo from './Logo.astro';
 import SelecteurLangue from './SelecteurLangue.astro';
-import { entreprise, lienDevis, lienWhatsApp } from '../data/entreprise';
+import { entreprise, lienWhatsApp } from '../data/entreprise';
 import { chemin, liensNavigation, t, type Langue } from '../i18n';
 
 interface Props {
@@ -21,15 +20,12 @@ const liens = liensNavigation(langue);
 ---
 
 <footer class="pied">
-  <div class="wrap pied__haut">
-    <div class="pied__appel">
-      <p class="pied__phrase">{pied.projet}</p>
-      <div class="pied__actions">
-        <Bouton href={lienDevis(langue)} variante="accent" iconeApres="fleche-diag" large>{textes.actions.devis}</Bouton>
-        <Bouton href={lienWhatsApp(textes.whatsappMessage)} variante="whatsapp" icone="whatsapp" large target="_blank" rel="noopener">
-          WhatsApp
-        </Bouton>
-      </div>
+  <div class="wrap">
+    <div class="pied__haut">
+      <a href={chemin('accueil', langue)} class="pied__logo" aria-label={textes.entete.accueilAria}>
+        <Logo />
+      </a>
+      <SelecteurLangue langue={langue} cheminActuel={cheminActuel} />
     </div>
 
     <div class="pied__colonnes">
@@ -49,60 +45,49 @@ const liens = liensNavigation(langue);
         <span class="pied__titre">{pied.entreprise}</span>
         <span>{entreprise.nomCourt}</span>
         <span>{pied.zone}</span>
-        <div class="pied__langues">
-          <SelecteurLangue langue={langue} cheminActuel={cheminActuel} />
-        </div>
       </div>
     </div>
-  </div>
 
-  <div class="wrap pied__bas">
-    <a href={chemin('accueil', langue)} class="pied__logo" aria-label={textes.entete.accueilAria}>
-      <Logo />
-    </a>
-    <p>© 2026 {entreprise.nomCourt}. {pied.droits}</p>
-    <nav class="pied__legal" aria-label={pied.mentionsLegales}>
-      <a href={chemin('mentionsLegales', langue)}>{pied.mentionsLegales}</a>
-      <a href={chemin('viePrivee', langue)}>{pied.viePrivee}</a>
-    </nav>
+    <div class="pied__bas">
+      <p>© 2026 {entreprise.nomCourt}. {pied.droits}</p>
+      <nav class="pied__legal" aria-label={pied.mentionsLegales}>
+        <a href={chemin('mentionsLegales', langue)}>{pied.mentionsLegales}</a>
+        <a href={chemin('viePrivee', langue)}>{pied.viePrivee}</a>
+      </nav>
+    </div>
   </div>
 </footer>
 
 <style>
   .pied {
-    position: relative;
     margin-top: var(--section-gap);
-    padding-bottom: calc(110px + env(safe-area-inset-bottom, 0px));
-    background: var(--color-paper);
-    border-top: 12px solid var(--color-accent);
+    padding: 48px 0 calc(110px + env(safe-area-inset-bottom, 0px));
+    background: var(--color-surface);
+    border-radius: 36px 36px 0 0;
   }
 
   .pied__haut {
-    display: grid;
-    gap: 56px;
-    padding-top: 64px;
-  }
-
-  .pied__phrase {
-    margin-bottom: 32px;
-    font-family: var(--font-title);
-    font-size: var(--size-h2);
-    line-height: 0.94;
-    text-transform: uppercase;
-    color: var(--color-ink);
-  }
-
-  .pied__actions {
     display: flex;
     flex-wrap: wrap;
-    gap: 16px;
+    align-items: center;
+    justify-content: space-between;
+    gap: 20px;
+    padding-bottom: 36px;
+    border-bottom: 1px solid var(--color-border);
+  }
+
+  .pied__logo {
+    display: inline-flex;
+  }
+
+  .pied__logo :global(.logo) {
+    height: 40px;
   }
 
   .pied__colonnes {
     display: grid;
-    gap: 36px;
-    padding-top: 40px;
-    border-top: 3px solid var(--color-ink);
+    gap: 32px;
+    padding-block: 36px;
   }
 
   .pied__col {
@@ -111,14 +96,13 @@ const liens = liensNavigation(langue);
     align-items: flex-start;
     gap: 6px;
     font-size: var(--size-small);
+    color: var(--color-text);
   }
 
   .pied__titre {
     margin-bottom: 8px;
-    font-size: 12px;
-    font-weight: 800;
-    letter-spacing: 0.16em;
-    text-transform: uppercase;
+    font-size: 13px;
+    font-weight: 700;
     color: var(--color-muted);
   }
 
@@ -127,6 +111,7 @@ const liens = liensNavigation(langue);
     align-items: center;
     min-height: 32px;
     color: var(--color-ink);
+    font-weight: 550;
     text-decoration: none;
   }
 
@@ -138,28 +123,16 @@ const liens = liensNavigation(langue);
     overflow-wrap: anywhere;
   }
 
-  .pied__langues {
-    margin-top: 12px;
-  }
-
   .pied__bas {
     display: flex;
     flex-wrap: wrap;
     align-items: center;
-    gap: 16px 32px;
-    margin-top: 56px;
-    padding-top: 28px;
-    border-top: 3px solid var(--color-ink);
+    justify-content: space-between;
+    gap: 8px 32px;
+    padding-top: 24px;
+    border-top: 1px solid var(--color-border);
     font-size: var(--size-tiny);
-  }
-
-  .pied__logo {
-    display: inline-flex;
-    margin-right: auto;
-  }
-
-  .pied__logo :global(.logo) {
-    height: 44px;
+    color: var(--color-muted);
   }
 
   .pied__legal {
@@ -171,25 +144,21 @@ const liens = liensNavigation(langue);
     display: inline-flex;
     align-items: center;
     min-height: 44px;
-    color: var(--color-text);
+    color: var(--color-muted);
   }
 
   .pied__legal a:hover {
-    color: var(--color-accent);
+    color: var(--color-ink);
   }
 
   @media (min-width: 900px) {
-    .pied__haut {
-      grid-template-columns: 1.1fr 1fr;
-      align-items: start;
-      padding-top: 96px;
+    .pied {
+      padding-top: 64px;
+      border-radius: 48px 48px 0 0;
     }
 
     .pied__colonnes {
-      grid-template-columns: repeat(3, auto);
-      justify-content: space-between;
-      padding-top: 0;
-      border-top: 0;
+      grid-template-columns: repeat(3, 1fr);
     }
   }
 </style>

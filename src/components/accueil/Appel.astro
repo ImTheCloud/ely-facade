@@ -1,0 +1,66 @@
+---
+import Bouton from '../Bouton.astro';
+import { entreprise, lienDevis, lienWhatsApp } from '../../data/entreprise';
+import { t, type Langue } from '../../i18n';
+
+interface Props {
+  langue: Langue;
+}
+
+const { langue } = Astro.props;
+const textes = t(langue);
+const appel = textes.accueil.appel;
+---
+
+<section class="appel">
+  <div class="wrap">
+    <div class="appel__tuile" data-reveal>
+      <h2>{appel.titre}</h2>
+      <p>{appel.texte}</p>
+      <div class="appel__actions">
+        <Bouton href={lienDevis(langue)} variante="accent" iconeApres="fleche-diag" large>{textes.actions.devis}</Bouton>
+        <Bouton href={lienWhatsApp(textes.whatsappMessage)} variante="whatsapp" icone="whatsapp" large target="_blank" rel="noopener">
+          WhatsApp
+        </Bouton>
+        <Bouton href={`tel:${entreprise.telephoneLien}`} variante="secondaire" icone="telephone" large>
+          {entreprise.telephoneAffiche}
+        </Bouton>
+      </div>
+    </div>
+  </div>
+</section>
+
+<style>
+  .appel {
+    margin-top: var(--section-gap);
+  }
+
+  .appel__tuile {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 20px;
+    padding: 36px 24px;
+    background: var(--color-accent-soft);
+    border: 1px solid #f6d6d8;
+    border-radius: var(--radius-tile);
+  }
+
+  .appel__tuile p {
+    max-width: 52ch;
+    font-size: var(--size-lead);
+  }
+
+  .appel__actions {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 12px;
+    margin-top: 8px;
+  }
+
+  @media (min-width: 900px) {
+    .appel__tuile {
+      padding: 80px 64px;
+    }
+  }
+</style>
