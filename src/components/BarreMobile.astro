@@ -62,8 +62,8 @@ const textes = t(langue);
     display: flex;
     align-items: stretch;
     padding-bottom: env(safe-area-inset-bottom, 0px);
-    background: var(--color-ink);
-    border-top: var(--trait) solid var(--color-accent);
+    background: #fff;
+    border-top: var(--trait) solid var(--color-ink);
     transform: translateY(110%);
     transition: transform 400ms var(--ease-out);
   }
@@ -78,12 +78,13 @@ const textes = t(langue);
     justify-content: center;
     width: 64px;
     min-height: 60px;
-    color: #fff;
-    border-right: 2px solid var(--color-line-on-ink);
+    color: var(--color-ink);
+    border-right: 3px solid var(--color-ink);
   }
 
   .dock__bouton--whatsapp {
     background: var(--color-whatsapp);
+    color: #fff;
     border-right: 0;
   }
 

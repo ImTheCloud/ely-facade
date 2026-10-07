@@ -23,10 +23,10 @@ const devis = lienDevis(langue);
 const estActif = (href: string) => cheminActuel.startsWith(href);
 ---
 
-<header class="entete sur-noir" data-entete>
+<header class="entete" data-entete>
   <div class="entete__barre">
     <a href={chemin('accueil', langue)} class="entete__logo" aria-label={textes.entete.accueilAria}>
-      <Logo surFonce />
+      <Logo />
     </a>
 
     <nav class="entete__nav" aria-label={textes.entete.menuAria}>
@@ -40,13 +40,13 @@ const estActif = (href: string) => cheminActuel.startsWith(href);
     </nav>
 
     <div class="entete__actions">
-      <SelecteurLangue langue={langue} cheminActuel={cheminActuel} surFonce />
+      <SelecteurLangue langue={langue} cheminActuel={cheminActuel} />
       <Bouton href={devis} variante="accent" iconeApres="fleche-diag">{textes.actions.devis}</Bouton>
     </div>
 
     <!-- Téléphone : FR / NL toujours à portée de main, à côté du menu. -->
     <div class="entete__langue-mobile">
-      <SelecteurLangue langue={langue} cheminActuel={cheminActuel} surFonce compact />
+      <SelecteurLangue langue={langue} cheminActuel={cheminActuel} compact />
     </div>
 
     <button
@@ -162,8 +162,8 @@ const estActif = (href: string) => cheminActuel.startsWith(href);
     position: fixed;
     inset: 0 0 auto;
     z-index: 60;
-    background: var(--color-ink);
-    border-bottom: var(--trait) solid var(--color-accent);
+    background: #fff;
+    border-bottom: var(--trait) solid var(--color-ink);
     transition: transform 400ms var(--ease-out);
   }
 
@@ -191,10 +191,6 @@ const estActif = (href: string) => cheminActuel.startsWith(href);
     min-height: var(--tap-min);
     text-decoration: none;
     flex-shrink: 0;
-  }
-
-  .entete__logo :global(.logo) {
-    height: 44px;
   }
 
   .entete__nav,
@@ -266,8 +262,8 @@ const estActif = (href: string) => cheminActuel.startsWith(href);
     gap: 32px;
     padding: calc(var(--header-h) + 24px) var(--gutter) calc(28px + env(safe-area-inset-bottom, 0px));
     overscroll-behavior: contain;
-    background: var(--color-ink);
-    color: var(--color-on-ink);
+    background: #fff;
+    color: var(--color-ink);
     overflow-y: auto;
     clip-path: inset(0 0 100% 0);
     transition: clip-path 500ms var(--ease-out);
@@ -287,8 +283,8 @@ const estActif = (href: string) => cheminActuel.startsWith(href);
     align-items: baseline;
     gap: 16px;
     padding: 10px 0;
-    border-bottom: 2px solid var(--color-line-on-ink);
-    color: #fff;
+    border-bottom: 3px solid var(--color-ink);
+    color: var(--color-ink);
     text-decoration: none;
     opacity: 0;
     transform: translateX(-24px);
@@ -306,7 +302,7 @@ const estActif = (href: string) => cheminActuel.startsWith(href);
   .panneau__num {
     font-size: 14px;
     font-weight: 800;
-    color: var(--color-accent-vif);
+    color: var(--color-accent);
   }
 
   .panneau__lien {
@@ -339,11 +335,11 @@ const estActif = (href: string) => cheminActuel.startsWith(href);
     font-weight: 800;
     letter-spacing: 0.16em;
     text-transform: uppercase;
-    color: var(--color-on-ink-label);
+    color: var(--color-muted);
   }
 
   .panneau__contact a {
-    color: #fff;
+    color: var(--color-ink);
     font-size: 18px;
     text-decoration: none;
     padding: 6px 0;
@@ -355,7 +351,7 @@ const estActif = (href: string) => cheminActuel.startsWith(href);
     }
 
     .entete__logo :global(.logo) {
-      height: 38px;
+      height: 28px;
     }
 
     .entete__burger {
@@ -370,10 +366,6 @@ const estActif = (href: string) => cheminActuel.startsWith(href);
   }
 
   @media (min-width: 1024px) {
-    .entete__logo :global(.logo) {
-      height: 52px;
-    }
-
     .entete__nav {
       display: flex;
       gap: 6px;
@@ -386,7 +378,7 @@ const estActif = (href: string) => cheminActuel.startsWith(href);
       font-weight: 800;
       letter-spacing: 0.1em;
       text-transform: uppercase;
-      color: #fff;
+      color: var(--color-ink);
       text-decoration: none;
     }
 

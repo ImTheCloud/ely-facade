@@ -1,6 +1,6 @@
 ---
 import Bouton from '../Bouton.astro';
-import Skyline from './Skyline.astro';
+import Briques from './Briques.astro';
 import { entreprise, lienDevis } from '../../data/entreprise';
 import { t, type Langue } from '../../i18n';
 
@@ -14,62 +14,44 @@ const hero = textes.accueil.hero;
 ---
 
 <section class="hero">
-  <div class="hero__noir sur-noir">
-  <div class="wrap hero__texte">
-    <!-- L'escalier rouge du logo se dessine à droite du texte. -->
-    <svg class="hero__escalier" viewBox="0 0 400 220" fill="none" aria-hidden="true" focusable="false">
-      <path
-        pathLength="1"
-        d="M8 210V133.6H76.6V99.5H145.2V149.7H206.1V69.3H267V33H297.6V9H350.9V53.2H389V210"
-        stroke="var(--color-accent)"
-        stroke-width="12"
-        stroke-linejoin="miter"
-      ></path>
-    </svg>
-    <p class="surtitre" style="--i: 0">{hero.surtitre}</p>
-    <h1 style="--i: 1">{hero.titreDebut} <span class="hero__rouge">{hero.titreFin}</span></h1>
-    <p class="hero__lead" style="--i: 2">{hero.texte}</p>
-    <div class="hero__actions" style="--i: 3">
-      <Bouton href={lienDevis(langue)} variante="accent" iconeApres="fleche-diag" large>{textes.actions.devis}</Bouton>
-      <Bouton href={`tel:${entreprise.telephoneLien}`} variante="secondaire" icone="telephone" large>
-        {entreprise.telephoneAffiche}
-      </Bouton>
+  <div class="wrap hero__grille">
+    <div class="hero__texte">
+      <p class="surtitre" style="--i: 0">{hero.surtitre}</p>
+      <h1 style="--i: 1">{hero.titreDebut} <span class="hero__rouge">{hero.titreFin}</span></h1>
+      <p class="hero__lead" style="--i: 2">{hero.texte}</p>
+      <div class="hero__actions" style="--i: 3">
+        <Bouton href={lienDevis(langue)} variante="accent" iconeApres="fleche-diag" large>{textes.actions.devis}</Bouton>
+        <Bouton href={`tel:${entreprise.telephoneLien}`} variante="secondaire" icone="telephone" large>
+          {entreprise.telephoneAffiche}
+        </Bouton>
+      </div>
+      <p class="hero__note" style="--i: 4">{hero.note}</p>
     </div>
-    <p class="hero__note" style="--i: 4">{hero.note}</p>
-  </div>
-  </div>
 
-  <div class="skyline-cadre" role="img" aria-label={hero.illustrationAria}>
-    <div class="skyline-cadre__interieur">
-      <Skyline etat="avant" />
-      <div class="skyline-cadre__apres"><Skyline etat="apres" /></div>
-      <span class="skyline-cadre__rouleau"></span>
-      <span class="skyline-cadre__pastille skyline-cadre__pastille--avant">{hero.avant}</span>
-      <span class="skyline-cadre__pastille skyline-cadre__pastille--apres">{hero.apres}</span>
-    </div>
+    <div class="hero__briques"><Briques /></div>
   </div>
 </section>
 
 <style>
   .hero {
-    position: relative;
-    overflow: hidden;
+    padding: calc(var(--header-h) + 48px) 0 0;
   }
 
-  .hero__noir {
-    padding: calc(var(--header-h) + 48px) 0 56px;
-  }
-
-  .hero__escalier {
-    display: none;
+  .hero__grille {
+    display: grid;
+    gap: 48px;
+    align-items: center;
   }
 
   .hero__texte {
-    position: relative;
     display: flex;
     flex-direction: column;
     align-items: flex-start;
     gap: 28px;
+  }
+
+  .hero h1 {
+    font-size: clamp(60px, 8.4vw, 136px);
   }
 
   .hero__rouge {
@@ -80,7 +62,6 @@ const hero = textes.accueil.hero;
     max-width: 50ch;
     font-size: var(--size-lead);
     line-height: 1.5;
-    color: var(--color-on-ink-soft);
   }
 
   .hero__actions {
@@ -92,104 +73,19 @@ const hero = textes.accueil.hero;
   .hero__note {
     font-size: var(--size-small);
     font-weight: 700;
-    color: #fff;
+    color: var(--color-ink);
   }
 
-  /* --- Le dessin avant / après, sur une bande de béton clair --- */
-  .skyline-cadre {
-    padding-top: 44px;
-    overflow: hidden;
-    display: flex;
-    justify-content: flex-end;
-    background: var(--color-paper);
+  .hero__briques {
+    width: min(70%, 320px);
+    margin-inline: auto;
   }
 
-  .skyline-cadre__interieur {
-    position: relative;
-    width: max(100%, 780px);
-    flex-shrink: 0;
-  }
-
-  .skyline-cadre__apres {
-    position: absolute;
-    inset: 0;
-  }
-
-  .skyline-cadre__rouleau {
-    position: absolute;
-    top: -44px;
-    bottom: 0;
-    left: 0;
-    width: 8px;
-    margin-left: -4px;
-    background: var(--color-accent);
-    opacity: 0;
-  }
-
-  .skyline-cadre__pastille {
-    position: absolute;
-    top: -26px;
-    padding: 8px 12px;
-    background: var(--color-ink);
-    color: #fff;
-    font-size: 12px;
-    font-weight: 800;
-    letter-spacing: 0.14em;
-    text-transform: uppercase;
-  }
-
-  .skyline-cadre__pastille--avant {
-    left: 20px;
-  }
-
-  .skyline-cadre__pastille--apres {
-    right: 20px;
-    background: var(--color-accent);
-  }
-
-  /* Sans mouvement : on montre le résultat, rien d'autre. */
-  .skyline-cadre__pastille--avant {
-    display: none;
-  }
-
+  /* Le texte monte au chargement, sans JavaScript. */
   @media (prefers-reduced-motion: no-preference) {
-    .skyline-cadre__pastille--avant {
-      display: block;
-    }
-
-    .skyline-cadre__apres {
-      animation: balayage 14s cubic-bezier(0.65, 0, 0.35, 1) 1.2s infinite;
-    }
-
-    .skyline-cadre__rouleau {
-      animation: rouleau 14s cubic-bezier(0.65, 0, 0.35, 1) 1.2s infinite;
-    }
-
-    @keyframes balayage {
-      0%, 8% { clip-path: inset(0 100% 0 0); }
-      44%, 62% { clip-path: inset(0 0 0 0); }
-      98%, 100% { clip-path: inset(0 100% 0 0); }
-    }
-
-    @keyframes rouleau {
-      0% { left: 0; opacity: 0; }
-      8% { left: 0; opacity: 1; }
-      44% { left: 100%; opacity: 1; }
-      45%, 61% { left: 100%; opacity: 0; }
-      62% { left: 100%; opacity: 1; }
-      98% { left: 0; opacity: 1; }
-      100% { left: 0; opacity: 0; }
-    }
-
-    /* Le texte monte au chargement, sans JavaScript. */
     .hero__texte > * {
       animation: monte 800ms var(--ease-out) backwards;
       animation-delay: calc(var(--i, 0) * 90ms + 100ms);
-    }
-
-    .hero__escalier path {
-      stroke-dasharray: 1;
-      animation: trace 1800ms var(--ease-out) 300ms backwards;
     }
 
     @keyframes monte {
@@ -198,38 +94,22 @@ const hero = textes.accueil.hero;
         transform: translateY(32px);
       }
     }
-
-    @keyframes trace {
-      from {
-        stroke-dashoffset: 1;
-      }
-    }
   }
 
   @media (min-width: 960px) {
-    .hero__noir {
-      padding: calc(var(--header-h) + 88px) 0 88px;
+    .hero {
+      padding-top: calc(var(--header-h) + 88px);
     }
 
-    .hero__escalier {
-      display: block;
-      position: absolute;
-      right: var(--gutter);
-      bottom: 0;
-      width: min(26vw, 380px);
-      height: auto;
+    .hero__grille {
+      grid-template-columns: 1.7fr 1fr;
+      gap: 72px;
     }
 
-    .skyline-cadre {
-      padding-top: 56px;
-    }
-
-    .skyline-cadre__rouleau {
-      top: -56px;
-    }
-
-    .skyline-cadre__interieur {
+    .hero__briques {
       width: 100%;
+      max-width: 460px;
+      margin-inline: 0 auto;
     }
   }
 </style>

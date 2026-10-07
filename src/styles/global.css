@@ -117,7 +117,7 @@ img {
   top: -100px;
   z-index: 300;
   background: var(--color-ink);
-  color: var(--color-on-ink);
+  color: #fff;
   padding: 12px 20px;
   font-weight: 700;
   text-decoration: none;
@@ -155,18 +155,6 @@ img {
   background: var(--color-accent);
 }
 
-/* Sur fond noir. */
-.sur-noir {
-  background: var(--color-ink);
-  color: var(--color-on-ink-soft);
-}
-
-.sur-noir h1,
-.sur-noir h2,
-.sur-noir h3,
-.sur-noir .surtitre {
-  color: var(--color-on-ink);
-}
 
 /* ---------------------------------------------------------------------------
    Apparitions au défilement (voir le script du gabarit).

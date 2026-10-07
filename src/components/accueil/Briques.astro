@@ -1,0 +1,73 @@
+---
+/**
+ * La maison en briques du logo, en grand : les briques se posent une à une,
+ * la brique rouge en dernier. Un motif de la marque, pas une photo de chantier.
+ * Quand les photos d'Elisei seront là, elles prendront cette place.
+ */
+const rangees = [
+  { y: 80, xs: [80, 159, 238] },
+  { y: 125, xs: [40.5, 119.5, 198.5, 277.5] },
+  { y: 170, xs: [80, 159, 238] },
+  { y: 215, xs: [40.5, 119.5, 198.5, 277.5] },
+  { y: 260, xs: [80, 159, 238] },
+  { y: 305, xs: [40.5, 119.5, 198.5, 277.5] },
+];
+
+let rang = 0;
+const briques = rangees.flatMap((rangee) =>
+  rangee.xs.map((x) => ({ x, y: rangee.y, rouge: rangee.y === 215 && x === 119.5, rang: rang++ })),
+);
+---
+
+<svg viewBox="74 74 240 273" fill="none" aria-hidden="true" focusable="false" class="briques">
+  <defs>
+    <clipPath id="forme-maison">
+      <path d="M194 80L308 152V341H80V152L194 80Z"></path>
+    </clipPath>
+  </defs>
+  <g clip-path="url(#forme-maison)">
+    {
+      briques.map((brique) => (
+        <rect
+          class:list={['briques__brique', { 'briques__brique--rouge': brique.rouge }]}
+          x={brique.x}
+          y={brique.y}
+          width="70"
+          height="36"
+          style={`--i: ${brique.rouge ? 30 : brique.rang}`}
+        />
+      ))
+    }
+  </g>
+</svg>
+
+<style>
+  .briques {
+    display: block;
+    width: 100%;
+    height: auto;
+  }
+
+  /* Briques en béton clair : la seule touche forte est la brique rouge. */
+  .briques__brique {
+    fill: #e6e6e1;
+  }
+
+  .briques__brique--rouge {
+    fill: var(--color-accent);
+  }
+
+  @media (prefers-reduced-motion: no-preference) {
+    .briques__brique {
+      animation: pose 600ms var(--ease-out) backwards;
+      animation-delay: calc(var(--i) * 45ms + 200ms);
+    }
+
+    @keyframes pose {
+      from {
+        opacity: 0;
+        transform: translateY(-28px);
+      }
+    }
+  }
+</style>

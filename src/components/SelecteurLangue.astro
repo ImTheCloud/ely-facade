@@ -9,13 +9,11 @@ import { LANGUES, memePageDansLaLangue, t, type Langue } from '../i18n';
 interface Props {
   langue: Langue;
   cheminActuel: string;
-  /** Sur fond sombre (pied de page). */
-  surFonce?: boolean;
   /** Version resserrée (en-tête sur téléphone). */
   compact?: boolean;
 }
 
-const { langue, cheminActuel, surFonce = false, compact = false } = Astro.props;
+const { langue, cheminActuel, compact = false } = Astro.props;
 const textes = t(langue);
 
 const options = LANGUES.map((code) => ({
@@ -27,7 +25,7 @@ const options = LANGUES.map((code) => ({
 }));
 ---
 
-<nav class:list={['langues', { 'langues--fonce': surFonce, 'langues--compact': compact }]} aria-label={textes.langues.choisirAria}>
+<nav class:list={['langues', { 'langues--compact': compact }]} aria-label={textes.langues.choisirAria}>
   {
     options.map((option) => (
       <a
@@ -83,23 +81,5 @@ const options = LANGUES.map((code) => ({
     min-width: 40px;
     padding: 0 6px;
     font-size: 12px;
-  }
-
-  .langues--fonce {
-    border-color: #fff;
-  }
-
-  .langues--fonce .langues__lien {
-    color: #fff;
-  }
-
-  .langues--fonce .langues__lien:hover {
-    background: rgba(255, 255, 255, 0.14);
-  }
-
-  .langues--fonce .langues__lien--actif,
-  .langues--fonce .langues__lien--actif:hover {
-    background: #fff;
-    color: var(--color-ink);
   }
 </style>

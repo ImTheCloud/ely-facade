@@ -1,7 +1,7 @@
 /* ==========================================================================
    Les réglages du site, au même endroit.
-   Direction « chantier » : noir et rouge du logo, blanc et béton clair,
-   angles droits, gros traits. Changer une valeur ici la change partout.
+   Direction « chantier » en thème clair : blanc et béton clair, avec quelques touches
+   de noir et de rouge (celles du logo), angles droits, gros traits. Changer une valeur ici la change partout.
    ========================================================================== */
 
 :root {
@@ -9,11 +9,9 @@
   --color-bg: #ffffff;           /* blanc : fond de page (les façades terminées) */
   --color-paper: #eeeeea;        /* béton clair : bandes et fonds de blocs */
   --color-ink: #111111;          /* noir du logo : titres, sections sombres */
-  --color-ink-2: #1c1c1c;        /* noir un cran plus clair, sur fond noir */
   --color-accent: #c8202b;       /* rouge du logo */
   --color-accent-dark: #a31923;  /* rouge au survol */
-  --color-accent-vif: #ff5a63;   /* le même rouge, lisible sur fond sombre */
-  --color-text: #333333;         /* texte courant */
+    --color-text: #333333;         /* texte courant */
   --color-muted: #595959;        /* texte secondaire */
   --color-border: #d4d4cf;       /* bordures légères */
   --color-border-field: #7d7d78; /* bordure des champs : lisible */
@@ -21,11 +19,6 @@
   --color-whatsapp: #0e8449;     /* vert sobre, 4,76:1 avec le blanc */
   --color-whatsapp-dark: #0b6b3b;
 
-  /* Sur fond noir */
-  --color-on-ink: #ffffff;
-  --color-on-ink-soft: #cfcfca;
-  --color-on-ink-label: #a3a39d;
-  --color-line-on-ink: rgba(255, 255, 255, 0.22);
 
   /* --- Polices --------------------------------------------------------- */
   --font-title: 'Anton', 'Impact', 'Arial Narrow', sans-serif;

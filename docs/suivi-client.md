@@ -4,7 +4,7 @@ Hors site. Ce qui manque, ce qui est à faire valider, ce qui est livré.
 
 ## Étape en cours
 
-Logo option 1 : en attente de validation par Elisei et Simi (fichiers dans `design/logo/`). Site : base posée (accueil FR/NL, en-tête, pied de page). Page Contact et formulaire de devis faits. Reste : pages Services (5 métiers), Réalisations, À propos, mentions légales, vie privée, 404.
+Logo : concept « briques » (maison en briques avec une brique rouge, ELY noir + FACADE rouge) choisi par le client, fichiers dans `design/logo/`. Site : base posée (accueil FR/NL, en-tête, pied de page). Page Contact et formulaire de devis faits. Reste : pages Services (5 métiers), Réalisations, À propos, mentions légales, vie privée, 404.
 
 ## Réglages Netlify (côté Claudiu)
 
@@ -22,7 +22,6 @@ Logo option 1 : en attente de validation par Elisei et Simi (fichiers dans `desi
 
 ## À valider avec eux
 
-- Logo : choix parmi les pistes, puis affinage.
 - Couleurs finales (noir et rouge exacts).
 - Textes des pages avant mise en ligne.
 

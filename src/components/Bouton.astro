@@ -93,11 +93,6 @@ const attributs = href ? { href } : { type };
     }
   }
 
-  /* Dans un bloc noir, l'ombre du bouton devient blanche. */
-  :global(.sur-noir) .bouton {
-    --ombre: #fff;
-  }
-
   .bouton:hover {
     transform: translate(-3px, -3px);
     box-shadow: 6px 6px 0 var(--ombre);
@@ -148,12 +143,6 @@ const attributs = href ? { href } : { type };
     background: var(--color-accent);
   }
 
-  :global(.sur-noir) .bouton--principal {
-    background: #fff;
-    border-color: #fff;
-    color: var(--color-ink);
-  }
-
   .bouton--accent {
     background: var(--color-accent);
     border-color: var(--color-accent);
@@ -164,11 +153,6 @@ const attributs = href ? { href } : { type };
     background: var(--color-ink);
   }
 
-  :global(.sur-noir) .bouton--accent .bouton__pastille {
-    background: #fff;
-    color: var(--color-ink);
-  }
-
   .bouton--secondaire {
     background: transparent;
     color: var(--color-ink);
@@ -177,16 +161,6 @@ const attributs = href ? { href } : { type };
   .bouton--secondaire:hover {
     background: var(--color-ink);
     color: #fff;
-  }
-
-  :global(.sur-noir) .bouton--secondaire {
-    border-color: #fff;
-    color: #fff;
-  }
-
-  :global(.sur-noir) .bouton--secondaire:hover {
-    background: #fff;
-    color: var(--color-ink);
   }
 
   .bouton--whatsapp {

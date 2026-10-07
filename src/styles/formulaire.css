@@ -264,7 +264,7 @@
 .formulaire .pastille input:checked + span {
   background: var(--color-ink);
   border-color: var(--color-ink);
-  color: var(--color-on-ink);
+  color: #fff;
 }
 
 /* --- Champs --- */

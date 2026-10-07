@@ -20,7 +20,7 @@ const pied = textes.piedDePage;
 const liens = liensNavigation(langue);
 ---
 
-<footer class="pied sur-noir">
+<footer class="pied">
   <div class="wrap pied__haut">
     <div class="pied__appel">
       <p class="pied__phrase">{pied.projet}</p>
@@ -50,7 +50,7 @@ const liens = liensNavigation(langue);
         <span>{entreprise.nomCourt}</span>
         <span>{pied.zone}</span>
         <div class="pied__langues">
-          <SelecteurLangue langue={langue} cheminActuel={cheminActuel} surFonce />
+          <SelecteurLangue langue={langue} cheminActuel={cheminActuel} />
         </div>
       </div>
     </div>
@@ -58,7 +58,7 @@ const liens = liensNavigation(langue);
 
   <div class="wrap pied__bas">
     <a href={chemin('accueil', langue)} class="pied__logo" aria-label={textes.entete.accueilAria}>
-      <Logo surFonce />
+      <Logo />
     </a>
     <p>© 2026 {entreprise.nomCourt}. {pied.droits}</p>
     <nav class="pied__legal" aria-label={pied.mentionsLegales}>
@@ -73,6 +73,7 @@ const liens = liensNavigation(langue);
     position: relative;
     margin-top: var(--section-gap);
     padding-bottom: calc(110px + env(safe-area-inset-bottom, 0px));
+    background: var(--color-paper);
     border-top: 12px solid var(--color-accent);
   }
 
@@ -88,7 +89,7 @@ const liens = liensNavigation(langue);
     font-size: var(--size-h2);
     line-height: 0.94;
     text-transform: uppercase;
-    color: #fff;
+    color: var(--color-ink);
   }
 
   .pied__actions {
@@ -101,7 +102,7 @@ const liens = liensNavigation(langue);
     display: grid;
     gap: 36px;
     padding-top: 40px;
-    border-top: 2px solid var(--color-line-on-ink);
+    border-top: 3px solid var(--color-ink);
   }
 
   .pied__col {
@@ -118,19 +119,19 @@ const liens = liensNavigation(langue);
     font-weight: 800;
     letter-spacing: 0.16em;
     text-transform: uppercase;
-    color: var(--color-on-ink-label);
+    color: var(--color-muted);
   }
 
   .pied__col a {
     display: inline-flex;
     align-items: center;
     min-height: 32px;
-    color: #fff;
+    color: var(--color-ink);
     text-decoration: none;
   }
 
   .pied__col a:hover {
-    color: var(--color-accent-vif);
+    color: var(--color-accent);
   }
 
   .pied__email {
@@ -148,7 +149,7 @@ const liens = liensNavigation(langue);
     gap: 16px 32px;
     margin-top: 56px;
     padding-top: 28px;
-    border-top: 2px solid var(--color-line-on-ink);
+    border-top: 3px solid var(--color-ink);
     font-size: var(--size-tiny);
   }
 
@@ -158,7 +159,7 @@ const liens = liensNavigation(langue);
   }
 
   .pied__logo :global(.logo) {
-    height: 56px;
+    height: 44px;
   }
 
   .pied__legal {
@@ -170,11 +171,11 @@ const liens = liensNavigation(langue);
     display: inline-flex;
     align-items: center;
     min-height: 44px;
-    color: var(--color-on-ink-soft);
+    color: var(--color-text);
   }
 
   .pied__legal a:hover {
-    color: #fff;
+    color: var(--color-accent);
   }
 
   @media (min-width: 900px) {

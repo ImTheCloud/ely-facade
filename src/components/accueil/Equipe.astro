@@ -10,36 +10,29 @@ const equipe = t(langue).accueil.equipe;
 ---
 
 <section class="equipe">
-  <div class="wrap equipe__grille" data-reveal>
+  <div class="wrap">
+    <div class="equipe__grille" data-reveal>
     <div class="equipe__titre">
       <p class="surtitre">{equipe.surtitre}</p>
       <h2>{equipe.titre}</h2>
     </div>
     <p class="equipe__texte">{equipe.texte}</p>
+    </div>
   </div>
 </section>
 
 <style>
   .equipe {
     margin-top: var(--section-gap);
-    padding-block: 64px;
-    background: var(--color-accent);
-    color: #fff;
-  }
-
-  .equipe :global(h2),
-  .equipe :global(.surtitre) {
-    color: #fff;
-  }
-
-  .equipe :global(.surtitre)::before {
-    background: #fff;
   }
 
   .equipe__grille {
     display: grid;
     gap: 32px;
     align-items: end;
+    padding-block: 8px;
+    padding-left: 28px;
+    border-left: 14px solid var(--color-accent);
   }
 
   .equipe__titre {
@@ -56,13 +49,11 @@ const equipe = t(langue).accueil.equipe;
   }
 
   @media (min-width: 900px) {
-    .equipe {
-      padding-block: 112px;
-    }
-
     .equipe__grille {
       grid-template-columns: 1.2fr 1fr;
       gap: 72px;
+      padding-left: 48px;
     }
   }
+
 </style>

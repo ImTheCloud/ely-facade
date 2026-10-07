@@ -9,7 +9,7 @@ const { langue } = Astro.props;
 const chiffres = t(langue).accueil.chiffres;
 ---
 
-<section class="chiffres sur-noir" aria-label={chiffres.aria}>
+<section class="chiffres" aria-label={chiffres.aria}>
   <ul class="wrap chiffres__liste">
     {
       chiffres.liste.map((chiffre) => (
@@ -24,6 +24,8 @@ const chiffres = t(langue).accueil.chiffres;
 
 <style>
   .chiffres {
+    margin-top: var(--section-gap);
+    background: var(--color-paper);
     border-top: 12px solid var(--color-accent);
   }
 
@@ -40,11 +42,11 @@ const chiffres = t(langue).accueil.chiffres;
     flex-direction: column;
     gap: 8px;
     padding: 32px 0 32px 20px;
-    border-bottom: 2px solid var(--color-line-on-ink);
+    border-bottom: 3px solid var(--color-ink);
   }
 
   .chiffres__liste li:nth-child(even) {
-    border-left: 2px solid var(--color-line-on-ink);
+    border-left: 3px solid var(--color-ink);
   }
 
   .chiffres__valeur {
@@ -52,13 +54,15 @@ const chiffres = t(langue).accueil.chiffres;
     font-size: clamp(56px, 6.4vw, 104px);
     line-height: 1;
     text-transform: uppercase;
-    color: #fff;
+    color: var(--color-ink);
   }
 
   .chiffres__libelle {
     max-width: 22ch;
     font-size: var(--size-small);
+    font-weight: 600;
     line-height: 1.4;
+    color: var(--color-text);
   }
 
   @media (min-width: 900px) {
@@ -69,7 +73,7 @@ const chiffres = t(langue).accueil.chiffres;
     .chiffres__liste li {
       padding: 56px 24px 56px 32px;
       border-bottom: 0;
-      border-left: 2px solid var(--color-line-on-ink);
+      border-left: 3px solid var(--color-ink);
     }
 
     .chiffres__liste li:first-child {

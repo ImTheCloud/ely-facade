@@ -70,9 +70,6 @@ export const nl = {
       texte:
         'Gevelpleister, schilderwerk, reiniging, voegwerk, herstel van bakstenen: wij brengen uw gevel weer in orde, van het kleine huis tot het appartementsgebouw.',
       note: 'Gratis plaatsbezoek, zonder verplichting.',
-      illustrationAria: 'Tekening van een rij gebouwen: vuile gevels onder een steiger worden wit en schoon',
-      avant: 'Voor',
-      apres: 'Na',
     },
 
     chiffres: {

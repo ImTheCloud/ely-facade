@@ -70,9 +70,6 @@ export const fr = {
       texte:
         'Crépi, peinture, nettoyage, rejointoiement, réparation de briques : nous remettons votre façade en état, de la petite maison à l’immeuble.',
       note: 'Visite sur place gratuite, sans engagement.',
-      illustrationAria: 'Dessin d’une rangée d’immeubles : des façades sales sous échafaudage deviennent blanches et propres',
-      avant: 'Avant',
-      apres: 'Après',
     },
 
     chiffres: {
