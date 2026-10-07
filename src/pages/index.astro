@@ -1,0 +1,24 @@
+---
+import Appel from '~/components/accueil/Appel.astro';
+import Chiffres from '~/components/accueil/Chiffres.astro';
+import Equipe from '~/components/accueil/Equipe.astro';
+import Faq from '~/components/accueil/Faq.astro';
+import Hero from '~/components/accueil/Hero.astro';
+import Methode from '~/components/accueil/Methode.astro';
+import Metiers from '~/components/accueil/Metiers.astro';
+import BaseLayout from '~/layouts/BaseLayout.astro';
+import { t } from '~/i18n';
+
+const langue = 'fr' as const;
+const page = t(langue).pages.accueil;
+---
+
+<BaseLayout langue={langue} titre={page.titre} description={page.description}>
+  <Hero langue={langue} />
+  <Chiffres langue={langue} />
+  <Metiers langue={langue} />
+  <Equipe langue={langue} />
+  <Methode langue={langue} />
+  <Faq langue={langue} />
+  <Appel langue={langue} />
+</BaseLayout>

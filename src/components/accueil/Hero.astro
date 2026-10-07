@@ -1,0 +1,93 @@
+---
+import Bouton from '../Bouton.astro';
+import Immeubles from './Immeubles.astro';
+import { entreprise, lienDevis } from '../../data/entreprise';
+import { t, type Langue } from '../../i18n';
+
+interface Props {
+  langue: Langue;
+}
+
+const { langue } = Astro.props;
+const textes = t(langue);
+const hero = textes.accueil.hero;
+---
+
+<section class="hero">
+  <div class="wrap hero__grille">
+    <div class="hero__texte">
+      <p class="surtitre">{hero.surtitre}</p>
+      <h1>{hero.titreDebut} <span class="hero__rouge">{hero.titreFin}</span></h1>
+      <p class="hero__lead">{hero.texte}</p>
+      <div class="hero__actions">
+        <Bouton href={lienDevis(langue)} variante="accent" iconeApres="fleche-diag" large>{textes.actions.devis}</Bouton>
+        <Bouton href={`tel:${entreprise.telephoneLien}`} variante="secondaire" icone="telephone" large>
+          {entreprise.telephoneAffiche}
+        </Bouton>
+      </div>
+      <p class="hero__note">{hero.note}</p>
+    </div>
+
+    <div class="hero__dessin">
+      <Immeubles titre={hero.illustrationAria} />
+    </div>
+  </div>
+</section>
+
+<style>
+  .hero {
+    padding-top: calc(var(--header-h) + 36px);
+  }
+
+  .hero__grille {
+    display: grid;
+    gap: 40px;
+    align-items: center;
+  }
+
+  .hero__texte {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 24px;
+  }
+
+  .hero__rouge {
+    color: var(--color-accent);
+  }
+
+  .hero__lead {
+    max-width: 52ch;
+    font-size: var(--size-lead);
+    line-height: 1.5;
+  }
+
+  .hero__actions {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 12px;
+  }
+
+  .hero__note {
+    font-size: var(--size-small);
+    font-weight: 600;
+    color: var(--color-ink);
+  }
+
+  .hero__dessin {
+    width: 100%;
+    max-width: 640px;
+    margin-inline: auto;
+  }
+
+  @media (min-width: 960px) {
+    .hero {
+      padding-top: calc(var(--header-h) + 64px);
+    }
+
+    .hero__grille {
+      grid-template-columns: 1.05fr 0.95fr;
+      gap: 56px;
+    }
+  }
+</style>

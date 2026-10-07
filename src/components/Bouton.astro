@@ -1,0 +1,162 @@
+---
+/**
+ * Bouton en forme de pilule. Toujours un vrai <a> (lien) ou <button> (action).
+ * La flèche finale vit dans une pastille ronde qui s'anime au survol.
+ * Variantes : principal (noir), accent (rouge), secondaire (contour), whatsapp (vert).
+ */
+import Icon, { type NomIcone } from './Icon.astro';
+
+type Variante = 'principal' | 'accent' | 'secondaire' | 'whatsapp';
+
+interface Props {
+  href?: string;
+  type?: 'button' | 'submit';
+  variante?: Variante;
+  icone?: NomIcone;
+  iconeApres?: NomIcone;
+  large?: boolean;
+  class?: string;
+  [key: string]: unknown;
+}
+
+const {
+  href,
+  type = 'button',
+  variante = 'principal',
+  icone,
+  iconeApres,
+  large = false,
+  class: classe,
+  ...reste
+} = Astro.props;
+
+const Element = href ? 'a' : 'button';
+const attributs = href ? { href } : { type };
+---
+
+<Element
+  class:list={['bouton', `bouton--${variante}`, large && 'bouton--large', iconeApres && 'bouton--pastille', classe]}
+  {...attributs}
+  {...reste}
+>
+  {icone && <Icon nom={icone} taille={20} />}
+  <span class="bouton__texte"><slot /></span>
+  {
+    iconeApres && (
+      <span class="bouton__pastille" aria-hidden="true">
+        <Icon nom={iconeApres} taille={18} epaisseur={2} />
+      </span>
+    )
+  }
+</Element>
+
+<style>
+  .bouton {
+    position: relative;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 10px;
+    min-height: 52px;
+    padding: 0 26px;
+    border: 2px solid transparent;
+    border-radius: var(--radius-pill);
+    font-family: var(--font-text);
+    font-size: var(--size-small);
+    font-weight: 700;
+    line-height: 1;
+    text-decoration: none;
+    max-width: 100%;
+    text-align: left;
+    cursor: pointer;
+    transition:
+      background-color var(--speed) var(--ease),
+      border-color var(--speed) var(--ease),
+      color var(--speed) var(--ease),
+      transform var(--speed) var(--ease);
+  }
+
+  .bouton--pastille {
+    padding-right: 6px;
+    gap: 16px;
+  }
+
+  .bouton--large {
+    min-height: 60px;
+    padding-inline: 30px;
+    font-size: var(--size-body);
+  }
+
+  .bouton--large.bouton--pastille {
+    padding-right: 7px;
+  }
+
+  .bouton:active {
+    transform: scale(0.98);
+  }
+
+  .bouton__pastille {
+    flex-shrink: 0;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    background: var(--color-accent);
+    color: #fff;
+    transition: transform 420ms var(--ease-out);
+  }
+
+  .bouton--large .bouton__pastille {
+    width: 46px;
+    height: 46px;
+  }
+
+  .bouton:hover .bouton__pastille {
+    transform: rotate(-45deg) scale(1.06);
+  }
+
+  .bouton--principal {
+    background: var(--color-ink);
+    color: var(--color-on-ink);
+  }
+
+  .bouton--principal:hover {
+    background: #2b2b2b;
+  }
+
+  /* Le bouton rouge : l'action principale (blanc sur #c8202b = 5,6:1). */
+  .bouton--accent {
+    background: var(--color-accent);
+    color: #fff;
+  }
+
+  .bouton--accent:hover {
+    background: var(--color-accent-dark);
+  }
+
+  .bouton--accent .bouton__pastille {
+    background: var(--color-ink);
+  }
+
+  .bouton--secondaire {
+    background: transparent;
+    border-color: var(--color-ink);
+    color: var(--color-ink);
+  }
+
+  .bouton--secondaire:hover {
+    background: var(--color-ink);
+    color: var(--color-on-ink);
+  }
+
+  .bouton--whatsapp {
+    background: var(--color-whatsapp);
+    color: #fff;
+  }
+
+  .bouton--whatsapp:hover {
+    background: var(--color-whatsapp-dark);
+  }
+</style>

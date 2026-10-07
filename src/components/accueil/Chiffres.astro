@@ -1,0 +1,73 @@
+---
+import { t, type Langue } from '../../i18n';
+
+interface Props {
+  langue: Langue;
+}
+
+const { langue } = Astro.props;
+const chiffres = t(langue).accueil.chiffres;
+---
+
+<section class="chiffres" aria-label={chiffres.aria}>
+  <ul class="wrap chiffres__liste">
+    {
+      chiffres.liste.map((chiffre) => (
+        <li>
+          <span class="chiffres__valeur">{chiffre.valeur}</span>
+          <span class="chiffres__libelle">{chiffre.libelle}</span>
+        </li>
+      ))
+    }
+  </ul>
+</section>
+
+<style>
+  .chiffres {
+    margin-top: var(--section-gap);
+    padding-block: 44px;
+    background: var(--color-ink);
+    color: var(--color-on-ink-soft);
+  }
+
+  .chiffres__liste {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 32px 20px;
+    margin-block: 0;
+    padding-block: 0;
+    list-style: none;
+  }
+
+  .chiffres__liste li {
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+    padding-left: 16px;
+    border-left: 4px solid var(--color-accent);
+  }
+
+  .chiffres__valeur {
+    font-family: var(--font-title);
+    font-size: clamp(44px, 5vw, 76px);
+    line-height: 1;
+    text-transform: uppercase;
+    color: var(--color-on-ink);
+  }
+
+  .chiffres__libelle {
+    font-size: var(--size-small);
+    line-height: 1.4;
+  }
+
+  @media (min-width: 900px) {
+    .chiffres {
+      padding-block: 64px;
+    }
+
+    .chiffres__liste {
+      grid-template-columns: repeat(4, 1fr);
+      gap: 32px;
+    }
+  }
+</style>

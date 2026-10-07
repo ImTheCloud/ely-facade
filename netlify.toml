@@ -1,0 +1,30 @@
+# Hébergement Netlify : construit depuis GitHub à chaque push.
+# Les formulaires (devis) passent par Netlify Forms : détection et
+# emails de notification se règlent dans Netlify → Forms (pas dans ce fichier).
+
+[build]
+  command = "npm run build"
+  publish = "dist"
+
+[build.environment]
+  NODE_VERSION = "22"
+
+# Fichiers du site avec une empreinte dans leur nom : ils ne changent jamais, on les garde en cache un an.
+[[headers]]
+  for = "/_astro/*"
+  [headers.values]
+    Cache-Control = "public, max-age=31536000, immutable"
+
+# Protections de base pour toutes les pages.
+[[headers]]
+  for = "/*"
+  [headers.values]
+    X-Content-Type-Options = "nosniff"
+    Referrer-Policy = "strict-origin-when-cross-origin"
+    X-Frame-Options = "SAMEORIGIN"
+
+# Page introuvable en néerlandais pour tout ce qui commence par /nl/ (sinon la 404 française).
+[[redirects]]
+  from = "/nl/*"
+  to = "/nl/404/"
+  status = 404

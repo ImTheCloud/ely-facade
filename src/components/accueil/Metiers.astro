@@ -1,0 +1,106 @@
+---
+import Icon from '../Icon.astro';
+import { t, type Langue } from '../../i18n';
+
+interface Props {
+  langue: Langue;
+}
+
+const { langue } = Astro.props;
+const metiers = t(langue).accueil.metiers;
+---
+
+<section class="metiers" id="metiers">
+  <div class="wrap">
+    <div class="metiers__tete" data-reveal>
+      <p class="surtitre">{metiers.surtitre}</p>
+      <h2>{metiers.titre}</h2>
+      <p class="metiers__texte">{metiers.texte}</p>
+    </div>
+
+    <ul class="metiers__liste">
+      {
+        metiers.liste.map((metier, i) => (
+          <li class="carte" data-reveal style={`--delai: ${i * 70}ms`}>
+            <span class="carte__icone"><Icon nom={metier.icone} taille={28} /></span>
+            <h3>{metier.titre}</h3>
+            <p>{metier.texte}</p>
+          </li>
+        ))
+      }
+    </ul>
+  </div>
+</section>
+
+<style>
+  .metiers {
+    margin-top: var(--section-gap);
+  }
+
+  .metiers__tete {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 20px;
+    max-width: 780px;
+    margin-bottom: 48px;
+  }
+
+  .metiers__texte {
+    font-size: var(--size-lead);
+  }
+
+  .metiers__liste {
+    display: grid;
+    gap: 16px;
+    margin: 0;
+    padding: 0;
+    list-style: none;
+  }
+
+  .carte {
+    display: flex;
+    flex-direction: column;
+    gap: 14px;
+    padding: 28px;
+    background: #fff;
+    border: 2px solid var(--color-ink);
+    border-radius: var(--radius-card);
+  }
+
+  .carte__icone {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 56px;
+    height: 56px;
+    border-radius: 50%;
+    background: var(--color-ink);
+    color: #fff;
+  }
+
+  @media (min-width: 700px) {
+    .metiers__liste {
+      grid-template-columns: repeat(2, 1fr);
+    }
+  }
+
+  @media (min-width: 1100px) {
+    .metiers__liste {
+      grid-template-columns: repeat(6, 1fr);
+    }
+
+    .carte {
+      grid-column: span 2;
+    }
+
+    /* Cinq cartes : les deux dernières se centrent sur la ligne du bas. */
+    .carte:nth-child(4) {
+      grid-column: 2 / span 2;
+    }
+
+    .carte:nth-child(5) {
+      grid-column: 4 / span 2;
+    }
+  }
+</style>

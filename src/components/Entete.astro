@@ -1,0 +1,449 @@
+---
+/**
+ * En-tête flottant.
+ * - Transparent en haut de page, puis pilule floutée dès qu'on défile.
+ * - Se cache quand on descend, revient dès qu'on remonte.
+ * - Sur mobile : bouton « Menu » qui ouvre un panneau plein écran.
+ */
+import Bouton from './Bouton.astro';
+import Logo from './Logo.astro';
+import SelecteurLangue from './SelecteurLangue.astro';
+import { entreprise, lienDevis, lienWhatsApp } from '../data/entreprise';
+import { chemin, liensNavigation, t, type Langue } from '../i18n';
+
+interface Props {
+  langue: Langue;
+  cheminActuel: string;
+}
+
+const { langue, cheminActuel } = Astro.props;
+const textes = t(langue);
+const liens = liensNavigation(langue);
+const devis = lienDevis(langue);
+const estActif = (href: string) => cheminActuel.startsWith(href);
+---
+
+<header class="entete" data-entete>
+  <div class="entete__barre">
+    <a href={chemin('accueil', langue)} class="entete__logo" aria-label={textes.entete.accueilAria}>
+      <Logo />
+    </a>
+
+    <nav class="entete__nav" aria-label={textes.entete.menuAria}>
+      {
+        liens.map((lien) => (
+          <a href={lien.href} aria-current={estActif(lien.href) ? 'page' : undefined}>
+            {lien.libelle}
+          </a>
+        ))
+      }
+    </nav>
+
+    <div class="entete__actions">
+      <SelecteurLangue langue={langue} cheminActuel={cheminActuel} />
+      <Bouton href={devis} variante="accent" iconeApres="fleche-diag">{textes.actions.devis}</Bouton>
+    </div>
+
+    <!-- Téléphone : FR / NL toujours à portée de main, à côté du menu. -->
+    <div class="entete__langue-mobile">
+      <SelecteurLangue langue={langue} cheminActuel={cheminActuel} compact />
+    </div>
+
+    <button
+      type="button"
+      class="entete__burger"
+      id="bouton-menu"
+      aria-expanded="false"
+      aria-controls="menu-mobile"
+      data-ouvrir={textes.entete.ouvrirMenu}
+      data-fermer={textes.entete.fermerMenu}
+    >
+      <span data-texte-menu={textes.entete.menu} data-texte-fermer={textes.entete.fermer}>{textes.entete.menu}</span>
+      <span class="entete__burger-traits" aria-hidden="true"><span></span><span></span></span>
+      <span class="sr-only" data-libelle>{textes.entete.ouvrirMenu}</span>
+    </button>
+  </div>
+
+  <div class="panneau" id="menu-mobile" data-panneau hidden data-lenis-prevent>
+    <nav class="panneau__nav" aria-label={textes.entete.menuAria}>
+      {
+        liens.map((lien, i) => (
+          <a href={lien.href} style={`--i: ${i}`}>
+            <span class="panneau__num">0{i + 1}</span>
+            <span class="panneau__lien">{lien.libelle}</span>
+          </a>
+        ))
+      }
+    </nav>
+
+    <div class="panneau__bas">
+      <Bouton href={devis} variante="accent" iconeApres="fleche-diag" large>{textes.actions.devis}</Bouton>
+      <div class="panneau__contact">
+        <span class="panneau__label">{textes.entete.contactDirect}</span>
+        <a href={`tel:${entreprise.telephoneLien}`}>{entreprise.telephoneAffiche}</a>
+        <a href={lienWhatsApp(textes.whatsappMessage)} target="_blank" rel="noopener">WhatsApp</a>
+        <a href={`mailto:${entreprise.email}`}>{entreprise.email}</a>
+      </div>
+    </div>
+  </div>
+</header>
+
+<script>
+  import { bloquerDefilement } from '~/scripts/site';
+
+  const entete = document.querySelector<HTMLElement>('[data-entete]');
+  const bouton = document.getElementById('bouton-menu');
+  const panneau = document.querySelector<HTMLElement>('[data-panneau]');
+  const libelle = bouton?.querySelector<HTMLElement>('[data-libelle]');
+  const texteVisible = bouton?.querySelector<HTMLElement>('[data-texte-menu]');
+
+  /* --- Apparence selon le défilement --- */
+  if (entete) {
+    let dernier = window.scrollY;
+    const mettreAJour = () => {
+      const y = window.scrollY;
+      entete.classList.toggle('entete--defile', y > 24);
+      if (!document.body.classList.contains('menu-ouvert')) {
+        entete.classList.toggle('entete--cache', y > dernier && y > 320);
+      }
+      dernier = y;
+    };
+    window.addEventListener('scroll', mettreAJour, { passive: true });
+    mettreAJour();
+  }
+
+  /* --- Menu mobile --- */
+  if (bouton && panneau) {
+    const basculer = (ouvert: boolean) => {
+      bouton.setAttribute('aria-expanded', String(ouvert));
+      if (libelle) libelle.textContent = (ouvert ? bouton.dataset.fermer : bouton.dataset.ouvrir) ?? '';
+      if (texteVisible) texteVisible.textContent = (ouvert ? texteVisible.dataset.texteFermer : texteVisible.dataset.texteMenu) ?? '';
+      panneau.hidden = !ouvert;
+      if (ouvert) entete?.classList.remove('entete--cache');
+      document.body.classList.toggle('menu-ouvert', ouvert);
+      bloquerDefilement(ouvert);
+      // Deux images d'attente : le panneau doit d'abord exister fermé pour que l'ouverture s'anime.
+      if (ouvert) requestAnimationFrame(() => requestAnimationFrame(() => panneau.classList.add('panneau--ouvert')));
+      else panneau.classList.remove('panneau--ouvert');
+    };
+
+    bouton.addEventListener('click', () => basculer(bouton.getAttribute('aria-expanded') !== 'true'));
+
+    document.addEventListener('keydown', (evenement) => {
+      if (evenement.key === 'Escape' && bouton.getAttribute('aria-expanded') === 'true') {
+        basculer(false);
+        bouton.focus();
+      }
+    });
+
+    // Un lien d'ancre sur la même page referme le menu.
+    panneau.querySelectorAll('a').forEach((lien) => lien.addEventListener('click', () => basculer(false)));
+
+    window.matchMedia('(min-width: 1024px)').addEventListener('change', (evenement) => {
+      if (evenement.matches) basculer(false);
+    });
+  }
+</script>
+
+<style is:global>
+  /* Menu ouvert : la page dessous ne bouge plus (iPhone compris), l'en-tête reste affiché. */
+  html:has(body.menu-ouvert),
+  body.menu-ouvert {
+    overflow: hidden;
+    overscroll-behavior: none;
+  }
+
+  body.menu-ouvert .entete {
+    transform: none;
+  }
+</style>
+
+<style>
+  .entete {
+    position: fixed;
+    inset: 0 0 auto;
+    z-index: 60;
+    padding: 10px 10px 0;
+    transition: transform 500ms var(--ease-out);
+    pointer-events: none;
+  }
+
+  .entete--cache {
+    transform: translateY(-120%);
+  }
+
+  /* Toujours au-dessus du panneau du menu (z-index 1). */
+  .entete__barre {
+    position: relative;
+    z-index: 3;
+    pointer-events: auto;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 8px;
+    max-width: calc(var(--content-max) + 32px);
+    min-height: 64px;
+    margin: 0 auto;
+    padding: 4px 4px 4px 14px;
+    border: 1px solid transparent;
+    border-radius: var(--radius-pill);
+    transition:
+      background-color 400ms var(--ease),
+      border-color 400ms var(--ease),
+      box-shadow 400ms var(--ease);
+  }
+
+  .entete--defile .entete__barre {
+    background: rgba(244, 241, 236, 0.96);
+    border-color: rgba(20, 20, 20, 0.1);
+    box-shadow: var(--shadow-soft);
+    backdrop-filter: blur(16px) saturate(1.4);
+    -webkit-backdrop-filter: blur(16px) saturate(1.4);
+  }
+
+  :global(body.menu-ouvert) .entete .entete__barre.entete__barre {
+    background: transparent;
+    border-color: transparent;
+    box-shadow: none;
+    backdrop-filter: none;
+  }
+
+  .entete__logo {
+    position: relative;
+    z-index: 2;
+    display: flex;
+    align-items: center;
+    min-height: var(--tap-min);
+    text-decoration: none;
+    flex-shrink: 0;
+  }
+
+  .entete__nav,
+  .entete__actions {
+    display: none;
+  }
+
+  .entete__langue-mobile {
+    margin-left: auto;
+    position: relative;
+    z-index: 2;
+  }
+
+  /* --- Bouton menu : pilule noire, pastille rouge --- */
+  .entete__burger {
+    display: inline-flex;
+    align-items: center;
+    flex-shrink: 0;
+    gap: 8px;
+    height: 46px;
+    padding: 0 6px 0 16px;
+    background: var(--color-ink);
+    border: none;
+    border-radius: var(--radius-pill);
+    color: var(--color-on-ink);
+    font: 700 15px/1 var(--font-text);
+    cursor: pointer;
+    position: relative;
+    z-index: 2;
+  }
+
+  .entete__burger-traits {
+    position: relative;
+    display: inline-block;
+    width: 34px;
+    height: 34px;
+    border-radius: 50%;
+    background: var(--color-accent);
+  }
+
+  .entete__burger-traits span {
+    position: absolute;
+    left: 10px;
+    right: 10px;
+    height: 2px;
+    border-radius: 2px;
+    background: #fff;
+    transition: transform 400ms var(--ease-out);
+  }
+
+  .entete__burger-traits span:first-child {
+    top: 13px;
+  }
+
+  .entete__burger-traits span:last-child {
+    top: 19px;
+  }
+
+  .entete__burger[aria-expanded='true'] .entete__burger-traits span:first-child {
+    transform: translateY(3px) rotate(45deg);
+  }
+
+  .entete__burger[aria-expanded='true'] .entete__burger-traits span:last-child {
+    transform: translateY(-3px) rotate(-45deg);
+  }
+
+  /* --- Panneau plein écran --- */
+  .panneau {
+    pointer-events: auto;
+    position: fixed;
+    inset: 0;
+    z-index: 1;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    gap: 40px;
+    padding: calc(var(--header-h) + 28px) var(--gutter) calc(28px + env(safe-area-inset-bottom, 0px));
+    overscroll-behavior: contain;
+    background: var(--color-bg);
+    color: var(--color-ink);
+    overflow-y: auto;
+    clip-path: circle(0 at calc(100% - 50px) 40px);
+    transition: clip-path 700ms var(--ease-out);
+  }
+
+  .panneau--ouvert {
+    clip-path: circle(150% at calc(100% - 50px) 40px);
+  }
+
+  .panneau__nav {
+    display: flex;
+    flex-direction: column;
+  }
+
+  .panneau__nav a {
+    display: flex;
+    align-items: baseline;
+    gap: 16px;
+    padding: 10px 0;
+    border-bottom: 1px solid var(--color-border);
+    color: var(--color-ink);
+    text-decoration: none;
+    opacity: 0;
+    transform: translateY(24px);
+    transition:
+      opacity 600ms var(--ease-out),
+      transform 600ms var(--ease-out);
+    transition-delay: calc(180ms + var(--i) * 60ms);
+  }
+
+  .panneau--ouvert .panneau__nav a {
+    opacity: 1;
+    transform: none;
+  }
+
+  .panneau__num {
+    font-size: 13px;
+    font-weight: 700;
+    color: var(--color-accent);
+  }
+
+  .panneau__lien {
+    font-family: var(--font-title);
+    font-size: clamp(44px, 12vw, 68px);
+    line-height: 1.05;
+    text-transform: uppercase;
+  }
+
+  .panneau__bas {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 28px;
+  }
+
+  .panneau__bas :global(.bouton) {
+    width: 100%;
+    justify-content: space-between;
+  }
+
+  .panneau__contact {
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+  }
+
+  .panneau__label {
+    font-size: 12px;
+    font-weight: 700;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+    color: var(--color-muted);
+  }
+
+  .panneau__contact a {
+    color: var(--color-ink);
+    font-size: 18px;
+    text-decoration: none;
+    padding: 4px 0;
+  }
+
+  /* Petits téléphones : on resserre pour que logo, FR/NL et « Menu » tiennent sur une ligne. */
+  @media (max-width: 380px) {
+    .entete__barre {
+      gap: 4px;
+      padding-left: 8px;
+    }
+
+    .entete__burger {
+      gap: 6px;
+      padding-left: 12px;
+      font-size: 14px;
+    }
+
+    .entete__langue-mobile :global(.langues__lien) {
+      min-width: 33px;
+    }
+  }
+
+  @media (min-width: 1024px) {
+    .entete {
+      padding: 16px var(--gutter) 0;
+    }
+
+    .entete__barre {
+      padding: 8px 8px 8px 20px;
+    }
+
+    .entete__nav {
+      display: flex;
+      gap: 4px;
+    }
+
+    .entete__nav a {
+      position: relative;
+      padding: 10px 16px;
+      border-radius: var(--radius-pill);
+      font-size: 15px;
+      font-weight: 600;
+      color: var(--color-ink);
+      text-decoration: none;
+      transition: background-color var(--speed) var(--ease);
+    }
+
+    .entete__nav a:hover {
+      background: rgba(20, 20, 20, 0.06);
+    }
+
+    .entete__nav a[aria-current='page']::after {
+      content: '';
+      position: absolute;
+      left: 16px;
+      right: 16px;
+      bottom: 3px;
+      height: 3px;
+      background: var(--color-accent);
+    }
+
+    .entete__actions {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+    }
+
+    .entete__burger,
+    .entete__langue-mobile,
+    .panneau {
+      display: none;
+    }
+  }
+</style>

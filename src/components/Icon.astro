@@ -1,0 +1,53 @@
+---
+/**
+ * Icônes SVG au trait. Toutes au même endroit pour garder un style unique.
+ */
+export type NomIcone =
+  | 'fleche-diag'
+  | 'telephone'
+  | 'email'
+  | 'whatsapp'
+  | 'truelle'
+  | 'rouleau'
+  | 'goutte'
+  | 'joint'
+  | 'brique';
+
+interface Props {
+  nom: NomIcone;
+  taille?: number;
+  epaisseur?: number;
+  class?: string;
+}
+
+const { nom, taille = 20, epaisseur = 1.8, class: classe } = Astro.props;
+
+const chemins: Record<NomIcone, string> = {
+  'fleche-diag': '<path d="M7 17L17 7"/><path d="M8 7h9v9"/>',
+  telephone:
+    '<path d="M6 3h3.5l1.8 4.6-2.3 1.5a11.5 11.5 0 0 0 5.9 5.9l1.5-2.3L21 14.5V18a2 2 0 0 1-2 2A16 16 0 0 1 4 5a2 2 0 0 1 2-2z"/>',
+  email: '<rect x="3" y="5" width="18" height="14" rx="3"/><path d="M4 7.5l8 5.5 8-5.5"/>',
+  whatsapp:
+    '<path d="M4 20l1.3-4.2A8.5 8.5 0 1 1 8.4 19z"/><path d="M9 8.5c0 3.2 3.3 6.5 6.5 6.5l1-1.6-2-1-1 .9a5 5 0 0 1-2.8-2.8l.9-1-1-2z"/>',
+  truelle: '<path d="M3 21l6-6"/><path d="M9 15l-1.5-1.5 9-9a2.1 2.1 0 0 1 3 3l-9 9L9 15z"/><path d="M7.5 13.5l3 3"/>',
+  rouleau: '<rect x="4" y="3" width="14" height="6" rx="1.5"/><path d="M18 6h2v5h-8v3"/><rect x="10.5" y="14" width="3" height="7" rx="1"/>',
+  goutte: '<path d="M12 3s6 6.6 6 11a6 6 0 0 1-12 0c0-4.4 6-11 6-11z"/><path d="M9.5 15a2.5 2.5 0 0 0 2.5 2.5"/>',
+  joint: '<rect x="3" y="4" width="18" height="16" rx="1.5"/><path d="M3 12h18"/><path d="M9 4v8"/><path d="M15 12v8"/><path d="M6 8h1M12 8h1M18 16h-1M12 16h-1" stroke-dasharray="1 2"/>',
+  brique: '<rect x="3" y="4" width="18" height="16" rx="1.5"/><path d="M3 9.3h18"/><path d="M3 14.6h18"/><path d="M9 4v5.3"/><path d="M15 9.3v5.3"/><path d="M9 14.6V20"/>',
+};
+---
+
+<svg
+  width={taille}
+  height={taille}
+  viewBox="0 0 24 24"
+  fill="none"
+  stroke="currentColor"
+  stroke-width={epaisseur}
+  stroke-linecap="round"
+  stroke-linejoin="round"
+  aria-hidden="true"
+  focusable="false"
+  class={classe}
+  set:html={chemins[nom]}
+/>

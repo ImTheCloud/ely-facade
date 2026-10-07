@@ -1,0 +1,90 @@
+---
+import { t, type Langue } from '../../i18n';
+
+interface Props {
+  langue: Langue;
+}
+
+const { langue } = Astro.props;
+const methode = t(langue).accueil.methode;
+---
+
+<section class="methode">
+  <div class="wrap">
+    <div class="methode__tete" data-reveal>
+      <p class="surtitre">{methode.surtitre}</p>
+      <h2>{methode.titre}</h2>
+    </div>
+
+    <!-- Une vraie liste ordonnée : les numéros sont aussi lus par les lecteurs d'écran. -->
+    <ol class="methode__etapes">
+      {
+        methode.etapes.map((etape, i) => (
+          <li data-reveal style={`--delai: ${i * 80}ms`}>
+            <span class="methode__num" aria-hidden="true">0{i + 1}</span>
+            <h3>{etape.titre}</h3>
+            <p>{etape.texte}</p>
+          </li>
+        ))
+      }
+    </ol>
+  </div>
+</section>
+
+<style>
+  .methode {
+    margin-top: var(--section-gap);
+  }
+
+  .methode__tete {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 20px;
+    max-width: 860px;
+    margin-bottom: 48px;
+  }
+
+  .methode__etapes {
+    display: grid;
+    gap: 0;
+    margin: 0;
+    padding: 0;
+    list-style: none;
+  }
+
+  .methode__etapes li {
+    display: grid;
+    grid-template-columns: auto 1fr;
+    column-gap: 20px;
+    row-gap: 6px;
+    padding-block: 24px;
+    border-top: 2px solid var(--color-ink);
+  }
+
+  .methode__num {
+    grid-row: span 2;
+    font-family: var(--font-title);
+    font-size: clamp(44px, 5vw, 64px);
+    line-height: 1;
+    color: var(--color-accent);
+  }
+
+  @media (min-width: 900px) {
+    .methode__etapes {
+      grid-template-columns: repeat(4, 1fr);
+      gap: 28px;
+    }
+
+    .methode__etapes li {
+      display: flex;
+      flex-direction: column;
+      gap: 12px;
+      padding-top: 24px;
+    }
+
+    .methode__etapes li + li {
+      border-top-color: var(--color-ink);
+    }
+  }
+</style>

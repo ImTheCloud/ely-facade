@@ -1,0 +1,80 @@
+/* ==========================================================================
+   Les réglages du site, au même endroit.
+   Couleurs du logo : noir encre, rouge, crème. Changer une valeur ici la change partout.
+   ========================================================================== */
+
+:root {
+  /* --- Couleurs -------------------------------------------------------- */
+  --color-bg: #f4f1ec;          /* crème du logo : fond de page */
+  --color-surface: #ebe6de;     /* cartes, pastilles */
+  --color-surface-2: #e2dcd2;   /* conteneurs secondaires */
+  --color-ink: #141414;         /* noir du logo : titres, boutons, sections sombres */
+  --color-accent: #c8202b;      /* rouge du logo : détails, liens */
+  --color-accent-dark: #a31923; /* rouge au survol */
+  --color-accent-vif: #ff5a63;  /* le même rouge, lisible sur fond sombre */
+  --color-text: #3a3836;        /* texte courant */
+  --color-muted: #5e5a55;       /* texte secondaire */
+  --color-border: #d9d2c6;      /* bordures */
+  --color-border-field: #8a857c; /* bordure des champs : lisible */
+  --color-erreur: #b3261e;
+  --color-whatsapp: #0e8449;     /* vert sobre, 4,76:1 avec le blanc */
+  --color-whatsapp-dark: #0b6b3b;
+
+  /* Sur fond encre */
+  --color-on-ink: #f4f1ec;
+  --color-on-ink-soft: #c9c5be;
+  --color-on-ink-label: #a09b93;
+  --color-line-on-ink: rgba(244, 241, 236, 0.16);
+
+  /* --- Polices --------------------------------------------------------- */
+  --font-title: 'Anton', 'Impact', 'Arial Narrow', sans-serif;
+  --font-text: 'Figtree Variable', 'Helvetica Neue', Arial, sans-serif;
+
+  /* --- Tailles de texte : elles grandissent avec l'écran --------------- */
+  --size-h1: clamp(52px, 7.4vw, 128px);
+  --size-h2: clamp(40px, 5.2vw, 84px);
+  --size-h3: clamp(24px, 2vw, 32px);
+  --size-lead: clamp(18px, 1.4vw, 22px);
+  --size-body: 17px;
+  --size-small: 15px;
+  --size-tiny: 13px;
+
+  /* --- Arrondis -------------------------------------------------------- */
+  --radius-pill: 999px;
+  --radius-card: 18px;
+  --radius-small: 10px;
+
+  /* --- Ombres ---------------------------------------------------------- */
+  --shadow-float: 0 18px 50px -12px rgba(20, 20, 20, 0.35);
+  --shadow-soft: 0 10px 30px -14px rgba(20, 20, 20, 0.25);
+
+  /* --- Gabarit --------------------------------------------------------- */
+  --content-max: 1360px;
+  --gutter: 20px;
+  --section-gap: 88px;
+  --tap-min: 48px;
+  --header-h: 72px;
+
+  /* --- Mouvement ------------------------------------------------------- */
+  --ease: cubic-bezier(0.22, 0.61, 0.36, 1);
+  --ease-out: cubic-bezier(0.16, 1, 0.3, 1);
+  --speed: 240ms;
+}
+
+@media (min-width: 900px) {
+  :root {
+    --size-body: 18px;
+    --size-small: 16px;
+    --size-tiny: 14px;
+    --gutter: 40px;
+    --section-gap: 136px;
+    --header-h: 88px;
+  }
+}
+
+/* Respecte le réglage « réduire les animations » du système. */
+@media (prefers-reduced-motion: reduce) {
+  :root {
+    --speed: 0ms;
+  }
+}

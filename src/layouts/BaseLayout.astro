@@ -1,0 +1,141 @@
+---
+/** Gabarit commun à toutes les pages du site. */
+
+// Polices hébergées sur le site : aucun appel à Google Fonts.
+import '@fontsource/anton/400.css';
+import '@fontsource-variable/figtree';
+import '../styles/global.css';
+
+// Préchargées : sinon le navigateur ne les découvre qu'après avoir lu le CSS.
+import policeTitre from '@fontsource/anton/files/anton-latin-400-normal.woff2?url';
+import policeTexte from '@fontsource-variable/figtree/files/figtree-latin-wght-normal.woff2?url';
+import imagePartage from '../assets/partage.png';
+import BarreMobile from '../components/BarreMobile.astro';
+import DonneesStructurees from '../components/DonneesStructurees.astro';
+import Entete from '../components/Entete.astro';
+import PiedDePage from '../components/PiedDePage.astro';
+import { LANGUES, memePageDansLaLangue, t, type Langue } from '../i18n';
+
+interface Props {
+  langue: Langue;
+  titre: string;
+  description: string;
+  /** Les pages légales et la 404 ne doivent pas remonter dans Google. */
+  noindex?: boolean;
+}
+
+const { langue, titre, description, noindex = false } = Astro.props;
+const textes = t(langue);
+
+const cheminActuel = Astro.url.pathname;
+const canonique = new URL(cheminActuel, Astro.site);
+
+const alternatives = LANGUES.map((code) => ({
+  code,
+  hreflang: t(code).htmlLang,
+  href: new URL(memePageDansLaLangue(cheminActuel, code), Astro.site).href,
+}));
+const xDefault = alternatives.find((alternative) => alternative.code === 'fr');
+
+// Pour choisir la langue selon l'appareil (voir le script dans <head>).
+const versFr = memePageDansLaLangue(cheminActuel, 'fr');
+const versNl = memePageDansLaLangue(cheminActuel, 'nl');
+const langueAuto = !noindex;
+
+const urlPartage = new URL(imagePartage.src, Astro.site).href;
+---
+
+<!doctype html>
+<html lang={textes.htmlLang}>
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
+    <meta name="generator" content={Astro.generator} />
+
+    {/* Posé avant tout affichage : les animations d'apparition ne s'activent qu'avec JS. */}
+    <script is:inline>document.documentElement.classList.add('js');</script>
+
+    {/*
+      Langue selon l'appareil, à l'arrivée sur le site uniquement :
+      - un choix fait avec le sélecteur FR/NL est retenu et prime toujours ;
+      - sinon, appareil réglé en néerlandais → NL, tout le reste → FR ;
+      - jamais pendant la navigation interne, jamais pour les robots (Google, aperçus WhatsApp).
+    */}
+    <script is:inline define:vars={{ pageLangue: langue, versFr, versNl, langueAuto }}>
+      (function () {
+        document.addEventListener('click', function (e) {
+          var lien = e.target.closest && e.target.closest('[data-choix-langue]');
+          if (lien) try { localStorage.setItem('langue', lien.getAttribute('data-choix-langue')); } catch (x) {}
+        });
+        if (!langueAuto) return;
+        if (/bot|crawl|spider|slurp|lighthouse|facebookexternalhit|whatsapp|preview/i.test(navigator.userAgent)) return;
+        try { if (document.referrer && new URL(document.referrer).host === location.host) return; } catch (x) {}
+        var cible = null;
+        try { cible = localStorage.getItem('langue'); } catch (x) {}
+        if (cible !== 'fr' && cible !== 'nl') {
+          cible = 'fr';
+          var langues = navigator.languages && navigator.languages.length ? navigator.languages : [navigator.language || ''];
+          for (var i = 0; i < langues.length; i++) {
+            var code = String(langues[i]).toLowerCase();
+            if (code.indexOf('nl') === 0) { cible = 'nl'; break; }
+            if (code.indexOf('fr') === 0) break;
+          }
+        }
+        if (cible !== pageLangue) location.replace((cible === 'nl' ? versNl : versFr) + location.search + location.hash);
+      })();
+    </script>
+
+    <link rel="preload" href={policeTitre} as="font" type="font/woff2" crossorigin />
+    <link rel="preload" href={policeTexte} as="font" type="font/woff2" crossorigin />
+
+    <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+    <link rel="icon" type="image/png" href="/favicon.png" />
+    <link rel="apple-touch-icon" href="/apple-touch-icon.png" />
+
+    <title>{titre}</title>
+    <meta name="description" content={description} />
+    <link rel="canonical" href={canonique.href} />
+    {noindex && <meta name="robots" content="noindex, follow" />}
+
+    {
+      alternatives.map((alternative) => (
+        <link rel="alternate" hreflang={alternative.hreflang} href={alternative.href} />
+      ))
+    }
+    {xDefault && <link rel="alternate" hreflang="x-default" href={xDefault.href} />}
+
+    <meta property="og:type" content="website" />
+    <meta property="og:site_name" content="Ely Facade" />
+    <meta property="og:title" content={titre} />
+    <meta property="og:description" content={description} />
+    <meta property="og:url" content={canonique.href} />
+    <meta property="og:locale" content={textes.htmlLang.replace('-', '_')} />
+    <meta property="og:image" content={urlPartage} />
+    <meta property="og:image:width" content={String(imagePartage.width)} />
+    <meta property="og:image:height" content={String(imagePartage.height)} />
+    <meta property="og:image:alt" content="Ely Facade" />
+    <meta name="twitter:card" content="summary_large_image" />
+    <meta name="twitter:image" content={urlPartage} />
+
+    <meta name="theme-color" content="#f4f1ec" />
+
+    {(cheminActuel === '/' || cheminActuel === '/nl/') && <DonneesStructurees langue={langue} image={urlPartage} />}
+  </head>
+
+  <body>
+    <a class="skip-link" href="#contenu">{textes.accessibilite.allerAuContenu}</a>
+
+    <Entete langue={langue} cheminActuel={cheminActuel} />
+
+    <main id="contenu">
+      <slot />
+    </main>
+
+    <PiedDePage langue={langue} cheminActuel={cheminActuel} />
+    <BarreMobile langue={langue} />
+
+    <script>
+      import '~/scripts/site';
+    </script>
+  </body>
+</html>

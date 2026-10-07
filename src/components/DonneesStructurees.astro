@@ -1,0 +1,35 @@
+---
+/**
+ * Données structurées (JSON-LD) pour Google : seulement des faits vérifiés.
+ * Pas de date de création, pas d'avis, pas de prix.
+ */
+import { entreprise } from '../data/entreprise';
+import type { Langue } from '../i18n';
+
+interface Props {
+  langue: Langue;
+  image: string;
+}
+
+const { langue, image } = Astro.props;
+
+const donnees = {
+  '@context': 'https://schema.org',
+  '@type': 'GeneralContractor',
+  name: entreprise.nomCourt,
+  url: new URL(langue === 'nl' ? '/nl/' : '/', Astro.site).href,
+  image,
+  telephone: entreprise.telephoneLien,
+  email: entreprise.email,
+  address: {
+    '@type': 'PostalAddress',
+    addressLocality: entreprise.ville,
+    postalCode: '1502',
+    addressCountry: 'BE',
+  },
+  areaServed: { '@type': 'Country', name: 'Belgique' },
+  knowsLanguage: ['fr', 'nl'],
+};
+---
+
+<script type="application/ld+json" set:html={JSON.stringify(donnees)} />

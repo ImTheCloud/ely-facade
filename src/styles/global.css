@@ -1,0 +1,216 @@
+/* Base commune à toutes les pages. Les valeurs viennent de tokens.css. */
+
+@import './tokens.css';
+
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+}
+
+html {
+  -webkit-text-size-adjust: 100%;
+  scroll-padding-top: calc(var(--header-h) + 16px);
+}
+
+/* Android : pas de rectangle au toucher (chaque élément a son propre retour visuel). */
+a,
+button,
+label,
+input,
+[role='button'] {
+  -webkit-tap-highlight-color: transparent;
+}
+
+html.lenis,
+html.lenis body {
+  height: auto;
+}
+
+.lenis.lenis-smooth [data-lenis-prevent] {
+  overscroll-behavior: contain;
+}
+
+body {
+  margin: 0;
+  background: var(--color-bg);
+  color: var(--color-text);
+  font-family: var(--font-text);
+  font-size: var(--size-body);
+  line-height: 1.6;
+  -webkit-font-smoothing: antialiased;
+  text-rendering: optimizeLegibility;
+  overflow-x: clip;
+}
+
+::selection {
+  background: var(--color-accent);
+  color: #fff;
+}
+
+/* Les titres reprennent la capitale condensée du logo. */
+h1,
+h2,
+h3 {
+  font-family: var(--font-title);
+  font-weight: 400;
+  text-transform: uppercase;
+  color: var(--color-ink);
+  margin: 0;
+  text-wrap: balance;
+}
+
+h1 {
+  font-size: var(--size-h1);
+  line-height: 0.96;
+  letter-spacing: 0.005em;
+}
+
+h2 {
+  font-size: var(--size-h2);
+  line-height: 1;
+  letter-spacing: 0.01em;
+}
+
+h3 {
+  font-size: var(--size-h3);
+  line-height: 1.1;
+  letter-spacing: 0.02em;
+}
+
+p {
+  margin: 0;
+  text-wrap: pretty;
+}
+
+a {
+  color: var(--color-accent);
+}
+
+[hidden] {
+  display: none !important;
+}
+
+img {
+  max-width: 100%;
+  height: auto;
+}
+
+:focus-visible {
+  outline: 3px solid var(--color-accent);
+  outline-offset: 3px;
+  border-radius: 6px;
+}
+
+.sr-only {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  padding: 0;
+  margin: -1px;
+  overflow: hidden;
+  clip-path: inset(50%);
+  white-space: nowrap;
+  border: 0;
+}
+
+.skip-link {
+  position: absolute;
+  left: var(--gutter);
+  top: -100px;
+  z-index: 300;
+  background: var(--color-ink);
+  color: var(--color-on-ink);
+  padding: 12px 20px;
+  border-radius: var(--radius-pill);
+  font-weight: 600;
+  text-decoration: none;
+  transition: top var(--speed) var(--ease);
+}
+
+.skip-link:focus {
+  top: 12px;
+}
+
+.wrap {
+  width: 100%;
+  max-width: calc(var(--content-max) + var(--gutter) * 2);
+  margin-inline: auto;
+  padding-inline: var(--gutter);
+}
+
+/* Le petit libellé au-dessus des titres : un trait rouge, comme la ligne du logo. */
+.surtitre {
+  display: inline-flex;
+  align-items: center;
+  gap: 12px;
+  font-size: var(--size-tiny);
+  font-weight: 700;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: var(--color-ink);
+}
+
+.surtitre::before {
+  content: '';
+  flex-shrink: 0;
+  width: 28px;
+  height: 4px;
+  background: var(--color-accent);
+}
+
+/* ---------------------------------------------------------------------------
+   Apparitions au défilement (voir le script du gabarit).
+   Sans JS, tout est visible : la classe .js est posée par le script.
+   --------------------------------------------------------------------------- */
+@media (prefers-reduced-motion: no-preference) {
+  .js [data-reveal] {
+    opacity: 0;
+    transform: translateY(28px);
+    transition:
+      opacity 800ms var(--ease-out),
+      transform 800ms var(--ease-out);
+    transition-delay: var(--delai, 0ms);
+  }
+
+  .js [data-reveal].est-visible {
+    opacity: 1;
+    transform: none;
+  }
+}
+
+/* Transitions entre pages (navigateurs récents, sans JavaScript). */
+@view-transition {
+  navigation: auto;
+}
+
+@media (prefers-reduced-motion: no-preference) {
+  ::view-transition-old(root) {
+    animation: page-sort 220ms var(--ease) both;
+  }
+
+  ::view-transition-new(root) {
+    animation: page-entre 420ms var(--ease-out) both;
+  }
+
+  @keyframes page-sort {
+    to {
+      opacity: 0;
+    }
+  }
+
+  @keyframes page-entre {
+    from {
+      opacity: 0;
+      transform: translateY(16px);
+    }
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  ::view-transition-group(*),
+  ::view-transition-old(*),
+  ::view-transition-new(*) {
+    animation: none !important;
+  }
+}

@@ -1,0 +1,112 @@
+---
+/**
+ * Sélecteur FR / NL.
+ * Mène toujours à la MÊME page dans l'autre langue, jamais à l'accueil
+ * (sauf si la page n'existe pas dans l'autre langue).
+ */
+import { LANGUES, memePageDansLaLangue, t, type Langue } from '../i18n';
+
+interface Props {
+  langue: Langue;
+  cheminActuel: string;
+  /** Sur fond sombre (pied de page). */
+  surFonce?: boolean;
+  /** Version resserrée (en-tête sur téléphone). */
+  compact?: boolean;
+}
+
+const { langue, cheminActuel, surFonce = false, compact = false } = Astro.props;
+const textes = t(langue);
+
+const options = LANGUES.map((code) => ({
+  code,
+  libelle: code.toUpperCase(),
+  href: memePageDansLaLangue(cheminActuel, code),
+  actif: code === langue,
+  titre: code === 'nl' ? textes.langues.versNl : textes.langues.versFr,
+}));
+---
+
+<nav class:list={['langues', { 'langues--fonce': surFonce, 'langues--compact': compact }]} aria-label={textes.langues.choisirAria}>
+  {
+    options.map((option) => (
+      <a
+        href={option.href}
+        class:list={['langues__lien', { 'langues__lien--actif': option.actif }]}
+        hreflang={option.code}
+        data-choix-langue={option.code}
+        lang={option.code}
+        aria-current={option.actif ? 'true' : undefined}
+        title={option.actif ? undefined : option.titre}
+      >
+        {option.libelle}
+      </a>
+    ))
+  }
+</nav>
+
+<style>
+  .langues {
+    display: inline-flex;
+    align-items: center;
+    padding: 3px;
+    border: 1px solid rgba(20, 20, 20, 0.22);
+    border-radius: var(--radius-pill);
+  }
+
+  .langues__lien {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    min-width: 44px;
+    min-height: 44px;
+    padding: 0 10px;
+    border-radius: var(--radius-pill);
+    font-size: 13px;
+    font-weight: 700;
+    letter-spacing: 0.04em;
+    color: var(--color-muted);
+    text-decoration: none;
+    transition:
+      background-color var(--speed) var(--ease),
+      color var(--speed) var(--ease);
+  }
+
+  .langues__lien:hover {
+    color: var(--color-ink);
+  }
+
+  .langues__lien--actif,
+  .langues__lien--actif:hover {
+    background: var(--color-ink);
+    color: var(--color-on-ink);
+  }
+
+  .langues--compact {
+    padding: 2px;
+  }
+
+  .langues--compact .langues__lien {
+    min-width: 38px;
+    padding: 0 6px;
+    font-size: 12px;
+  }
+
+  .langues--fonce {
+    border-color: var(--color-line-on-ink);
+  }
+
+  .langues--fonce .langues__lien {
+    color: var(--color-on-ink-label);
+  }
+
+  .langues--fonce .langues__lien:hover {
+    color: var(--color-on-ink);
+  }
+
+  .langues--fonce .langues__lien--actif,
+  .langues--fonce .langues__lien--actif:hover {
+    background: var(--color-on-ink);
+    color: var(--color-ink);
+  }
+</style>

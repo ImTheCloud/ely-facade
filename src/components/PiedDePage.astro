@@ -1,0 +1,203 @@
+---
+/**
+ * Pied de page sur fond noir : un appel au contact, les colonnes d'infos,
+ * puis le logo et les mentions légales.
+ */
+import Bouton from './Bouton.astro';
+import Logo from './Logo.astro';
+import SelecteurLangue from './SelecteurLangue.astro';
+import { entreprise, lienDevis, lienWhatsApp } from '../data/entreprise';
+import { chemin, liensNavigation, t, type Langue } from '../i18n';
+
+interface Props {
+  langue: Langue;
+  cheminActuel: string;
+}
+
+const { langue, cheminActuel } = Astro.props;
+const textes = t(langue);
+const pied = textes.piedDePage;
+const liens = liensNavigation(langue);
+---
+
+<footer class="pied">
+  <div class="pied__ligne" aria-hidden="true"></div>
+
+  <div class="wrap pied__haut">
+    <div class="pied__appel">
+      <p class="pied__phrase">{pied.projet}</p>
+      <div class="pied__actions">
+        <Bouton href={lienDevis(langue)} variante="accent" iconeApres="fleche-diag" large>{textes.actions.devis}</Bouton>
+        <Bouton href={lienWhatsApp(textes.whatsappMessage)} variante="whatsapp" icone="whatsapp" large target="_blank" rel="noopener">
+          WhatsApp
+        </Bouton>
+      </div>
+    </div>
+
+    <div class="pied__colonnes">
+      <nav class="pied__col" aria-label={textes.entete.menuAria}>
+        <span class="pied__titre">{textes.entete.menu}</span>
+        {liens.map((lien) => <a href={lien.href}>{lien.libelle}</a>)}
+      </nav>
+
+      <div class="pied__col">
+        <span class="pied__titre">{textes.entete.contactDirect}</span>
+        <a href={`tel:${entreprise.telephoneLien}`}>{entreprise.telephoneAffiche}</a>
+        <a href={lienWhatsApp(textes.whatsappMessage)} target="_blank" rel="noopener">WhatsApp</a>
+        <a href={`mailto:${entreprise.email}`} class="pied__email">{entreprise.email}</a>
+      </div>
+
+      <div class="pied__col">
+        <span class="pied__titre">{pied.entreprise}</span>
+        <span>{entreprise.nomCourt}</span>
+        <span>{pied.zone}</span>
+        <div class="pied__langues">
+          <SelecteurLangue langue={langue} cheminActuel={cheminActuel} surFonce />
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="wrap pied__bas">
+    <a href={chemin('accueil', langue)} class="pied__logo" aria-label={textes.entete.accueilAria}>
+      <Logo surFonce />
+    </a>
+    <p>© 2026 {entreprise.nomCourt}. {pied.droits}</p>
+    <nav class="pied__legal" aria-label={pied.mentionsLegales}>
+      <a href={chemin('mentionsLegales', langue)}>{pied.mentionsLegales}</a>
+      <a href={chemin('viePrivee', langue)}>{pied.viePrivee}</a>
+    </nav>
+  </div>
+</footer>
+
+<style>
+  .pied {
+    position: relative;
+    margin-top: var(--section-gap);
+    padding-bottom: calc(104px + env(safe-area-inset-bottom, 0px));
+    background: var(--color-ink);
+    color: var(--color-on-ink-soft);
+  }
+
+  /* La ligne rouge du logo, en haut du pied de page. */
+  .pied__ligne {
+    height: 10px;
+    background: var(--color-accent);
+  }
+
+  .pied__haut {
+    display: grid;
+    gap: 56px;
+    padding-top: 64px;
+  }
+
+  .pied__phrase {
+    margin-bottom: 28px;
+    font-family: var(--font-title);
+    font-size: var(--size-h2);
+    line-height: 1;
+    text-transform: uppercase;
+    color: var(--color-on-ink);
+  }
+
+  .pied__actions {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 12px;
+  }
+
+  .pied__colonnes {
+    display: grid;
+    gap: 36px;
+    padding-top: 40px;
+    border-top: 1px solid var(--color-line-on-ink);
+  }
+
+  .pied__col {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 6px;
+    font-size: var(--size-small);
+  }
+
+  .pied__titre {
+    margin-bottom: 8px;
+    font-size: 12px;
+    font-weight: 700;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+    color: var(--color-on-ink-label);
+  }
+
+  .pied__col a {
+    display: inline-flex;
+    align-items: center;
+    min-height: 32px;
+    color: var(--color-on-ink);
+    text-decoration: none;
+  }
+
+  .pied__col a:hover {
+    color: var(--color-accent-vif);
+  }
+
+  .pied__email {
+    overflow-wrap: anywhere;
+  }
+
+  .pied__langues {
+    margin-top: 12px;
+  }
+
+  .pied__bas {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: 16px 32px;
+    margin-top: 56px;
+    padding-top: 28px;
+    border-top: 1px solid var(--color-line-on-ink);
+    font-size: var(--size-tiny);
+  }
+
+  .pied__logo {
+    display: inline-flex;
+    margin-right: auto;
+  }
+
+  .pied__logo :global(.logo) {
+    height: 52px;
+  }
+
+  .pied__legal {
+    display: flex;
+    gap: 20px;
+  }
+
+  .pied__legal a {
+    display: inline-flex;
+    align-items: center;
+    min-height: 44px;
+    color: var(--color-on-ink-soft);
+  }
+
+  .pied__legal a:hover {
+    color: var(--color-on-ink);
+  }
+
+  @media (min-width: 900px) {
+    .pied__haut {
+      grid-template-columns: 1.1fr 1fr;
+      align-items: start;
+      padding-top: 96px;
+    }
+
+    .pied__colonnes {
+      grid-template-columns: repeat(3, auto);
+      justify-content: space-between;
+      padding-top: 0;
+      border-top: 0;
+    }
+  }
+</style>

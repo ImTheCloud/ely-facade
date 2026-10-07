@@ -1,0 +1,24 @@
+# Dépendances
+node_modules/
+
+# Build Astro
+dist/
+.astro/
+
+# Variables d'environnement locales (le site n'en a besoin d'aucune)
+.env
+.env.production
+.env.local
+.env.*.local
+
+# Logs
+*.log
+npm-debug.log*
+
+# macOS
+.DS_Store
+
+# Éditeurs
+.vscode/*
+!.vscode/extensions.json
+.idea/

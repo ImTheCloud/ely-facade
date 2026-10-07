@@ -4,7 +4,7 @@ Hors site. Ce qui manque, ce qui est à faire valider, ce qui est livré.
 
 ## Étape en cours
 
-Logo : 26 pistes dans `design/logo/pistes.html` (les 8 premières n'ont pas plu). Claudiu choisit, puis on montre une sélection à Elisei et Simi.
+Logo option 1 : en attente de validation par Elisei et Simi (fichiers dans `design/logo/`). Site : base posée (accueil FR/NL, en-tête, pied de page). Reste : pages Services, Réalisations, À propos, Contact (formulaire de devis), mentions légales, vie privée, 404.
 
 ## Informations manquantes (rien n'est affiché tant qu'elles manquent)
 

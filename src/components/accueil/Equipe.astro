@@ -1,0 +1,52 @@
+---
+import { t, type Langue } from '../../i18n';
+
+interface Props {
+  langue: Langue;
+}
+
+const { langue } = Astro.props;
+const equipe = t(langue).accueil.equipe;
+---
+
+<section class="equipe">
+  <div class="wrap equipe__grille" data-reveal>
+    <div class="equipe__titre">
+      <p class="surtitre">{equipe.surtitre}</p>
+      <h2>{equipe.titre}</h2>
+    </div>
+    <p class="equipe__texte">{equipe.texte}</p>
+  </div>
+</section>
+
+<style>
+  .equipe {
+    margin-top: var(--section-gap);
+  }
+
+  .equipe__grille {
+    display: grid;
+    gap: 28px;
+    align-items: end;
+  }
+
+  .equipe__titre {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 20px;
+  }
+
+  .equipe__texte {
+    max-width: 56ch;
+    font-size: var(--size-lead);
+    line-height: 1.55;
+  }
+
+  @media (min-width: 900px) {
+    .equipe__grille {
+      grid-template-columns: 1fr 1fr;
+      gap: 64px;
+    }
+  }
+</style>

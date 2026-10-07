@@ -1,0 +1,33 @@
+---
+/**
+ * Le logo (SVG du dossier assets/marque). La version blanche sert sur fond sombre.
+ * Le texte alternatif est le nom de l'entreprise : la balise est décorative dans un lien qui porte déjà son aria-label.
+ */
+import logo from '~/assets/marque/logo.svg';
+import logoBlanc from '~/assets/marque/logo-blanc.svg';
+
+interface Props {
+  /** Sur fond sombre, le texte passe en blanc. */
+  surFonce?: boolean;
+  class?: string;
+}
+
+const { surFonce = false, class: classe } = Astro.props;
+const image = surFonce ? logoBlanc : logo;
+---
+
+<img src={image.src} width={image.width} height={image.height} alt="" class:list={['logo', classe]} />
+
+<style>
+  .logo {
+    display: block;
+    width: auto;
+    height: 48px;
+  }
+
+  @media (min-width: 900px) {
+    .logo {
+      height: 56px;
+    }
+  }
+</style>
