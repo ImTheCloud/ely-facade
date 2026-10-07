@@ -9,7 +9,7 @@ const { langue } = Astro.props;
 const chiffres = t(langue).accueil.chiffres;
 ---
 
-<section class="chiffres" aria-label={chiffres.aria}>
+<section class="chiffres sur-noir" aria-label={chiffres.aria}>
   <ul class="wrap chiffres__liste">
     {
       chiffres.liste.map((chiffre) => (
@@ -24,17 +24,12 @@ const chiffres = t(langue).accueil.chiffres;
 
 <style>
   .chiffres {
-    /* La ligne rouge du logo sépare le dessin des chiffres. */
-    border-top: 10px solid var(--color-accent);
-    padding-block: 44px;
-    background: var(--color-ink);
-    color: var(--color-on-ink-soft);
+    border-top: 12px solid var(--color-accent);
   }
 
   .chiffres__liste {
     display: grid;
     grid-template-columns: repeat(2, 1fr);
-    gap: 32px 20px;
     margin-block: 0;
     padding-block: 0;
     list-style: none;
@@ -43,32 +38,43 @@ const chiffres = t(langue).accueil.chiffres;
   .chiffres__liste li {
     display: flex;
     flex-direction: column;
-    gap: 6px;
-    padding-left: 16px;
-    border-left: 4px solid var(--color-accent);
+    gap: 8px;
+    padding: 32px 0 32px 20px;
+    border-bottom: 2px solid var(--color-line-on-ink);
+  }
+
+  .chiffres__liste li:nth-child(even) {
+    border-left: 2px solid var(--color-line-on-ink);
   }
 
   .chiffres__valeur {
     font-family: var(--font-title);
-    font-size: clamp(44px, 5vw, 76px);
+    font-size: clamp(56px, 6.4vw, 104px);
     line-height: 1;
     text-transform: uppercase;
-    color: var(--color-on-ink);
+    color: #fff;
   }
 
   .chiffres__libelle {
+    max-width: 22ch;
     font-size: var(--size-small);
     line-height: 1.4;
   }
 
   @media (min-width: 900px) {
-    .chiffres {
-      padding-block: 64px;
-    }
-
     .chiffres__liste {
       grid-template-columns: repeat(4, 1fr);
-      gap: 32px;
+    }
+
+    .chiffres__liste li {
+      padding: 56px 24px 56px 32px;
+      border-bottom: 0;
+      border-left: 2px solid var(--color-line-on-ink);
+    }
+
+    .chiffres__liste li:first-child {
+      border-left: 0;
+      padding-left: 0;
     }
   }
 </style>

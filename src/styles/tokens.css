@@ -1,64 +1,60 @@
 /* ==========================================================================
    Les réglages du site, au même endroit.
-   Couleurs du logo : noir encre et rouge, sur fond blanc. Changer une valeur ici la change partout.
+   Direction « chantier » : noir et rouge du logo, blanc et béton clair,
+   angles droits, gros traits. Changer une valeur ici la change partout.
    ========================================================================== */
 
 :root {
   /* --- Couleurs -------------------------------------------------------- */
-  --color-bg: #ffffff;          /* blanc : fond de page (les façades terminées) */
-  --color-surface: #f3f3f1;     /* cartes, pastilles */
-  --color-surface-2: #e4e4e0;   /* conteneurs secondaires */
-  --color-ink: #141414;         /* noir du logo : titres, boutons, sections sombres */
-  --color-accent: #c8202b;      /* rouge du logo : détails, liens */
-  --color-accent-dark: #a31923; /* rouge au survol */
-  --color-accent-vif: #ff5a63;  /* le même rouge, lisible sur fond sombre */
-  --color-text: #383838;        /* texte courant */
-  --color-muted: #5a5a5a;       /* texte secondaire */
-  --color-border: #dcdcd8;      /* bordures */
-  --color-border-field: #8a857c; /* bordure des champs : lisible */
+  --color-bg: #ffffff;           /* blanc : fond de page (les façades terminées) */
+  --color-paper: #eeeeea;        /* béton clair : bandes et fonds de blocs */
+  --color-ink: #111111;          /* noir du logo : titres, sections sombres */
+  --color-ink-2: #1c1c1c;        /* noir un cran plus clair, sur fond noir */
+  --color-accent: #c8202b;       /* rouge du logo */
+  --color-accent-dark: #a31923;  /* rouge au survol */
+  --color-accent-vif: #ff5a63;   /* le même rouge, lisible sur fond sombre */
+  --color-text: #333333;         /* texte courant */
+  --color-muted: #595959;        /* texte secondaire */
+  --color-border: #d4d4cf;       /* bordures légères */
+  --color-border-field: #7d7d78; /* bordure des champs : lisible */
   --color-erreur: #b3261e;
   --color-whatsapp: #0e8449;     /* vert sobre, 4,76:1 avec le blanc */
   --color-whatsapp-dark: #0b6b3b;
 
-  /* Sur fond encre */
-  --color-on-ink: #f6f6f4;
-  --color-on-ink-soft: #c9c5be;
-  --color-on-ink-label: #a09b93;
-  --color-line-on-ink: rgba(246, 246, 244, 0.16);
+  /* Sur fond noir */
+  --color-on-ink: #ffffff;
+  --color-on-ink-soft: #cfcfca;
+  --color-on-ink-label: #a3a39d;
+  --color-line-on-ink: rgba(255, 255, 255, 0.22);
 
   /* --- Polices --------------------------------------------------------- */
   --font-title: 'Anton', 'Impact', 'Arial Narrow', sans-serif;
-  --font-text: 'Figtree Variable', 'Helvetica Neue', Arial, sans-serif;
+  --font-text: 'Archivo Variable', 'Helvetica Neue', Arial, sans-serif;
 
   /* --- Tailles de texte : elles grandissent avec l'écran --------------- */
-  --size-h1: clamp(52px, 7.4vw, 128px);
-  --size-h2: clamp(40px, 5.2vw, 84px);
-  --size-h3: clamp(24px, 2vw, 32px);
-  --size-lead: clamp(18px, 1.4vw, 22px);
+  --size-h1: clamp(64px, 11.5vw, 188px);
+  --size-h2: clamp(46px, 7vw, 116px);
+  --size-h3: clamp(26px, 2.4vw, 38px);
+  --size-lead: clamp(18px, 1.5vw, 23px);
   --size-body: 17px;
   --size-small: 15px;
   --size-tiny: 13px;
 
-  /* --- Arrondis -------------------------------------------------------- */
-  --radius-pill: 999px;
-  --radius-card: 18px;
-  --radius-small: 10px;
-
-  /* --- Ombres ---------------------------------------------------------- */
-  --shadow-float: 0 18px 50px -12px rgba(20, 20, 20, 0.35);
-  --shadow-soft: 0 10px 30px -14px rgba(20, 20, 20, 0.25);
+  /* --- Traits : épais, droits ------------------------------------------ */
+  --trait: 4px;
+  --radius: 0;
 
   /* --- Gabarit --------------------------------------------------------- */
-  --content-max: 1360px;
+  --content-max: 1400px;
   --gutter: 20px;
   --section-gap: 88px;
   --tap-min: 48px;
-  --header-h: 72px;
+  --header-h: 68px;
 
   /* --- Mouvement ------------------------------------------------------- */
   --ease: cubic-bezier(0.22, 0.61, 0.36, 1);
   --ease-out: cubic-bezier(0.16, 1, 0.3, 1);
-  --speed: 240ms;
+  --speed: 200ms;
 }
 
 @media (min-width: 900px) {
@@ -67,8 +63,8 @@
     --size-small: 16px;
     --size-tiny: 14px;
     --gutter: 40px;
-    --section-gap: 136px;
-    --header-h: 88px;
+    --section-gap: 144px;
+    --header-h: 84px;
   }
 }
 

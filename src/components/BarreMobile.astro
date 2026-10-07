@@ -17,15 +17,15 @@ const textes = t(langue);
 ---
 
 <div class="dock" data-dock>
-  <a href={`tel:${entreprise.telephoneLien}`} class="dock__rond" aria-label={`${textes.actions.appeler} ${entreprise.telephoneAffiche}`}>
-    <Icon nom="telephone" taille={20} />
+  <a href={`tel:${entreprise.telephoneLien}`} class="dock__bouton" aria-label={`${textes.actions.appeler} ${entreprise.telephoneAffiche}`}>
+    <Icon nom="telephone" taille={22} />
   </a>
-  <a href={lienWhatsApp(textes.whatsappMessage)} class="dock__rond dock__rond--whatsapp" target="_blank" rel="noopener" aria-label={textes.actions.whatsapp}>
-    <Icon nom="whatsapp" taille={21} />
+  <a href={lienWhatsApp(textes.whatsappMessage)} class="dock__bouton dock__bouton--whatsapp" target="_blank" rel="noopener" aria-label={textes.actions.whatsapp}>
+    <Icon nom="whatsapp" taille={22} />
   </a>
   <a href={lienDevis(langue)} class="dock__devis">
     {textes.actions.devis}
-    <span class="dock__pastille" aria-hidden="true"><Icon nom="fleche-diag" taille={16} epaisseur={2.2} /></span>
+    <Icon nom="fleche-diag" taille={18} epaisseur={2.4} />
   </a>
 </div>
 
@@ -54,67 +54,55 @@ const textes = t(langue);
 </script>
 
 <style>
+  /* Une barre pleine largeur collée en bas : appeler, WhatsApp, devis. */
   .dock {
     position: fixed;
-    left: 50%;
-    bottom: calc(12px + env(safe-area-inset-bottom, 0px));
+    inset: auto 0 0;
     z-index: 55;
     display: flex;
-    align-items: center;
-    gap: 6px;
-    padding: 6px;
+    align-items: stretch;
+    padding-bottom: env(safe-area-inset-bottom, 0px);
     background: var(--color-ink);
-    border-radius: var(--radius-pill);
-    box-shadow: var(--shadow-float);
-    transform: translate(-50%, 140%);
-    transition: transform 600ms var(--ease-out);
+    border-top: var(--trait) solid var(--color-accent);
+    transform: translateY(110%);
+    transition: transform 400ms var(--ease-out);
   }
 
   .dock--visible {
-    transform: translate(-50%, 0);
+    transform: none;
   }
 
-  .dock__rond {
+  .dock__bouton {
     display: inline-flex;
     align-items: center;
     justify-content: center;
-    width: 50px;
-    height: 50px;
-    border-radius: 50%;
-    box-shadow: inset 0 0 0 1px var(--color-line-on-ink);
-    color: var(--color-on-ink);
+    width: 64px;
+    min-height: 60px;
+    color: #fff;
+    border-right: 2px solid var(--color-line-on-ink);
   }
 
-  .dock__rond--whatsapp {
+  .dock__bouton--whatsapp {
     background: var(--color-whatsapp);
-    box-shadow: none;
-    color: #fff;
+    border-right: 0;
   }
 
   .dock__devis {
+    flex: 1;
     display: inline-flex;
     align-items: center;
+    justify-content: space-between;
     gap: 12px;
-    min-height: 50px;
-    padding: 0 6px 0 18px;
-    border-radius: var(--radius-pill);
+    min-height: 60px;
+    padding: 0 20px;
     background: var(--color-accent);
     color: #fff;
     font-size: 15px;
-    font-weight: 700;
+    font-weight: 800;
+    letter-spacing: 0.06em;
+    text-transform: uppercase;
     text-decoration: none;
     white-space: nowrap;
-  }
-
-  .dock__pastille {
-    display: inline-flex;
-    align-items: center;
-    justify-content: center;
-    width: 38px;
-    height: 38px;
-    border-radius: 50%;
-    background: var(--color-ink);
-    color: #fff;
   }
 
   :global(body.menu-ouvert) .dock {

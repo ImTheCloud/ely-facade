@@ -14,6 +14,7 @@ const hero = textes.accueil.hero;
 ---
 
 <section class="hero">
+  <div class="hero__noir sur-noir">
   <div class="wrap hero__texte">
     <!-- L'escalier rouge du logo se dessine à droite du texte. -->
     <svg class="hero__escalier" viewBox="0 0 400 220" fill="none" aria-hidden="true" focusable="false">
@@ -21,7 +22,7 @@ const hero = textes.accueil.hero;
         pathLength="1"
         d="M8 210V133.6H76.6V99.5H145.2V149.7H206.1V69.3H267V33H297.6V9H350.9V53.2H389V210"
         stroke="var(--color-accent)"
-        stroke-width="10"
+        stroke-width="12"
         stroke-linejoin="miter"
       ></path>
     </svg>
@@ -35,6 +36,7 @@ const hero = textes.accueil.hero;
       </Bouton>
     </div>
     <p class="hero__note" style="--i: 4">{hero.note}</p>
+  </div>
   </div>
 
   <div class="skyline-cadre" role="img" aria-label={hero.illustrationAria}>
@@ -51,8 +53,11 @@ const hero = textes.accueil.hero;
 <style>
   .hero {
     position: relative;
-    padding-top: calc(var(--header-h) + 40px);
     overflow: hidden;
+  }
+
+  .hero__noir {
+    padding: calc(var(--header-h) + 48px) 0 56px;
   }
 
   .hero__escalier {
@@ -64,7 +69,7 @@ const hero = textes.accueil.hero;
     display: flex;
     flex-direction: column;
     align-items: flex-start;
-    gap: 24px;
+    gap: 28px;
   }
 
   .hero__rouge {
@@ -72,29 +77,31 @@ const hero = textes.accueil.hero;
   }
 
   .hero__lead {
-    max-width: 52ch;
+    max-width: 50ch;
     font-size: var(--size-lead);
     line-height: 1.5;
+    color: var(--color-on-ink-soft);
   }
 
   .hero__actions {
     display: flex;
     flex-wrap: wrap;
-    gap: 12px;
+    gap: 16px;
   }
 
   .hero__note {
     font-size: var(--size-small);
-    font-weight: 600;
-    color: var(--color-ink);
+    font-weight: 700;
+    color: #fff;
   }
 
-  /* --- Le dessin avant / après --- */
+  /* --- Le dessin avant / après, sur une bande de béton clair --- */
   .skyline-cadre {
-    margin-top: 56px;
+    padding-top: 44px;
     overflow: hidden;
     display: flex;
     justify-content: flex-end;
+    background: var(--color-paper);
   }
 
   .skyline-cadre__interieur {
@@ -110,7 +117,7 @@ const hero = textes.accueil.hero;
 
   .skyline-cadre__rouleau {
     position: absolute;
-    top: 0;
+    top: -44px;
     bottom: 0;
     left: 0;
     width: 8px;
@@ -121,14 +128,13 @@ const hero = textes.accueil.hero;
 
   .skyline-cadre__pastille {
     position: absolute;
-    top: 8px;
-    padding: 6px 12px;
-    border-radius: var(--radius-pill);
+    top: -26px;
+    padding: 8px 12px;
     background: var(--color-ink);
     color: #fff;
     font-size: 12px;
-    font-weight: 700;
-    letter-spacing: 0.12em;
+    font-weight: 800;
+    letter-spacing: 0.14em;
     text-transform: uppercase;
   }
 
@@ -177,7 +183,7 @@ const hero = textes.accueil.hero;
 
     /* Le texte monte au chargement, sans JavaScript. */
     .hero__texte > * {
-      animation: monte 900ms var(--ease-out) backwards;
+      animation: monte 800ms var(--ease-out) backwards;
       animation-delay: calc(var(--i, 0) * 90ms + 100ms);
     }
 
@@ -201,8 +207,8 @@ const hero = textes.accueil.hero;
   }
 
   @media (min-width: 960px) {
-    .hero {
-      padding-top: calc(var(--header-h) + 72px);
+    .hero__noir {
+      padding: calc(var(--header-h) + 88px) 0 88px;
     }
 
     .hero__escalier {
@@ -210,12 +216,16 @@ const hero = textes.accueil.hero;
       position: absolute;
       right: var(--gutter);
       bottom: 0;
-      width: min(26vw, 370px);
+      width: min(26vw, 380px);
       height: auto;
     }
 
     .skyline-cadre {
-      margin-top: 72px;
+      padding-top: 56px;
+    }
+
+    .skyline-cadre__rouleau {
+      top: -56px;
     }
 
     .skyline-cadre__interieur {

@@ -23,10 +23,10 @@ const devis = lienDevis(langue);
 const estActif = (href: string) => cheminActuel.startsWith(href);
 ---
 
-<header class="entete" data-entete>
+<header class="entete sur-noir" data-entete>
   <div class="entete__barre">
     <a href={chemin('accueil', langue)} class="entete__logo" aria-label={textes.entete.accueilAria}>
-      <Logo />
+      <Logo surFonce />
     </a>
 
     <nav class="entete__nav" aria-label={textes.entete.menuAria}>
@@ -40,13 +40,13 @@ const estActif = (href: string) => cheminActuel.startsWith(href);
     </nav>
 
     <div class="entete__actions">
-      <SelecteurLangue langue={langue} cheminActuel={cheminActuel} />
+      <SelecteurLangue langue={langue} cheminActuel={cheminActuel} surFonce />
       <Bouton href={devis} variante="accent" iconeApres="fleche-diag">{textes.actions.devis}</Bouton>
     </div>
 
     <!-- Téléphone : FR / NL toujours à portée de main, à côté du menu. -->
     <div class="entete__langue-mobile">
-      <SelecteurLangue langue={langue} cheminActuel={cheminActuel} compact />
+      <SelecteurLangue langue={langue} cheminActuel={cheminActuel} surFonce compact />
     </div>
 
     <button
@@ -102,7 +102,6 @@ const estActif = (href: string) => cheminActuel.startsWith(href);
     let dernier = window.scrollY;
     const mettreAJour = () => {
       const y = window.scrollY;
-      entete.classList.toggle('entete--defile', y > 24);
       if (!document.body.classList.contains('menu-ouvert')) {
         entete.classList.toggle('entete--cache', y > dernier && y > 320);
       }
@@ -163,59 +162,39 @@ const estActif = (href: string) => cheminActuel.startsWith(href);
     position: fixed;
     inset: 0 0 auto;
     z-index: 60;
-    padding: 10px 10px 0;
-    transition: transform 500ms var(--ease-out);
-    pointer-events: none;
+    background: var(--color-ink);
+    border-bottom: var(--trait) solid var(--color-accent);
+    transition: transform 400ms var(--ease-out);
   }
 
   .entete--cache {
-    transform: translateY(-120%);
+    transform: translateY(-110%);
   }
 
   /* Toujours au-dessus du panneau du menu (z-index 1). */
   .entete__barre {
     position: relative;
     z-index: 3;
-    pointer-events: auto;
     display: flex;
     align-items: center;
     justify-content: space-between;
-    gap: 8px;
-    max-width: calc(var(--content-max) + 32px);
-    min-height: 64px;
+    gap: 10px;
+    max-width: calc(var(--content-max) + var(--gutter) * 2);
+    min-height: var(--header-h);
     margin: 0 auto;
-    padding: 4px 4px 4px 14px;
-    border: 1px solid transparent;
-    border-radius: var(--radius-pill);
-    transition:
-      background-color 400ms var(--ease),
-      border-color 400ms var(--ease),
-      box-shadow 400ms var(--ease);
-  }
-
-  .entete--defile .entete__barre {
-    background: rgba(255, 255, 255, 0.96);
-    border-color: rgba(20, 20, 20, 0.1);
-    box-shadow: var(--shadow-soft);
-    backdrop-filter: blur(16px) saturate(1.4);
-    -webkit-backdrop-filter: blur(16px) saturate(1.4);
-  }
-
-  :global(body.menu-ouvert) .entete .entete__barre.entete__barre {
-    background: transparent;
-    border-color: transparent;
-    box-shadow: none;
-    backdrop-filter: none;
+    padding: 8px var(--gutter);
   }
 
   .entete__logo {
-    position: relative;
-    z-index: 2;
     display: flex;
     align-items: center;
     min-height: var(--tap-min);
     text-decoration: none;
     flex-shrink: 0;
+  }
+
+  .entete__logo :global(.logo) {
+    height: 44px;
   }
 
   .entete__nav,
@@ -225,84 +204,77 @@ const estActif = (href: string) => cheminActuel.startsWith(href);
 
   .entete__langue-mobile {
     margin-left: auto;
-    position: relative;
-    z-index: 2;
   }
 
-  /* --- Bouton menu : pilule noire, pastille rouge --- */
+  /* --- Bouton menu : carré rouge --- */
   .entete__burger {
     display: inline-flex;
     align-items: center;
     flex-shrink: 0;
-    gap: 8px;
-    height: 46px;
-    padding: 0 6px 0 16px;
-    background: var(--color-ink);
-    border: none;
-    border-radius: var(--radius-pill);
-    color: var(--color-on-ink);
-    font: 700 15px/1 var(--font-text);
+    gap: 10px;
+    height: 48px;
+    padding: 0 14px;
+    background: var(--color-accent);
+    border: 0;
+    color: #fff;
+    font: 800 14px/1 var(--font-text);
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
     cursor: pointer;
-    position: relative;
-    z-index: 2;
   }
 
   .entete__burger-traits {
     position: relative;
     display: inline-block;
-    width: 34px;
-    height: 34px;
-    border-radius: 50%;
-    background: var(--color-accent);
+    width: 22px;
+    height: 16px;
   }
 
   .entete__burger-traits span {
     position: absolute;
-    left: 10px;
-    right: 10px;
-    height: 2px;
-    border-radius: 2px;
+    left: 0;
+    right: 0;
+    height: 3px;
     background: #fff;
-    transition: transform 400ms var(--ease-out);
+    transition: transform 300ms var(--ease-out);
   }
 
   .entete__burger-traits span:first-child {
-    top: 13px;
+    top: 2px;
   }
 
   .entete__burger-traits span:last-child {
-    top: 19px;
+    top: 11px;
   }
 
   .entete__burger[aria-expanded='true'] .entete__burger-traits span:first-child {
-    transform: translateY(3px) rotate(45deg);
+    transform: translateY(4.5px) rotate(45deg);
   }
 
   .entete__burger[aria-expanded='true'] .entete__burger-traits span:last-child {
-    transform: translateY(-3px) rotate(-45deg);
+    transform: translateY(-4.5px) rotate(-45deg);
   }
 
-  /* --- Panneau plein écran --- */
+  /* --- Panneau plein écran, noir --- */
   .panneau {
-    pointer-events: auto;
     position: fixed;
     inset: 0;
     z-index: 1;
     display: flex;
     flex-direction: column;
     justify-content: space-between;
-    gap: 40px;
-    padding: calc(var(--header-h) + 28px) var(--gutter) calc(28px + env(safe-area-inset-bottom, 0px));
+    gap: 32px;
+    padding: calc(var(--header-h) + 24px) var(--gutter) calc(28px + env(safe-area-inset-bottom, 0px));
     overscroll-behavior: contain;
-    background: var(--color-bg);
-    color: var(--color-ink);
+    background: var(--color-ink);
+    color: var(--color-on-ink);
     overflow-y: auto;
-    clip-path: circle(0 at calc(100% - 50px) 40px);
-    transition: clip-path 700ms var(--ease-out);
+    clip-path: inset(0 0 100% 0);
+    transition: clip-path 500ms var(--ease-out);
   }
 
   .panneau--ouvert {
-    clip-path: circle(150% at calc(100% - 50px) 40px);
+    clip-path: inset(0);
   }
 
   .panneau__nav {
@@ -315,15 +287,15 @@ const estActif = (href: string) => cheminActuel.startsWith(href);
     align-items: baseline;
     gap: 16px;
     padding: 10px 0;
-    border-bottom: 1px solid var(--color-border);
-    color: var(--color-ink);
+    border-bottom: 2px solid var(--color-line-on-ink);
+    color: #fff;
     text-decoration: none;
     opacity: 0;
-    transform: translateY(24px);
+    transform: translateX(-24px);
     transition:
-      opacity 600ms var(--ease-out),
-      transform 600ms var(--ease-out);
-    transition-delay: calc(180ms + var(--i) * 60ms);
+      opacity 500ms var(--ease-out),
+      transform 500ms var(--ease-out);
+    transition-delay: calc(150ms + var(--i) * 60ms);
   }
 
   .panneau--ouvert .panneau__nav a {
@@ -332,14 +304,14 @@ const estActif = (href: string) => cheminActuel.startsWith(href);
   }
 
   .panneau__num {
-    font-size: 13px;
-    font-weight: 700;
-    color: var(--color-accent);
+    font-size: 14px;
+    font-weight: 800;
+    color: var(--color-accent-vif);
   }
 
   .panneau__lien {
     font-family: var(--font-title);
-    font-size: clamp(44px, 12vw, 68px);
+    font-size: clamp(48px, 13vw, 76px);
     line-height: 1.05;
     text-transform: uppercase;
   }
@@ -348,7 +320,7 @@ const estActif = (href: string) => cheminActuel.startsWith(href);
     display: flex;
     flex-direction: column;
     align-items: flex-start;
-    gap: 28px;
+    gap: 24px;
   }
 
   .panneau__bas :global(.bouton) {
@@ -359,85 +331,87 @@ const estActif = (href: string) => cheminActuel.startsWith(href);
   .panneau__contact {
     display: flex;
     flex-direction: column;
-    gap: 6px;
+    gap: 4px;
   }
 
   .panneau__label {
     font-size: 12px;
-    font-weight: 700;
-    letter-spacing: 0.14em;
+    font-weight: 800;
+    letter-spacing: 0.16em;
     text-transform: uppercase;
-    color: var(--color-muted);
+    color: var(--color-on-ink-label);
   }
 
   .panneau__contact a {
-    color: var(--color-ink);
+    color: #fff;
     font-size: 18px;
     text-decoration: none;
-    padding: 4px 0;
+    padding: 6px 0;
   }
 
-  /* Petits téléphones : on resserre pour que logo, FR/NL et « Menu » tiennent sur une ligne. */
   @media (max-width: 380px) {
     .entete__barre {
-      gap: 4px;
-      padding-left: 8px;
+      gap: 6px;
+    }
+
+    .entete__logo :global(.logo) {
+      height: 38px;
     }
 
     .entete__burger {
-      gap: 6px;
-      padding-left: 12px;
-      font-size: 14px;
+      padding: 0 10px;
+      gap: 8px;
+      font-size: 13px;
     }
 
     .entete__langue-mobile :global(.langues__lien) {
-      min-width: 33px;
+      min-width: 34px;
     }
   }
 
   @media (min-width: 1024px) {
-    .entete {
-      padding: 16px var(--gutter) 0;
-    }
-
-    .entete__barre {
-      padding: 8px 8px 8px 20px;
+    .entete__logo :global(.logo) {
+      height: 52px;
     }
 
     .entete__nav {
       display: flex;
-      gap: 4px;
+      gap: 6px;
     }
 
     .entete__nav a {
       position: relative;
-      padding: 10px 16px;
-      border-radius: var(--radius-pill);
-      font-size: 15px;
-      font-weight: 600;
-      color: var(--color-ink);
+      padding: 12px 16px;
+      font-size: 14px;
+      font-weight: 800;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      color: #fff;
       text-decoration: none;
-      transition: background-color var(--speed) var(--ease);
     }
 
-    .entete__nav a:hover {
-      background: rgba(20, 20, 20, 0.06);
-    }
-
-    .entete__nav a[aria-current='page']::after {
+    .entete__nav a::after {
       content: '';
       position: absolute;
       left: 16px;
       right: 16px;
-      bottom: 3px;
+      bottom: 4px;
       height: 3px;
       background: var(--color-accent);
+      transform: scaleX(0);
+      transform-origin: left;
+      transition: transform var(--speed) var(--ease);
+    }
+
+    .entete__nav a:hover::after,
+    .entete__nav a[aria-current='page']::after {
+      transform: scaleX(1);
     }
 
     .entete__actions {
       display: flex;
       align-items: center;
-      gap: 12px;
+      gap: 14px;
     }
 
     .entete__burger,

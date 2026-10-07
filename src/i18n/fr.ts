@@ -184,10 +184,6 @@ export const fr = {
       ],
     },
 
-    appel: {
-      titre: 'Parlons de votre façade.',
-      texte: 'Visite sur place gratuite, sans engagement. Écrivez-nous ou appelez-nous.',
-    },
     contact: {
       surtitre: 'Contact et devis',
       titre: 'Votre devis, sans engagement.',

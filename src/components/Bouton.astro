@@ -52,107 +52,146 @@ const attributs = href ? { href } : { type };
 
 <style>
   .bouton {
+    --ombre: var(--color-ink);
     position: relative;
     display: inline-flex;
-    align-items: center;
+    align-items: stretch;
     justify-content: center;
-    gap: 10px;
-    min-height: 52px;
-    padding: 0 26px;
-    border: 2px solid transparent;
-    border-radius: var(--radius-pill);
+    gap: 12px;
+    min-height: 56px;
+    padding: 0 24px;
+    border: 3px solid var(--color-ink);
     font-family: var(--font-text);
     font-size: var(--size-small);
-    font-weight: 700;
+    font-weight: 800;
     line-height: 1;
+    letter-spacing: 0.06em;
+    text-transform: uppercase;
     text-decoration: none;
     max-width: 100%;
     text-align: left;
     cursor: pointer;
     transition:
       background-color var(--speed) var(--ease),
-      border-color var(--speed) var(--ease),
       color var(--speed) var(--ease),
+      box-shadow var(--speed) var(--ease),
       transform var(--speed) var(--ease);
   }
 
+  .bouton > :global(svg),
+  .bouton__texte {
+    align-self: center;
+  }
+
+  .bouton__texte {
+    padding-block: 12px;
+  }
+
+  @media (min-width: 500px) {
+    .bouton__texte {
+      white-space: nowrap;
+    }
+  }
+
+  /* Dans un bloc noir, l'ombre du bouton devient blanche. */
+  :global(.sur-noir) .bouton {
+    --ombre: #fff;
+  }
+
+  .bouton:hover {
+    transform: translate(-3px, -3px);
+    box-shadow: 6px 6px 0 var(--ombre);
+  }
+
+  .bouton:active {
+    transform: none;
+    box-shadow: none;
+  }
+
   .bouton--pastille {
-    padding-right: 6px;
-    gap: 16px;
+    padding-right: 0;
   }
 
   .bouton--large {
-    min-height: 60px;
-    padding-inline: 30px;
+    min-height: 64px;
+    padding-inline: 28px;
     font-size: var(--size-body);
   }
 
   .bouton--large.bouton--pastille {
-    padding-right: 7px;
+    padding-right: 0;
   }
 
-  .bouton:active {
-    transform: scale(0.98);
+  .bouton--large .bouton__pastille {
+    width: 64px;
   }
 
+  /* La flèche vit dans un carré qui prend toute la hauteur du bouton. */
   .bouton__pastille {
     flex-shrink: 0;
     display: inline-flex;
     align-items: center;
     justify-content: center;
-    width: 40px;
-    height: 40px;
-    border-radius: 50%;
-    background: var(--color-accent);
+    align-self: stretch;
+    width: 56px;
+    margin: -3px -3px -3px 8px;
+    background: var(--color-ink);
     color: #fff;
-    transition: transform 420ms var(--ease-out);
-  }
-
-  .bouton--large .bouton__pastille {
-    width: 46px;
-    height: 46px;
-  }
-
-  .bouton:hover .bouton__pastille {
-    transform: rotate(-45deg) scale(1.06);
   }
 
   .bouton--principal {
     background: var(--color-ink);
-    color: var(--color-on-ink);
-  }
-
-  .bouton--principal:hover {
-    background: #2b2b2b;
-  }
-
-  /* Le bouton rouge : l'action principale (blanc sur #c8202b = 5,6:1). */
-  .bouton--accent {
-    background: var(--color-accent);
     color: #fff;
   }
 
-  .bouton--accent:hover {
-    background: var(--color-accent-dark);
+  .bouton--principal .bouton__pastille {
+    background: var(--color-accent);
+  }
+
+  :global(.sur-noir) .bouton--principal {
+    background: #fff;
+    border-color: #fff;
+    color: var(--color-ink);
+  }
+
+  .bouton--accent {
+    background: var(--color-accent);
+    border-color: var(--color-accent);
+    color: #fff;
   }
 
   .bouton--accent .bouton__pastille {
     background: var(--color-ink);
   }
 
+  :global(.sur-noir) .bouton--accent .bouton__pastille {
+    background: #fff;
+    color: var(--color-ink);
+  }
+
   .bouton--secondaire {
     background: transparent;
-    border-color: var(--color-ink);
     color: var(--color-ink);
   }
 
   .bouton--secondaire:hover {
     background: var(--color-ink);
-    color: var(--color-on-ink);
+    color: #fff;
+  }
+
+  :global(.sur-noir) .bouton--secondaire {
+    border-color: #fff;
+    color: #fff;
+  }
+
+  :global(.sur-noir) .bouton--secondaire:hover {
+    background: #fff;
+    color: var(--color-ink);
   }
 
   .bouton--whatsapp {
     background: var(--color-whatsapp);
+    border-color: var(--color-whatsapp);
     color: #fff;
   }
 

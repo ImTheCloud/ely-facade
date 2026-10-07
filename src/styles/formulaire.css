@@ -8,10 +8,9 @@
   position: relative;
   padding: 24px 20px;
   background: #fff;
-  border: 2px solid var(--color-ink);
-  border-radius: var(--radius-card);
+  border: var(--trait) solid var(--color-ink);
   color: var(--color-text);
-  box-shadow: 10px 10px 0 var(--color-accent);
+  box-shadow: 12px 12px 0 var(--color-accent);
 }
 
 /* --- Progression --- */
@@ -49,7 +48,6 @@
   position: relative;
   height: 4px;
   overflow: hidden;
-  border-radius: 4px;
   background: var(--color-border);
 }
 
@@ -90,7 +88,7 @@
 
 .formulaire .etape__question {
   font-family: var(--font-title);
-  font-size: clamp(24px, 2.4vw, 32px);
+  font-size: clamp(30px, 3.2vw, 44px);
   line-height: 1.05;
   text-transform: uppercase;
   color: var(--color-ink);
@@ -117,7 +115,7 @@
 /* --- Tuiles (plusieurs choix, avec icône) --- */
 .formulaire .tuiles {
   display: grid;
-  grid-template-columns: repeat(2, minmax(0, 1fr));
+  grid-template-columns: repeat(auto-fill, minmax(146px, 1fr));
   gap: 8px;
 }
 
@@ -129,8 +127,7 @@
   gap: 10px;
   min-height: 96px;
   padding: 14px;
-  border: 1.5px solid var(--color-border);
-  border-radius: var(--radius-small);
+  border: 3px solid var(--color-border);
   background: #fff;
   cursor: pointer;
   transition:
@@ -141,10 +138,13 @@
 
 .formulaire .tuile:hover {
   border-color: var(--color-ink);
+  transform: translate(-2px, -2px);
+  box-shadow: 4px 4px 0 var(--color-ink);
 }
 
 .formulaire .tuile:active {
-  transform: scale(0.98);
+  transform: none;
+  box-shadow: none;
 }
 
 .formulaire .tuile input {
@@ -159,17 +159,16 @@
   justify-content: center;
   width: 40px;
   height: 40px;
-  border-radius: 50%;
   background: var(--color-surface);
   color: var(--color-ink);
   transition: background-color 200ms var(--ease);
 }
 
 .formulaire .tuile__nom {
-  padding-right: 18px;
-  font-size: 15px;
-  font-weight: 650;
+  font-size: 14px;
+  font-weight: 800;
   line-height: 1.25;
+  overflow-wrap: anywhere;
   color: var(--color-ink);
 }
 
@@ -182,8 +181,7 @@
   justify-content: center;
   width: 22px;
   height: 22px;
-  border: 1.5px solid var(--color-border);
-  border-radius: 50%;
+  border: 3px solid var(--color-border);
   color: transparent;
   transition: all 200ms var(--ease);
 }
@@ -248,8 +246,7 @@
   align-items: center;
   min-height: 44px;
   padding: 0 18px;
-  border: 1.5px solid var(--color-border);
-  border-radius: var(--radius-pill);
+  border: 3px solid var(--color-border);
   background: #fff;
   font-size: 15px;
   font-weight: 600;
@@ -299,8 +296,7 @@
   width: 100%;
   min-height: 50px;
   padding: 12px 16px;
-  border: 1.5px solid var(--color-border-field);
-  border-radius: var(--radius-small);
+  border: 3px solid var(--color-border-field);
   background: #fff;
   font: inherit;
   font-size: 17px;
@@ -364,8 +360,7 @@
   justify-content: center;
   width: 24px;
   height: 24px;
-  border: 1.5px solid var(--color-border-field);
-  border-radius: 7px;
+  border: 3px solid var(--color-border-field);
   background: #fff;
   color: transparent;
   transition: all 200ms var(--ease);
@@ -515,10 +510,6 @@
 @media (min-width: 600px) {
   .formulaire {
     padding: 36px;
-  }
-
-  .formulaire .tuiles {
-    grid-template-columns: repeat(3, minmax(0, 1fr));
   }
 
   .formulaire .champ__paire {

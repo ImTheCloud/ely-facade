@@ -184,10 +184,6 @@ export const nl = {
       ],
     },
 
-    appel: {
-      titre: 'Laten we praten over uw gevel.',
-      texte: 'Gratis plaatsbezoek, zonder verplichting. Schrijf of bel ons.',
-    },
     contact: {
       surtitre: 'Contact en offerte',
       titre: 'Uw offerte, zonder verplichting.',

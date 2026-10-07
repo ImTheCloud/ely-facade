@@ -62,20 +62,18 @@ h3 {
 
 h1 {
   font-size: var(--size-h1);
-  line-height: 0.96;
-  letter-spacing: 0.005em;
+  line-height: 0.9;
 }
 
 h2 {
   font-size: var(--size-h2);
-  line-height: 1;
-  letter-spacing: 0.01em;
+  line-height: 0.94;
 }
 
 h3 {
   font-size: var(--size-h3);
-  line-height: 1.1;
-  letter-spacing: 0.02em;
+  line-height: 1.05;
+  letter-spacing: 0.01em;
 }
 
 p {
@@ -99,7 +97,6 @@ img {
 :focus-visible {
   outline: 3px solid var(--color-accent);
   outline-offset: 3px;
-  border-radius: 6px;
 }
 
 .sr-only {
@@ -122,8 +119,7 @@ img {
   background: var(--color-ink);
   color: var(--color-on-ink);
   padding: 12px 20px;
-  border-radius: var(--radius-pill);
-  font-weight: 600;
+  font-weight: 700;
   text-decoration: none;
   transition: top var(--speed) var(--ease);
 }
@@ -139,14 +135,14 @@ img {
   padding-inline: var(--gutter);
 }
 
-/* Le petit libellé au-dessus des titres : un trait rouge, comme la ligne du logo. */
+/* Le petit libellé au-dessus des titres : un carré rouge devant des capitales. */
 .surtitre {
   display: inline-flex;
   align-items: center;
   gap: 12px;
   font-size: var(--size-tiny);
-  font-weight: 700;
-  letter-spacing: 0.14em;
+  font-weight: 800;
+  letter-spacing: 0.16em;
   text-transform: uppercase;
   color: var(--color-ink);
 }
@@ -154,9 +150,22 @@ img {
 .surtitre::before {
   content: '';
   flex-shrink: 0;
-  width: 28px;
-  height: 4px;
+  width: 14px;
+  height: 14px;
   background: var(--color-accent);
+}
+
+/* Sur fond noir. */
+.sur-noir {
+  background: var(--color-ink);
+  color: var(--color-on-ink-soft);
+}
+
+.sur-noir h1,
+.sur-noir h2,
+.sur-noir h3,
+.sur-noir .surtitre {
+  color: var(--color-on-ink);
 }
 
 /* ---------------------------------------------------------------------------

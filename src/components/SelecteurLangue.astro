@@ -48,24 +48,21 @@ const options = LANGUES.map((code) => ({
 <style>
   .langues {
     display: inline-flex;
-    align-items: center;
-    padding: 3px;
-    border: 1px solid rgba(20, 20, 20, 0.22);
-    border-radius: var(--radius-pill);
+    align-items: stretch;
+    border: 3px solid var(--color-ink);
   }
 
   .langues__lien {
     display: inline-flex;
     align-items: center;
     justify-content: center;
-    min-width: 44px;
+    min-width: 46px;
     min-height: 44px;
     padding: 0 10px;
-    border-radius: var(--radius-pill);
     font-size: 13px;
-    font-weight: 700;
-    letter-spacing: 0.04em;
-    color: var(--color-muted);
+    font-weight: 800;
+    letter-spacing: 0.08em;
+    color: var(--color-ink);
     text-decoration: none;
     transition:
       background-color var(--speed) var(--ease),
@@ -73,40 +70,36 @@ const options = LANGUES.map((code) => ({
   }
 
   .langues__lien:hover {
-    color: var(--color-ink);
+    background: var(--color-paper);
   }
 
   .langues__lien--actif,
   .langues__lien--actif:hover {
     background: var(--color-ink);
-    color: var(--color-on-ink);
-  }
-
-  .langues--compact {
-    padding: 2px;
+    color: #fff;
   }
 
   .langues--compact .langues__lien {
-    min-width: 38px;
+    min-width: 40px;
     padding: 0 6px;
     font-size: 12px;
   }
 
   .langues--fonce {
-    border-color: var(--color-line-on-ink);
+    border-color: #fff;
   }
 
   .langues--fonce .langues__lien {
-    color: var(--color-on-ink-label);
+    color: #fff;
   }
 
   .langues--fonce .langues__lien:hover {
-    color: var(--color-on-ink);
+    background: rgba(255, 255, 255, 0.14);
   }
 
   .langues--fonce .langues__lien--actif,
   .langues--fonce .langues__lien--actif:hover {
-    background: var(--color-on-ink);
+    background: #fff;
     color: var(--color-ink);
   }
 </style>
