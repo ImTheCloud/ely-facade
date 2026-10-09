@@ -10,7 +10,7 @@ const { langue } = Astro.props;
 const metiers = t(langue).accueil.metiers;
 ---
 
-<section class="metiers" id="metiers">
+<section class="metiers" data-niveau={metiers.surtitre} id="metiers">
   <div class="wrap">
     <div class="metiers__tete" data-reveal>
       <p class="surtitre">{metiers.surtitre}</p>

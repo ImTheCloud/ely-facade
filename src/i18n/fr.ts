@@ -69,6 +69,28 @@ export const fr = {
       texte:
         'Crépi, peinture, nettoyage, rejointoiement, réparation de briques : nous remettons votre façade en état, de la petite maison à l’immeuble.',
       note: 'Visite sur place gratuite, sans engagement.',
+      scene: {
+        commune: 'Mons',
+        legende: 'Façade terminée',
+        alt: 'Immeuble de trois étages à la façade blanche et aux fenêtres noires, à Mons',
+        rejouer: 'Revoir l’échafaudage se retirer',
+      },
+    },
+
+    chantiers: {
+      surtitre: 'Sur nos chantiers',
+      titre: 'Nos chantiers en Belgique.',
+      texte: 'Mons, Namur, Charleroi : des façades sur lesquelles nous avons travaillé.',
+      liste: [
+        { cle: 'grand', commune: 'Mons', legende: 'Une partie terminée, le reste en cours' },
+        { cle: 'echafaudage', commune: 'Charleroi', legende: 'Chantier sous échafaudage' },
+        { cle: 'immeuble', commune: 'Namur', legende: 'Immeuble terminé' },
+        { cle: 'angle', commune: 'Mons', legende: 'Façade terminée' },
+        { cle: 'isolation', commune: 'Charleroi', legende: 'Isolation livrée, échafaudage monté' },
+        { cle: 'namur', commune: 'Namur', legende: 'Façade sous échafaudage' },
+        { cle: 'maisons', commune: 'Charleroi', legende: 'Rangée de maisons terminée' },
+        { cle: 'finie', commune: 'Namur', legende: 'Façade terminée, échafaudage démonté' },
+      ],
     },
 
     chiffres: {

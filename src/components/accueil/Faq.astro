@@ -9,7 +9,7 @@ const { langue } = Astro.props;
 const faq = t(langue).accueil.faq;
 ---
 
-<section class="faq">
+<section class="faq" data-niveau={faq.surtitre}>
   <div class="wrap">
     <div class="faq__tuile tuile-bento" data-reveal>
       <div class="faq__tete">

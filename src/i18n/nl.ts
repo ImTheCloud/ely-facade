@@ -69,6 +69,28 @@ export const nl = {
       texte:
         'Gevelpleister, schilderwerk, reiniging, voegwerk, herstel van bakstenen: wij brengen uw gevel weer in orde, van het kleine huis tot het appartementsgebouw.',
       note: 'Gratis plaatsbezoek, zonder verplichting.',
+      scene: {
+        commune: 'Bergen',
+        legende: 'Afgewerkte gevel',
+        alt: 'Gebouw met drie verdiepingen, witte gevel en zwarte ramen, in Bergen',
+        rejouer: 'Bekijk opnieuw hoe de steiger verdwijnt',
+      },
+    },
+
+    chantiers: {
+      surtitre: 'Op onze werven',
+      titre: 'Onze werven in België.',
+      texte: 'Bergen, Namen, Charleroi: gevels waaraan we hebben gewerkt.',
+      liste: [
+        { cle: 'grand', commune: 'Bergen', legende: 'Een deel klaar, de rest in uitvoering' },
+        { cle: 'echafaudage', commune: 'Charleroi', legende: 'Werf onder steiger' },
+        { cle: 'immeuble', commune: 'Namen', legende: 'Afgewerkt gebouw' },
+        { cle: 'angle', commune: 'Bergen', legende: 'Afgewerkte gevel' },
+        { cle: 'isolation', commune: 'Charleroi', legende: 'Isolatie geleverd, steiger opgesteld' },
+        { cle: 'namur', commune: 'Namen', legende: 'Gevel onder steiger' },
+        { cle: 'maisons', commune: 'Charleroi', legende: 'Afgewerkte rij huizen' },
+        { cle: 'finie', commune: 'Namen', legende: 'Afgewerkte gevel, steiger afgebroken' },
+      ],
     },
 
     chiffres: {

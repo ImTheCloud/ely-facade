@@ -29,7 +29,13 @@ Document de reprise pour démarrer une nouvelle conversation. Les règles du pro
    - rouge `#c8202b` seulement sur le bouton principal, un mot du titre, les icônes, un point, une tuile rosée ;
    - réglages dans `src/styles/tokens.css`.
 - Ce que le client n'aime pas : dessins d'immeubles (supprimés), angles droits, couleurs fortes, fond beige. Il veut du moderne, du doux, plus de photos.
-- La grande tuile de l'accueil contient aujourd'hui la maison en briques du logo (`src/components/accueil/Briques.astro`) : **c'est la place d'une grande photo ou d'un curseur avant/après**.
+5. **Nouveau (10 octobre 2026), à faire valider : « La façade qui se révèle »**, même thème clair et doux, plus de photos et une idée propre au métier :
+   - accueil : grande photo de façade avec un **échafaudage dessiné en SVG qui se retire étage par étage** au chargement (bouton pour le revoir, coupé avec `prefers-reduced-motion`), `Hero.astro` + `Echafaudage.astro` ;
+   - les 4 chiffres sont des **fenêtres** (cadre graphite fin, vitre claire, reflet qui suit le doigt ou la souris) ;
+   - **règle des niveaux** sur le côté (grand écran) : +0, +1, +2… comme des cotes d'étage, l'étage lu s'allume (`site.ts`, attribut `data-niveau` sur chaque section) ;
+   - grain très léger sur le fond (comme un crépi fin) ;
+   - galerie « Sur nos chantiers » (`Chantiers.astro`) avec 8 photos, commune seulement.
+   - Une fois validé, les autres pages reprennent ces composants (tuiles, fenêtres, photos, règle des niveaux).
 
 ### Netlify (site de test)
 - Projet **ely-facade** (équipe ELI4IT), adresse `https://ely-facade.netlify.app`, formulaires activés (formulaire « devis » détecté).
@@ -56,5 +62,5 @@ Document de reprise pour démarrer une nouvelle conversation. Les règles du pro
 - L'adresse Gmail d'Elisei est affichée en attendant l'email professionnel.
 
 ## Pour reprendre
-- `npm run dev` pour travailler, `npm run build` avant chaque commit, puis commit et push (Git de GitHub Desktop, voir `CLAUDE.md`, aucune mention de Claude dans les commits).
+- `npm run dev` pour travailler, `npm run build` avant chaque commit, puis commit, sans push (Claudiu pousse lui-même ; Git de GitHub Desktop, voir `CLAUDE.md`, aucune mention de Claude dans les commits).
 - Captures de test : le script Playwright de BS Renove (`/Users/claudiupopadiuc/Documents/GitHub/bs-renove/node_modules/playwright`) fonctionne avec Chromium et WebKit.

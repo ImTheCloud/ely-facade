@@ -9,7 +9,7 @@ const { langue } = Astro.props;
 const equipe = t(langue).accueil.equipe;
 ---
 
-<section class="equipe">
+<section class="equipe" data-niveau={equipe.surtitre}>
   <div class="wrap">
     <div class="equipe__tuile tuile-bento" data-reveal>
       <div class="equipe__texte">

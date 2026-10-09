@@ -12,13 +12,24 @@ const chiffres = t(langue).accueil.chiffres;
 <ul class="chiffres" aria-label={chiffres.aria}>
   {
     chiffres.liste.map((chiffre, i) => (
-      <li class:list={['chiffre', 'tuile-bento', { 'chiffre--rouge': i === 2 }]}>
+      <li class:list={['chiffre', { 'chiffre--rouge': i === 2 }]} data-fenetre>
         <span class="chiffre__valeur">{chiffre.valeur}</span>
         <span class="chiffre__libelle">{chiffre.libelle}</span>
       </li>
     ))
   }
 </ul>
+
+<script>
+  // Le reflet de la vitre suit le doigt ou la souris.
+  document.querySelectorAll<HTMLElement>('[data-fenetre]').forEach((fenetre) => {
+    fenetre.addEventListener('pointermove', (e) => {
+      const r = fenetre.getBoundingClientRect();
+      fenetre.style.setProperty('--mx', `${((e.clientX - r.left) / r.width) * 100}%`);
+      fenetre.style.setProperty('--my', `${((e.clientY - r.top) / r.height) * 100}%`);
+    });
+  });
+</script>
 
 <style>
   .chiffres {
@@ -30,13 +41,30 @@ const chiffres = t(langue).accueil.chiffres;
     list-style: none;
   }
 
+  /* Une fenêtre : fin cadre graphite comme les menuiseries des façades, vitre claire avec un reflet. */
   .chiffre {
+    position: relative;
     display: flex;
     flex-direction: column;
     justify-content: space-between;
     gap: 16px;
     min-height: 150px;
     padding: 22px;
+    overflow: hidden;
+    border: 3px solid #2b3239;
+    border-radius: 20px;
+    background:
+      radial-gradient(circle 180px at var(--mx, 85%) var(--my, 0%), rgba(255, 255, 255, 0.9), transparent 70%),
+      linear-gradient(160deg, #f6f9fb 0%, #e6edf2 100%);
+    box-shadow: var(--shadow-tile);
+    transition:
+      transform var(--speed) var(--ease),
+      box-shadow var(--speed) var(--ease);
+  }
+
+  .chiffre:hover {
+    transform: translateY(-3px);
+    box-shadow: var(--shadow-lift);
   }
 
   .chiffre__valeur {
@@ -56,8 +84,9 @@ const chiffres = t(langue).accueil.chiffres;
 
   /* La garantie : la seule tuile teintée de rouge. */
   .chiffre--rouge {
-    background: var(--color-accent-soft);
-    border-color: #f6d6d8;
+    background:
+      radial-gradient(circle 180px at var(--mx, 85%) var(--my, 0%), rgba(255, 255, 255, 0.85), transparent 70%),
+      linear-gradient(160deg, #fff4f4 0%, #fbe3e4 100%);
   }
 
   .chiffre--rouge .chiffre__valeur {

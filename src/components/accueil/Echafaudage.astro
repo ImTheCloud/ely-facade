@@ -1,0 +1,107 @@
+---
+/**
+ * Un échafaudage dessiné en SVG, posé sur la photo : au chargement il se retire
+ * étage par étage, du haut vers le bas, et la façade apparaît.
+ * Décoratif : la photo dessous est la vraie. Sans animation (mouvement réduit), il n'apparaît pas.
+ */
+const colonnes = 14;
+const etages = 6;
+const largeur = 120 / colonnes;
+const hauteur = 100 / etages;
+
+const travees = Array.from({ length: etages }, (_, etage) =>
+  Array.from({ length: colonnes }, (_, col) => ({
+    x: col * largeur,
+    y: etage * hauteur,
+    contreventement: (col + etage * 2) % 3 === 0,
+    // Les étages du haut partent d'abord ; un petit décalage par colonne casse l'effet « rideau ».
+    ordre: etage * 4 + ((col * 5) % colonnes) / 2,
+  })),
+).flat();
+---
+
+<svg
+  class="echafaudage"
+  viewBox="0 0 120 100"
+  preserveAspectRatio="none"
+  aria-hidden="true"
+  focusable="false"
+>
+  {
+    travees.map((t) => (
+      <g class="travee" style={`--ordre: ${t.ordre}`}>
+        <path class="travee__montant" d={`M${t.x} ${t.y}V${t.y + hauteur}`} />
+        <path class="travee__lisse" d={`M${t.x} ${t.y + hauteur * 0.45}H${t.x + largeur}`} />
+        {t.contreventement && (
+          <path class="travee__diag" d={`M${t.x} ${t.y + 1}L${t.x + largeur} ${t.y + hauteur - 1}`} />
+        )}
+        <rect class="travee__plancher" x={t.x} y={t.y + hauteur - 0.9} width={largeur} height="0.9" />
+      </g>
+    ))
+  }
+  <path class="travee__montant" d={`M${colonnes * largeur} 0V100`} />
+</svg>
+
+<style>
+  .echafaudage {
+    position: absolute;
+    inset: 0;
+    width: 100%;
+    height: 100%;
+    pointer-events: none;
+    /* Caché tant que le script ne l'a pas lancé, et sans animation : seule la photo compte. */
+    display: none;
+    opacity: 0;
+  }
+
+  .echafaudage :is(path) {
+    fill: none;
+    vector-effect: non-scaling-stroke;
+  }
+
+  .travee__montant,
+  .travee__lisse {
+    stroke: #3a4249;
+    stroke-width: 1.3;
+    opacity: 0.8;
+  }
+
+  .travee__lisse {
+    stroke-width: 0.8;
+    opacity: 0.55;
+  }
+
+  .travee__diag {
+    stroke: #3a4249;
+    stroke-width: 0.8;
+    opacity: 0.45;
+  }
+
+  .travee__plancher {
+    fill: var(--color-accent);
+    opacity: 0.9;
+  }
+
+  @media (prefers-reduced-motion: no-preference) {
+    .echafaudage {
+      display: block;
+    }
+
+    .echafaudage.pret {
+      opacity: 1;
+    }
+
+    .joue .travee {
+      transform-box: fill-box;
+      animation: demonte 900ms var(--ease) forwards;
+      animation-delay: calc(1100ms + var(--ordre) * 38ms);
+    }
+
+    @keyframes demonte {
+      to {
+        opacity: 0;
+        transform: translateY(-14%) scaleY(0.92);
+      }
+    }
+  }
+</style>

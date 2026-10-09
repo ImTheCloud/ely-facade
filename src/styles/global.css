@@ -33,7 +33,9 @@ html.lenis body {
 
 body {
   margin: 0;
-  background: var(--color-bg);
+  background-color: var(--color-bg);
+  /* Un grain très léger, comme un crépi fin : donne de la matière au blanc. */
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='220' height='220'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.85' numOctaves='2' stitchTiles='stitch'/%3E%3CfeColorMatrix values='0 0 0 0 .2 0 0 0 0 .22 0 0 0 0 .25 0 0 0 .05 0'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
   color: var(--color-text);
   font-family: var(--font-text);
   font-size: var(--size-body);
@@ -239,5 +241,96 @@ img {
   ::view-transition-old(*),
   ::view-transition-new(*) {
     animation: none !important;
+  }
+}
+
+
+/* ---------------------------------------------------------------------------
+   Les niveaux : la règle d'étages sur le côté (grand écran seulement).
+   --------------------------------------------------------------------------- */
+.niveaux {
+  display: none;
+}
+
+@media (min-width: 1360px) {
+  .niveaux {
+    position: fixed;
+    left: 28px;
+    top: 50%;
+    z-index: 50;
+    display: flex;
+    flex-direction: column;
+    gap: 18px;
+    margin: 0;
+    padding: 0 0 0 14px;
+    list-style: none;
+    transform: translateY(-50%);
+    pointer-events: none;
+  }
+
+  /* Le trait vertical, comme la hauteur d'un bâtiment. */
+  .niveaux::before {
+    content: '';
+    position: absolute;
+    left: 0;
+    top: 4px;
+    bottom: 4px;
+    width: 1px;
+    background: var(--color-border-field);
+    opacity: 0.45;
+  }
+
+  .niveaux li {
+    position: relative;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    font-size: 12px;
+    font-weight: 600;
+    letter-spacing: 0.04em;
+    color: var(--color-muted);
+    transition: color var(--speed) var(--ease);
+  }
+
+  .niveaux li::before {
+    content: '';
+    position: absolute;
+    left: -14px;
+    width: 9px;
+    height: 1px;
+    background: currentColor;
+    transition: width var(--speed) var(--ease);
+  }
+
+  .niveaux__nom {
+    display: none;
+    max-width: 0;
+    overflow: hidden;
+    white-space: nowrap;
+    opacity: 0;
+    transition:
+      max-width 500ms var(--ease-out),
+      opacity var(--speed) var(--ease);
+  }
+
+  .niveaux .est-actif {
+    color: var(--color-accent);
+  }
+
+  .niveaux .est-actif::before {
+    width: 20px;
+  }
+
+  .niveaux .est-actif .niveaux__nom {
+    max-width: 200px;
+    opacity: 1;
+    color: var(--color-ink);
+  }
+}
+
+/* Assez de place sur le côté : le nom de l'étage apparaît. */
+@media (min-width: 1600px) {
+  .niveaux__nom {
+    display: block;
   }
 }

@@ -1,7 +1,10 @@
 ---
+import { Image } from 'astro:assets';
 import Bouton from '../Bouton.astro';
-import Briques from './Briques.astro';
+import Echafaudage from './Echafaudage.astro';
 import Chiffres from './Chiffres.astro';
+import Icon from '../Icon.astro';
+import { photoHero } from '../../data/chantiers';
 import { entreprise, lienDevis } from '../../data/entreprise';
 import { t, type Langue } from '../../i18n';
 
@@ -14,41 +17,138 @@ const textes = t(langue);
 const hero = textes.accueil.hero;
 ---
 
-<section class="hero">
+<section class="hero" data-niveau="Ely Facade">
   <div class="wrap">
-    <div class="hero__texte">
-      <p class="surtitre" style="--i: 0">{hero.surtitre}</p>
-      <h1 style="--i: 1">{hero.titreDebut} <span class="hero__rouge">{hero.titreFin}</span></h1>
-      <p class="hero__lead" style="--i: 2">{hero.texte}</p>
-      <div class="hero__actions" style="--i: 3">
-        <Bouton href={lienDevis(langue)} variante="accent" iconeApres="fleche-diag" large>{textes.actions.devis}</Bouton>
-        <Bouton href={`tel:${entreprise.telephoneLien}`} variante="secondaire" icone="telephone" large>
-          {entreprise.telephoneAffiche}
-        </Bouton>
+    <div class="hero__grille">
+      <div class="hero__texte">
+        <p class="surtitre" style="--i: 0">{hero.surtitre}</p>
+        <h1 style="--i: 1">{hero.titreDebut} <span class="hero__rouge">{hero.titreFin}</span></h1>
+        <p class="hero__lead" style="--i: 2">{hero.texte}</p>
+        <div class="hero__actions" style="--i: 3">
+          <Bouton href={lienDevis(langue)} variante="accent" iconeApres="fleche-diag" large>{textes.actions.devis}</Bouton>
+          <Bouton href={`tel:${entreprise.telephoneLien}`} variante="secondaire" icone="telephone" large>
+            {entreprise.telephoneAffiche}
+          </Bouton>
+        </div>
+        <p class="hero__note" style="--i: 4">{hero.note}</p>
       </div>
-      <p class="hero__note" style="--i: 4">{hero.note}</p>
+
+      <figure class="scene tuile-bento" data-scene>
+        <Image
+          class="scene__photo"
+          src={photoHero}
+          alt={hero.scene.alt}
+          widths={[640, 960, 1280, 1600]}
+          sizes="(min-width: 1100px) 700px, 100vw"
+          loading="eager"
+          fetchpriority="high"
+          format="webp"
+        />
+        <Echafaudage />
+        <figcaption class="scene__legende">
+          <span class="scene__point" aria-hidden="true"></span>
+          <strong>{hero.scene.commune}</strong>
+          <span>{hero.scene.legende}</span>
+        </figcaption>
+        <button class="scene__rejouer" type="button" aria-label={hero.scene.rejouer} data-rejouer>
+          <Icon nom="rejouer" taille={20} />
+        </button>
+      </figure>
     </div>
 
-    <!-- Les tuiles « bento » : le motif du logo et les chiffres. Une photo prendra la place du motif. -->
-    <div class="bento">
-      <div class="bento__visuel tuile-bento" aria-hidden="true"><Briques /></div>
-      <Chiffres langue={langue} />
-    </div>
+    <Chiffres langue={langue} />
   </div>
 </section>
+
+<script>
+  const scene = document.querySelector<HTMLElement>('[data-scene]');
+  const echafaudage = scene?.querySelector<SVGElement>('.echafaudage');
+  const calme = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+  // L'échafaudage se retire quand la photo est bien à l'écran (sur mobile, elle est sous le titre).
+  if (scene && echafaudage && !calme) {
+    const vue = new IntersectionObserver(
+      ([entree]) => {
+        if (entree.isIntersecting) {
+          echafaudage.classList.add('pret', 'joue');
+          vue.disconnect();
+        }
+      },
+      { threshold: 0.45 },
+    );
+    vue.observe(scene);
+  }
+
+  // Un bouton pour revoir l'échafaudage se retirer.
+  scene?.querySelector('[data-rejouer]')?.addEventListener('click', () => {
+    if (!echafaudage || calme) return;
+    echafaudage.classList.remove('joue');
+    void echafaudage.getBoundingClientRect();
+    echafaudage.classList.add('joue');
+  });
+
+  // La photo respire doucement quand on défile.
+  if (scene && !calme) {
+    let attente = false;
+    const maj = () => {
+      attente = false;
+      const haut = scene.getBoundingClientRect().top;
+      const avancee = Math.min(1, Math.max(0, 1 - (haut + scene.offsetHeight) / (window.innerHeight + scene.offsetHeight)));
+      scene.style.setProperty('--avancee', avancee.toFixed(3));
+    };
+    window.addEventListener(
+      'scroll',
+      () => {
+        if (!attente) {
+          attente = true;
+          requestAnimationFrame(maj);
+        }
+      },
+      { passive: true },
+    );
+    maj();
+  }
+</script>
 
 <style>
   .hero {
     padding-top: calc(var(--header-h) + 40px);
   }
 
-  .hero__texte {
-    display: flex;
-    flex-direction: column;
-    align-items: flex-start;
+  .hero__grille {
+    display: grid;
     gap: 24px;
-    max-width: 920px;
-    margin-bottom: 56px;
+    margin-bottom: var(--tile-gap);
+  }
+
+  /* Mobile : titre, puis la photo, puis le texte et les boutons. */
+  .hero__texte {
+    display: contents;
+  }
+
+  .hero__texte > .surtitre {
+    justify-self: start;
+    order: 0;
+  }
+
+  .hero__texte > h1 {
+    order: 1;
+  }
+
+  .scene {
+    order: 2;
+  }
+
+  .hero__texte > :nth-child(n + 3) {
+    order: 3;
+  }
+
+  .hero__actions {
+    justify-self: start;
+  }
+
+  .hero__texte h1 {
+    font-size: clamp(46px, 5.2vw, 80px);
   }
 
   .hero__rouge {
@@ -56,7 +156,7 @@ const hero = textes.accueil.hero;
   }
 
   .hero__lead {
-    max-width: 52ch;
+    max-width: 48ch;
     font-size: var(--size-lead);
     line-height: 1.55;
   }
@@ -73,34 +173,91 @@ const hero = textes.accueil.hero;
     color: var(--color-muted);
   }
 
-  .bento {
-    display: grid;
-    gap: var(--tile-gap);
+  /* La scène : la vraie photo, l'échafaudage dessiné par-dessus. */
+  .scene {
+    position: relative;
+    margin: 0;
+    min-height: 420px;
+    overflow: hidden;
+    background: var(--color-surface);
+    isolation: isolate;
   }
 
-  .bento__visuel {
-    display: flex;
+  .scene :global(.scene__photo) {
+    position: absolute;
+    inset: 0;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    object-position: 35% 40%;
+    transform: scale(calc(1.07 - var(--avancee, 0) * 0.07));
+    transform-origin: 50% 40%;
+  }
+
+  .scene__legende {
+    position: absolute;
+    left: 16px;
+    bottom: 16px;
+    display: inline-flex;
+    align-items: center;
+    gap: 10px;
+    padding: 10px 16px 10px 14px;
+    border: 1px solid rgba(255, 255, 255, 0.7);
+    border-radius: var(--radius-pill);
+    background: rgba(255, 255, 255, 0.72);
+    backdrop-filter: blur(14px) saturate(1.4);
+    -webkit-backdrop-filter: blur(14px) saturate(1.4);
+    font-size: var(--size-tiny);
+    color: var(--color-text);
+  }
+
+  .scene__legende strong {
+    color: var(--color-ink);
+  }
+
+  .scene__point {
+    width: 8px;
+    height: 8px;
+    border-radius: 50%;
+    background: var(--color-accent);
+  }
+
+  .scene__rejouer {
+    position: absolute;
+    right: 16px;
+    bottom: 16px;
+    display: none;
     align-items: center;
     justify-content: center;
-    min-height: 300px;
-    padding: 36px;
-    background: linear-gradient(160deg, #ffffff 0%, var(--color-surface) 100%);
-    overflow: hidden;
+    width: var(--tap-min);
+    height: var(--tap-min);
+    padding: 0;
+    border: 1px solid rgba(255, 255, 255, 0.7);
+    border-radius: 50%;
+    background: rgba(255, 255, 255, 0.72);
+    backdrop-filter: blur(14px) saturate(1.4);
+    -webkit-backdrop-filter: blur(14px) saturate(1.4);
+    color: var(--color-ink);
+    cursor: pointer;
+    transition: transform var(--speed) var(--ease);
   }
 
-  .bento__visuel :global(.briques) {
-    width: min(100%, 240px);
+  .scene__rejouer:hover {
+    transform: rotate(-90deg);
   }
 
-  /* Le texte monte au chargement, sans JavaScript. */
   @media (prefers-reduced-motion: no-preference) {
+    .scene__rejouer {
+      display: inline-flex;
+    }
+
     .hero__texte > * {
       animation: monte 800ms var(--ease-out) backwards;
       animation-delay: calc(var(--i, 0) * 90ms + 100ms);
     }
 
-    .bento > * {
-      animation: monte 900ms var(--ease-out) 450ms backwards;
+    .scene {
+      animation: monte 900ms var(--ease-out) 250ms backwards;
     }
 
     @keyframes monte {
@@ -113,23 +270,36 @@ const hero = textes.accueil.hero;
 
   @media (min-width: 900px) {
     .hero {
-      padding-top: calc(var(--header-h) + 72px);
+      padding-top: calc(var(--header-h) + 64px);
+    }
+
+    .hero__grille {
+      grid-template-columns: 5fr 7fr;
+      align-items: stretch;
+      gap: var(--tile-gap);
     }
 
     .hero__texte {
-      margin-bottom: 72px;
+      display: flex;
+      flex-direction: column;
+      align-items: flex-start;
+      justify-content: center;
+      gap: 24px;
+      padding-right: 24px;
     }
 
-    .bento {
-      grid-template-columns: 7fr 5fr;
+    .scene {
+      min-height: 640px;
     }
 
-    .bento__visuel {
-      min-height: 460px;
+    .scene__legende {
+      left: 24px;
+      bottom: 24px;
     }
 
-    .bento__visuel :global(.briques) {
-      width: min(100%, 300px);
+    .scene__rejouer {
+      right: 24px;
+      bottom: 24px;
     }
   }
 </style>
