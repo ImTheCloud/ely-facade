@@ -50,7 +50,7 @@ Document de reprise pour démarrer une nouvelle conversation. Les règles du pro
 - Acheter `elyfacade.be` et `elyfacade.com` (connecteur Vercel : montrer le prix avant d'acheter), email pro, fiche Google Business, Search Console, QR code, cartes de visite.
 
 ## Prochaines étapes (dans l'ordre)
-1. **Photos reçues** (une partie) : suivre la règle de `CLAUDE.md` : masquer par un aplat numéros de maison, visages, plaques, coordonnées, vérifier à l'œil, ne jamais afficher d'adresse (commune seulement), import sans métadonnées dans `src/assets/` avec `astro:assets`, jamais dans `public/`. Décider avec le client : grande photo en haut de l'accueil et/ou curseur avant/après, frise des étapes.
+1. **Photos** : 56 reçues (Charleroi, Mons, Namur), 9 retenues dans `src/assets/photos/` (recadrées pour retirer plaques, panneaux, personnes ; aplats sur le reste ; sans métadonnées). Les autres sont des doublons ou montrent des plaques, visages ou logos d'autres sociétés. Pas de paires avant/après d'un même point de vue : le curseur avant/après et la frise des étapes attendent d'autres photos.
 2. Faire évoluer le design (« faire mieux » : plus de photos, plus de relief, éventuellement animations plus soignées) avant d'ajouter des pages.
 3. Les 5 pages métier (`/services/<slug>/`, `/nl/diensten/<slug>/`), avec JSON-LD `Service` et fil d'Ariane, boutons devis qui pré-cochent le métier.
 4. Réalisations (avant/après en content collection), À propos, mentions légales (raison sociale exacte « ELY FAÇADE BV », n° 1030.283.223, hébergeur Netlify), vie privée, 404 (FR + NL).
