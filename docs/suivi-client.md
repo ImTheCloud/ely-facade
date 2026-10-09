@@ -28,3 +28,10 @@ Logo : concept « briques » (maison en briques avec une brique rouge, ELY noir 
 ## À la fin
 
 Domaine elyfacade.be + elyfacade.com, email pro, fiche Google Business (Halle), Search Console, QR code, cartes de visite (100, recto-verso), README.
+
+## À demander à Elisei (photos et étapes)
+
+- Photos de la façade **avant** le début des travaux, sans échafaudage, prises du même endroit que les photos « pendant » (Namur, Charleroi, Mons). Idéalement une photo à chaque étape depuis le même point de vue.
+- **L'ordre exact des étapes d'un chantier** : le site affiche échafaudage et protections, isolation, sous-couche et armature, crépi de finition, façade terminée. À faire confirmer et corriger (ordre, mots, étapes manquantes comme préparation du support ou profilés).
+- Le chantier de Namur a-t-il bien été fait par eux de A à Z ? (légendes « Grand bâtiment », « Rangée de maisons » à valider).
+

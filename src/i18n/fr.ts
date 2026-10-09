@@ -69,27 +69,73 @@ export const fr = {
       texte:
         'Crépi, peinture, nettoyage, rejointoiement, réparation de briques : nous remettons votre façade en état, de la petite maison à l’immeuble.',
       note: 'Visite sur place gratuite, sans engagement.',
-      scene: {
-        commune: 'Mons',
-        legende: 'Façade terminée',
-        alt: 'Immeuble de trois étages à la façade blanche et aux fenêtres noires, à Mons',
-        rejouer: 'Revoir l’échafaudage se retirer',
-      },
+      altAvant: 'Immeuble de trois étages sous échafaudage, à Namur',
+      altApres: 'Le même immeuble à Namur, façade terminée',
     },
 
-    chantiers: {
-      surtitre: 'Sur nos chantiers',
-      titre: 'Nos chantiers en Belgique.',
-      texte: 'Mons, Namur, Charleroi : des façades sur lesquelles nous avons travaillé.',
+    comparateur: {
+      aria: 'Comparer la façade pendant les travaux et une fois terminée',
+      avant: 'Pendant les travaux',
+      apres: 'Après',
+    },
+
+    comparaisons: {
+      surtitre: 'Avant, après',
+      titre: 'La différence se voit.',
+      texte: 'Faites glisser le curseur : la même façade, au même endroit, pendant les travaux puis une fois terminée.',
       liste: [
-        { cle: 'grand', commune: 'Mons', legende: 'Une partie terminée, le reste en cours' },
-        { cle: 'echafaudage', commune: 'Charleroi', legende: 'Chantier sous échafaudage' },
-        { cle: 'immeuble', commune: 'Namur', legende: 'Immeuble terminé' },
-        { cle: 'angle', commune: 'Mons', legende: 'Façade terminée' },
-        { cle: 'isolation', commune: 'Charleroi', legende: 'Isolation livrée, échafaudage monté' },
-        { cle: 'namur', commune: 'Namur', legende: 'Façade sous échafaudage' },
-        { cle: 'maisons', commune: 'Charleroi', legende: 'Rangée de maisons terminée' },
-        { cle: 'finie', commune: 'Namur', legende: 'Façade terminée, échafaudage démonté' },
+        {
+          cle: 'charleroi',
+          commune: 'Charleroi',
+          legende: 'Rangée de maisons',
+          altAvant: 'Rangée de maisons à Charleroi, façade sous échafaudage',
+          altApres: 'La même rangée de maisons à Charleroi, façade terminée',
+        },
+        {
+          cle: 'mons',
+          commune: 'Mons',
+          legende: 'Grand bâtiment',
+          altAvant: 'Grand bâtiment à Mons, façade sous échafaudage',
+          altApres: 'Le même bâtiment à Mons, façade presque terminée',
+        },
+      ],
+    },
+
+    etapes: {
+      surtitre: 'Les étapes',
+      titre: 'De l’échafaudage à la finition.',
+      texte: 'Voici comment une façade se transforme, étape par étape.',
+      liste: [
+        {
+          cle: 'echafaudage',
+          titre: 'Échafaudage et protections',
+          texte: 'Nous montons l’échafaudage et protégeons ce qui doit l’être : fenêtres, portes et abords.',
+          alt: 'Rangée de maisons sous échafaudage, fenêtres protégées par une membrane bleue',
+        },
+        {
+          cle: 'isolation',
+          titre: 'Isolation',
+          texte: 'Les panneaux d’isolation arrivent sur le chantier et sont posés sur la façade.',
+          alt: 'Panneaux d’isolation livrés devant un bâtiment sous échafaudage',
+        },
+        {
+          cle: 'souscouche',
+          titre: 'Sous-couche et armature',
+          texte: 'Une sous-couche est appliquée, renforcée par un treillis d’armature.',
+          alt: 'Façade recouverte de sa sous-couche blanche, ouvriers sur l’échafaudage',
+        },
+        {
+          cle: 'crepi',
+          titre: 'Crépi de finition',
+          texte: 'Le crépi de finition donne à la façade son aspect final, dans la teinte et la finition de votre choix.',
+          alt: 'Façade blanche aux fenêtres noires, crépi de finition appliqué',
+        },
+        {
+          cle: 'termine',
+          titre: 'Façade terminée',
+          texte: 'L’échafaudage est retiré. Votre façade est garantie 10 ans minimum.',
+          alt: 'Rangée de maisons à la façade blanche terminée',
+        },
       ],
     },
 

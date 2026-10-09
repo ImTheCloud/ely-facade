@@ -29,6 +29,14 @@ Document de reprise pour démarrer une nouvelle conversation. Les règles du pro
    - rouge `#c8202b` seulement sur le bouton principal, un mot du titre, les icônes, un point, une tuile rosée ;
    - réglages dans `src/styles/tokens.css`.
 - Ce que le client n'aime pas : dessins d'immeubles (supprimés), angles droits, couleurs fortes, fond beige. Il veut du moderne, du doux, plus de photos.
+5. **Nouveau (10 octobre 2026), à faire valider : l'avant/après d'abord**, même thème clair, plus sobre (le premier essai avec échafaudage dessiné, fenêtres et règle d'étages a été jugé enfantin et supprimé) :
+   - haut de l'accueil : photo pleine largeur avec **curseur avant/après** (Namur) qui se révèle tout seul à l'arrivée, puis se manipule au doigt, à la souris ou au clavier (`Comparateur.astro`, `src/scripts/comparateur.ts`) ;
+   - bande de 4 chiffres posée sur le bas de la photo ;
+   - section « Avant, après » : 2 autres curseurs (Charleroi, Mons) ;
+   - section « Les étapes » : échafaudage, isolation, sous-couche et armature, crépi, terminé (5 photos) ;
+   - les photos « après » sont recalées sur les photos « avant » (même point de vue) par un script de traitement ponctuel ; seules les paires vérifiées à l'œil sont utilisées.
+   - Une fois validé, les autres pages reprennent ces composants.
+- Ce que le client n'aime pas : dessins d'immeubles (supprimés), angles droits, couleurs fortes, fond beige. Il veut du moderne, du doux, plus de photos.
 5. **Nouveau (10 octobre 2026), à faire valider : « La façade qui se révèle »**, même thème clair et doux, plus de photos et une idée propre au métier :
    - accueil : grande photo de façade avec un **échafaudage dessiné en SVG qui se retire étage par étage** au chargement (bouton pour le revoir, coupé avec `prefers-reduced-motion`), `Hero.astro` + `Echafaudage.astro` ;
    - les 4 chiffres sont des **fenêtres** (cadre graphite fin, vitre claire, reflet qui suit le doigt ou la souris) ;
@@ -50,7 +58,7 @@ Document de reprise pour démarrer une nouvelle conversation. Les règles du pro
 - Acheter `elyfacade.be` et `elyfacade.com` (connecteur Vercel : montrer le prix avant d'acheter), email pro, fiche Google Business, Search Console, QR code, cartes de visite.
 
 ## Prochaines étapes (dans l'ordre)
-1. **Photos** : 56 reçues (Charleroi, Mons, Namur), 9 retenues dans `src/assets/photos/` (recadrées pour retirer plaques, panneaux, personnes ; aplats sur le reste ; sans métadonnées). Les autres sont des doublons ou montrent des plaques, visages ou logos d'autres sociétés. Pas de paires avant/après d'un même point de vue : le curseur avant/après et la frise des étapes attendent d'autres photos.
+1. **Photos** : 56 reçues (Charleroi, Mons, Namur), 9 retenues dans `src/assets/photos/` (recadrées pour retirer plaques, panneaux, personnes ; aplats sur le reste ; sans métadonnées). 3 paires avant/après exactes trouvées (Namur, Charleroi, Mons). Aucune photo n'a été prise avant l'installation de l'échafaudage : la photo « avant » est toujours « pendant les travaux ». À demander à Elisei : des photos de la façade d'origine, sans échafaudage, prises du même endroit que celles-ci.
 2. Faire évoluer le design (« faire mieux » : plus de photos, plus de relief, éventuellement animations plus soignées) avant d'ajouter des pages.
 3. Les 5 pages métier (`/services/<slug>/`, `/nl/diensten/<slug>/`), avec JSON-LD `Service` et fil d'Ariane, boutons devis qui pré-cochent le métier.
 4. Réalisations (avant/après en content collection), À propos, mentions légales (raison sociale exacte « ELY FAÇADE BV », n° 1030.283.223, hébergeur Netlify), vie privée, 404 (FR + NL).

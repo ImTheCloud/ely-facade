@@ -15,8 +15,7 @@ export type NomIcone =
   | 'rouleau'
   | 'goutte'
   | 'joint'
-  | 'brique'
-  | 'rejouer';
+  | 'brique';
 
 interface Props {
   nom: NomIcone;
@@ -28,7 +27,6 @@ interface Props {
 const { nom, taille = 20, epaisseur = 1.8, class: classe } = Astro.props;
 
 const chemins: Record<NomIcone, string> = {
-  rejouer: '<path d="M4 12a8 8 0 1 0 2.6-5.9"/><path d="M4 4v5h5"/>',
   fleche: '<path d="M5 12h14"/><path d="M13 6l6 6-6 6"/>',
   'fleche-diag': '<path d="M7 17L17 7"/><path d="M8 7h9v9"/>',
   'fleche-gauche': '<path d="M19 12H5"/><path d="M11 6l-6 6 6 6"/>',

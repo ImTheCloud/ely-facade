@@ -1,10 +1,8 @@
 ---
-import { Image } from 'astro:assets';
 import Bouton from '../Bouton.astro';
-import Echafaudage from './Echafaudage.astro';
+import Comparateur from '../Comparateur.astro';
 import Chiffres from './Chiffres.astro';
-import Icon from '../Icon.astro';
-import { photoHero } from '../../data/chantiers';
+import { paires } from '../../data/chantiers';
 import { entreprise, lienDevis } from '../../data/entreprise';
 import { t, type Langue } from '../../i18n';
 
@@ -17,138 +15,90 @@ const textes = t(langue);
 const hero = textes.accueil.hero;
 ---
 
-<section class="hero" data-niveau="Ely Facade">
-  <div class="wrap">
-    <div class="hero__grille">
-      <div class="hero__texte">
-        <p class="surtitre" style="--i: 0">{hero.surtitre}</p>
-        <h1 style="--i: 1">{hero.titreDebut} <span class="hero__rouge">{hero.titreFin}</span></h1>
-        <p class="hero__lead" style="--i: 2">{hero.texte}</p>
-        <div class="hero__actions" style="--i: 3">
-          <Bouton href={lienDevis(langue)} variante="accent" iconeApres="fleche-diag" large>{textes.actions.devis}</Bouton>
-          <Bouton href={`tel:${entreprise.telephoneLien}`} variante="secondaire" icone="telephone" large>
-            {entreprise.telephoneAffiche}
-          </Bouton>
-        </div>
-        <p class="hero__note" style="--i: 4">{hero.note}</p>
-      </div>
-
-      <figure class="scene tuile-bento" data-scene>
-        <Image
-          class="scene__photo"
-          src={photoHero}
-          alt={hero.scene.alt}
-          widths={[640, 960, 1280, 1600]}
-          sizes="(min-width: 1100px) 700px, 100vw"
-          loading="eager"
-          fetchpriority="high"
-          format="webp"
-        />
-        <Echafaudage />
-        <figcaption class="scene__legende">
-          <span class="scene__point" aria-hidden="true"></span>
-          <strong>{hero.scene.commune}</strong>
-          <span>{hero.scene.legende}</span>
-        </figcaption>
-        <button class="scene__rejouer" type="button" aria-label={hero.scene.rejouer} data-rejouer>
-          <Icon nom="rejouer" taille={20} />
-        </button>
-      </figure>
+<section class="hero">
+  <div class="hero__tete">
+    <div class="hero__titre">
+      <p class="surtitre" style="--i: 0">{hero.surtitre}</p>
+      <h1 style="--i: 1">{hero.titreDebut} <span class="hero__rouge">{hero.titreFin}</span></h1>
     </div>
 
+    <div class="hero__suite">
+      <p class="hero__lead" style="--i: 2">{hero.texte}</p>
+      <div class="hero__actions" style="--i: 3">
+        <Bouton href={lienDevis(langue)} variante="accent" iconeApres="fleche-diag" large>{textes.actions.devis}</Bouton>
+        <Bouton href={`tel:${entreprise.telephoneLien}`} variante="secondaire" icone="telephone" large>
+          {entreprise.telephoneAffiche}
+        </Bouton>
+      </div>
+      <p class="hero__note" style="--i: 4">{hero.note}</p>
+    </div>
+  </div>
+
+  <Comparateur
+    class="hero__scene"
+    langue={langue}
+    avant={paires.namur.avant}
+    apres={paires.namur.apres}
+    altAvant={hero.altAvant}
+    altApres={hero.altApres}
+    cadrage="42% 50%"
+    sizes="100vw"
+    priorite
+    animer
+  />
+
+  <div class="hero__chiffres">
     <Chiffres langue={langue} />
   </div>
 </section>
 
-<script>
-  const scene = document.querySelector<HTMLElement>('[data-scene]');
-  const echafaudage = scene?.querySelector<SVGElement>('.echafaudage');
-  const calme = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
-
-  // L'échafaudage se retire quand la photo est bien à l'écran (sur mobile, elle est sous le titre).
-  if (scene && echafaudage && !calme) {
-    const vue = new IntersectionObserver(
-      ([entree]) => {
-        if (entree.isIntersecting) {
-          echafaudage.classList.add('pret', 'joue');
-          vue.disconnect();
-        }
-      },
-      { threshold: 0.45 },
-    );
-    vue.observe(scene);
-  }
-
-  // Un bouton pour revoir l'échafaudage se retirer.
-  scene?.querySelector('[data-rejouer]')?.addEventListener('click', () => {
-    if (!echafaudage || calme) return;
-    echafaudage.classList.remove('joue');
-    void echafaudage.getBoundingClientRect();
-    echafaudage.classList.add('joue');
-  });
-
-  // La photo respire doucement quand on défile.
-  if (scene && !calme) {
-    let attente = false;
-    const maj = () => {
-      attente = false;
-      const haut = scene.getBoundingClientRect().top;
-      const avancee = Math.min(1, Math.max(0, 1 - (haut + scene.offsetHeight) / (window.innerHeight + scene.offsetHeight)));
-      scene.style.setProperty('--avancee', avancee.toFixed(3));
-    };
-    window.addEventListener(
-      'scroll',
-      () => {
-        if (!attente) {
-          attente = true;
-          requestAnimationFrame(maj);
-        }
-      },
-      { passive: true },
-    );
-    maj();
-  }
-</script>
-
 <style>
   .hero {
-    padding-top: calc(var(--header-h) + 40px);
-  }
-
-  .hero__grille {
     display: grid;
-    gap: 24px;
-    margin-bottom: var(--tile-gap);
+    grid-template-columns: minmax(var(--gutter), 1fr) minmax(0, var(--content-max)) minmax(var(--gutter), 1fr);
+    row-gap: 28px;
+    padding-top: calc(var(--header-h) + 32px);
   }
 
-  /* Mobile : titre, puis la photo, puis le texte et les boutons. */
-  .hero__texte {
+  /* Mobile : le titre, puis la photo, puis le texte et les boutons. */
+  .hero__tete {
     display: contents;
   }
 
-  .hero__texte > .surtitre {
-    justify-self: start;
+  .hero__titre,
+  .hero__suite,
+  .hero__chiffres {
+    grid-column: 2;
+  }
+
+  .hero__titre {
     order: 0;
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 22px;
   }
 
-  .hero__texte > h1 {
+  .hero :global(.hero__scene) {
     order: 1;
+    grid-column: 1 / -1;
+    height: min(118vw, 600px);
   }
 
-  .scene {
+  .hero__suite {
     order: 2;
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 22px;
   }
 
-  .hero__texte > :nth-child(n + 3) {
+  .hero__chiffres {
     order: 3;
   }
 
-  .hero__actions {
-    justify-self: start;
-  }
-
-  .hero__texte h1 {
-    font-size: clamp(46px, 5.2vw, 80px);
+  .hero__titre h1 {
+    font-size: clamp(46px, 6.2vw, 92px);
   }
 
   .hero__rouge {
@@ -156,7 +106,7 @@ const hero = textes.accueil.hero;
   }
 
   .hero__lead {
-    max-width: 48ch;
+    max-width: 46ch;
     font-size: var(--size-lead);
     line-height: 1.55;
   }
@@ -173,133 +123,51 @@ const hero = textes.accueil.hero;
     color: var(--color-muted);
   }
 
-  /* La scène : la vraie photo, l'échafaudage dessiné par-dessus. */
-  .scene {
-    position: relative;
-    margin: 0;
-    min-height: 420px;
-    overflow: hidden;
-    background: var(--color-surface);
-    isolation: isolate;
-  }
-
-  .scene :global(.scene__photo) {
-    position: absolute;
-    inset: 0;
-    width: 100%;
-    height: 100%;
-    object-fit: cover;
-    object-position: 35% 40%;
-    transform: scale(calc(1.07 - var(--avancee, 0) * 0.07));
-    transform-origin: 50% 40%;
-  }
-
-  .scene__legende {
-    position: absolute;
-    left: 16px;
-    bottom: 16px;
-    display: inline-flex;
-    align-items: center;
-    gap: 10px;
-    padding: 10px 16px 10px 14px;
-    border: 1px solid rgba(255, 255, 255, 0.7);
-    border-radius: var(--radius-pill);
-    background: rgba(255, 255, 255, 0.72);
-    backdrop-filter: blur(14px) saturate(1.4);
-    -webkit-backdrop-filter: blur(14px) saturate(1.4);
-    font-size: var(--size-tiny);
-    color: var(--color-text);
-  }
-
-  .scene__legende strong {
-    color: var(--color-ink);
-  }
-
-  .scene__point {
-    width: 8px;
-    height: 8px;
-    border-radius: 50%;
-    background: var(--color-accent);
-  }
-
-  .scene__rejouer {
-    position: absolute;
-    right: 16px;
-    bottom: 16px;
-    display: none;
-    align-items: center;
-    justify-content: center;
-    width: var(--tap-min);
-    height: var(--tap-min);
-    padding: 0;
-    border: 1px solid rgba(255, 255, 255, 0.7);
-    border-radius: 50%;
-    background: rgba(255, 255, 255, 0.72);
-    backdrop-filter: blur(14px) saturate(1.4);
-    -webkit-backdrop-filter: blur(14px) saturate(1.4);
-    color: var(--color-ink);
-    cursor: pointer;
-    transition: transform var(--speed) var(--ease);
-  }
-
-  .scene__rejouer:hover {
-    transform: rotate(-90deg);
-  }
-
   @media (prefers-reduced-motion: no-preference) {
-    .scene__rejouer {
-      display: inline-flex;
-    }
-
-    .hero__texte > * {
+    .hero__titre > *,
+    .hero__suite > * {
       animation: monte 800ms var(--ease-out) backwards;
       animation-delay: calc(var(--i, 0) * 90ms + 100ms);
-    }
-
-    .scene {
-      animation: monte 900ms var(--ease-out) 250ms backwards;
     }
 
     @keyframes monte {
       from {
         opacity: 0;
-        transform: translateY(28px);
+        transform: translateY(24px);
       }
     }
   }
 
   @media (min-width: 900px) {
     .hero {
-      padding-top: calc(var(--header-h) + 64px);
+      row-gap: 44px;
+      padding-top: calc(var(--header-h) + 36px);
     }
 
-    .hero__grille {
-      grid-template-columns: 5fr 7fr;
-      align-items: stretch;
-      gap: var(--tile-gap);
+    /* Ordinateur : le titre à gauche, le texte à droite, puis la photo sur toute la largeur. */
+    .hero__tete {
+      display: grid;
+      grid-column: 2;
+      grid-template-columns: 7fr 5fr;
+      align-items: end;
+      gap: 56px;
     }
 
-    .hero__texte {
-      display: flex;
-      flex-direction: column;
-      align-items: flex-start;
-      justify-content: center;
-      gap: 24px;
-      padding-right: 24px;
+    .hero__titre,
+    .hero__suite {
+      grid-column: auto;
     }
 
-    .scene {
-      min-height: 640px;
+    .hero :global(.hero__scene) {
+      order: 0;
+      height: clamp(460px, 46vw, 760px);
     }
 
-    .scene__legende {
-      left: 24px;
-      bottom: 24px;
-    }
-
-    .scene__rejouer {
-      right: 24px;
-      bottom: 24px;
+    .hero__chiffres {
+      order: 0;
+      margin-top: -88px;
+      position: relative;
+      z-index: 5;
     }
   }
 </style>

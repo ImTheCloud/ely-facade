@@ -12,7 +12,7 @@ const chiffres = t(langue).accueil.chiffres;
 <ul class="chiffres" aria-label={chiffres.aria}>
   {
     chiffres.liste.map((chiffre, i) => (
-      <li class:list={['chiffre', { 'chiffre--rouge': i === 2 }]} data-fenetre>
+      <li class:list={['chiffre', { 'chiffre--rouge': i === 2 }]}>
         <span class="chiffre__valeur">{chiffre.valeur}</span>
         <span class="chiffre__libelle">{chiffre.libelle}</span>
       </li>
@@ -20,73 +20,52 @@ const chiffres = t(langue).accueil.chiffres;
   }
 </ul>
 
-<script>
-  // Le reflet de la vitre suit le doigt ou la souris.
-  document.querySelectorAll<HTMLElement>('[data-fenetre]').forEach((fenetre) => {
-    fenetre.addEventListener('pointermove', (e) => {
-      const r = fenetre.getBoundingClientRect();
-      fenetre.style.setProperty('--mx', `${((e.clientX - r.left) / r.width) * 100}%`);
-      fenetre.style.setProperty('--my', `${((e.clientY - r.top) / r.height) * 100}%`);
-    });
-  });
-</script>
-
 <style>
+  /* Une bande de chiffres posée sur le bas de la photo. */
   .chiffres {
     display: grid;
     grid-template-columns: repeat(2, 1fr);
-    gap: var(--tile-gap);
     margin: 0;
     padding: 0;
     list-style: none;
+    background: var(--color-card);
+    border: 1px solid var(--color-border);
+    border-radius: var(--radius-tile);
+    box-shadow: var(--shadow-lift);
+    overflow: hidden;
   }
 
-  /* Une fenêtre : fin cadre graphite comme les menuiseries des façades, vitre claire avec un reflet. */
   .chiffre {
-    position: relative;
     display: flex;
     flex-direction: column;
     justify-content: space-between;
-    gap: 16px;
-    min-height: 150px;
-    padding: 22px;
-    overflow: hidden;
-    border: 3px solid #2b3239;
-    border-radius: 20px;
-    background:
-      radial-gradient(circle 180px at var(--mx, 85%) var(--my, 0%), rgba(255, 255, 255, 0.9), transparent 70%),
-      linear-gradient(160deg, #f6f9fb 0%, #e6edf2 100%);
-    box-shadow: var(--shadow-tile);
-    transition:
-      transform var(--speed) var(--ease),
-      box-shadow var(--speed) var(--ease);
+    gap: 14px;
+    padding: 22px 22px 24px;
+    border-top: 1px solid var(--color-border);
   }
 
-  .chiffre:hover {
-    transform: translateY(-3px);
-    box-shadow: var(--shadow-lift);
+  .chiffre:nth-child(-n + 2) {
+    border-top: 0;
+  }
+
+  .chiffre:nth-child(even) {
+    border-left: 1px solid var(--color-border);
   }
 
   .chiffre__valeur {
-    font-size: clamp(38px, 4.4vw, 64px);
-    font-weight: 800;
+    font-size: clamp(36px, 4vw, 56px);
+    font-weight: 700;
     line-height: 1;
     letter-spacing: -0.04em;
+    font-variant-numeric: tabular-nums;
     color: var(--color-ink);
   }
 
   .chiffre__libelle {
     font-size: var(--size-small);
-    font-weight: 550;
+    font-weight: 500;
     line-height: 1.35;
     color: var(--color-text);
-  }
-
-  /* La garantie : la seule tuile teintée de rouge. */
-  .chiffre--rouge {
-    background:
-      radial-gradient(circle 180px at var(--mx, 85%) var(--my, 0%), rgba(255, 255, 255, 0.85), transparent 70%),
-      linear-gradient(160deg, #fff4f4 0%, #fbe3e4 100%);
   }
 
   .chiffre--rouge .chiffre__valeur {
@@ -94,9 +73,18 @@ const chiffres = t(langue).accueil.chiffres;
   }
 
   @media (min-width: 900px) {
+    .chiffres {
+      grid-template-columns: repeat(4, 1fr);
+    }
+
     .chiffre {
-      min-height: 0;
-      padding: 28px;
+      padding: 30px 32px 32px;
+      border-top: 0;
+      border-left: 1px solid var(--color-border);
+    }
+
+    .chiffre:first-child {
+      border-left: 0;
     }
   }
 </style>
