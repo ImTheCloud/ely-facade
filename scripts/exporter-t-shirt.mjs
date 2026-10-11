@@ -34,7 +34,7 @@ const couleurs = {
 
 // Mesures pour un t-shirt taille L, en millimètres.
 const DEVANT = { largeur: 100, sousLeCol: 80, duMilieu: 70 };
-const DOS = { largeur: 250, hauteur: 200, sousLeCol: 90 };
+const DOS = { largeur: 250, hauteur: 230, sousLeCol: 90 };
 
 const logoSvg = (version, forme = 'logo') => fs.readFileSync(`${logos}/ely-facade-${forme}-${version}.svg`, 'utf8');
 const contenuLogo = (svg) => svg.replace(/^<svg[^>]*>\n?/, '').replace(/<\/svg>\s*$/, '');
@@ -42,7 +42,7 @@ const contenuLogo = (svg) => svg.replace(/^<svg[^>]*>\n?/, '').replace(/<\/svg>\
 /** Le dos : maison au-dessus du nom (logo empilé), métier en FR et NL, téléphone, site. Unités : mm. */
 function dos(c) {
   const L = DOS.largeur;
-  const hMaison = 70, lMaison = hMaison * 228 / 261;
+  const hMaison = 100, lMaison = hMaison * 228 / 261;
   const nom = logoSvg(c.logo).split('</g>')[1].replace(/<\/svg>\s*$/, ''); // « ELY FACADE » seul
   const hNom = L * 92.56 / 851.1, yNom = hMaison + 11;
   const yMetier = yNom + hNom + 17, yTrait = yMetier + 9;
