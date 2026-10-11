@@ -1,0 +1,15 @@
+Logo Ely Facade : fichiers pour l'impression
+
+Format à donner à l'imprimeur : le PDF (vectoriel, agrandissable sans perte).
+Le PNG (4000 px, fond transparent) sert si l'imprimeur demande une image.
+
+- couleur      : t-shirt blanc ou clair (noir + rouge)
+- fond-sombre  : t-shirt noir ou foncé (blanc + rouge)
+- noir         : impression en une seule couleur, sur fond clair
+- blanc        : impression en une seule couleur, sur fond foncé
+
+"logo" = maison + nom (devant ou dos). "icone" = la maison seule (poitrine, manche).
+
+Couleurs :
+- Noir  #141414  (RVB 20, 20, 20)
+- Rouge #C8202B  (RVB 200, 32, 43)

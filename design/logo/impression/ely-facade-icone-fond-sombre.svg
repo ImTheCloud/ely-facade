@@ -1,0 +1,26 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="74 74 240 273" fill="none">
+<defs><clipPath id="maison"><path d="M194 80L308 152V341H80V152L194 80Z"/></clipPath></defs>
+<g clip-path="url(#maison)">
+<rect x="80" y="80" width="70" height="36" fill="#FFFFFF"/>
+<rect x="159" y="80" width="70" height="36" fill="#FFFFFF"/>
+<rect x="238" y="80" width="70" height="36" fill="#FFFFFF"/>
+<rect x="40.5" y="125" width="70" height="36" fill="#FFFFFF"/>
+<rect x="119.5" y="125" width="70" height="36" fill="#FFFFFF"/>
+<rect x="198.5" y="125" width="70" height="36" fill="#FFFFFF"/>
+<rect x="277.5" y="125" width="70" height="36" fill="#FFFFFF"/>
+<rect x="80" y="170" width="70" height="36" fill="#FFFFFF"/>
+<rect x="159" y="170" width="70" height="36" fill="#FFFFFF"/>
+<rect x="238" y="170" width="70" height="36" fill="#FFFFFF"/>
+<rect x="40.5" y="215" width="70" height="36" fill="#FFFFFF"/>
+<rect x="119.5" y="215" width="70" height="36" fill="#C8202B"/>
+<rect x="198.5" y="215" width="70" height="36" fill="#FFFFFF"/>
+<rect x="277.5" y="215" width="70" height="36" fill="#FFFFFF"/>
+<rect x="80" y="260" width="70" height="36" fill="#FFFFFF"/>
+<rect x="159" y="260" width="70" height="36" fill="#FFFFFF"/>
+<rect x="238" y="260" width="70" height="36" fill="#FFFFFF"/>
+<rect x="40.5" y="305" width="70" height="36" fill="#FFFFFF"/>
+<rect x="119.5" y="305" width="70" height="36" fill="#FFFFFF"/>
+<rect x="198.5" y="305" width="70" height="36" fill="#FFFFFF"/>
+<rect x="277.5" y="305" width="70" height="36" fill="#FFFFFF"/>
+</g>
+</svg>
