@@ -34,22 +34,26 @@ const couleurs = {
 
 // Mesures pour un t-shirt taille L, en millimètres.
 const DEVANT = { largeur: 100, sousLeCol: 80, duMilieu: 70 };
-const DOS = { largeur: 250, hauteur: 150, sousLeCol: 90 };
+const DOS = { largeur: 250, hauteur: 200, sousLeCol: 90 };
 
-const logoSvg = (version) => fs.readFileSync(`${logos}/ely-facade-logo-${version}.svg`, 'utf8');
+const logoSvg = (version, forme = 'logo') => fs.readFileSync(`${logos}/ely-facade-${forme}-${version}.svg`, 'utf8');
 const contenuLogo = (svg) => svg.replace(/^<svg[^>]*>\n?/, '').replace(/<\/svg>\s*$/, '');
 
-/** Le dos : logo, métier en FR et NL, téléphone, site. Unités : mm. */
+/** Le dos : maison au-dessus du nom (logo empilé), métier en FR et NL, téléphone, site. Unités : mm. */
 function dos(c) {
-  const L = DOS.largeur, k = L / 1152;
-  const hLogo = 274 * k, x0 = 6 * k, x1 = (1219.1 - 74) * k;
+  const L = DOS.largeur;
+  const hMaison = 70, lMaison = hMaison * 228 / 261;
+  const nom = logoSvg(c.logo).split('</g>')[1].replace(/<\/svg>\s*$/, ''); // « ELY FACADE » seul
+  const hNom = L * 92.56 / 851.1, yNom = hMaison + 11;
+  const yMetier = yNom + hNom + 17, yTrait = yMetier + 9;
   return `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 ${L} ${DOS.hauteur}" width="${L}mm" height="${DOS.hauteur}mm">
-<svg x="0" y="0" width="${L}" height="${hLogo}" viewBox="74 74 1152 274" fill="none">${contenuLogo(logoSvg(c.logo))}</svg>
+<svg x="${(L - lMaison) / 2}" y="0" width="${lMaison}" height="${hMaison}" viewBox="80 80 228 261" fill="none">${contenuLogo(logoSvg(c.logo, 'icone'))}</svg>
+<svg x="0" y="${yNom}" width="${L}" height="${hNom}" viewBox="368 165.78 851.1 92.56" fill="none">${nom}</svg>
 <g font-family="DM Sans" fill="${c.encre}" text-anchor="middle">
-<text x="${x0}" y="${hLogo + 17}" text-anchor="start" font-size="9.2" font-weight="600" textLength="${x1 - x0}" lengthAdjust="spacing">${metier.toUpperCase()}</text>
-<rect x="${L / 2 - 15}" y="85" width="30" height="2.4" fill="${ROUGE}"/>
-<text x="${L / 2}" y="122" font-size="36" font-weight="700" letter-spacing="0.4">${telephone}</text>
-<text x="${L / 2}" y="145" font-size="17" font-weight="500">${site}</text>
+<text x="0" y="${yMetier}" text-anchor="start" font-size="9.2" font-weight="600" textLength="${L}" lengthAdjust="spacing">${metier.toUpperCase()}</text>
+<rect x="${L / 2 - 15}" y="${yTrait}" width="30" height="2.4" fill="${ROUGE}"/>
+<text x="${L / 2}" y="${yTrait + 36}" font-size="36" font-weight="700" letter-spacing="0.4">${telephone}</text>
+<text x="${L / 2}" y="${yTrait + 60}" font-size="17" font-weight="500">${site}</text>
 </g>
 </svg>`;
 }
@@ -139,7 +143,7 @@ function maquette(nom, c) {
 <ul>${[`Logo côté cœur`, `${DEVANT.largeur / 10} cm de large`, `${DEVANT.sousLeCol / 10} cm sous le col`, `${DEVANT.duMilieu / 10} cm du milieu`].map(puce).join('')}</ul>
 <p class="fichier">t-shirt-devant-${nom}.pdf</p></figure>
 <figure><figcaption>Dos</figcaption>${tshirt('dos', c, motifDos)}
-<ul>${[`Centré`, `${DOS.largeur / 10} cm de large`, `${DOS.sousLeCol / 10} cm sous le col`].map(puce).join('')}</ul>
+<ul>${[`Centré`, `${DOS.largeur / 10} × ${DOS.hauteur / 10} cm`, `${DOS.sousLeCol / 10} cm sous le col`].map(puce).join('')}</ul>
 <p class="fichier">t-shirt-dos-${nom}.pdf</p></figure>
 </main>
 <footer>
@@ -186,8 +190,9 @@ function rendre(nom, contenu, { pdf, png }) {
     `--force-device-scale-factor=${png.echelle}`, ...(png.transparent ? ['--default-background-color=00000000'] : []), ...base], { stdio: 'ignore' });
 }
 
-fs.rmSync(sortie, { recursive: true, force: true });
+// Ne vide que les fichiers de ce script : le sous-dossier photo (scripts/photo-t-shirt.mjs) reste.
 fs.mkdirSync(sortie, { recursive: true });
+for (const f of fs.readdirSync(sortie, { withFileTypes: true })) if (f.isFile()) fs.rmSync(path.join(sortie, f.name));
 for (const [nom, c] of Object.entries(couleurs)) {
   for (const ext of ['pdf', 'png']) fs.copyFileSync(`${logos}/ely-facade-logo-${c.logo}.${ext}`, `${sortie}/t-shirt-devant-${nom}.${ext}`);
 
