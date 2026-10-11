@@ -25,6 +25,11 @@ Logo : concept « briques » (maison en briques avec une brique rouge, ELY noir 
 - Couleurs finales (noir et rouge exacts).
 - Textes des pages avant mise en ligne.
 
+## T-shirts
+
+- Maquettes et fichiers pour l'imprimeur dans `design/t-shirt/` (blanc et noir, devant + dos). Conseillé : blanc.
+- Le dos affiche elyfacade.be : **acheter le domaine avant d'imprimer** (encore libre le 11 octobre 2026).
+
 ## À la fin
 
 Domaine elyfacade.be + elyfacade.com, email pro, fiche Google Business (Halle), Search Console, QR code, cartes de visite (100, recto-verso), README.

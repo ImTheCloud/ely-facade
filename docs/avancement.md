@@ -9,6 +9,7 @@ Document de reprise pour démarrer une nouvelle conversation. Les règles du pro
 - Sources dans `design/logo/` : `logo.svg` (fond transparent) et `icone.svg` (la maison seule).
 - `node scripts/generer-marque.mjs` copie les SVG dans `src/assets/marque/` et fabrique le favicon, l'icône iPhone et l'image de partage (`src/assets/partage.png`).
 - Fichiers pour l'imprimeur (t-shirts…) dans `design/logo/impression/` : logo et icône en couleur, fond sombre, noir, blanc ; chacun en PDF vectoriel, SVG et PNG 4000 px, avec un `LISEZ-MOI.txt`. Fabriqués par `node scripts/exporter-logo-impression.mjs`.
+- T-shirts : maquettes (devant + dos, blanc et noir) et fichiers d'impression dans `design/t-shirt/`, fabriqués par `node scripts/exporter-t-shirt.mjs` (après `exporter-logo-impression.mjs`). Dos : logo, « Rénovation de façades · Gevelrenovatie », téléphone, elyfacade.be. 25 cm de large maximum (zone d'impression Vistaprint).
 - Pas encore livrés : icône ronde, version carte de visite (à faire en fin de projet).
 
 ### Site (Astro, statique, FR + NL)
