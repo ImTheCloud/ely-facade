@@ -32,7 +32,7 @@ Logo : concept « briques » (maison en briques avec une brique rouge, ELY noir 
 
 ## Carte de visite
 
-- Exemple pour Elisei dans `design/carte-visite/`. À valider avec lui : titre « Gérant », texte, couleurs. Une carte pour Simi à faire si besoin.
+- Exemple pour Elisei dans `design/carte-visite/`. À valider avec lui : texte, couleurs (recto et verso noirs, nom sans titre). Une carte pour Simi à faire si besoin.
 - Email à ajouter quand l'adresse pro existera. Le QR code ne marche qu'une fois elyfacade.be acheté et le site en ligne : **ne pas imprimer avant**.
 
 ## À la fin

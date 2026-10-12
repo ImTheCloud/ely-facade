@@ -38,28 +38,26 @@ body{font-family:'DM Sans';-webkit-print-color-adjust:exact;print-color-adjust:e
 .sur{position:absolute;inset:3mm}`;
 
 // 91 × 61 mm : 3 mm de fonds perdus de chaque côté. Tout ce qui compte reste à 5 mm du bord fini.
-const recto = `<div class="carte" style="background:#fff">
+const recto = `<div class="carte" style="background:${NOIR};color:#fff">
 <div class="sur" style="display:flex;flex-direction:column;align-items:center;justify-content:center;gap:5.5mm">
-${logoHorizontal('couleur', 56)}
+${logoHorizontal('fond-sombre', 56)}
 <div style="width:9mm;height:.5mm;background:${ROUGE}"></div>
-<div style="font-size:2.1mm;font-weight:600;letter-spacing:.22em;text-transform:uppercase;color:${NOIR}">Rénovation de façades · Gevelrenovatie</div>
+<div style="font-size:2.1mm;font-weight:600;letter-spacing:.22em;text-transform:uppercase">Rénovation de façades · Gevelrenovatie</div>
 </div></div>`;
 
 const verso = `<div class="carte" style="background:${NOIR};color:#fff">
-<div style="position:absolute;left:0;top:0;bottom:0;width:2mm;background:${ROUGE}"></div>
-<div class="sur" style="left:9mm;right:8mm;top:8mm;bottom:8mm;display:flex;justify-content:space-between">
+<div class="sur" style="left:8mm;right:8mm;top:8mm;bottom:7mm;display:flex;justify-content:space-between">
 <div style="display:flex;flex-direction:column;justify-content:space-between">
-<div>${maison('fond-sombre', 9)}
-<div style="font-size:4.6mm;font-weight:700;letter-spacing:-.01em;margin-top:3.6mm;line-height:1.1">Elisei Ungureanu</div>
-<div style="font-size:2.3mm;font-weight:600;letter-spacing:.2em;text-transform:uppercase;color:${ROUGE};margin-top:1.2mm;filter:brightness(1.25)">Gérant</div></div>
+<div>${logoHorizontal('fond-sombre', 30)}
+<div style="font-size:4.8mm;font-weight:700;letter-spacing:-.01em;margin-top:9mm;line-height:1.1">Elisei Ungureanu</div>
+<div style="width:7mm;height:.45mm;background:${ROUGE};margin-top:2.6mm"></div></div>
 <div style="font-size:2.7mm;line-height:1.65;font-weight:500">
-<div style="font-size:3.5mm;font-weight:700;margin-bottom:.5mm">${telephone}</div>
+<div style="font-size:3.6mm;font-weight:700;margin-bottom:.6mm">${telephone}</div>
 <div>${site.hostname}</div>
 <div style="opacity:.72">Bergensesteenweg 745 · 1502 Halle</div></div>
 </div>
-<div style="display:flex;flex-direction:column;justify-content:flex-end;align-items:center;gap:1.6mm">
-<div style="width:20mm;height:20mm;border-radius:1.2mm;overflow:hidden">${qrSvg}</div>
-<div style="font-size:1.9mm;font-weight:600;letter-spacing:.18em;text-transform:uppercase;opacity:.8">Toute la Belgique</div>
+<div style="display:flex;flex-direction:column;justify-content:flex-end;align-items:flex-end">
+<div style="width:21mm;height:21mm;border-radius:1.2mm;overflow:hidden">${qrSvg}</div>
 </div></div></div>`;
 
 const temp = fs.mkdtempSync(path.join(os.tmpdir(), 'ely-carte-'));
