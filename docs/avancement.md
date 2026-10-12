@@ -11,7 +11,8 @@ Document de reprise pour démarrer une nouvelle conversation. Les règles du pro
 - Fichiers pour l'imprimeur (t-shirts…) dans `design/logo/impression/` : logo et icône en couleur, fond sombre, noir, blanc ; chacun en PDF vectoriel, SVG et PNG 4000 px, avec un `LISEZ-MOI.txt`. Fabriqués par `node scripts/exporter-logo-impression.mjs`.
 - T-shirts : maquettes (devant + dos, blanc et noir) et fichiers d'impression dans `design/t-shirt/`, fabriqués par `node scripts/exporter-t-shirt.mjs` (après `exporter-logo-impression.mjs`). Devant : logo 10 cm côté cœur. Dos (25 × 23 cm) : logo empilé (maison de 10 cm au-dessus du nom), « Rénovation de façades · Gevelrenovatie », téléphone, elyfacade.be. 25 cm de large maximum (zone d'impression Vistaprint).
 - Maquettes photo pour le client dans `design/t-shirt/photo/` (`node scripts/photo-t-shirt.mjs`) : le vrai fichier d'impression posé sur une photo de t-shirts vierges générée par IA (`photo/sources/`, maquette seulement, jamais sur le site).
-- Pas encore livrés : icône ronde, version carte de visite (à faire en fin de projet).
+- Carte de visite d'Elisei (exemple) dans `design/carte-visite/` : PDF imprimeur recto-verso avec fonds perdus (85 × 55 mm fini), PNG, image de présentation, fabriqués par `node scripts/exporter-carte-visite.mjs`. QR code vers elyfacade.be (domaine pas encore acheté), pas d'email affiché tant que l'adresse pro n'existe pas.
+- Pas encore livrés : icône ronde.
 
 ### Site (Astro, statique, FR + NL)
 - Projet en place : Astro, sitemap avec hreflang, `netlify.toml`, polices hébergées (DM Sans via Fontsource), aucun cookie.

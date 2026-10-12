@@ -30,6 +30,11 @@ Logo : concept « briques » (maison en briques avec une brique rouge, ELY noir 
 - Maquettes et fichiers pour l'imprimeur dans `design/t-shirt/` (blanc et noir, devant + dos). Conseillé : blanc.
 - Le dos affiche elyfacade.be : **acheter le domaine avant d'imprimer** (encore libre le 11 octobre 2026).
 
+## Carte de visite
+
+- Exemple pour Elisei dans `design/carte-visite/`. À valider avec lui : titre « Gérant », texte, couleurs. Une carte pour Simi à faire si besoin.
+- Email à ajouter quand l'adresse pro existera. Le QR code ne marche qu'une fois elyfacade.be acheté et le site en ligne : **ne pas imprimer avant**.
+
 ## À la fin
 
 Domaine elyfacade.be + elyfacade.com, email pro, fiche Google Business (Halle), Search Console, QR code, cartes de visite (100, recto-verso), README.
