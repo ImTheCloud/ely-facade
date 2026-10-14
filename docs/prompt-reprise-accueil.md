@@ -22,7 +22,7 @@ Ce que Claudiu veut, dans ses mots : *« un header bien intégré, une bien meil
 
 1. Curseur avant/après en haut de page (Namur) : jugé moyen.
 2. Échafaudage dessiné, fenêtres, règle d'étages : « enfantin », supprimé.
-3. Prototypes « rouleau » (un rouleau de peinture dévoile l'après au défilement), **« briques » (la façade suivante se construit brique par brique, aimé au rendu mais « ça ne m'impressionne pas »)**, « lentille » (loupe qui montre l'après). Prototypes dans `~/Desktop/Prototypes Ely Facade/` (dossier hors dépôt).
+3. Prototypes « rouleau » (un rouleau de peinture dévoile l'après au défilement), **« briques » (la façade suivante se construit brique par brique, aimé au rendu mais « ça ne m'impressionne pas »)**, « lentille » (loupe qui montre l'après). Ces prototypes ont été supprimés : repartir de zéro.
 4. Versions claires A/B/C (curseur dans une tuile, duo de photos, photo puis texte) et D/E/F/G (plein écran, carte arrondie, ciel remplacé) : « j'aime aucun ».
 5. **Aucun effet au défilement dans le haut de page** : Claudiu l'a explicitement demandé (« rien au scroll »). Une seule image fixe.
 6. Noir lourd, angles droits, grandes capitales brutes sur fond noir, beige : refusés plus tôt (thème « chantier »). Il aime : moderne, doux, clair, arrondi, rouge en petites touches.
@@ -37,7 +37,7 @@ Ce que Claudiu veut, dans ses mots : *« un header bien intégré, une bien meil
 
 - Haut de page : `~/Downloads/image.jpeg` (2730 × 1536, façade de Namur nettoyée et retouchée par Claudiu avec son iPhone) déjà importée en `src/assets/accueil.jpg`. Il peut en fournir d'autres. Les originaux sont dans `~/Desktop/Charleroi`, `Mons`, `Namur`, `Halle`, `Evere` (ne jamais les mettre dans `public/` : GPS ; masquer visages, plaques, numéros, panneaux et bannières d'autres sociétés par un aplat avant tout import, avec `sharp`, sans métadonnées).
 - Le toit de l'immeuble de la photo d'accueil touche le bord haut de l'image : prévoir un cadrage qui le laisse respirer, ou une autre photo.
-- Paires avant/après validées dans `~/Desktop/Prototypes Ely Facade/Paires validées/` et dans `src/assets/photos/paires/`.
+- Paires avant/après validées (masquées, sans métadonnées) dans `src/assets/photos/paires/`.
 
 ## Règles non négociables (rappel de `CLAUDE.md`, les plus importantes ici)
 
