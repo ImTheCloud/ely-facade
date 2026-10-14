@@ -112,6 +112,7 @@ Pour chaque photo importée : **masquer par un aplat** visages, plaques d'immatr
 - Cadrage de la photo de Namur choisi à la main pour ordinateur **et** pour téléphone (photo large : sur mobile, soit un recadrage vertical dédié exporté depuis l'original, soit un bloc photo arrondi) ; le toit ne doit pas toucher le bord ; le texte va sur une zone calme (à gauche, sur les arbres/le ciel), pas sur les fenêtres.
 - Typographie forte (capitales, tracking serré), pastille d'accroche, un bouton principal rouge, le téléphone en secondaire ; apparition douce du texte au chargement seulement.
 - Section avant/après : grands curseurs par chantier, légendes avec la commune.
+- **Phrases d'émotion animées au défilement** entre les sections (décision 20) : c'est ce qui donne le rythme et le « waw » du reste de la page.
 - Section « étapes » avec **la chronologie de Mons** (membrane → sous-couche → finition ; cour : membrane → isolation → aile terminée) en vraies photos, sans texte technique inventé.
 
 ---
@@ -135,13 +136,12 @@ Pour chaque photo importée : **masquer par un aplat** visages, plaques d'immatr
    Correspondance avec les photos de Mons : membrane/panneaux sombres et fenêtres protégées → étape 2 ; couche crème → étape 3 ; façade blanche → étape 4-5. **Ne pas affirmer** de matériaux ou techniques précis (la couche noire n'est pas identifiée : membrane ou isolant, ne pas la nommer) ; légendes factuelles : « Échafaudage et protections », « Pose de l'isolation » (seulement si l'image le montre sans doute), « Sous-couche », « Finition », « Façade terminée ».
 
 10. **Ambiance en 5 mots** : **premium, confiance, moderne, lumineux, solide** (beaucoup d'espace, photo très soignée, peu d'éléments).
-11. **Titre du haut de page : il doit donner envie de contacter l'entreprise.** Claudiu veut un titre qui motive vraiment (pas seulement joli) : émotion (la fierté de retrouver une belle façade) + preuve concrète + facilité de passer à l'action. Texte retenu (FR, NL entre parenthèses), **uniquement des faits confirmés** :
+11. **Titre du haut de page : « VOTRE FAÇADE MÉRITE DE BRILLER. »** (NL : « UW GEVEL VERDIENT TE STRALEN. », l'IA corrige si le néerlandais ne sonne pas naturel). Choisi par Claudiu. Autour :
     - Pastille : « Rénovation de façades · Toute la Belgique » (« Gevelrenovatie · Heel België »)
-    - **Titre (3 lignes, capitales)** : « UNE FAÇADE NEUVE. UNE FIERTÉ RETROUVÉE. » (« EEN NIEUWE GEVEL. TROTS TERUG. » : l'IA peut corriger le néerlandais pour qu'il sonne naturel)
-    - Texte : « Crépi, peinture, nettoyage, rejointoiement, réparation de briques : de la petite maison à l'immeuble. Visite gratuite, garantie de 10 ans minimum. » (NL équivalent)
+    - Texte (faits confirmés seulement) : « Crépi, peinture, nettoyage, rejointoiement, réparation de briques : de la petite maison à l'immeuble. Visite gratuite, garantie de 10 ans minimum. » (NL équivalent)
     - **Bouton principal** : « Demander ma visite gratuite » (« Plan mijn gratis plaatsbezoek »), lien vers `#devis` ; secondaire : le téléphone `0492 43 96 17`.
-    - Sous le bouton, 3 mini-preuves discrètes en une ligne : « Visite sur place gratuite · Garantie 10 ans minimum · Partout en Belgique ».
-    - Si l'IA trouve un titre qui motive davantage avec les mêmes faits, elle peut le remplacer et le note dans `docs/avancement.md` (jamais de chiffre ou de promesse non confirmé : pas de « délai », « meilleur prix », « satisfaction garantie »…). L'ancien titre « Redonnez à votre façade tout son éclat. » reste une solution de repli.
+    - Sous le bouton, une ligne de 3 mini-preuves : « Visite sur place gratuite · Garantie 10 ans minimum · Partout en Belgique ».
+    - Jamais de chiffre ou de promesse non confirmé (pas de « délai », « meilleur prix », « satisfaction garantie »).
 12. **Mise en page du haut de page** : texte **en bas à gauche** sur la zone calme de la photo (arbres, pelouse), la façade reste visible à droite, comme Ironwood. Le texte ne doit jamais tomber sur les fenêtres du bâtiment.
 13. **Périmètre autonome** : accueil complet, puis **toutes les autres pages** (5 pages métier, Réalisations, À propos, mentions légales, vie privée, 404, SEO, README). L'IA va jusqu'au bout seule.
 14. **Police** : l'IA est autorisée à ajouter **une police d'affichage** (Fontsource, hébergée) pour les gros titres, en gardant DM Sans pour le texte, si cela améliore le rendu premium.
@@ -153,6 +153,20 @@ Pour chaque photo importée : **masquer par un aplat** visages, plaques d'immatr
 17. **Police** : plus grosse, plus moderne et plus caractère pour les titres de ce genre de site : **Bricolage Grotesque** (variable, `@fontsource-variable/bricolage-grotesque`, hébergée) en graisse 700-800, capitales, interlettrage serré (≈ -0.03 em), très grands corps (`clamp(44px, 7.2vw, 112px)`), pour tous les titres du site ; **DM Sans** reste pour le texte courant. Si le rendu n'est pas convaincant en capture, tester `Sora` ou `Manrope`, garder la meilleure, la noter. Pas de Google Fonts.
 18. **Couleurs du haut de page : cohérentes avec le site ET avec la photo** (pas de jaune/orange comme Ironwood, qui est dû à sa photo chaude). Palette : blanc, ardoise `#1f2429`, rouge `#c8202b` en touches seulement (point de la pastille, bouton principal). Voile sur la photo = **ardoise-bleutée** (ex. `rgba(15, 24, 36, …)`) en dégradé léger à gauche et en bas, jamais un noir neutre lourd. Échantillonner les couleurs de la photo (`sharp`) pour accorder le voile et les accents ; contraste AA obligatoire.
 19. **Référence de composition** : capture `docs/references/ironwood-hero-choisi-par-claudiu.webp` (celle que Claudiu a envoyée). À reproduire dans l'esprit : en-tête transparent (logo à gauche, liens au centre en blanc discret, bouton clair à droite), pastille d'accroche, titre très gros en capitales sur 3 lignes, 3 lignes de texte, **un** bouton avec petite flèche carrée, photo qui remplit tout l'écran, texte à gauche sur la zone calme. Reproduire la **qualité de finition**, pas les couleurs ni les textes.
+
+20. **Phrases d'émotion au défilement (le « waw » du reste de la page d'accueil).** Claudiu veut, **sous** le haut de page (qui reste fixe, « rien au scroll » ne concerne que lui), des **phrases fortes qui jouent sur l'émotion quand on défile**, avec de belles animations. Ce sont de grandes sections-citations (très grand titre Bricolage Grotesque, beaucoup d'espace, parfois sur fond de photo plein cadre), placées entre les sections de contenu :
+    | Après la section… | Phrase (FR) | NL (à faire relire) |
+    |---|---|---|
+    | Haut de page | **Une façade refaite pour durer.** + « Garantie de 10 ans minimum » | **Een gevel die blijft.** |
+    | Bande de chiffres / avant-avant-après | **La première chose qu'on voit de chez vous.** | **Het eerste wat men van uw huis ziet.** |
+    | Avant/après | **Chaque façade a sa seconde jeunesse.** | **Elke gevel krijgt een tweede jeugd.** |
+    | Étapes | **De l'échafaudage à la façade terminée.** | **Van steiger tot afgewerkte gevel.** |
+    | UMons | **Une maison ou une université : la même exigence.** | **Een huis of een universiteit: dezelfde zorg.** |
+    | Galerie | **Ce que vous voyez, ce sont nos chantiers.** | **Wat u ziet, zijn onze werven.** |
+    | Équipe | **Deux frères, une équipe.** | **Twee broers, één team.** |
+    | Appel final | **Votre façade mérite de briller. Parlons-en.** | **Uw gevel verdient te stralen. Laten we praten.** |
+    L'IA peut ajuster, remplacer ou en ajouter 2 ou 3 du même style (courtes, émotionnelles, **uniquement vraies et vérifiables**, jamais de chiffre inventé) ; elle les écrit en FR **et** NL dans `fr.ts`/`nl.ts`.
+    **Animations (soignées, sobres, premium)** : apparition ligne par ligne (masque qui glisse vers le haut) ou mot par mot qui s'éclaircit progressivement avec le défilement ; léger parallaxe sur les fonds photo ; un soulignement ou un mot en rouge qui se trace ; compteurs doux. Uniquement `transform` et `opacity` (60 images/s, rien qui bloque le défilement), via `IntersectionObserver` ou CSS scroll-driven animations avec repli ; Lenis déjà présent (`src/scripts/site.ts`). **Tout se coupe avec `prefers-reduced-motion`, le texte est lisible sans JavaScript, les curseurs avant/après ne bloquent jamais le défilement.** Pas de mouvement dans le haut de page.
 
 ## 5. Règles non négociables (rappel, voir `CLAUDE.md`)
 
@@ -198,7 +212,7 @@ Netlify (relier GitHub, retirer le badge, adresse des devis), acheter elyfacade.
 2. **Nettoyage** : supprimer les anciennes photos du projet et tout le code/texte FR+NL devenus inutiles (aucun code mort).
 3. **Références** : ouvrir les liens de `docs/references/README.md`, enregistrer les captures, remplir le tableau.
 4. **En-tête et haut de page** : refaire `Entete.astro` + `Hero.astro` selon la checklist (boucle d'auto-critique).
-5. **Reste de l'accueil**, dans cet ordre : bande de chiffres sobre (« 6 ans de métier pour notre gérant », « 50+ chantiers réalisés par nos gérants », « 10 ans de garantie minimum », « 8 personnes dans l'équipe ») → **avant/après** (**UMons cour intérieure en premier**, puis les autres ; grands curseurs, un par chantier avec la commune, y compris Halle, les deux chantiers de Namur, Mons, Charleroi) → **« Les étapes d'une façade »** avec la chronologie de Mons/UMons en vraies photos (ordre confirmé, légendes factuelles) → **chantier prestigieux : Université de Mons (UMons)** mis en valeur → réalisations par commune (galerie) → métiers → équipe → méthode → FAQ → appel. **Utiliser toutes les photos** quelque part.
+5. **Reste de l'accueil**, dans cet ordre : bande de chiffres sobre (« 6 ans de métier pour notre gérant », « 50+ chantiers réalisés par nos gérants », « 10 ans de garantie minimum », « 8 personnes dans l'équipe ») → **phrases d'émotion animées (décision 20) entre les sections** → **avant/après** (**UMons cour intérieure en premier**, puis les autres ; grands curseurs, un par chantier avec la commune, y compris Halle, les deux chantiers de Namur, Mons, Charleroi) → **« Les étapes d'une façade »** avec la chronologie de Mons/UMons en vraies photos (ordre confirmé, légendes factuelles) → **chantier prestigieux : Université de Mons (UMons)** mis en valeur → réalisations par commune (galerie) → métiers → équipe → méthode → FAQ → appel. **Utiliser toutes les photos** quelque part.
 6. **Pages métier** (5), **Réalisations** (une page ou section par chantier), **À propos**, **mentions légales** (« ELY FAÇADE BV », n° 1030.283.223, hébergeur Netlify), **vie privée**, **404**, en FR et NL, avec le même niveau de soin que l'accueil.
 7. **SEO** : titre et description par page, JSON-LD `GeneralContractor`, `Service` et fil d'Ariane, sitemap hreflang.
 8. **Vérifications finales** : contrastes AA, clavier, `prefers-reduced-motion`, sans JavaScript, poids des images, Android et iPhone, `npm run build`.
