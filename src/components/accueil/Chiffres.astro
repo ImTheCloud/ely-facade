@@ -9,6 +9,7 @@ const { langue } = Astro.props;
 const chiffres = t(langue).accueil.chiffres;
 ---
 
+<div class="wrap chiffres-bande">
 <ul class="chiffres" aria-label={chiffres.aria}>
   {
     chiffres.liste.map((chiffre, i) => (
@@ -19,9 +20,14 @@ const chiffres = t(langue).accueil.chiffres;
     ))
   }
 </ul>
+</div>
 
 <style>
-  /* Une bande de chiffres posée sur le bas de la photo. */
+  .chiffres-bande {
+    margin-top: calc(var(--section-gap) * 0.6);
+  }
+
+  /* Une bande de quatre chiffres sous le haut de page. */
   .chiffres {
     display: grid;
     grid-template-columns: repeat(2, 1fr);

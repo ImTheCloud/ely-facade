@@ -26,3 +26,19 @@ export const etapes = {
   termine: charleroiApres,
 } as const;
 export type CleEtape = keyof typeof etapes;
+
+/** Toutes les photos de chantier (sans métadonnées, sans adresse), pour la galerie. */
+const fichiers = import.meta.glob<{ default: ImageMetadata }>('../assets/photos/*.jpg', { eager: true });
+export const galerie = Object.entries(fichiers)
+  .map(([chemin, module]) => {
+    const nom = chemin.split('/').pop()!.replace('.jpg', '');
+    return { nom, commune: nom.split('-')[0] as 'namur' | 'charleroi' | 'mons', image: module.default };
+  })
+  .sort((a, b) => a.nom.localeCompare(b.nom));
+
+/** Les façades terminées du haut de page : la suivante se construit brique par brique. */
+export const heroPhotos = [
+  { image: namurApres, cadrage: 0.48 },
+  { image: charleroiApres, cadrage: 0.4 },
+  { image: crepi, cadrage: 0.55 },
+] as const;

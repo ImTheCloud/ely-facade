@@ -14,13 +14,7 @@ interface Props {
   apres: ImageMetadata;
   altAvant: string;
   altApres: string;
-  /** Photo du haut de page : chargée tout de suite. */
-  priorite?: boolean;
-  /** La photo « après » se révèle toute seule quand le curseur arrive à l'écran. */
-  animer?: boolean;
   sizes?: string;
-  /** Cadrage de la photo quand l'écran est plus étroit qu'elle (object-position). */
-  cadrage?: string;
   class?: string;
 }
 
@@ -30,27 +24,19 @@ const {
   apres,
   altAvant,
   altApres,
-  priorite = false,
-  animer = false,
   sizes = '100vw',
-  cadrage = '50% 50%',
   class: classe,
 } = Astro.props;
 const libelles = t(langue).accueil.comparateur;
-const image = { widths: [640, 960, 1340], sizes, format: 'webp' as const, loading: priorite ? ('eager' as const) : ('lazy' as const) };
+const image = { widths: [640, 960, 1340], sizes, format: 'webp' as const, loading: 'lazy' as const };
 ---
 
-<div
-  class:list={['comparateur', classe]}
-  data-comparateur
-  data-animer={animer ? '' : undefined}
-  style={`--cadrage: ${cadrage}`}
->
+<div class:list={['comparateur', classe]} data-comparateur>
   <div class="comparateur__couche">
-    <Image src={avant} alt={altAvant} fetchpriority={priorite ? 'high' : undefined} {...image} />
+    <Image src={avant} alt={altAvant} {...image} />
   </div>
   <div class="comparateur__couche comparateur__apres">
-    <Image src={apres} alt={altApres} {...image} loading={priorite || animer ? 'eager' : 'lazy'} />
+    <Image src={apres} alt={altApres} {...image} />
   </div>
 
   <span class="comparateur__etiquette comparateur__etiquette--avant" aria-hidden="true">{libelles.avant}</span>
@@ -85,11 +71,6 @@ const image = { widths: [640, 960, 1340], sizes, format: 'webp' as const, loadin
     -webkit-user-select: none;
   }
 
-  /* Avec JavaScript, un curseur animé commence sur « pendant les travaux » (avant le premier affichage). */
-  :global(.js) .comparateur[data-animer] {
-    --pos: 100%;
-  }
-
   .comparateur__couche {
     position: absolute;
     inset: 0;
@@ -100,7 +81,6 @@ const image = { widths: [640, 960, 1340], sizes, format: 'webp' as const, loadin
     width: 100%;
     height: 100%;
     object-fit: cover;
-    object-position: var(--cadrage);
   }
 
   .comparateur__apres {
