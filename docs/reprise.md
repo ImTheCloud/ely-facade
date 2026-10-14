@@ -76,7 +76,7 @@ Inventaire (n° = ordre alphabétique du dossier, dimensions, ce que je vois). L
 
 **Longue façade (côté gauche, panneau UMons)** : `Avant:apres copie/avant.jpeg` (échafaudage, façade en cours) → `mons-longue-facade/pendant.jpg` ; `…/apres.jpeg` (terminée, ciel bleu) → `mons-longue-facade/apres.jpg`.
 
-> L'ordre des étapes est **déduit des images**. `CLAUDE.md` demande de le faire confirmer par Elisei/Simi (ordre exact, mots, étapes manquantes comme préparation du support ou profilés) : à noter dans `docs/suivi-client.md`, ne pas affirmer de détails techniques (matériaux, épaisseurs…).
+> L'ordre des étapes est **confirmé par Elisei** (voir section 4, point 9). Ne pas affirmer de détails techniques (matériaux, épaisseurs…) au-delà de ce qu'on voit.
 
 ### Halle : maison en briques claires
 `Halle Maison/Avant:Apres/pendant.jpeg` (1600×1200, pignon sous échafaudage, lumière dorée) → `halle-maison/pendant-pignon.jpg` ; `…/apres.jpeg` (1200×1600, pignon terminé, terre au premier plan) → `halle-maison/apres-pignon.jpg` ; `rendufinal.jpeg` (entrée, portrait), `rendufinal2.jpeg` (angle fenêtre noire), `rendufinal3.jpeg` (baie vitrée, **reflet d'une personne dans la vitre** : à masquer) → `halle-maison/final-entree.jpg`, `final-angle.jpg`, `final-baie-vitree.jpg`.
@@ -121,12 +121,12 @@ Pour chaque photo importée : **masquer par un aplat** visages, plaques d'immatr
 1. **Immeuble à balcons** : c'est aussi Namur mais **un autre chantier** ; le lieu exact n'a pas d'importance, on affiche seulement la commune. À ranger comme un chantier à part (`namur-immeuble-balcons`) ; libre au développeur de choisir comment le présenter sur le site (deux chantiers distincts à Namur).
 2. **Charleroi** : la qualité des « après » (1024 px) est la seule disponible : s'en contenter (les afficher en taille raisonnable, pas en plein écran).
 3. **Noms de sociétés visibles (Wust, De Graeve, Travhydro, MAES, ACT) : NE PAS masquer** (« ce n'est pas important »). Continuer à masquer visages, plaques d'immatriculation, numéros de maison, coordonnées, panneaux de chantier avec adresse.
-4. **UMons** : **citer l'université** comme référence (« Université de Mons (UMons) », chantier prestigieux). Montrer les panneaux UMons tels quels. Rester factuel : « façades de bâtiments de l'Université de Mons », sans inventer de détails (surface, durée, client, rôle exact des gérants). À noter dans `docs/suivi-client.md` : faire confirmer par Elisei qu'il peut citer l'UMons publiquement.
+4. **UMons** : **citer l'université** comme référence (« Université de Mons (UMons) », chantier prestigieux). Montrer les panneaux UMons tels quels. Rester factuel : « façades de bâtiments de l'Université de Mons », sans inventer de détails (surface, durée, client, rôle exact des gérants). **Confirmé par Elisei** : l'UMons peut être cité publiquement.
 5. **Halle** : `pendant` et `apres` sont bien le même pignon : en faire une paire avant/après (curseur).
 6. **Personnes** : retirer (recadrage ou aplat sur les visages) la photo de face de Namur.
 7. **Photo retouchée du haut de page** (ciel, objets retirés) : acceptée par Elisei et Simi.
 8. **Vidéos** : jamais affichées.
-9. **Ordre des étapes de Mons** : Claudiu demande de se renseigner. Ordre standard d'une façade isolée par l'extérieur sous enduit, d'après des sources de la profession (OPPBTP/FFB, IZI by EDF, fiches métier, sources françaises ; la pratique belge est la même dans ses grandes lignes, **à faire confirmer par Elisei**) :
+9. **Ordre des étapes de Mons** : Claudiu demande de se renseigner. Ordre standard d'une façade isolée par l'extérieur sous enduit, d'après des sources de la profession (OPPBTP/FFB, IZI by EDF, fiches métier, sources françaises ; la pratique belge est la même dans ses grandes lignes, **ordre confirmé par Elisei le 15 octobre**) :
    1. préparation du support et échafaudage (protections des ouvertures) ;
    2. pose des panneaux isolants (collés et/ou chevillés) ;
    3. sous-enduit armé : treillis de fibre de verre marouflé dans le sous-enduit (le treillis n'est pas une étape séparée) + renforts aux fenêtres et en haut de façade ;
