@@ -1,5 +1,5 @@
 ---
-/** Haut de page : la plus belle façade terminée en plein écran, le titre et les boutons dessus. Rien ne bouge au défilement. */
+/** Haut de page : une grande photo plein écran, le titre et les boutons à gauche. Rien ne bouge au défilement. */
 import { Image } from 'astro:assets';
 import Bouton from '../Bouton.astro';
 import { heroPhoto } from '../../data/chantiers';
@@ -20,8 +20,8 @@ const hero = textes.accueil.hero;
     <Image
       src={heroPhoto.image}
       alt={hero.alt}
-      widths={[640, 960, 1280, 1600]}
-      sizes="(max-width: 899px) 230vw, 100vw"
+      widths={[640, 960, 1280, 1600, 2000, 2400]}
+      sizes="100vw"
       format="webp"
       loading="eager"
       fetchpriority="high"
@@ -31,12 +31,9 @@ const hero = textes.accueil.hero;
   <div class="hero__voile"></div>
 
   <div class="hero__texte">
-    <div class="hero__titre">
+    <div class="hero__contenu">
       <p class="hero__surtitre">{hero.surtitre}</p>
       <h1>{hero.titreDebut} <span class="hero__rouge">{hero.titreFin}</span></h1>
-    </div>
-
-    <div class="hero__cote">
       <p class="hero__lead">{hero.texte}</p>
       <div class="hero__actions">
         <Bouton href={lienDevis(langue)} variante="accent" iconeApres="fleche-diag" large>{textes.actions.devis}</Bouton>
@@ -53,7 +50,7 @@ const hero = textes.accueil.hero;
   .hero {
     position: relative;
     height: 100svh;
-    min-height: 560px;
+    min-height: 600px;
     overflow: hidden;
     color: #fff;
     background: #14171a;
@@ -68,19 +65,20 @@ const hero = textes.accueil.hero;
     object-fit: cover;
   }
 
+  /* Un voile sombre à gauche et en bas : le texte reste lisible, la façade reste visible à droite. */
   .hero__voile {
     position: absolute;
     inset: 0;
-    background: linear-gradient(to top, rgba(12, 14, 16, 0.84) 0%, rgba(12, 14, 16, 0.46) 40%, rgba(12, 14, 16, 0.06) 72%, rgba(12, 14, 16, 0.3) 100%);
+    background:
+      linear-gradient(to top, rgba(8, 14, 22, 0.78) 0%, rgba(8, 14, 22, 0.3) 45%, rgba(8, 14, 22, 0) 70%),
+      linear-gradient(to right, rgba(8, 14, 22, 0.5) 0%, rgba(8, 14, 22, 0.12) 55%, rgba(8, 14, 22, 0) 80%);
   }
 
   .hero__texte {
     position: relative;
     z-index: 2;
     display: flex;
-    flex-direction: column;
-    justify-content: flex-end;
-    gap: 18px;
+    align-items: flex-end;
     height: 100%;
     max-width: calc(var(--content-max) + var(--gutter) * 2);
     margin-inline: auto;
@@ -88,30 +86,56 @@ const hero = textes.accueil.hero;
     padding: calc(var(--header-h) + 24px) var(--gutter) 108px;
   }
 
-  .hero__surtitre {
-    font-size: var(--size-tiny);
-    font-weight: 700;
-    letter-spacing: 0.08em;
-    text-transform: uppercase;
-    color: rgba(255, 255, 255, 0.82);
+  .hero__contenu {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 18px;
+    max-width: 680px;
   }
 
-  .hero__titre h1 {
-    margin-top: 10px;
-    font-size: clamp(44px, 6.2vw, 96px);
-    line-height: 0.98;
+  .hero__surtitre {
+    display: inline-flex;
+    align-items: center;
+    gap: 10px;
+    padding: 8px 16px 8px 14px;
+    border: 1px solid rgba(255, 255, 255, 0.4);
+    border-radius: var(--radius-pill);
+    background: rgba(255, 255, 255, 0.14);
+    backdrop-filter: blur(10px);
+    -webkit-backdrop-filter: blur(10px);
+    font-size: var(--size-tiny);
+    font-weight: 600;
     color: #fff;
   }
 
+  .hero__surtitre::before {
+    content: '';
+    width: 8px;
+    height: 8px;
+    border-radius: 50%;
+    background: var(--color-accent);
+  }
+
+  .hero__contenu h1 {
+    font-size: clamp(38px, 5.4vw, 84px);
+    line-height: 1;
+    letter-spacing: -0.035em;
+    text-transform: uppercase;
+    color: #fff;
+    text-shadow: 0 2px 40px rgba(0, 20, 50, 0.35);
+  }
+
   .hero__rouge {
-    color: #ff6a72;
+    color: #ff7a81;
   }
 
   .hero__lead {
     max-width: 46ch;
     font-size: 16px;
-    line-height: 1.5;
-    color: rgba(255, 255, 255, 0.9);
+    line-height: 1.55;
+    color: rgba(255, 255, 255, 0.92);
+    text-shadow: 0 1px 18px rgba(0, 20, 50, 0.5);
   }
 
   .hero__actions,
@@ -127,58 +151,33 @@ const hero = textes.accueil.hero;
     -webkit-backdrop-filter: blur(18px) saturate(1.5);
   }
 
-  /* Téléphone : la photo est large, donc la fenêtre est presque carrée (on voit plus de façade) et le texte est dessous. */
-  @media (max-width: 899px) {
-    .hero__photo {
-      inset: auto;
-      top: calc(var(--header-h) + 12px);
-      left: 12px;
-      width: calc(100% - 24px);
-      height: 46svh;
-      overflow: hidden;
-      border-radius: 24px;
-    }
-
-    .hero__voile,
-    .hero__lead {
-      display: none;
-    }
-  }
-
   @media (min-width: 900px) {
     .hero__texte {
-      display: grid;
-      grid-template-columns: 7fr 5fr;
-      align-items: end;
-      column-gap: 56px;
-      padding-bottom: 48px;
+      align-items: center;
+      padding-bottom: 8vh;
     }
 
     .hero__lead {
       font-size: var(--size-lead);
     }
 
-    .hero__cote {
-      display: grid;
-      gap: 20px;
-    }
-
     .hero__actions {
       display: flex;
       flex-wrap: wrap;
       gap: 12px;
+      margin-top: 6px;
     }
 
     .hero__note {
       display: block;
       font-size: var(--size-small);
       font-weight: 600;
-      color: rgba(255, 255, 255, 0.78);
+      color: rgba(255, 255, 255, 0.82);
     }
 
     .hero :global(.hero__tel) {
-      background: rgba(255, 255, 255, 0.12);
-      border-color: rgba(255, 255, 255, 0.4);
+      background: rgba(255, 255, 255, 0.14);
+      border-color: rgba(255, 255, 255, 0.45);
       color: #fff;
       backdrop-filter: blur(8px);
       -webkit-backdrop-filter: blur(8px);
@@ -186,7 +185,7 @@ const hero = textes.accueil.hero;
 
     .hero :global(.hero__tel:hover) {
       border-color: #fff;
-      background: rgba(255, 255, 255, 0.2);
+      background: rgba(255, 255, 255, 0.22);
     }
   }
 </style>

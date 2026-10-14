@@ -45,3 +45,9 @@ Domaine elyfacade.be + elyfacade.com, email pro, fiche Google Business (Halle), 
 - **L'ordre exact des étapes d'un chantier** : le site affiche échafaudage et protections, isolation, sous-couche et armature, crépi de finition, façade terminée. À faire confirmer et corriger (ordre, mots, étapes manquantes comme préparation du support ou profilés).
 - Le chantier de Namur a-t-il bien été fait par eux de A à Z ? (légendes « Grand bâtiment », « Rangée de maisons » à valider).
 
+
+## Photos (14 octobre 2026)
+
+- Halle : maison en briques claires, photos « pendant » et « après » mais pas du même angle, donc pas d'avant/après. Evere : une seule photo (de nuit). À demander : des photos « avant » du même endroit pour Halle et Evere.
+- Deux vidéos de Halle reçues (`Desktop/Halle`) : non affichées (règle : pas de vidéo sur le site).
+- Le haut de page utilise une photo retouchée (ciel, objets retirés) : à faire valider par Elisei et Simi.

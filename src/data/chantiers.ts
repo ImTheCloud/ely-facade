@@ -11,6 +11,9 @@ import namurRueLargeAvant from '../assets/photos/paires/namur-rue-large-avant.jp
 import namurRueApres from '../assets/photos/paires/namur-rue-apres.jpg';
 import namurFaceAvant from '../assets/photos/paires/namur-face-avant.jpg';
 import namurFaceApres from '../assets/photos/paires/namur-face-apres.jpg';
+import namurBalconsAvant from '../assets/photos/paires/namur-balcons-avant.jpg';
+import namurBalconsApres from '../assets/photos/paires/namur-balcons-apres.jpg';
+import accueil from '../assets/accueil.jpg';
 import monsLongueAvant from '../assets/photos/paires/mons-longue-avant.jpg';
 import monsLongueApres from '../assets/photos/paires/mons-longue-apres.jpg';
 import monsCourAvant1 from '../assets/photos/paires/mons-cour-avant-1.jpg';
@@ -25,6 +28,7 @@ export const paires = {
   'namur-rue': { avant: namurRueAvant, apres: namurRueApres },
   'namur-rue-large': { avant: namurRueLargeAvant, apres: namurRueApres },
   'namur-face': { avant: namurFaceAvant, apres: namurFaceApres },
+  'namur-balcons': { avant: namurBalconsAvant, apres: namurBalconsApres },
   charleroi: { avant: charleroiAvant, apres: charleroiApres },
   'mons-longue': { avant: monsLongueAvant, apres: monsLongueApres },
   'mons-cour-1': { avant: monsCourAvant1, apres: monsCourApres },
@@ -50,9 +54,9 @@ const fichiers = import.meta.glob<{ default: ImageMetadata }>('../assets/photos/
 export const galerie = Object.entries(fichiers)
   .map(([chemin, module]) => {
     const nom = chemin.split('/').pop()!.replace('.jpg', '');
-    return { nom, commune: nom.split('-')[0] as 'namur' | 'charleroi' | 'mons', image: module.default };
+    return { nom, commune: nom.split('-')[0] as 'namur' | 'charleroi' | 'mons' | 'halle' | 'evere', image: module.default };
   })
   .sort((a, b) => a.nom.localeCompare(b.nom));
 
 /** La photo du haut de page : l'immeuble de Namur terminé, vu d'en haut. */
-export const heroPhoto = { image: namurFaceApres, cadrage: '50% 35%' } as const;
+export const heroPhoto = { image: accueil, cadrage: '50% 40%' } as const;

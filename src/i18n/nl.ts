@@ -64,8 +64,8 @@ export const nl = {
   accueil: {
     hero: {
       surtitre: 'Gevelrenovatie · Heel België',
-      titreDebut: 'Uw gevel,',
-      titreFin: 'als nieuw.',
+      titreDebut: 'Geef uw gevel',
+      titreFin: 'zijn glans terug.',
       texte:
         'Gevelpleister, schilderwerk, reiniging, voegwerk, herstel van bakstenen: wij brengen uw gevel weer in orde, van het kleine huis tot het appartementsgebouw.',
       note: 'Gratis plaatsbezoek, zonder verplichting.',
@@ -104,6 +104,13 @@ export const nl = {
           legende: 'Vooraanzicht',
           altAvant: 'Gevel vooraanzicht onder steiger, in Namen',
           altApres: 'Hetzelfde gebouw afgewerkt, van boven gezien, in Namen',
+        },
+        {
+          cle: 'namur-balcons',
+          commune: 'Namen',
+          legende: 'Gebouw met balkons',
+          altAvant: 'Gebouw met balkons onder steiger en netten, in Namen',
+          altApres: 'Hetzelfde gebouw met balkons afgewerkt, in Namen',
         },
         {
           cle: 'charleroi',
@@ -206,8 +213,17 @@ export const nl = {
       fermer: 'Sluiten',
       precedente: 'Vorige foto',
       suivante: 'Volgende foto',
-      communes: { namur: 'Namen', charleroi: 'Charleroi', mons: 'Bergen' },
+      communes: { namur: 'Namen', charleroi: 'Charleroi', mons: 'Bergen', halle: 'Halle', evere: 'Evere' },
       photos: {
+        'namur-balcons-gris': 'Afgewerkt gebouw met balkons onder een grijze lucht, in Namen',
+        'namur-balcons-poteau': 'Afgewerkt gebouw met balkons, gezien vanaf de straathoek, in Namen',
+        'halle-pignon-brique': 'Puntgevel in lichte baksteen onder steiger, in Halle',
+        'halle-pignon-termine': 'Huis met afgewerkte puntgevel in lichte baksteen, in Halle',
+        'halle-baie-vitree': 'Gevel in lichte baksteen met grote glaspartij, in Halle',
+        'halle-angle-fenetre': 'Hoek van een huis in lichte baksteen met zwart raam, in Halle',
+        'halle-entree': 'Ingang van een huis in lichte baksteen, in Halle',
+        'halle-pignon-fenetre': 'Puntgevel in lichte baksteen met zwart raam, in Halle',
+        'evere-immeuble-nuit': 'Appartementsgebouw op een straathoek, bij nacht, in Evere',
         'namur-avant': 'Gebouw met drie verdiepingen onder steiger, in Namen',
         'namur-apres': 'Hetzelfde gebouw, afgewerkte gevel, in Namen',
         'namur-terminee-chantier': 'Afgewerkt wit en grijs gebouw, steiger ernaast, in Namen',

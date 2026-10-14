@@ -64,8 +64,8 @@ export const fr = {
   accueil: {
     hero: {
       surtitre: 'Rénovation de façades · Toute la Belgique',
-      titreDebut: 'Votre façade,',
-      titreFin: 'comme neuve.',
+      titreDebut: 'Redonnez à votre façade',
+      titreFin: 'tout son éclat.',
       texte:
         'Crépi, peinture, nettoyage, rejointoiement, réparation de briques : nous remettons votre façade en état, de la petite maison à l’immeuble.',
       note: 'Visite sur place gratuite, sans engagement.',
@@ -104,6 +104,13 @@ export const fr = {
           legende: 'De face',
           altAvant: 'Façade de face sous échafaudage, à Namur',
           altApres: 'Le même immeuble terminé, vu d’en haut, à Namur',
+        },
+        {
+          cle: 'namur-balcons',
+          commune: 'Namur',
+          legende: 'Immeuble à balcons',
+          altAvant: 'Immeuble à balcons sous échafaudage et filets, à Namur',
+          altApres: 'Le même immeuble à balcons terminé, à Namur',
         },
         {
           cle: 'charleroi',
@@ -206,8 +213,17 @@ export const fr = {
       fermer: 'Fermer',
       precedente: 'Photo précédente',
       suivante: 'Photo suivante',
-      communes: { namur: 'Namur', charleroi: 'Charleroi', mons: 'Mons' },
+      communes: { namur: 'Namur', charleroi: 'Charleroi', mons: 'Mons', halle: 'Halle', evere: 'Evere' },
       photos: {
+        'namur-balcons-gris': 'Immeuble à balcons terminé sous un ciel gris, à Namur',
+        'namur-balcons-poteau': 'Immeuble à balcons terminé, vu du coin de la rue, à Namur',
+        'halle-pignon-brique': 'Pignon en briques claires sous échafaudage, à Halle',
+        'halle-pignon-termine': 'Maison au pignon en briques claires terminé, à Halle',
+        'halle-baie-vitree': 'Façade en briques claires avec grande baie vitrée, à Halle',
+        'halle-angle-fenetre': 'Angle d’une maison en briques claires avec sa fenêtre noire, à Halle',
+        'halle-entree': 'Entrée d’une maison en briques claires, à Halle',
+        'halle-pignon-fenetre': 'Pignon en briques claires et fenêtre noire, à Halle',
+        'evere-immeuble-nuit': 'Immeuble d’appartements au coin d’une rue, de nuit, à Evere',
         'namur-avant': 'Immeuble de trois étages sous échafaudage, à Namur',
         'namur-apres': 'Le même immeuble, façade terminée, à Namur',
         'namur-terminee-chantier': 'Immeuble blanc et gris terminé, échafaudage voisin, à Namur',
