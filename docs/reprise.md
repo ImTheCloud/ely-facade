@@ -142,6 +142,8 @@ Pour chaque photo importée : **masquer par un aplat** visages, plaques d'immatr
 
 15. **Ordre des avant/après** : le premier curseur de la section est **UMons, la cour intérieure** (dossier `UMons Université/Avant:apres`, le 1er dossier : avant = membrane noire, après = `WhatsApp Image … (8).jpeg`, aile de gauche terminée) : Claudiu trouve cette photo « après » très belle. Les autres suivent (UMons longue façade, UMons immeuble d'angle, Namur ×2, Halle, Charleroi). Si, en voyant les images, l'IA juge que Claudiu parlait plutôt du bâtiment à 4 étages (`Avant:apres copie 2/apres.jpeg`), elle le note dans `docs/avancement.md` et met les deux en tête.
 
+16. **Section « étapes » = le dossier `UMons Université/Avant:apres copie 2`** (immeuble à 4 étages, bâche Wust, 6 photos) : Claudiu l'aime beaucoup pour ses nombreuses étapes. C'est **la colonne vertébrale de la section** : utiliser les 6 photos (4 de la membrane noire à des moments différents, la sous-couche crème, la finition blanche), dans l'ordre confirmé, avec légendes factuelles. La cour intérieure (3 étapes) sert de complément ; Namur et Halle peuvent illustrer l'étape finale.
+
 ## 5. Règles non négociables (rappel, voir `CLAUDE.md`)
 
 - Ne jamais inventer d'information sur l'entreprise. Société récente (fin 2025) : jamais « depuis… ». « 6 ans de métier pour notre gérant », « 50+ chantiers réalisés par nos gérants », « garantie de 10 ans minimum », « équipe de 8 personnes, des indépendants » (jamais « salariés »). Pas de « un seul interlocuteur ».
