@@ -2,8 +2,8 @@
 
 Document unique pour démarrer une nouvelle conversation. Il remplace l'ancien prompt de reprise. Lire aussi `CLAUDE.md` (règles non négociables), `docs/brief.md`, `docs/suivi-client.md`.
 
-> **Prompt à coller en premier message (mode autonome) :**
-> « Lis `docs/reprise.md` en entier, puis `CLAUDE.md`, `docs/brief.md` et `docs/references/README.md`. Toutes les décisions sont prises (section 4) : ne me les redemande pas. Exécute tout le plan de la section 8, de bout en bout, sans t'arrêter pour demander mon avis, en suivant le protocole d'autonomie et les critères de qualité du document. Tu ne m'interromps que si un choix est impossible à trancher avec le document. Commit après chaque étape (jamais de push). Tu as carte blanche pour innover (section 9) : propose et réalise au moins 4 idées originales de ton choix qui donnent envie de contacter l'entreprise, dans le respect des règles. À la fin, donne-moi un rapport court avec captures. »
+> **Prompt à coller en premier message (mode autonome total) :**
+> « Lis `docs/reprise.md` en entier, puis `CLAUDE.md`, `docs/brief.md` et `docs/references/README.md`. **Ne me pose aucune question et ne t'arrête pas** : code tout, de bout en bout, jusqu'à la dernière étape de la section 8 (y compris toutes les pages, le SEO, les vérifications et le README), dans un seul long travail. Si tu hésites, choisis toi-même, note ton choix dans `docs/avancement.md` et continue. Pour le haut de page, réalise **3 variantes** différentes (section 8, étape 4) pour que je choisisse à la fin. Tu as carte blanche pour innover (section 9). Commit après chaque étape (jamais de push). Je ne te parlerai qu'à la fin : termine par un rapport court avec captures et le lien pour comparer les variantes. »
 
 ---
 
@@ -190,7 +190,7 @@ Netlify (relier GitHub, retirer le badge, adresse des devis), acheter elyfacade.
 ## 8. Plan d'exécution autonome (de bout en bout)
 
 ### Protocole d'autonomie
-- **Ne pas s'arrêter pour demander** « c'est bon ? ». Les décisions sont dans la section 4 ; en cas de doute, choisir l'option la plus conforme à `CLAUDE.md` et à l'ambiance premium, la noter dans `docs/avancement.md`, continuer.
+- **Ne poser AUCUNE question à Claudiu pendant le travail et ne pas terminer son tour avant la dernière étape** (le rapport final). Un point d'étape se fait dans le même tour, sans attendre de réponse. **Ne pas s'arrêter pour demander** « c'est bon ? ». Les décisions sont dans la section 4 ; en cas de doute, choisir l'option la plus conforme à `CLAUDE.md` et à l'ambiance premium, la noter dans `docs/avancement.md`, continuer.
 - **Seules raisons de s'arrêter** : une information sur l'entreprise manque et ne peut pas être omise (la noter dans `docs/suivi-client.md` et omettre l'élément), ou un outil/droit manque.
 - **Commit après chaque étape** (`npm run build` sans erreur d'abord), jamais de push, sans mention de Claude.
 - Tenir `docs/avancement.md` à jour (ce qui est fait, ce qui reste, décisions prises seul).
@@ -211,13 +211,13 @@ Netlify (relier GitHub, retirer le badge, adresse des devis), acheter elyfacade.
 1. **Photos** : suivre la section 2. Renommer et ranger ; importer dans `src/assets/photos/<commune>-<chantier>/` avec masquage (visages, plaques, numéros, panneaux avec adresse ; les noms de sociétés restent visibles), recadrages, sans métadonnées (`sharp`) ; vérifier chaque image à l'œil ; export haute qualité pour le haut de page.
 2. **Nettoyage** : supprimer les anciennes photos du projet et tout le code/texte FR+NL devenus inutiles (aucun code mort).
 3. **Références** : ouvrir les liens de `docs/references/README.md`, enregistrer les captures, remplir le tableau.
-4. **En-tête et haut de page** : refaire `Entete.astro` + `Hero.astro` selon la checklist (boucle d'auto-critique).
+4. **En-tête et haut de page en 3 VARIANTES** (Claudiu choisira à la fin ; l'IA ne l'interroge pas) : refaire `Entete.astro` + `Hero.astro` selon la checklist, avec trois partis pris **vraiment différents** (par exemple : A = photo fixe très soignée avec entrée douce zoom/mise au point ; B = film d'ouverture en motion design ou vidéo fabriquée à partir des photos ; C = reflet de lumière sur « briller » + signature brique rouge ; l'IA peut inventer mieux). Mécanisme simple et propre : une variante par défaut (**celle que l'IA juge la meilleure**), les autres accessibles par l'adresse `?hero=a`, `?hero=b`, `?hero=c` (ou pages `/variantes/…` en `noindex`, hors sitemap), et une page `docs/variantes.md` qui explique chaque variante et comment la voir. Chaque variante passe la checklist et la boucle d'auto-critique. **À la livraison, ce mécanisme reste en place** pour que Claudiu compare ; l'étape de nettoyage (suppression des variantes non choisies, aucun code mort) est notée dans `docs/avancement.md` comme « à faire dès que Claudiu a choisi ».
 5. **Reste de l'accueil**, dans cet ordre : bande de chiffres sobre (« 6 ans de métier pour notre gérant », « 50+ chantiers réalisés par nos gérants », « 10 ans de garantie minimum », « 8 personnes dans l'équipe ») → **phrases d'émotion animées (décision 20) entre les sections** → **avant/après** (**UMons cour intérieure en premier**, puis les autres ; grands curseurs, un par chantier avec la commune, y compris Halle, les deux chantiers de Namur, Mons, Charleroi) → **« Les étapes d'une façade »** avec la chronologie de Mons/UMons en vraies photos (ordre confirmé, légendes factuelles) → **chantier prestigieux : Université de Mons (UMons)** mis en valeur → réalisations par commune (galerie) → métiers → équipe → méthode → FAQ → appel. **Utiliser toutes les photos** quelque part.
 6. **Pages métier** (5), **Réalisations** (une page ou section par chantier), **À propos**, **mentions légales** (« ELY FAÇADE BV », n° 1030.283.223, hébergeur Netlify), **vie privée**, **404**, en FR et NL, avec le même niveau de soin que l'accueil.
 7. **SEO** : titre et description par page, JSON-LD `GeneralContractor`, `Service` et fil d'Ariane, sitemap hreflang.
 8. **Vérifications finales** : contrastes AA, clavier, `prefers-reduced-motion`, sans JavaScript, poids des images, Android et iPhone, `npm run build`.
 9. **README** : présenter le site (ce qu'il offre, captures, design, crédits), jamais le développement. Rappeler à Claudiu de le relire.
-10. **Rapport final court** : ce qui est fait, captures (ordinateur + téléphone) du haut de page et de l'accueil, ce qui reste côté Claudiu (section 7).
+10. **Rapport final court (seul moment où Claudiu est sollicité)** : ce qui est fait, comment voir les 3 variantes, captures (ordinateur + téléphone) du haut de page et de l'accueil, ce qui reste côté Claudiu (section 7).
 
 ---
 
