@@ -104,7 +104,7 @@ Pour chaque photo importée : **masquer par un aplat** visages, plaques d'immatr
 - **Puis une partie « avancement et étapes d'une façade » avec le chantier de Mons** (« parle d'elles avec de bonnes images »).
 - **Utiliser toutes les photos** de façon idéale : avant/après, étapes, galerie/réalisations par chantier.
 - Capture de référence : `docs/references/ironwood-hero-choisi-par-claudiu.webp`. Références validées : https://construction-visuvate.framer.website/ (Ironwood, **la** référence : en-tête transparent intégré à une photo riche, pastille d'accroche, gros titre en capitales sur 3 lignes, un bouton), et les modèles Framer `bldr`, `lintel`, `roofera`, `constructal`, `constructiv`, `hearthstone-template`, https://scandiwest.framer.website/ (ouvrir avec le navigateur intégré, décrire ce qui les rend « waw »).
-- Il aime : moderne, doux, clair, arrondi, rouge en petites touches. Il refuse : noir lourd, angles droits, beige, couleurs trop fortes, dessins d'immeubles, effets au défilement dans le haut de page (« rien au scroll »), plusieurs variantes au hasard.
+- Il aime : moderne, doux, clair, arrondi, rouge en petites touches. Il refuse : noir lourd, angles droits, beige, couleurs trop fortes, dessins d'immeubles, effets décevants dans le haut de page (les animations ne sont pas interdites, voir section 9), plusieurs variantes au hasard.
 - **Proposer un seul design très soigné**, le montrer en capture (ordinateur + téléphone), demander son avis, itérer. Réponses courtes, sans jargon.
 
 ### Pistes pour le « waw » (à évaluer, pas à imposer)
@@ -126,7 +126,7 @@ Pour chaque photo importée : **masquer par un aplat** visages, plaques d'immatr
 5. **Halle** : `pendant` et `apres` sont bien le même pignon : en faire une paire avant/après (curseur).
 6. **Personnes** : retirer (recadrage ou aplat sur les visages) la photo de face de Namur.
 7. **Photo retouchée du haut de page** (ciel, objets retirés) : acceptée par Elisei et Simi.
-8. **Vidéos** : jamais affichées.
+8. **Vidéos : AUTORISÉES.** Il n'y a aucune règle qui les interdit (l'ancienne règle a été supprimée de `CLAUDE.md`). Seules les 2 vidéos reçues d'Elisei (dossier Halle) sont mauvaises : ne pas les utiliser. Motion design, vidéo, zoom, scrollytelling : tout est permis s'il est fait **proprement et sans déranger le visiteur**.
 9. **Ordre des étapes de Mons** : Claudiu demande de se renseigner. Ordre standard d'une façade isolée par l'extérieur sous enduit, d'après des sources de la profession (OPPBTP/FFB, IZI by EDF, fiches métier, sources françaises ; la pratique belge est la même dans ses grandes lignes, **ordre confirmé par Elisei le 15 octobre**) :
    1. préparation du support et échafaudage (protections des ouvertures) ;
    2. pose des panneaux isolants (collés et/ou chevillés) ;
@@ -154,7 +154,7 @@ Pour chaque photo importée : **masquer par un aplat** visages, plaques d'immatr
 18. **Couleurs du haut de page : cohérentes avec le site ET avec la photo** (pas de jaune/orange comme Ironwood, qui est dû à sa photo chaude). Palette : blanc, ardoise `#1f2429`, rouge `#c8202b` en touches seulement (point de la pastille, bouton principal). Voile sur la photo = **ardoise-bleutée** (ex. `rgba(15, 24, 36, …)`) en dégradé léger à gauche et en bas, jamais un noir neutre lourd. Échantillonner les couleurs de la photo (`sharp`) pour accorder le voile et les accents ; contraste AA obligatoire.
 19. **Référence de composition** : capture `docs/references/ironwood-hero-choisi-par-claudiu.webp` (celle que Claudiu a envoyée). À reproduire dans l'esprit : en-tête transparent (logo à gauche, liens au centre en blanc discret, bouton clair à droite), pastille d'accroche, titre très gros en capitales sur 3 lignes, 3 lignes de texte, **un** bouton avec petite flèche carrée, photo qui remplit tout l'écran, texte à gauche sur la zone calme. Reproduire la **qualité de finition**, pas les couleurs ni les textes.
 
-20. **Phrases d'émotion au défilement (le « waw » du reste de la page d'accueil).** Claudiu veut, **sous** le haut de page (qui reste fixe, « rien au scroll » ne concerne que lui), des **phrases fortes qui jouent sur l'émotion quand on défile**, avec de belles animations. Ce sont de grandes sections-citations (très grand titre Bricolage Grotesque, beaucoup d'espace, parfois sur fond de photo plein cadre), placées entre les sections de contenu :
+20. **Phrases d'émotion au défilement (le « waw » du reste de la page d'accueil).** Claudiu veut, **sous** le haut de page (le haut de page lui-même peut rester une image fixe très belle, ou recevoir une entrée animée : voir section 9), des **phrases fortes qui jouent sur l'émotion quand on défile**, avec de belles animations. Ce sont de grandes sections-citations (très grand titre Bricolage Grotesque, beaucoup d'espace, parfois sur fond de photo plein cadre), placées entre les sections de contenu :
     | Après la section… | Phrase (FR) | NL (à faire relire) |
     |---|---|---|
     | Haut de page | **Une façade refaite pour durer.** + « Garantie de 10 ans minimum » | **Een gevel die blijft.** |
@@ -166,14 +166,14 @@ Pour chaque photo importée : **masquer par un aplat** visages, plaques d'immatr
     | Équipe | **Deux frères, une équipe.** | **Twee broers, één team.** |
     | Appel final | **Votre façade mérite de briller. Parlons-en.** | **Uw gevel verdient te stralen. Laten we praten.** |
     L'IA peut ajuster, remplacer ou en ajouter 2 ou 3 du même style (courtes, émotionnelles, **uniquement vraies et vérifiables**, jamais de chiffre inventé) ; elle les écrit en FR **et** NL dans `fr.ts`/`nl.ts`.
-    **Animations (soignées, sobres, premium)** : apparition ligne par ligne (masque qui glisse vers le haut) ou mot par mot qui s'éclaircit progressivement avec le défilement ; léger parallaxe sur les fonds photo ; un soulignement ou un mot en rouge qui se trace ; compteurs doux. Uniquement `transform` et `opacity` (60 images/s, rien qui bloque le défilement), via `IntersectionObserver` ou CSS scroll-driven animations avec repli ; Lenis déjà présent (`src/scripts/site.ts`). **Tout se coupe avec `prefers-reduced-motion`, le texte est lisible sans JavaScript, les curseurs avant/après ne bloquent jamais le défilement.** Pas de mouvement dans le haut de page.
+    **Animations (soignées, sobres, premium)** : apparition ligne par ligne (masque qui glisse vers le haut) ou mot par mot qui s'éclaircit progressivement avec le défilement ; léger parallaxe sur les fonds photo ; un soulignement ou un mot en rouge qui se trace ; compteurs doux. Uniquement `transform` et `opacity` (60 images/s, rien qui bloque le défilement), via `IntersectionObserver` ou CSS scroll-driven animations avec repli ; Lenis déjà présent (`src/scripts/site.ts`). **Tout se coupe avec `prefers-reduced-motion`, le texte est lisible sans JavaScript, les curseurs avant/après ne bloquent jamais le défilement.** 
 
 ## 5. Règles non négociables (rappel, voir `CLAUDE.md`)
 
 - Ne jamais inventer d'information sur l'entreprise. Société récente (fin 2025) : jamais « depuis… ». « 6 ans de métier pour notre gérant », « 50+ chantiers réalisés par nos gérants », « garantie de 10 ans minimum », « équipe de 8 personnes, des indépendants » (jamais « salariés »). Pas de « un seul interlocuteur ».
 - Métiers = uniquement la façade (crépi/enduit, peinture, nettoyage, rejointoiement, réparation de briques).
 - Tout texte visible en FR **et** NL. Nom « Ely Facade » (sans cédille). Site 100 % statique, pas de cookies de suivi, polices hébergées.
-- Photos : jamais d'adresse client (seule la commune), `src/assets/` + `astro:assets`, sans métadonnées. Pas d'image IA présentée comme chantier. Pas de vidéo, avis, prix, assurance, réseaux sociaux.
+- Photos : jamais d'adresse client (seule la commune), `src/assets/` + `astro:assets`, sans métadonnées. Pas d'image IA présentée comme chantier. Pas d'avis, prix, assurance, réseaux sociaux affichés.
 - Accessibilité (contraste AA, focus, `prefers-reduced-motion`, contenu utilisable sans JS, zones tactiles ≥ 44 px), mobile d'abord, **test Android (Chrome) et iPhone (Safari/WebKit)**.
 - Fin de chaque changement : `npm run build` sans erreur, puis **commit, jamais de push**, aucune mention de Claude ni ligne Co-Authored-By. Git de GitHub Desktop : `GIT_EXEC_PATH="/Applications/GitHub Desktop.app/Contents/Resources/app/git/libexec/git-core" "/Applications/GitHub Desktop.app/Contents/Resources/app/git/bin/git" …`
 
@@ -203,7 +203,7 @@ Netlify (relier GitHub, retirer le badge, adresse des devis), acheter elyfacade.
 - [ ] Titre (décision 11) en Bricolage Grotesque (décision 17), capitales, très gros, tracking serré, 3 lignes maximum, **en bas à gauche, sur la zone calme** ; une pastille d'accroche discrète ; **un** bouton principal « Demander ma visite gratuite » et le téléphone en secondaire ; les 3 mini-preuves sous le bouton.
 - [ ] Couleurs du haut de page accordées à la photo et à la palette du site (décision 18).
 - [ ] Contraste AA du texte sur la photo (voile léger et progressif, pas un gros bloc sombre).
-- [ ] Aucune animation au défilement dans le haut de page (apparition douce du texte au chargement seulement, coupée avec `prefers-reduced-motion`).
+- [ ] Si le haut de page est animé (entrée, zoom, vidéo, reflet…), c'est **propre et discret** : ne bloque rien, pas de saccades, coupé avec `prefers-reduced-motion`, le bouton Devis est accessible tout de suite, beau aussi sans l'animation.
 - [ ] Rendu **premium** à 375 px : rien d'écrasé, texte lisible, zones tactiles ≥ 44 px, dock Appeler / WhatsApp / Devis en bas.
 - [ ] Marges et alignements sur la grille du site, aucune coupure de mot disgracieuse, titres FR **et** NL tiennent.
 
@@ -225,7 +225,7 @@ Netlify (relier GitHub, retirer le badge, adresse des devis), acheter elyfacade.
 
 Claudiu veut être **« incroyablement surpris »**. L'IA ne se contente pas d'exécuter la liste : elle doit **proposer et réaliser au moins 4 idées originales** qui rendent le site mémorable et donnent envie de contacter l'entreprise, puis les noter dans `docs/avancement.md` (idée, pourquoi, où). Elle peut aussi améliorer, remplacer ou supprimer ce qui est dans ce document si elle trouve nettement mieux, en le justifiant en une ligne.
 
-**Limites** : toutes les règles de `CLAUDE.md` restent valables (rien d'inventé sur l'entreprise, pas d'image IA présentée comme chantier, pas de vidéo, pas d'avis, pas de prix, aucun mouvement dans le haut de page, accessibilité, `prefers-reduced-motion`, utilisable sans JavaScript, 100 % statique, performance). Une idée est bonne si elle sert l'objectif : **un propriétaire, un syndic ou une société a confiance et prend contact**.
+**Limites** : toutes les règles de `CLAUDE.md` restent valables (rien d'inventé sur l'entreprise, pas d'image IA présentée comme chantier, pas d'avis, pas de prix, accessibilité, `prefers-reduced-motion`, utilisable sans JavaScript, 100 % statique, performance). Une idée est bonne si elle sert l'objectif : **un propriétaire, un syndic ou une société a confiance et prend contact**.
 
 ### Idées de départ (à prendre, adapter ou dépasser)
 1. **Étapes en « scrollytelling »** (section étapes) : la photo de l'immeuble UMons reste fixe à gauche et change d'étape en fondu (membrane → sous-couche → finition) au fil du défilement, pendant que les textes d'étapes défilent à droite. Les 6 photos du dossier.
@@ -240,16 +240,18 @@ Claudiu veut être **« incroyablement surpris »**. L'IA ne se contente pas d'e
 10. **Détails premium** : focus clavier élégant, sélection de texte aux couleurs de la marque, apparitions échelonnées, images avec léger zoom au survol, légendes soignées, favicon et image de partage.
 11. **Une page « UMons »** (ou un chantier phare dans Réalisations) avec l'histoire du chantier en photos, ordre des étapes confirmé, ton factuel.
 
-### Idée de Claudiu : une entrée en matière animée (zoom-in / motion design)
-Claudiu a proposé, **« juste comme exemple, pas forcément dans cette direction »**, une vidéo motion design ou un zoom-in sur la photo quand on arrive sur le site, et demande à l'IA **d'avoir plus d'imagination que lui**. Cadre :
-- **Pas de fichier vidéo** (règle : aucune vidéo sur le site, voir `CLAUDE.md`). L'effet est fait **en code** (CSS/JS/SVG), léger et net : c'est de l'animation, pas une vidéo.
-- **À l'arrivée seulement, jamais au défilement** : le haut de page reste fixe ensuite (« rien au scroll »). Courte (2 à 2,5 s), **jamais bloquante** (le contenu et le bouton Devis sont utilisables dès le début, pas d'écran d'attente, pas de mauvais LCP), jouée **une fois par visite** (`sessionStorage` avec repli), **coupée avec `prefers-reduced-motion`**, et le haut de page doit être complet et beau sans elle.
+### Idée de Claudiu : une entrée en matière animée (zoom-in / motion design / vidéo)
+Claudiu a proposé, **« juste comme exemple, pas forcément dans cette direction »**, une vidéo motion design ou un zoom-in sur la photo à l'arrivée sur le site, et demande à l'IA **d'avoir plus d'imagination que lui**. **Rien n'est encore fait** : ce sont des idées.
+- **Tout est permis** : vidéo, motion design, zoom, animation de l'en-tête et du titre, scrollytelling, y compris dans le haut de page. La contrainte « rien au scroll » dite plus tôt visait des essais décevants, pas un interdit : si une animation de haut de page est *vraiment* meilleure, l'IA peut la proposer et la réaliser, en justifiant.
+- **Seule exigence : faire ça ultra proprement, sans déranger le visiteur** : pas de durée imposée ni de bouton obligatoire, mais le bouton Devis et le téléphone restent accessibles tout de suite, rien ne bloque le chargement, pas de saccades sur un téléphone d'entrée de gamme, vidéo **muette par défaut**, compressée (MP4 H.264 + WebM si utile, quelques centaines de Ko à quelques Mo), avec `poster` (la photo), chargée sans retarder le reste, **coupée avec `prefers-reduced-motion`** (retour à la photo), jamais de son automatique. Le haut de page doit rester beau si l'animation ne se lance pas.
+- Une vidéo ou un motion design peut être **créé en code** (CSS/JS/SVG, canvas) ou **fabriqué** à partir des photos du projet (zoom lent sur une façade, enchaînement de façades, reconstitution des étapes) avec ffmpeg si disponible ; ne jamais présenter une image générée par IA comme un chantier.
 - Pistes (l'IA choisit ou invente mieux) :
-  1. **Zoom-out d'arrivée** : la photo de Namur démarre légèrement zoomée (≈ 1,10) et se pose en 2 s, pendant que l'en-tête apparaît puis que le titre se révèle ligne par ligne (masque qui glisse).
-  2. **« Briller », littéralement** : un reflet de lumière très doux qui traverse la façade une seule fois à l'arrivée et fait scintiller le mot **« briller »** du titre (écho direct au titre). Sobre, élégant.
-  3. **Signature de marque** : la brique rouge du logo se pose à sa place dans le logo de l'en-tête (≈ 0,8 s).
-  4. Mise au point : la photo passe d'un léger flou à la netteté en 1 s.
-  5. Une idée meilleure que toutes celles-ci : bienvenue.
+  1. **Zoom d'arrivée** : la photo de Namur démarre légèrement zoomée (≈ 1,10) et se pose en quelques secondes, l'en-tête apparaît puis le titre se révèle ligne par ligne.
+  2. **« Briller », littéralement** : un reflet de lumière très doux qui traverse la façade et fait scintiller le mot **« briller »** du titre (écho direct au titre).
+  3. **Signature de marque** : la brique rouge du logo se pose à sa place dans l'en-tête.
+  4. **Mise au point** : la photo passe d'un léger flou à la netteté.
+  5. **Film d'ouverture** (motion design) : un court enchaînement des façades terminées (Namur, Mons, Charleroi, Halle) en fondu et zoom lent, en fond du haut de page, puis arrêt sur la photo de Namur.
+  6. **Une idée meilleure que toutes celles-ci** : bienvenue.
 
 ### Ce qu'il ne faut pas faire
-Pas d'écran d'attente ni d'intro qui retarde le contenu, pas de pop-up, pas de carrousel automatique, pas de son, pas de curseur personnalisé qui gêne, pas de compteur de chiffres inventés, pas d'animation lourde qui ralentit un téléphone d'entrée de gamme, pas de copie d'un site de référence.
+Pas d'écran d'attente qui retarde le contenu, pas de pop-up, pas de carrousel automatique, pas de son, pas de curseur personnalisé qui gêne, pas de compteur de chiffres inventés, pas d'animation lourde qui ralentit un téléphone d'entrée de gamme, pas de copie d'un site de référence.

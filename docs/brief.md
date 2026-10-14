@@ -81,7 +81,7 @@ Délai : le devis arrive en quelques jours maximum après la visite.
 
 - Elisei envoie cette semaine beaucoup de photos **avant / pendant / après** (toutes les étapes d'une rénovation de façade). Pas encore reçues : la façon de les présenter (curseurs, frise des étapes) se décidera en les voyant.
 - Photo d'équipe (8 personnes) : plus tard.
-- Vidéos : pas pour le moment, **rien de prévu dans le site**. On l'ajoutera quand elles existeront.
+- Vidéos : **autorisées** (aucune interdiction sur le site). Les 2 vidéos reçues d'Elisei (dossier Halle) sont de mauvaise qualité et ne sont pas utilisées ; une vidéo de qualité ou un motion design créé pour le site est bienvenu.
 - Règles reprises de BS Renove : jamais d'adresse client (seule la commune), masquer numéros de maison, visages, plaques, coordonnées avant import ; photos sans métadonnées GPS ; pas d'image IA présentée comme un chantier.
 
 ## 5. Identité visuelle

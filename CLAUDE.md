@@ -18,7 +18,8 @@ Le client ne veut pas toucher à l'informatique : Claudiu s'occupe de tout (logo
 - **Société récente (fin 2025)** : jamais « depuis… » ni « fondée en… ». Les 6 ans de métier et les 50+ chantiers sont ceux d'Elisei et Simi à titre personnel (« nos gérants »), pas ceux de l'entreprise.
 - **Équipe de 8 personnes, indépendants** : ne jamais écrire « salariés ».
 - **Garantie** : « Garantie de 10 ans minimum » seulement. Aucun détail sur les retenues de garantie des grandes sociétés.
-- **Ne rien afficher** : assurance (RC, décennale), primes et aides, prix au mètre, horaires de visite, réseaux sociaux, vidéos, avis clients (il n'y en a pas encore).
+- **Ne rien afficher** : assurance (RC, décennale), primes et aides, prix au mètre, horaires de visite, réseaux sociaux, avis clients (il n'y en a pas encore).
+- **Vidéos et animations autorisées** (aucune interdiction) : motion design, vidéo, zoom, scrollytelling, tout ce qui sert le site. Les deux vidéos de chantier reçues d'Elisei (dossier Halle) sont de mauvaise qualité : ne pas les utiliser, mais une vidéo de qualité (ou créée en code/motion design) est bienvenue. Faire les choses **proprement, sans déranger le visiteur** : vidéo muette par défaut, légère et compressée, `poster`, coupée avec `prefers-reduced-motion`, contenu lisible sans elle.
 - **Métiers = uniquement la façade** : crépi / enduit, peinture de façade, nettoyage de façade, rejointoiement, réparation de briques (pas de montage de murs). Ni toiture, ni maçonnerie, ni intérieur, même si la BCE liste d'autres activités.
 - **Photos : jamais d'adresse client.** Seule la commune est affichée (« Belgique » si inconnue). Avant tout import, **masquer par un aplat** numéros de maison, visages, plaques, coordonnées, puis vérifier à l'œil.
 - **Photos dans `src/assets/`**, affichées avec `astro:assets`, importées **sans métadonnées** (sharp). Jamais dans `public/` : les originaux contiennent la position GPS.
