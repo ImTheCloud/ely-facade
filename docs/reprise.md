@@ -240,5 +240,16 @@ Claudiu veut être **« incroyablement surpris »**. L'IA ne se contente pas d'e
 10. **Détails premium** : focus clavier élégant, sélection de texte aux couleurs de la marque, apparitions échelonnées, images avec léger zoom au survol, légendes soignées, favicon et image de partage.
 11. **Une page « UMons »** (ou un chantier phare dans Réalisations) avec l'histoire du chantier en photos, ordre des étapes confirmé, ton factuel.
 
+### Idée de Claudiu : une entrée en matière animée (zoom-in / motion design)
+Claudiu a proposé, **« juste comme exemple, pas forcément dans cette direction »**, une vidéo motion design ou un zoom-in sur la photo quand on arrive sur le site, et demande à l'IA **d'avoir plus d'imagination que lui**. Cadre :
+- **Pas de fichier vidéo** (règle : aucune vidéo sur le site, voir `CLAUDE.md`). L'effet est fait **en code** (CSS/JS/SVG), léger et net : c'est de l'animation, pas une vidéo.
+- **À l'arrivée seulement, jamais au défilement** : le haut de page reste fixe ensuite (« rien au scroll »). Courte (2 à 2,5 s), **jamais bloquante** (le contenu et le bouton Devis sont utilisables dès le début, pas d'écran d'attente, pas de mauvais LCP), jouée **une fois par visite** (`sessionStorage` avec repli), **coupée avec `prefers-reduced-motion`**, et le haut de page doit être complet et beau sans elle.
+- Pistes (l'IA choisit ou invente mieux) :
+  1. **Zoom-out d'arrivée** : la photo de Namur démarre légèrement zoomée (≈ 1,10) et se pose en 2 s, pendant que l'en-tête apparaît puis que le titre se révèle ligne par ligne (masque qui glisse).
+  2. **« Briller », littéralement** : un reflet de lumière très doux qui traverse la façade une seule fois à l'arrivée et fait scintiller le mot **« briller »** du titre (écho direct au titre). Sobre, élégant.
+  3. **Signature de marque** : la brique rouge du logo se pose à sa place dans le logo de l'en-tête (≈ 0,8 s).
+  4. Mise au point : la photo passe d'un léger flou à la netteté en 1 s.
+  5. Une idée meilleure que toutes celles-ci : bienvenue.
+
 ### Ce qu'il ne faut pas faire
-Pas de pop-up, pas de carrousel automatique, pas de son, pas de curseur personnalisé qui gêne, pas de compteur de chiffres inventés, pas d'animation lourde qui ralentit un téléphone d'entrée de gamme, pas de copie d'un site de référence.
+Pas d'écran d'attente ni d'intro qui retarde le contenu, pas de pop-up, pas de carrousel automatique, pas de son, pas de curseur personnalisé qui gêne, pas de compteur de chiffres inventés, pas d'animation lourde qui ralentit un téléphone d'entrée de gamme, pas de copie d'un site de référence.
