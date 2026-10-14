@@ -1,5 +1,13 @@
 # Reprise du projet Ely Facade (15 octobre 2026)
 
+> ## ⚙️ Session cloud : à lire en premier
+> - Cette session tourne dans le **cloud** : elle ne voit **pas** le Mac de Claudiu (`~/Desktop`, `~/Downloads`, `/Users/…` n'existent pas). Tout ce qu'il faut est **dans le dépôt**.
+> - **Tu dois partir de `main` à jour** : `git fetch origin && git merge origin/main` (ou `git rebase origin/main`) sur ta branche de travail avant toute chose. Si `docs/reprise.md` n'existe pas, c'est que ta branche est en retard.
+> - **Les photos sont DÉJÀ importées** dans `src/assets/photos/<chantier>/…` (section 2) ; les originaux sont dans `photos-sources/`. Ne cherche rien sur le Bureau.
+> - **Push autorisé** (branche de travail ; jamais de merge sur `main` ni de push forcé). **Les déploiements Netlify sont en pause** (`ignore = "exit 0"` dans `netlify.toml`) : ne jamais retirer cette ligne.
+> - Chemins du Mac à ignorer dans ce document : `/Users/claudiupopadiuc/Documents/GitHub/bs-renove` (BS Renove, pas accessible), git de GitHub Desktop (utilise le `git` du système), `~/Desktop/Photos-ElyFacade` (= `photos-sources/`). Playwright : installe-le toi-même (`npx playwright install chromium webkit`) pour les captures Chromium + WebKit ; sinon utilise le navigateur intégré si disponible.
+> - Les captures de référence sont dans `docs/references/` ; les originaux Framer sont à ouvrir par leurs liens.
+
 Document unique pour démarrer une nouvelle conversation. Il remplace l'ancien prompt de reprise. Lire aussi `CLAUDE.md` (règles non négociables), `docs/brief.md`, `docs/suivi-client.md`.
 
 > **Prompt à coller en premier message (mode autonome total) :**
@@ -17,7 +25,7 @@ Document unique pour démarrer une nouvelle conversation. Il remplace l'ancien p
 
 **La page d'accueil est le blocage.** Claudiu a rejeté tous les hauts de page essayés (curseur, échafaudage dessiné, rouleau, briques, lentille, versions claires, plein écran avec voile). Dernier état (commit `a0c255b`) : photo plein écran de Namur + titre « Redonnez à votre façade tout son éclat. » : « je n'aime pas du tout ». Défauts : en-tête = barre blanche floutée posée sur la photo (mal intégrée), le toit passe sous l'en-tête, le titre tombe sur les fenêtres du bâtiment, rendu bricolé, sur téléphone on ne voit qu'une tranche de la photo.
 
-**Il faut repartir de zéro sur l'accueil** (et seulement ensuite faire les autres pages : elles reprendront son design).
+**Il faut repartir de zéro sur l'accueil** (les photos étant déjà importées, le travail commence au nettoyage de l'ancien code puis au haut de page) (et seulement ensuite faire les autres pages : elles reprendront son design).
 
 ### Code actuel (à adapter, pas à garder tel quel)
 
@@ -28,13 +36,32 @@ Document unique pour démarrer une nouvelle conversation. Il remplace l'ancien p
 
 ---
 
-## 2. Nouvelles photos : `photos-sources/` dans le dépôt (35 photos, métadonnées déjà absentes)
+## 2. Photos : déjà importées dans le site (15 octobre 2026)
 
-> **Où sont les photos** : en session **cloud**, elles sont dans le dépôt, dossier **`photos-sources/`** (copie de `~/Desktop/Photos-ElyFacade`, mêmes dossiers, avec les « : » remplacés par « - » : `Avant:apres` → `Avant-apres`). Les noms de fichiers du tableau ci-dessous sont ceux d'origine ; quelques-uns ont été renommés depuis (ex. `Evere/UniquePhotoDeEvere.jpeg`) : **se fier au contenu des images** (les regarder) plus qu'aux noms. `photos-sources/` n'est **pas publié** (hors `src/` et `public/`) et sert uniquement de matière première : ne jamais le déplacer dans `public/`. Une fois les photos importées proprement dans `src/assets/photos/…`, `photos-sources/` peut rester comme archive.
+Les 35 photos triées par Claudiu sont **importées, renommées, recadrées, masquées** (plaques, visages) et sans métadonnées dans `src/assets/photos/<chantier>/`, par `node scripts/importer-photos.mjs` (relançable ; les coordonnées des aplats et recadrages sont dans le script). Les originaux sont dans **`photos-sources/`** (non publié, hors `src/` et `public/`).
 
-Claudiu a trié par chantier. **Elles remplacent tout ce qui est dans le projet.** Les noms de dossiers/fichiers actuels sont approximatifs (« copie 2 », « pendantaussi »…) : tout renommer proprement.
+```
+src/assets/photos/
+  accueil/hero-namur.jpg                                  2400×1350 : LA photo du haut de page (retouchée par Claudiu)
+  namur-immeuble-3-etages/   apres-rue, pendant-rue, pendant-face      (toit vert puis ardoise)
+  namur-immeuble-balcons/    pendant-grue, apres-coin, pendant-cote-gauche, apres-cote-gauche,
+                             pendant-loin-1…3, pendant-debut-1…2       (autre chantier à Namur)
+  charleroi-rangee-1/        pendant, apres      (apres = 1024 px : la seule qualité disponible)
+  charleroi-rangee-2/        pendant, apres      (idem)
+  charleroi-vue-ensemble/    apres
+  mons-umons-immeuble-angle/ etape-1-membrane-1…4, etape-2-sous-couche, etape-3-termine   (6 photos : base de la section « étapes »)
+  mons-umons-cour/           etape-1-membrane, etape-2-isolation, etape-3-aile-terminee   (cour en U : **1er avant/après du site** = etape-1 → etape-3)
+  mons-umons-longue-facade/  pendant, apres
+  halle-maison/              pendant-pignon, apres-pignon, final-entree, final-angle, final-baie-vitree
+  evere-immeuble/            nuit
+  (ancien contenu à supprimer : tous les `*.jpg` directement dans `src/assets/photos/`, le dossier `paires/`, et `src/assets/accueil.jpg`)
+```
 
-Inventaire (n° = ordre alphabétique du dossier, dimensions, ce que je vois). Les « pendant » sont tous *sous échafaudage*, aucune vraie photo « avant les travaux ».
+**À vérifier** (je n'ai pas pu tout contrôler à pleine taille) : plaques d'immatriculation éventuellement restantes (UMons : petits fourgons dans les photos `mons-umons-immeuble-angle/*`, `mons-umons-cour/*` ; Charleroi : voiture bleue de `charleroi-rangee-2/pendant`), personnes éventuelles. Les ouvrir en grand ; si besoin, ajouter un aplat dans `scripts/importer-photos.mjs` et relancer. Les noms de sociétés (Wust, De Graeve, Travhydro, MAES, ACT, Heras) restent visibles (décision du client), de même que les panneaux UMons / Materia Nova.
+
+**Paires avant/après** (même chantier, angles proches) : UMons cour (`mons-umons-cour/etape-1-membrane` ou `etape-2-isolation` → `etape-3-aile-terminee`, **à mettre en premier**) ; UMons longue façade (`pendant` → `apres`) ; UMons immeuble d'angle (`etape-1-membrane-*` → `etape-3-termine`) ; Namur 3 étages (`pendant-rue` → `apres-rue`) ; Namur balcons (`pendant-grue` → `apres-coin`, `pendant-cote-gauche` → `apres-cote-gauche`) ; Halle (`pendant-pignon` → `apres-pignon`) ; Charleroi (`rangee-1`, `rangee-2` : `pendant` → `apres`). Recadrer si besoin pour aligner les angles (recadrage dans l'import, sans déformer).
+
+> Ci-dessous, l'inventaire d'origine (noms de dossiers avant renommage), gardé pour mémoire. **L'import est déjà fait : ne pas refaire le rangement.**
 
 ### Namur : immeuble de 3 étages (toit vert puis ardoise)
 | Fichier d'origine | Contenu | Nom proposé |
@@ -212,7 +239,7 @@ Netlify (relier GitHub, retirer le badge, adresse des devis), acheter elyfacade.
 - [ ] Marges et alignements sur la grille du site, aucune coupure de mot disgracieuse, titres FR **et** NL tiennent.
 
 ### Étapes
-1. **Photos** : suivre la section 2. Renommer et ranger ; importer dans `src/assets/photos/<commune>-<chantier>/` avec masquage (visages, plaques, numéros, panneaux avec adresse ; les noms de sociétés restent visibles), recadrages, sans métadonnées (`sharp`) ; vérifier chaque image à l'œil ; export haute qualité pour le haut de page.
+1. **Photos : déjà importées** (section 2). Seulement : contrôler à l'œil les images (plaques, personnes), corriger `scripts/importer-photos.mjs` si besoin et relancer ; produire les variantes nécessaires (recadrage vertical du haut de page pour téléphone, vignettes).
 2. **Nettoyage** : supprimer les anciennes photos du projet et tout le code/texte FR+NL devenus inutiles (aucun code mort).
 3. **Références** : ouvrir les liens de `docs/references/README.md`, enregistrer les captures, remplir le tableau.
 4. **En-tête et haut de page en 3 VARIANTES** (Claudiu choisira à la fin ; l'IA ne l'interroge pas) : refaire `Entete.astro` + `Hero.astro` selon la checklist, avec trois partis pris **vraiment différents** (par exemple : A = photo fixe très soignée avec entrée douce zoom/mise au point ; B = film d'ouverture en motion design ou vidéo fabriquée à partir des photos ; C = reflet de lumière sur « briller » + signature brique rouge ; l'IA peut inventer mieux). Mécanisme simple et propre : une variante par défaut (**celle que l'IA juge la meilleure**), les autres accessibles par l'adresse `?hero=a`, `?hero=b`, `?hero=c` (ou pages `/variantes/…` en `noindex`, hors sitemap), et une page `docs/variantes.md` qui explique chaque variante et comment la voir. Chaque variante passe la checklist et la boucle d'auto-critique. **À la livraison, ce mécanisme reste en place** pour que Claudiu compare ; l'étape de nettoyage (suppression des variantes non choisies, aucun code mort) est notée dans `docs/avancement.md` comme « à faire dès que Claudiu a choisi ».
