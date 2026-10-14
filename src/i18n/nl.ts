@@ -69,12 +69,7 @@ export const nl = {
       texte:
         'Gevelpleister, schilderwerk, reiniging, voegwerk, herstel van bakstenen: wij brengen uw gevel weer in orde, van het kleine huis tot het appartementsgebouw.',
       note: 'Gratis plaatsbezoek, zonder verplichting.',
-      aria: 'Gerenoveerde gevels in Namen, Charleroi en Bergen',
-      chantiers: [
-        { commune: 'Namen', alt: 'Gebouw met drie verdiepingen in Namen, afgewerkte gevel' },
-        { commune: 'Charleroi', alt: 'Rij huizen in Charleroi, afgewerkte gevel' },
-        { commune: 'Bergen', alt: 'Groot gebouw in Bergen, afgewerkte witte gevel' },
-      ],
+      alt: 'Groot gebouw in Bergen, afgewerkte witte gevel',
     },
 
     comparateur: {

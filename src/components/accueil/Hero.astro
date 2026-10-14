@@ -1,12 +1,8 @@
 ---
-/**
- * Haut de page : trois façades terminées en plein écran.
- * En défilant, la façade suivante se construit brique par brique (canvas, voir scripts/briques.ts),
- * avec la brique rouge du logo. Sans JavaScript ou avec « réduire les animations » : une seule photo fixe.
- */
+/** Haut de page : la plus belle façade terminée en plein écran, le titre et les boutons dessus. Rien ne bouge au défilement. */
 import { Image } from 'astro:assets';
 import Bouton from '../Bouton.astro';
-import { heroPhotos } from '../../data/chantiers';
+import { heroPhoto } from '../../data/chantiers';
 import { entreprise, lienDevis } from '../../data/entreprise';
 import { t, type Langue } from '../../i18n';
 
@@ -19,100 +15,57 @@ const textes = t(langue);
 const hero = textes.accueil.hero;
 ---
 
-<section class="hero" data-briques>
-  <div class="hero__scene">
-    <canvas class="hero__toile" role="img" aria-label={hero.aria}></canvas>
+<section class="hero">
+  <div class="hero__photo">
+    <Image
+      src={heroPhoto.image}
+      alt={hero.alt}
+      widths={[640, 960, 1280, 1600]}
+      sizes="(max-width: 899px) 230vw, 100vw"
+      format="webp"
+      loading="eager"
+      fetchpriority="high"
+      style={`object-position: ${heroPhoto.cadrage}`}
+    />
+  </div>
+  <div class="hero__voile"></div>
 
-    <div class="hero__photos">
-      {
-        heroPhotos.map((photo, i) => (
-          <Image
-            src={photo.image}
-            alt={hero.chantiers[i].alt}
-            widths={[640, 960, 1280, 1600]}
-            sizes="(max-width: 899px) 230vw, 100vw"
-            format="webp"
-            loading="eager"
-            fetchpriority={i === 0 ? 'high' : undefined}
-            data-photo
-            data-cadrage={photo.cadrage}
-            data-commune={hero.chantiers[i].commune}
-          />
-        ))
-      }
+  <div class="hero__texte">
+    <div class="hero__titre">
+      <p class="hero__surtitre">{hero.surtitre}</p>
+      <h1>{hero.titreDebut} <span class="hero__rouge">{hero.titreFin}</span></h1>
     </div>
-    <div class="hero__voile"></div>
 
-    <div class="hero__texte">
-      <div class="hero__titre">
-        <p class="hero__surtitre">{hero.surtitre}</p>
-        <h1>{hero.titreDebut} <span class="hero__rouge">{hero.titreFin}</span></h1>
+    <div class="hero__cote">
+      <p class="hero__lead">{hero.texte}</p>
+      <div class="hero__actions">
+        <Bouton href={lienDevis(langue)} variante="accent" iconeApres="fleche-diag" large>{textes.actions.devis}</Bouton>
+        <Bouton href={`tel:${entreprise.telephoneLien}`} variante="secondaire" icone="telephone" large class="hero__tel">
+          {entreprise.telephoneAffiche}
+        </Bouton>
       </div>
-
-      <div class="hero__cote">
-        <p class="hero__lead">{hero.texte}</p>
-        <div class="hero__actions">
-          <Bouton href={lienDevis(langue)} variante="accent" iconeApres="fleche-diag" large>{textes.actions.devis}</Bouton>
-          <Bouton href={`tel:${entreprise.telephoneLien}`} variante="secondaire" icone="telephone" large class="hero__tel">
-            {entreprise.telephoneAffiche}
-          </Bouton>
-        </div>
-        <p class="hero__note">{hero.note}</p>
-      </div>
-
-      <div class="hero__bas" aria-live="polite">
-        <span class="hero__numero" data-numero>01 / 0{heroPhotos.length}</span>
-        <span class="hero__commune" data-commune-active>{hero.chantiers[0].commune}</span>
-        <span class="hero__points" aria-hidden="true">
-          {heroPhotos.map(() => <i><b></b></i>)}
-        </span>
-      </div>
+      <p class="hero__note">{hero.note}</p>
     </div>
   </div>
 </section>
 
-<script>
-  import '~/scripts/briques';
-</script>
-
 <style>
   .hero {
-    position: relative;
-    color: #fff;
-    background: #14171a;
-  }
-
-  .hero__scene {
     position: relative;
     height: 100svh;
     min-height: 560px;
     overflow: hidden;
+    color: #fff;
+    background: #14171a;
   }
 
-  .hero__toile {
-    display: none;
-    position: absolute;
-    inset: 0;
-    width: 100%;
-    height: 100%;
-  }
-
-  /* Sans canvas : la première photo reste affichée, les autres ne servent qu'au canvas. */
-  .hero__photos {
-    position: absolute;
-    inset: 0;
-  }
-
-  .hero__photos img {
+  .hero__photo,
+  .hero__photo :global(img) {
     position: absolute;
     inset: 0;
     width: 100%;
     height: 100%;
     object-fit: cover;
-  }
-
-  .hero__photos img:not(:first-child) {
-    visibility: hidden;
   }
 
   .hero__voile {
@@ -145,7 +98,7 @@ const hero = textes.accueil.hero;
 
   .hero__titre h1 {
     margin-top: 10px;
-    font-size: clamp(44px, 7.4vw, 112px);
+    font-size: clamp(44px, 6.2vw, 96px);
     line-height: 0.98;
     color: #fff;
   }
@@ -166,62 +119,6 @@ const hero = textes.accueil.hero;
     display: none;
   }
 
-  .hero__bas {
-    display: flex;
-    align-items: center;
-    gap: 14px;
-    font-weight: 600;
-    min-height: 32px;
-  }
-
-  .hero__numero {
-    font-variant-numeric: tabular-nums;
-    color: rgba(255, 255, 255, 0.72);
-  }
-
-  .hero__points {
-    display: flex;
-    gap: 6px;
-    margin-left: auto;
-  }
-
-  .hero__points i {
-    display: block;
-    width: 28px;
-    height: 4px;
-    overflow: hidden;
-    border-radius: 4px;
-    background: rgba(255, 255, 255, 0.3);
-  }
-
-  .hero__points b {
-    display: block;
-    height: 100%;
-    background: #fff;
-    transform-origin: left;
-    transform: scaleX(var(--f, 0));
-  }
-
-  /* Le défilement construit les briques : la scène reste collée pendant ~3 écrans. */
-  @media (prefers-reduced-motion: no-preference) {
-    :global(.js) .hero {
-      height: 420svh;
-    }
-
-    :global(.js) .hero__scene {
-      position: sticky;
-      top: 0;
-    }
-
-    :global(.js) .hero__toile {
-      display: block;
-    }
-
-    :global(.js) .hero__photos {
-      visibility: hidden;
-    }
-  }
-
   /* L'en-tête est un voile blanc flouté dès l'arrivée : lisible sur la photo. */
   :global(body:has(.hero) .entete) {
     background: rgba(251, 251, 250, 0.84);
@@ -230,10 +127,9 @@ const hero = textes.accueil.hero;
     -webkit-backdrop-filter: blur(18px) saturate(1.5);
   }
 
-  /* Téléphone : les photos sont larges, donc la fenêtre est presque carrée (on voit plus de façade) et le texte est dessous. */
+  /* Téléphone : la photo est large, donc la fenêtre est presque carrée (on voit plus de façade) et le texte est dessous. */
   @media (max-width: 899px) {
-    .hero__toile,
-    .hero__photos {
+    .hero__photo {
       inset: auto;
       top: calc(var(--header-h) + 12px);
       left: 12px;
@@ -253,31 +149,18 @@ const hero = textes.accueil.hero;
     .hero__texte {
       display: grid;
       grid-template-columns: 7fr 5fr;
-      grid-template-rows: 1fr auto auto;
       align-items: end;
       column-gap: 56px;
-      row-gap: 22px;
-      padding-bottom: 40px;
-    }
-
-    .hero__titre {
-      grid-row: 2;
-    }
-
-    .hero__cote {
-      grid-row: 2;
-      grid-column: 2;
-      display: grid;
-      gap: 20px;
-    }
-
-    .hero__bas {
-      grid-row: 3;
-      grid-column: 1 / -1;
+      padding-bottom: 48px;
     }
 
     .hero__lead {
       font-size: var(--size-lead);
+    }
+
+    .hero__cote {
+      display: grid;
+      gap: 20px;
     }
 
     .hero__actions {

@@ -36,9 +36,5 @@ export const galerie = Object.entries(fichiers)
   })
   .sort((a, b) => a.nom.localeCompare(b.nom));
 
-/** Les façades terminées du haut de page : la suivante se construit brique par brique. */
-export const heroPhotos = [
-  { image: namurApres, cadrage: 0.48 },
-  { image: charleroiApres, cadrage: 0.4 },
-  { image: crepi, cadrage: 0.55 },
-] as const;
+/** La photo du haut de page : la plus belle façade terminée. */
+export const heroPhoto = { image: crepi, cadrage: '55% 50%' } as const;

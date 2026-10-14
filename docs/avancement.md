@@ -49,8 +49,8 @@ Document de reprise pour démarrer une nouvelle conversation. Les règles du pro
    - galerie « Sur nos chantiers » (`Chantiers.astro`) avec 8 photos, commune seulement.
    - Une fois validé, les autres pages reprennent ces composants (tuiles, fenêtres, photos, règle des niveaux).
 
-### Design : version « briques » (14 octobre 2026), à faire valider
-- Haut de page : trois façades terminées (Namur, Charleroi, Mons) en plein écran ; en défilant, la façade suivante se construit **brique par brique** (canvas, `Hero.astro` + `src/scripts/briques.ts`), avec la brique rouge du logo. Sur téléphone la photo est dans une fenêtre arrondie (les photos sont larges), le texte dessous. Sans JavaScript ou avec « réduire les animations » : une seule photo fixe.
+### Design : version « photo unique » (14 octobre 2026), à faire valider
+- Haut de page : une seule photo plein écran, la façade blanche terminée de Mons (`Hero.astro`), titre et boutons dessus, **rien au défilement**. Les essais « rouleau », « briques » et « lentille » ont été abandonnés (le client voulait une seule image). Sur téléphone la photo est dans une fenêtre arrondie (les photos sont larges), le texte dessous.
 - Bande des 4 chiffres sous le haut de page, puis avant/après (Namur, Charleroi, Mons), étapes, **galerie « Sur nos chantiers »** (36 photos, filtre par commune, visionneuse, `Galerie.astro` + `src/scripts/galerie.ts`).
 - 27 nouvelles photos ajoutées dans `src/assets/photos/` : recadrées pour retirer voitures et personnes, aplats sur plaques, panneaux de chantier, bannières d'autres entreprises et numéro de téléphone d'une grue. À revoir en grand avant la mise en ligne.
 

@@ -69,12 +69,7 @@ export const fr = {
       texte:
         'Crépi, peinture, nettoyage, rejointoiement, réparation de briques : nous remettons votre façade en état, de la petite maison à l’immeuble.',
       note: 'Visite sur place gratuite, sans engagement.',
-      aria: 'Façades rénovées à Namur, Charleroi et Mons',
-      chantiers: [
-        { commune: 'Namur', alt: 'Immeuble de trois étages à Namur, façade terminée' },
-        { commune: 'Charleroi', alt: 'Rangée de maisons à Charleroi, façade terminée' },
-        { commune: 'Mons', alt: 'Grand bâtiment à Mons, façade blanche terminée' },
-      ],
+      alt: 'Grand bâtiment à Mons, façade blanche terminée',
     },
 
     comparateur: {
