@@ -3,7 +3,7 @@
 Document unique pour démarrer une nouvelle conversation. Il remplace l'ancien prompt de reprise. Lire aussi `CLAUDE.md` (règles non négociables), `docs/brief.md`, `docs/suivi-client.md`.
 
 > **Prompt à coller en premier message (mode autonome) :**
-> « Lis `docs/reprise.md` en entier, puis `CLAUDE.md`, `docs/brief.md` et `docs/references/README.md`. Toutes les décisions sont prises (section 4) : ne me les redemande pas. Exécute tout le plan de la section 8, de bout en bout, sans t'arrêter pour demander mon avis, en suivant le protocole d'autonomie et les critères de qualité du document. Tu ne m'interromps que si un choix est impossible à trancher avec le document. Commit après chaque étape (jamais de push). À la fin, donne-moi un rapport court avec captures. »
+> « Lis `docs/reprise.md` en entier, puis `CLAUDE.md`, `docs/brief.md` et `docs/references/README.md`. Toutes les décisions sont prises (section 4) : ne me les redemande pas. Exécute tout le plan de la section 8, de bout en bout, sans t'arrêter pour demander mon avis, en suivant le protocole d'autonomie et les critères de qualité du document. Tu ne m'interromps que si un choix est impossible à trancher avec le document. Commit après chaque étape (jamais de push). Tu as carte blanche pour innover (section 9) : propose et réalise au moins 4 idées originales de ton choix qui donnent envie de contacter l'entreprise, dans le respect des règles. À la fin, donne-moi un rapport court avec captures. »
 
 ---
 
@@ -218,3 +218,27 @@ Netlify (relier GitHub, retirer le badge, adresse des devis), acheter elyfacade.
 8. **Vérifications finales** : contrastes AA, clavier, `prefers-reduced-motion`, sans JavaScript, poids des images, Android et iPhone, `npm run build`.
 9. **README** : présenter le site (ce qu'il offre, captures, design, crédits), jamais le développement. Rappeler à Claudiu de le relire.
 10. **Rapport final court** : ce qui est fait, captures (ordinateur + téléphone) du haut de page et de l'accueil, ce qui reste côté Claudiu (section 7).
+
+---
+
+## 9. Carte blanche pour innover
+
+Claudiu veut être **« incroyablement surpris »**. L'IA ne se contente pas d'exécuter la liste : elle doit **proposer et réaliser au moins 4 idées originales** qui rendent le site mémorable et donnent envie de contacter l'entreprise, puis les noter dans `docs/avancement.md` (idée, pourquoi, où). Elle peut aussi améliorer, remplacer ou supprimer ce qui est dans ce document si elle trouve nettement mieux, en le justifiant en une ligne.
+
+**Limites** : toutes les règles de `CLAUDE.md` restent valables (rien d'inventé sur l'entreprise, pas d'image IA présentée comme chantier, pas de vidéo, pas d'avis, pas de prix, aucun mouvement dans le haut de page, accessibilité, `prefers-reduced-motion`, utilisable sans JavaScript, 100 % statique, performance). Une idée est bonne si elle sert l'objectif : **un propriétaire, un syndic ou une société a confiance et prend contact**.
+
+### Idées de départ (à prendre, adapter ou dépasser)
+1. **Étapes en « scrollytelling »** (section étapes) : la photo de l'immeuble UMons reste fixe à gauche et change d'étape en fondu (membrane → sous-couche → finition) au fil du défilement, pendant que les textes d'étapes défilent à droite. Les 6 photos du dossier.
+2. **Phrases d'émotion animées** (décision 20) avec ligne par ligne / mot par mot qui s'éclaircit avec le défilement, et un mot clé qui se souligne en rouge.
+3. **Grand curseur avant/après plein cadre** avec une poignée très soignée et la commune en légende ; effet « voile » doux à l'arrivée à l'écran.
+4. **Carte de Belgique épurée** (SVG dessiné, pas une image de chantier) avec les communes de chantiers (Namur, Charleroi, Mons, Halle, Evere) en points qui apparaissent, et la mention « Partout en Belgique ».
+5. **Bande de photos horizontale** (galerie) qu'on fait glisser, avec un curseur « Voir » qui suit la souris sur ordinateur et des zones tactiles larges sur téléphone.
+6. **La brique rouge du logo comme signature** : petit motif récurrent (puces de liste, séparateurs en briques, point de la pastille), sobre, jamais enfantin.
+7. **Rythme de la page** : alterner bandes blanches, bandes ardoise et une grande bande de photo plein cadre ; cartes arrondies douces ; très gros titres Bricolage Grotesque.
+8. **Mini-formulaire de départ** en bas de l'accueil : 3 questions (type de bâtiment, commune, téléphone) qui préremplissent le vrai formulaire de devis (`?travaux=…`) : réduit la friction.
+9. **Transitions de pages douces** (View Transitions, avec repli) et en-tête qui change d'apparence avec fluidité.
+10. **Détails premium** : focus clavier élégant, sélection de texte aux couleurs de la marque, apparitions échelonnées, images avec léger zoom au survol, légendes soignées, favicon et image de partage.
+11. **Une page « UMons »** (ou un chantier phare dans Réalisations) avec l'histoire du chantier en photos, ordre des étapes confirmé, ton factuel.
+
+### Ce qu'il ne faut pas faire
+Pas de pop-up, pas de carrousel automatique, pas de son, pas de curseur personnalisé qui gêne, pas de compteur de chiffres inventés, pas d'animation lourde qui ralentit un téléphone d'entrée de gamme, pas de copie d'un site de référence.
