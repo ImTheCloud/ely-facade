@@ -7,6 +7,8 @@ Document unique pour démarrer une nouvelle conversation. Il remplace l'ancien p
 
 ---
 
+> **Netlify est en pause (important)** : `netlify.toml` contient `ignore = "exit 0"` : aucun push ne met le site en ligne à jour. **Ne jamais retirer cette ligne** : Claudiu seul décidera de reprendre les déploiements.
+
 ## 1. Où en est le projet
 
 **Fait et validé** : logo (maison en briques), thème clair doux (blanc, ardoise, rouge en petites touches, DM Sans), formulaire de devis en 3 étapes (`/contact/`), en-tête et pied de page, bilingue FR/NL, JSON-LD de base, sitemap hreflang, T-shirts (`design/t-shirt/`), carte de visite d'Elisei (`design/carte-visite/`).
@@ -26,7 +28,9 @@ Document unique pour démarrer une nouvelle conversation. Il remplace l'ancien p
 
 ---
 
-## 2. Nouvelles photos : `~/Desktop/Photos-ElyFacade` (35 photos, métadonnées déjà absentes)
+## 2. Nouvelles photos : `photos-sources/` dans le dépôt (35 photos, métadonnées déjà absentes)
+
+> **Où sont les photos** : en session **cloud**, elles sont dans le dépôt, dossier **`photos-sources/`** (copie de `~/Desktop/Photos-ElyFacade`, mêmes dossiers, avec les « : » remplacés par « - » : `Avant:apres` → `Avant-apres`). Les noms de fichiers du tableau ci-dessous sont ceux d'origine ; quelques-uns ont été renommés depuis (ex. `Evere/UniquePhotoDeEvere.jpeg`) : **se fier au contenu des images** (les regarder) plus qu'aux noms. `photos-sources/` n'est **pas publié** (hors `src/` et `public/`) et sert uniquement de matière première : ne jamais le déplacer dans `public/`. Une fois les photos importées proprement dans `src/assets/photos/…`, `photos-sources/` peut rester comme archive.
 
 Claudiu a trié par chantier. **Elles remplacent tout ce qui est dans le projet.** Les noms de dossiers/fichiers actuels sont approximatifs (« copie 2 », « pendantaussi »…) : tout renommer proprement.
 
