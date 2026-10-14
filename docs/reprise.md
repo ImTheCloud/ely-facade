@@ -2,8 +2,8 @@
 
 Document unique pour démarrer une nouvelle conversation. Il remplace l'ancien prompt de reprise. Lire aussi `CLAUDE.md` (règles non négociables), `docs/brief.md`, `docs/suivi-client.md`.
 
-> **Prompt à coller en premier message :**
-> « Lis `docs/reprise.md`, `CLAUDE.md` et `docs/brief.md`. Les décisions sont déjà prises (section 4) : ne les redemande pas. Fais, dans l'ordre : (1) ranger et renommer les photos de `~/Desktop/Photos-ElyFacade` selon le plan du document, (2) supprimer les anciennes photos du projet, (3) refaire la page d'accueil : photo de Namur en tout grand, en-tête intégré dans la photo, avant/après en dessous, puis la partie « étapes d'une façade » avec le chantier de Mons. Montre-moi des captures (ordinateur + téléphone) avant de continuer. »
+> **Prompt à coller en premier message (mode autonome) :**
+> « Lis `docs/reprise.md` en entier, puis `CLAUDE.md`, `docs/brief.md` et `docs/references/README.md`. Toutes les décisions sont prises (section 4) : ne me les redemande pas. Exécute tout le plan de la section 8, de bout en bout, sans t'arrêter pour demander mon avis, en suivant le protocole d'autonomie et les critères de qualité du document. Tu ne m'interromps que si un choix est impossible à trancher avec le document. Commit après chaque étape (jamais de push). À la fin, donne-moi un rapport court avec captures. »
 
 ---
 
@@ -134,6 +134,12 @@ Pour chaque photo importée : **masquer par un aplat** visages, plaques d'immatr
    5. retrait de l'échafaudage, façade terminée.
    Correspondance avec les photos de Mons : membrane/panneaux sombres et fenêtres protégées → étape 2 ; couche crème → étape 3 ; façade blanche → étape 4-5. **Ne pas affirmer** de matériaux ou techniques précis (la couche noire n'est pas identifiée : membrane ou isolant, ne pas la nommer) ; légendes factuelles : « Échafaudage et protections », « Pose de l'isolation » (seulement si l'image le montre sans doute), « Sous-couche », « Finition », « Façade terminée ».
 
+10. **Ambiance** : **premium / haut de gamme** (beaucoup d'espace, photo très soignée, peu d'éléments, typographie élégante), tout en restant lumineux et doux.
+11. **Titre du haut de page** : « Redonnez à votre façade tout son éclat. » (NL : « Geef uw gevel zijn glans terug. »).
+12. **Mise en page du haut de page** : texte **en bas à gauche** sur la zone calme de la photo (arbres, pelouse), la façade reste visible à droite, comme Ironwood. Le texte ne doit jamais tomber sur les fenêtres du bâtiment.
+13. **Périmètre autonome** : accueil complet, puis **toutes les autres pages** (5 pages métier, Réalisations, À propos, mentions légales, vie privée, 404, SEO, README). L'IA va jusqu'au bout seule.
+14. **Police** : l'IA est autorisée à ajouter **une police d'affichage** (Fontsource, hébergée) pour les gros titres, en gardant DM Sans pour le texte, si cela améliore le rendu premium.
+
 ## 5. Règles non négociables (rappel, voir `CLAUDE.md`)
 
 - Ne jamais inventer d'information sur l'entreprise. Société récente (fin 2025) : jamais « depuis… ». « 6 ans de métier pour notre gérant », « 50+ chantiers réalisés par nos gérants », « garantie de 10 ans minimum », « équipe de 8 personnes, des indépendants » (jamais « salariés »). Pas de « un seul interlocuteur ».
@@ -150,3 +156,36 @@ Pour chaque photo importée : **masquer par un aplat** visages, plaques d'immatr
 ## 7. Côté Claudiu (hors code)
 
 Netlify (relier GitHub, retirer le badge, adresse des devis), acheter elyfacade.be et .com **avant d'imprimer** t-shirts et cartes, email pro, fiche Google Business (Halle), Search Console, photos « avant » du même endroit par Simi, validation des textes et couleurs par Elisei et Simi.
+
+---
+
+## 8. Plan d'exécution autonome (de bout en bout)
+
+### Protocole d'autonomie
+- **Ne pas s'arrêter pour demander** « c'est bon ? ». Les décisions sont dans la section 4 ; en cas de doute, choisir l'option la plus conforme à `CLAUDE.md` et à l'ambiance premium, la noter dans `docs/avancement.md`, continuer.
+- **Seules raisons de s'arrêter** : une information sur l'entreprise manque et ne peut pas être omise (la noter dans `docs/suivi-client.md` et omettre l'élément), ou un outil/droit manque.
+- **Commit après chaque étape** (`npm run build` sans erreur d'abord), jamais de push, sans mention de Claude.
+- Tenir `docs/avancement.md` à jour (ce qui est fait, ce qui reste, décisions prises seul).
+- Utiliser le navigateur intégré pour **voir** le résultat à chaque étape : `npm run preview` puis captures à 1440 px, 768 px et 375 px (mobile émulé : taille d'écran 375 × 812) ; vérifier aussi WebKit (iPhone) si possible avec le Playwright de `/Users/claudiupopadiuc/Documents/GitHub/bs-renove/node_modules/playwright`.
+- Pour le haut de page : **boucle d'auto-critique d'au moins 3 tours** : capture → comparer aux captures de références (`docs/references/`) → lister honnêtement les défauts → corriger → recommencer. Ne passer à la suite que si le haut de page est au niveau des références.
+
+### Critères de qualité du haut de page (checklist, tous à cocher)
+- [ ] La photo de Namur remplit **tout** l'écran (100 svh), nette, bien cadrée, le toit **respire** (jamais collé ou coupé par l'en-tête). Cadrage ordinateur et cadrage téléphone choisis séparément (export vertical depuis l'original si besoin).
+- [ ] L'en-tête est **dans la photo** : transparent, logo et liens blancs (logo blanc : voir `design/logo/`), bouton Devis lisible ; il devient blanc flouté seulement après défilement ; menu mobile soigné.
+- [ ] Titre en capitales, très fort, tracking serré, sur 3 lignes maximum, **en bas à gauche, sur la zone calme** ; « tout son éclat » en touche de rouge ou de blanc ; une pastille d'accroche discrète ; **un** bouton principal (Devis) et le téléphone en secondaire.
+- [ ] Contraste AA du texte sur la photo (voile léger et progressif, pas un gros bloc sombre).
+- [ ] Aucune animation au défilement dans le haut de page (apparition douce du texte au chargement seulement, coupée avec `prefers-reduced-motion`).
+- [ ] Rendu **premium** à 375 px : rien d'écrasé, texte lisible, zones tactiles ≥ 44 px, dock Appeler / WhatsApp / Devis en bas.
+- [ ] Marges et alignements sur la grille du site, aucune coupure de mot disgracieuse, titres FR **et** NL tiennent.
+
+### Étapes
+1. **Photos** : suivre la section 2. Renommer et ranger ; importer dans `src/assets/photos/<commune>-<chantier>/` avec masquage (visages, plaques, numéros, panneaux avec adresse ; les noms de sociétés restent visibles), recadrages, sans métadonnées (`sharp`) ; vérifier chaque image à l'œil ; export haute qualité pour le haut de page.
+2. **Nettoyage** : supprimer les anciennes photos du projet et tout le code/texte FR+NL devenus inutiles (aucun code mort).
+3. **Références** : ouvrir les liens de `docs/references/README.md`, enregistrer les captures, remplir le tableau.
+4. **En-tête et haut de page** : refaire `Entete.astro` + `Hero.astro` selon la checklist (boucle d'auto-critique).
+5. **Reste de l'accueil**, dans cet ordre : bande de chiffres sobre (« 6 ans de métier pour notre gérant », « 50+ chantiers réalisés par nos gérants », « 10 ans de garantie minimum », « 8 personnes dans l'équipe ») → **avant/après** (grands curseurs, un par chantier avec la commune, y compris Halle, les deux chantiers de Namur, Mons, Charleroi) → **« Les étapes d'une façade »** avec la chronologie de Mons/UMons en vraies photos (ordre confirmé, légendes factuelles) → **chantier prestigieux : Université de Mons (UMons)** mis en valeur → réalisations par commune (galerie) → métiers → équipe → méthode → FAQ → appel. **Utiliser toutes les photos** quelque part.
+6. **Pages métier** (5), **Réalisations** (une page ou section par chantier), **À propos**, **mentions légales** (« ELY FAÇADE BV », n° 1030.283.223, hébergeur Netlify), **vie privée**, **404**, en FR et NL, avec le même niveau de soin que l'accueil.
+7. **SEO** : titre et description par page, JSON-LD `GeneralContractor`, `Service` et fil d'Ariane, sitemap hreflang.
+8. **Vérifications finales** : contrastes AA, clavier, `prefers-reduced-motion`, sans JavaScript, poids des images, Android et iPhone, `npm run build`.
+9. **README** : présenter le site (ce qu'il offre, captures, design, crédits), jamais le développement. Rappeler à Claudiu de le relire.
+10. **Rapport final court** : ce qui est fait, captures (ordinateur + téléphone) du haut de page et de l'accueil, ce qui reste côté Claudiu (section 7).
