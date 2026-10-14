@@ -69,7 +69,7 @@ export const fr = {
       texte:
         'Crépi, peinture, nettoyage, rejointoiement, réparation de briques : nous remettons votre façade en état, de la petite maison à l’immeuble.',
       note: 'Visite sur place gratuite, sans engagement.',
-      alt: 'Grand bâtiment à Mons, façade blanche terminée',
+      alt: 'Immeuble blanc et gris terminé, vu d’en haut, à Namur',
     },
 
     comparateur: {
@@ -79,16 +79,31 @@ export const fr = {
     },
 
     comparaisons: {
+      ongletsAria: 'Choisir un chantier',
       surtitre: 'Avant, après',
       titre: 'La différence se voit.',
-      texte: 'Faites glisser le curseur : la même façade, au même endroit, pendant les travaux puis une fois terminée.',
+      texte: 'Choisissez un chantier, puis faites glisser le curseur : la même façade, au même endroit, pendant les travaux puis une fois terminée.',
       liste: [
         {
-          cle: 'namur',
+          cle: 'namur-rue',
           commune: 'Namur',
-          legende: 'Immeuble de trois étages',
-          altAvant: 'Immeuble de trois étages à Namur, façade sous échafaudage',
-          altApres: 'Le même immeuble à Namur, façade terminée',
+          legende: 'La rue',
+          altAvant: 'Immeuble de trois étages sous échafaudage, vu de la rue, à Namur',
+          altApres: 'Le même immeuble terminé, à Namur',
+        },
+        {
+          cle: 'namur-rue-large',
+          commune: 'Namur',
+          legende: 'La rue, plan large',
+          altAvant: 'Immeuble de trois étages sous échafaudage, au bout de la rue, à Namur',
+          altApres: 'Le même immeuble terminé, à Namur',
+        },
+        {
+          cle: 'namur-face',
+          commune: 'Namur',
+          legende: 'De face',
+          altAvant: 'Façade de face sous échafaudage, à Namur',
+          altApres: 'Le même immeuble terminé, vu d’en haut, à Namur',
         },
         {
           cle: 'charleroi',
@@ -98,11 +113,46 @@ export const fr = {
           altApres: 'La même rangée de maisons à Charleroi, façade terminée',
         },
         {
-          cle: 'mons',
+          cle: 'mons-longue',
           commune: 'Mons',
-          legende: 'Grand bâtiment',
-          altAvant: 'Grand bâtiment à Mons, façade sous échafaudage',
-          altApres: 'Le même bâtiment à Mons, façade presque terminée',
+          legende: 'Longue façade',
+          altAvant: 'Très longue façade sous échafaudage, à Mons',
+          altApres: 'La même façade terminée, à Mons',
+        },
+        {
+          cle: 'mons-cour-1',
+          commune: 'Mons',
+          legende: 'Cour intérieure (1)',
+          altAvant: 'Cour intérieure d’un grand bâtiment sous échafaudage, à Mons',
+          altApres: 'La même cour, première aile terminée, à Mons',
+        },
+        {
+          cle: 'mons-cour-2',
+          commune: 'Mons',
+          legende: 'Cour intérieure (2)',
+          altAvant: 'Cour intérieure d’un grand bâtiment sous échafaudage, autre angle, à Mons',
+          altApres: 'La même cour, première aile terminée, à Mons',
+        },
+        {
+          cle: 'mons-angle-1',
+          commune: 'Mons',
+          legende: 'Immeuble d’angle (1)',
+          altAvant: 'Immeuble d’angle sous échafaudage au crépuscule, à Mons',
+          altApres: 'Le même immeuble terminé, à Mons',
+        },
+        {
+          cle: 'mons-angle-2',
+          commune: 'Mons',
+          legende: 'Immeuble d’angle (2)',
+          altAvant: 'Immeuble d’angle sous échafaudage, à Mons',
+          altApres: 'Le même immeuble terminé, à Mons',
+        },
+        {
+          cle: 'mons-angle-3',
+          commune: 'Mons',
+          legende: 'Immeuble d’angle (3)',
+          altAvant: 'Immeuble d’angle sous échafaudage, vu de plus loin, à Mons',
+          altApres: 'Le même immeuble terminé, à Mons',
         },
       ],
     },

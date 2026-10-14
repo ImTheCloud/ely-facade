@@ -69,7 +69,7 @@ export const nl = {
       texte:
         'Gevelpleister, schilderwerk, reiniging, voegwerk, herstel van bakstenen: wij brengen uw gevel weer in orde, van het kleine huis tot het appartementsgebouw.',
       note: 'Gratis plaatsbezoek, zonder verplichting.',
-      alt: 'Groot gebouw in Bergen, afgewerkte witte gevel',
+      alt: 'Afgewerkt wit en grijs gebouw, van boven gezien, in Namen',
     },
 
     comparateur: {
@@ -79,16 +79,31 @@ export const nl = {
     },
 
     comparaisons: {
+      ongletsAria: 'Kies een werf',
       surtitre: 'Voor en na',
       titre: 'Het verschil is zichtbaar.',
-      texte: 'Schuif de regelaar: dezelfde gevel, op dezelfde plaats, tijdens de werken en na afwerking.',
+      texte: 'Kies een werf en schuif dan de regelaar: dezelfde gevel, op dezelfde plaats, tijdens de werken en na afwerking.',
       liste: [
         {
-          cle: 'namur',
+          cle: 'namur-rue',
           commune: 'Namen',
-          legende: 'Gebouw met drie verdiepingen',
-          altAvant: 'Gebouw met drie verdiepingen in Namen, gevel onder steiger',
-          altApres: 'Hetzelfde gebouw in Namen, afgewerkte gevel',
+          legende: 'De straat',
+          altAvant: 'Gebouw met drie verdiepingen onder steiger, gezien vanaf de straat, in Namen',
+          altApres: 'Hetzelfde gebouw afgewerkt, in Namen',
+        },
+        {
+          cle: 'namur-rue-large',
+          commune: 'Namen',
+          legende: 'De straat, breed beeld',
+          altAvant: 'Gebouw met drie verdiepingen onder steiger, aan het einde van de straat, in Namen',
+          altApres: 'Hetzelfde gebouw afgewerkt, in Namen',
+        },
+        {
+          cle: 'namur-face',
+          commune: 'Namen',
+          legende: 'Vooraanzicht',
+          altAvant: 'Gevel vooraanzicht onder steiger, in Namen',
+          altApres: 'Hetzelfde gebouw afgewerkt, van boven gezien, in Namen',
         },
         {
           cle: 'charleroi',
@@ -98,11 +113,46 @@ export const nl = {
           altApres: 'Dezelfde rij huizen in Charleroi, afgewerkte gevel',
         },
         {
-          cle: 'mons',
+          cle: 'mons-longue',
           commune: 'Bergen',
-          legende: 'Groot gebouw',
-          altAvant: 'Groot gebouw in Bergen, gevel onder steiger',
-          altApres: 'Hetzelfde gebouw in Bergen, gevel bijna afgewerkt',
+          legende: 'Lange gevel',
+          altAvant: 'Zeer lange gevel onder steiger, in Bergen',
+          altApres: 'Dezelfde gevel afgewerkt, in Bergen',
+        },
+        {
+          cle: 'mons-cour-1',
+          commune: 'Bergen',
+          legende: 'Binnenplaats (1)',
+          altAvant: 'Binnenplaats van een groot gebouw onder steiger, in Bergen',
+          altApres: 'Dezelfde binnenplaats, eerste vleugel afgewerkt, in Bergen',
+        },
+        {
+          cle: 'mons-cour-2',
+          commune: 'Bergen',
+          legende: 'Binnenplaats (2)',
+          altAvant: 'Binnenplaats van een groot gebouw onder steiger, andere hoek, in Bergen',
+          altApres: 'Dezelfde binnenplaats, eerste vleugel afgewerkt, in Bergen',
+        },
+        {
+          cle: 'mons-angle-1',
+          commune: 'Bergen',
+          legende: 'Hoekgebouw (1)',
+          altAvant: 'Hoekgebouw onder steiger in de schemering, in Bergen',
+          altApres: 'Hetzelfde gebouw afgewerkt, in Bergen',
+        },
+        {
+          cle: 'mons-angle-2',
+          commune: 'Bergen',
+          legende: 'Hoekgebouw (2)',
+          altAvant: 'Hoekgebouw onder steiger, in Bergen',
+          altApres: 'Hetzelfde gebouw afgewerkt, in Bergen',
+        },
+        {
+          cle: 'mons-angle-3',
+          commune: 'Bergen',
+          legende: 'Hoekgebouw (3)',
+          altAvant: 'Hoekgebouw onder steiger, van verder gezien, in Bergen',
+          altApres: 'Hetzelfde gebouw afgewerkt, in Bergen',
         },
       ],
     },
