@@ -3,7 +3,7 @@
 Document unique pour démarrer une nouvelle conversation. Il remplace l'ancien prompt de reprise. Lire aussi `CLAUDE.md` (règles non négociables), `docs/brief.md`, `docs/suivi-client.md`.
 
 > **Prompt à coller en premier message :**
-> « Lis `docs/reprise.md`, `CLAUDE.md` et `docs/brief.md`. Réponds d'abord aux « Décisions à confirmer » en me les posant, puis fais, dans l'ordre : (1) ranger et renommer les photos de `~/Desktop/Photos-ElyFacade` selon le plan du document, (2) supprimer les anciennes photos du projet, (3) refaire la page d'accueil : photo de Namur en tout grand, en-tête intégré dans la photo, avant/après en dessous, puis la partie « étapes d'une façade » avec le chantier de Mons. Montre-moi des captures (ordinateur + téléphone) avant de continuer. »
+> « Lis `docs/reprise.md`, `CLAUDE.md` et `docs/brief.md`. Les décisions sont déjà prises (section 4) : ne les redemande pas. Fais, dans l'ordre : (1) ranger et renommer les photos de `~/Desktop/Photos-ElyFacade` selon le plan du document, (2) supprimer les anciennes photos du projet, (3) refaire la page d'accueil : photo de Namur en tout grand, en-tête intégré dans la photo, avant/après en dessous, puis la partie « étapes d'une façade » avec le chantier de Mons. Montre-moi des captures (ordinateur + téléphone) avant de continuer. »
 
 ---
 
@@ -90,7 +90,7 @@ src/assets/photos/
   accueil/hero-namur.jpg
   <commune>-<chantier>/<etape>-<detail>.jpg     (noms en minuscules, sans accents, tirets)
 ```
-Pour chaque photo importée : **masquer par un aplat** visages, plaques, numéros, coordonnées, panneaux/bannières d'autres sociétés (Wust, De Graeve, Travhydro, MAES, ACT) puis vérifier à l'œil ; recadrer si besoin ; export WebP/JPEG sans métadonnées avec `sharp`. Jamais dans `public/`. Seule la commune est affichée (« Mons » pour UMons, **jamais l'adresse ni le nom de l'université comme adresse** ; le nom UMons est une marque : voir question 4).
+Pour chaque photo importée : **masquer par un aplat** visages, plaques d'immatriculation, numéros de maison, coordonnées, panneaux de chantier avec adresse (**les noms et bannières de sociétés restent visibles**) puis vérifier à l'œil ; recadrer si besoin ; export WebP/JPEG sans métadonnées avec `sharp`. Jamais dans `public/`. Seule la commune est affichée (pour Mons : « Mons, Université de Mons (UMons) », **jamais l'adresse**).
 
 ### À supprimer (« tout ce qu'on a utilisé jusqu'ici »)
 `src/assets/photos/*.jpg` (45), `src/assets/photos/paires/` (16), `src/assets/accueil.jpg`, et le code/les textes FR+NL qui ne servent plus (`galerie.photos`, anciennes paires dans `chantiers.ts` et `fr.ts`/`nl.ts`, etc. : **aucun code mort**). Les originaux restent dans `~/Desktop/Photos-ElyFacade`. Les anciens dossiers `~/Desktop/Charleroi|Mons|Namur|Halle|Evere` (contiennent la position GPS) ne sont pas dans le projet : ne les supprimer qu'à la demande de Claudiu.
@@ -116,19 +116,23 @@ Pour chaque photo importée : **masquer par un aplat** visages, plaques, numéro
 
 ---
 
-## 4. Décisions à confirmer avec Claudiu avant de commencer
+## 4. Décisions prises par Claudiu (15 octobre 2026, ne plus les redemander)
 
-1. **Immeuble à balcons** : confirmer que `Namur/Avant:apres copie 4/*`, `Namur/avantpendant.jpeg`, `avantpendentaaussi.jpeg` sont bien le même immeuble que `NamurAutrechantier` (à ranger ensemble).
-2. **Charleroi** : les « après » font 1024 px : OK ou a-t-il les originaux en haute résolution ?
-3. **Noms de sociétés visibles** (Wust, De Graeve, Travhydro, MAES, ACT) : tous masqués par un aplat, comme jusqu'ici ?
-4. **UMons** : la photo montre le panneau « UMONS » et « Materia Nova » ; on affiche seulement « Mons » (aplat sur les panneaux), ou le client veut-il citer l'université comme référence ? (règle : jamais d'adresse ; ne pas inventer de client.)
-5. **Halle** : `pendant` (pignon sous échafaudage) et `apres` (pignon terminé) sont-ils vraiment le même pignon ?
-6. **Personnes** : la photo de face de Namur (3 hommes) : recadrer pour les retirer ou aplat sur les visages ?
-7. **Photo retouchée du haut de page** (ciel, objets retirés par Claudiu) : accepté par Elisei et Simi ? (règle : pas d'image générée par IA présentée comme un chantier ; une retouche de photo réelle est un choix du client.)
-8. **Vidéos** : deux vidéos de Halle existent sur le Bureau (`~/Desktop/Halle/*.mp4`) : toujours non affichées (règle du projet) ?
-9. **Ordre des étapes de Mons** ci-dessus : OK pour l'afficher en attendant la confirmation d'Elisei, avec uniquement des légendes factuelles (« échafaudage et protections », « sous-couche », « façade terminée ») ?
-
----
+1. **Immeuble à balcons** : c'est aussi Namur mais **un autre chantier** ; le lieu exact n'a pas d'importance, on affiche seulement la commune. À ranger comme un chantier à part (`namur-immeuble-balcons`) ; libre au développeur de choisir comment le présenter sur le site (deux chantiers distincts à Namur).
+2. **Charleroi** : la qualité des « après » (1024 px) est la seule disponible : s'en contenter (les afficher en taille raisonnable, pas en plein écran).
+3. **Noms de sociétés visibles (Wust, De Graeve, Travhydro, MAES, ACT) : NE PAS masquer** (« ce n'est pas important »). Continuer à masquer visages, plaques d'immatriculation, numéros de maison, coordonnées, panneaux de chantier avec adresse.
+4. **UMons** : **citer l'université** comme référence (« Université de Mons (UMons) », chantier prestigieux). Montrer les panneaux UMons tels quels. Rester factuel : « façades de bâtiments de l'Université de Mons », sans inventer de détails (surface, durée, client, rôle exact des gérants). À noter dans `docs/suivi-client.md` : faire confirmer par Elisei qu'il peut citer l'UMons publiquement.
+5. **Halle** : `pendant` et `apres` sont bien le même pignon : en faire une paire avant/après (curseur).
+6. **Personnes** : retirer (recadrage ou aplat sur les visages) la photo de face de Namur.
+7. **Photo retouchée du haut de page** (ciel, objets retirés) : acceptée par Elisei et Simi.
+8. **Vidéos** : jamais affichées.
+9. **Ordre des étapes de Mons** : Claudiu demande de se renseigner. Ordre standard d'une façade isolée par l'extérieur sous enduit, d'après des sources de la profession (OPPBTP/FFB, IZI by EDF, fiches métier, sources françaises ; la pratique belge est la même dans ses grandes lignes, **à faire confirmer par Elisei**) :
+   1. préparation du support et échafaudage (protections des ouvertures) ;
+   2. pose des panneaux isolants (collés et/ou chevillés) ;
+   3. sous-enduit armé : treillis de fibre de verre marouflé dans le sous-enduit (le treillis n'est pas une étape séparée) + renforts aux fenêtres et en haut de façade ;
+   4. séchage, puis enduit de finition (aspect et teinte au choix) ;
+   5. retrait de l'échafaudage, façade terminée.
+   Correspondance avec les photos de Mons : membrane/panneaux sombres et fenêtres protégées → étape 2 ; couche crème → étape 3 ; façade blanche → étape 4-5. **Ne pas affirmer** de matériaux ou techniques précis (la couche noire n'est pas identifiée : membrane ou isolant, ne pas la nommer) ; légendes factuelles : « Échafaudage et protections », « Pose de l'isolation » (seulement si l'image le montre sans doute), « Sous-couche », « Finition », « Façade terminée ».
 
 ## 5. Règles non négociables (rappel, voir `CLAUDE.md`)
 

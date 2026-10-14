@@ -51,3 +51,9 @@ Domaine elyfacade.be + elyfacade.com, email pro, fiche Google Business (Halle), 
 - Halle : maison en briques claires, photos « pendant » et « après » mais pas du même angle, donc pas d'avant/après. Evere : une seule photo (de nuit). À demander : des photos « avant » du même endroit pour Halle et Evere.
 - Deux vidéos de Halle reçues (`Desktop/Halle`) : non affichées (règle : pas de vidéo sur le site).
 - Le haut de page utilise une photo retouchée (ciel, objets retirés) : à faire valider par Elisei et Simi.
+
+## À confirmer avec Elisei (15 octobre 2026)
+
+- Peut-on citer l'Université de Mons (UMons) comme chantier sur le site ?
+- Ordre exact des étapes d'une façade (préparation du support, isolation, sous-enduit armé, finition) et vocabulaire à utiliser.
+- Le chantier des deux immeubles de Namur : bien faits par eux de A à Z ?
