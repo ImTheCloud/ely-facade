@@ -103,7 +103,7 @@ Pour chaque photo importée : **masquer par un aplat** visages, plaques d'immatr
 - **Ensuite tous les avant/après, un peu en bas.**
 - **Puis une partie « avancement et étapes d'une façade » avec le chantier de Mons** (« parle d'elles avec de bonnes images »).
 - **Utiliser toutes les photos** de façon idéale : avant/après, étapes, galerie/réalisations par chantier.
-- Références validées : https://construction-visuvate.framer.website/ (Ironwood, **la** référence : en-tête transparent intégré à une photo riche, pastille d'accroche, gros titre en capitales sur 3 lignes, un bouton), et les modèles Framer `bldr`, `lintel`, `roofera`, `constructal`, `constructiv`, `hearthstone-template`, https://scandiwest.framer.website/ (ouvrir avec le navigateur intégré, décrire ce qui les rend « waw »).
+- Capture de référence : `docs/references/ironwood-hero-choisi-par-claudiu.webp`. Références validées : https://construction-visuvate.framer.website/ (Ironwood, **la** référence : en-tête transparent intégré à une photo riche, pastille d'accroche, gros titre en capitales sur 3 lignes, un bouton), et les modèles Framer `bldr`, `lintel`, `roofera`, `constructal`, `constructiv`, `hearthstone-template`, https://scandiwest.framer.website/ (ouvrir avec le navigateur intégré, décrire ce qui les rend « waw »).
 - Il aime : moderne, doux, clair, arrondi, rouge en petites touches. Il refuse : noir lourd, angles droits, beige, couleurs trop fortes, dessins d'immeubles, effets au défilement dans le haut de page (« rien au scroll »), plusieurs variantes au hasard.
 - **Proposer un seul design très soigné**, le montrer en capture (ordinateur + téléphone), demander son avis, itérer. Réponses courtes, sans jargon.
 
@@ -134,8 +134,14 @@ Pour chaque photo importée : **masquer par un aplat** visages, plaques d'immatr
    5. retrait de l'échafaudage, façade terminée.
    Correspondance avec les photos de Mons : membrane/panneaux sombres et fenêtres protégées → étape 2 ; couche crème → étape 3 ; façade blanche → étape 4-5. **Ne pas affirmer** de matériaux ou techniques précis (la couche noire n'est pas identifiée : membrane ou isolant, ne pas la nommer) ; légendes factuelles : « Échafaudage et protections », « Pose de l'isolation » (seulement si l'image le montre sans doute), « Sous-couche », « Finition », « Façade terminée ».
 
-10. **Ambiance** : **premium / haut de gamme** (beaucoup d'espace, photo très soignée, peu d'éléments, typographie élégante), tout en restant lumineux et doux.
-11. **Titre du haut de page** : « Redonnez à votre façade tout son éclat. » (NL : « Geef uw gevel zijn glans terug. »).
+10. **Ambiance en 5 mots** : **premium, confiance, moderne, lumineux, solide** (beaucoup d'espace, photo très soignée, peu d'éléments).
+11. **Titre du haut de page : il doit donner envie de contacter l'entreprise.** Claudiu veut un titre qui motive vraiment (pas seulement joli) : émotion (la fierté de retrouver une belle façade) + preuve concrète + facilité de passer à l'action. Texte retenu (FR, NL entre parenthèses), **uniquement des faits confirmés** :
+    - Pastille : « Rénovation de façades · Toute la Belgique » (« Gevelrenovatie · Heel België »)
+    - **Titre (3 lignes, capitales)** : « UNE FAÇADE NEUVE. UNE FIERTÉ RETROUVÉE. » (« EEN NIEUWE GEVEL. TROTS TERUG. » : l'IA peut corriger le néerlandais pour qu'il sonne naturel)
+    - Texte : « Crépi, peinture, nettoyage, rejointoiement, réparation de briques : de la petite maison à l'immeuble. Visite gratuite, garantie de 10 ans minimum. » (NL équivalent)
+    - **Bouton principal** : « Demander ma visite gratuite » (« Plan mijn gratis plaatsbezoek »), lien vers `#devis` ; secondaire : le téléphone `0492 43 96 17`.
+    - Sous le bouton, 3 mini-preuves discrètes en une ligne : « Visite sur place gratuite · Garantie 10 ans minimum · Partout en Belgique ».
+    - Si l'IA trouve un titre qui motive davantage avec les mêmes faits, elle peut le remplacer et le note dans `docs/avancement.md` (jamais de chiffre ou de promesse non confirmé : pas de « délai », « meilleur prix », « satisfaction garantie »…). L'ancien titre « Redonnez à votre façade tout son éclat. » reste une solution de repli.
 12. **Mise en page du haut de page** : texte **en bas à gauche** sur la zone calme de la photo (arbres, pelouse), la façade reste visible à droite, comme Ironwood. Le texte ne doit jamais tomber sur les fenêtres du bâtiment.
 13. **Périmètre autonome** : accueil complet, puis **toutes les autres pages** (5 pages métier, Réalisations, À propos, mentions légales, vie privée, 404, SEO, README). L'IA va jusqu'au bout seule.
 14. **Police** : l'IA est autorisée à ajouter **une police d'affichage** (Fontsource, hébergée) pour les gros titres, en gardant DM Sans pour le texte, si cela améliore le rendu premium.
@@ -143,6 +149,10 @@ Pour chaque photo importée : **masquer par un aplat** visages, plaques d'immatr
 15. **Ordre des avant/après** : le premier curseur de la section est **UMons, la cour intérieure** (dossier `UMons Université/Avant:apres`, le 1er dossier : avant = membrane noire, après = `WhatsApp Image … (8).jpeg`, aile de gauche terminée) : Claudiu trouve cette photo « après » très belle. Les autres suivent (UMons longue façade, UMons immeuble d'angle, Namur ×2, Halle, Charleroi). Si, en voyant les images, l'IA juge que Claudiu parlait plutôt du bâtiment à 4 étages (`Avant:apres copie 2/apres.jpeg`), elle le note dans `docs/avancement.md` et met les deux en tête.
 
 16. **Section « étapes » = le dossier `UMons Université/Avant:apres copie 2`** (immeuble à 4 étages, bâche Wust, 6 photos) : Claudiu l'aime beaucoup pour ses nombreuses étapes. C'est **la colonne vertébrale de la section** : utiliser les 6 photos (4 de la membrane noire à des moments différents, la sous-couche crème, la finition blanche), dans l'ordre confirmé, avec légendes factuelles. La cour intérieure (3 étapes) sert de complément ; Namur et Halle peuvent illustrer l'étape finale.
+
+17. **Police** : plus grosse, plus moderne et plus caractère pour les titres de ce genre de site : **Bricolage Grotesque** (variable, `@fontsource-variable/bricolage-grotesque`, hébergée) en graisse 700-800, capitales, interlettrage serré (≈ -0.03 em), très grands corps (`clamp(44px, 7.2vw, 112px)`), pour tous les titres du site ; **DM Sans** reste pour le texte courant. Si le rendu n'est pas convaincant en capture, tester `Sora` ou `Manrope`, garder la meilleure, la noter. Pas de Google Fonts.
+18. **Couleurs du haut de page : cohérentes avec le site ET avec la photo** (pas de jaune/orange comme Ironwood, qui est dû à sa photo chaude). Palette : blanc, ardoise `#1f2429`, rouge `#c8202b` en touches seulement (point de la pastille, bouton principal). Voile sur la photo = **ardoise-bleutée** (ex. `rgba(15, 24, 36, …)`) en dégradé léger à gauche et en bas, jamais un noir neutre lourd. Échantillonner les couleurs de la photo (`sharp`) pour accorder le voile et les accents ; contraste AA obligatoire.
+19. **Référence de composition** : capture `docs/references/ironwood-hero-choisi-par-claudiu.webp` (celle que Claudiu a envoyée). À reproduire dans l'esprit : en-tête transparent (logo à gauche, liens au centre en blanc discret, bouton clair à droite), pastille d'accroche, titre très gros en capitales sur 3 lignes, 3 lignes de texte, **un** bouton avec petite flèche carrée, photo qui remplit tout l'écran, texte à gauche sur la zone calme. Reproduire la **qualité de finition**, pas les couleurs ni les textes.
 
 ## 5. Règles non négociables (rappel, voir `CLAUDE.md`)
 
@@ -176,7 +186,8 @@ Netlify (relier GitHub, retirer le badge, adresse des devis), acheter elyfacade.
 ### Critères de qualité du haut de page (checklist, tous à cocher)
 - [ ] La photo de Namur remplit **tout** l'écran (100 svh), nette, bien cadrée, le toit **respire** (jamais collé ou coupé par l'en-tête). Cadrage ordinateur et cadrage téléphone choisis séparément (export vertical depuis l'original si besoin).
 - [ ] L'en-tête est **dans la photo** : transparent, logo et liens blancs (logo blanc : voir `design/logo/`), bouton Devis lisible ; il devient blanc flouté seulement après défilement ; menu mobile soigné.
-- [ ] Titre en capitales, très fort, tracking serré, sur 3 lignes maximum, **en bas à gauche, sur la zone calme** ; « tout son éclat » en touche de rouge ou de blanc ; une pastille d'accroche discrète ; **un** bouton principal (Devis) et le téléphone en secondaire.
+- [ ] Titre (décision 11) en Bricolage Grotesque (décision 17), capitales, très gros, tracking serré, 3 lignes maximum, **en bas à gauche, sur la zone calme** ; une pastille d'accroche discrète ; **un** bouton principal « Demander ma visite gratuite » et le téléphone en secondaire ; les 3 mini-preuves sous le bouton.
+- [ ] Couleurs du haut de page accordées à la photo et à la palette du site (décision 18).
 - [ ] Contraste AA du texte sur la photo (voile léger et progressif, pas un gros bloc sombre).
 - [ ] Aucune animation au défilement dans le haut de page (apparition douce du texte au chargement seulement, coupée avec `prefers-reduced-motion`).
 - [ ] Rendu **premium** à 375 px : rien d'écrasé, texte lisible, zones tactiles ≥ 44 px, dock Appeler / WhatsApp / Devis en bas.

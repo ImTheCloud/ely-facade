@@ -4,6 +4,7 @@ Références que Claudiu a choisies. **Les ouvrir avec le navigateur intégré, 
 
 | Référence | URL | Ce qu'on en retient |
 |---|---|---|
+| **Capture envoyée par Claudiu** | `ironwood-hero-choisi-par-claudiu.webp` (dans ce dossier) | composition à reproduire dans l'esprit, avec nos couleurs et notre photo |
 | Ironwood (**la** référence) | https://construction-visuvate.framer.website/ | à remplir |
 | BLDR | https://www.framer.com/marketplace/templates/bldr/ | à remplir |
 | Lintel | https://www.framer.com/marketplace/templates/lintel/ | à remplir |
