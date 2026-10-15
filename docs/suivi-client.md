@@ -57,3 +57,8 @@ Domaine elyfacade.be + elyfacade.com, email pro, fiche Google Business (Halle), 
 - On peut citer l'Université de Mons (UMons) publiquement.
 - L'ordre des étapes d'une façade est correct : préparation du support et échafaudage, isolation, sous-enduit armé, enduit de finition, retrait de l'échafaudage.
 - Les deux immeubles de Namur ont bien été faits par eux de A à Z.
+
+## À confirmer (15 octobre 2026, rien n'est affiché en attendant)
+
+- Charleroi : « 2 chantiers, 23 maisons au total » (nom du dossier photo). À confirmer avec Elisei avant de l'écrire sur le site.
+- Evere : quels travaux ont été faits sur l'immeuble (une seule photo, de nuit) ? Le site montre la photo avec la commune seulement.
