@@ -1,0 +1,296 @@
+---
+/**
+ * Nos réalisations : la carte des communes et une bande de chantiers qu'on fait glisser
+ * (au doigt, à la souris, au clavier ou avec les flèches). Une carte par chantier, la commune en grand.
+ */
+import { Image } from 'astro:assets';
+import CarteBelgique from '../CarteBelgique.astro';
+import Icon from '../Icon.astro';
+import Souligne from '../Souligne.astro';
+import { CHANTIERS, photo } from '../../data/chantiers';
+import { chemin, t, type Langue } from '../../i18n';
+
+interface Props {
+  langue: Langue;
+}
+
+const { langue } = Astro.props;
+const textes = t(langue);
+const section = textes.accueil.realisations;
+const base = chemin('realisations', langue);
+---
+
+<section class="section realisations" id="realisations" data-bande>
+  <div class="wrap realisations__haut">
+    <div class="tete" data-reveal>
+      <p class="surtitre">{section.pastille}</p>
+      <h2 data-trait><Souligne texte={section.titre} /></h2>
+      <p>{section.texte}</p>
+    </div>
+    <CarteBelgique langue={langue} class="realisations__carte" />
+  </div>
+
+  <div class="wrap realisations__commandes">
+    <a class="realisations__toutes" href={base}>
+      {section.toutes}
+      <Icon nom="fleche" taille={18} />
+    </a>
+    <div class="realisations__fleches">
+      <button type="button" data-bande-precedent aria-label={section.precedent}><Icon nom="fleche-gauche" taille={20} /></button>
+      <button type="button" data-bande-suivant aria-label={section.suivant}><Icon nom="fleche" taille={20} /></button>
+    </div>
+  </div>
+
+  <ul class="bande" data-bande-liste>
+    {
+      CHANTIERS.map((c) => {
+        const fiche = textes.chantiers[c.cle];
+        const nombre = c.photos.length;
+        const contenu = (
+          <>
+            <div class="carte-chantier__photo">
+              <Image
+                src={photo(c.couverture)}
+                alt={textes.photos[c.couverture]}
+                widths={[400, 640, 900]}
+                sizes="(min-width: 900px) 420px, 82vw"
+                format="webp"
+                quality={74}
+              />
+              <span class="carte-chantier__nombre">
+                {nombre} {nombre > 1 ? section.photos : section.photo}
+              </span>
+            </div>
+            <div class="carte-chantier__texte">
+              <span class="carte-chantier__commune">{textes.communes[c.commune]}</span>
+              <span class="carte-chantier__titre">{fiche.titre}</span>
+              <span class="carte-chantier__accroche">{fiche.accroche}</span>
+            </div>
+          </>
+        );
+        return (
+          <li class="carte-chantier">
+            {c.page ? (
+              <a href={`${base}${c.slug[langue]}/`} class="carte-chantier__lien">
+                {contenu}
+                <span class="carte-chantier__voir">
+                  {section.voir}
+                  <Icon nom="fleche-diag" taille={16} />
+                </span>
+              </a>
+            ) : (
+              <div class="carte-chantier__lien">{contenu}</div>
+            )}
+          </li>
+        );
+      })
+    }
+  </ul>
+</section>
+
+<script>
+  import '~/scripts/bande';
+</script>
+
+<style>
+  .realisations__haut {
+    display: grid;
+    gap: 24px;
+    align-items: center;
+  }
+
+  .realisations__haut .tete {
+    margin-bottom: 0;
+  }
+
+  .realisations__haut :global(.realisations__carte) {
+    max-width: 560px;
+    width: 100%;
+    justify-self: center;
+  }
+
+  .realisations__commandes {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 16px;
+    margin-top: clamp(32px, 5vw, 56px);
+    margin-bottom: 20px;
+  }
+
+  .realisations__toutes {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    min-height: 44px;
+    color: var(--color-ink);
+    font-weight: 700;
+    text-decoration: none;
+  }
+
+  .realisations__toutes:hover {
+    color: var(--color-accent);
+  }
+
+  .realisations__fleches {
+    display: none;
+    gap: 8px;
+  }
+
+  :global(.js) .realisations__fleches {
+    display: flex;
+  }
+
+  .realisations__fleches button {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 52px;
+    height: 52px;
+    border: 1px solid var(--color-border);
+    border-radius: 50%;
+    background: var(--color-card);
+    color: var(--color-ink);
+    cursor: pointer;
+    transition:
+      background-color var(--speed) var(--ease),
+      color var(--speed) var(--ease),
+      opacity var(--speed) var(--ease);
+  }
+
+  .realisations__fleches button:hover {
+    background: var(--color-ink);
+    color: #fff;
+  }
+
+  .realisations__fleches button:disabled {
+    opacity: 0.35;
+    cursor: default;
+    background: var(--color-card);
+    color: var(--color-ink);
+  }
+
+  /* La bande : les cartes défilent horizontalement et s'arrêtent bien alignées. */
+  .bande {
+    --bord: max(var(--gutter), calc((100vw - var(--content-max)) / 2));
+    display: flex;
+    gap: var(--tile-gap);
+    margin: 0;
+    padding: 4px var(--bord) 24px;
+    list-style: none;
+    overflow-x: auto;
+    scroll-snap-type: x mandatory;
+    scroll-padding-inline: var(--bord);
+    scrollbar-width: none;
+    overscroll-behavior-x: contain;
+  }
+
+  .bande::-webkit-scrollbar {
+    display: none;
+  }
+
+  .carte-chantier {
+    flex: 0 0 min(82vw, 420px);
+    scroll-snap-align: start;
+  }
+
+  .carte-chantier__lien {
+    display: flex;
+    flex-direction: column;
+    height: 100%;
+    overflow: hidden;
+    border: 1px solid var(--color-border);
+    border-radius: var(--radius-tile);
+    background: var(--color-card);
+    box-shadow: var(--shadow-tile);
+    color: inherit;
+    text-decoration: none;
+    transition:
+      transform var(--speed) var(--ease),
+      box-shadow var(--speed) var(--ease);
+  }
+
+  a.carte-chantier__lien:hover {
+    transform: translateY(-4px);
+    box-shadow: var(--shadow-lift);
+  }
+
+  a.carte-chantier__lien:focus-visible {
+    outline: 3px solid var(--color-accent);
+    outline-offset: 3px;
+  }
+
+  .carte-chantier__photo {
+    position: relative;
+    aspect-ratio: 4 / 3;
+    overflow: hidden;
+  }
+
+  .carte-chantier__photo :global(img) {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    transition: transform 900ms var(--ease-out);
+  }
+
+  a.carte-chantier__lien:hover .carte-chantier__photo :global(img) {
+    transform: scale(1.05);
+  }
+
+  .carte-chantier__nombre {
+    position: absolute;
+    top: 14px;
+    left: 14px;
+    padding: 6px 12px;
+    border-radius: var(--radius-pill);
+    background: rgba(255, 255, 255, 0.9);
+    font-size: 13px;
+    font-weight: 650;
+    color: var(--color-ink);
+  }
+
+  .carte-chantier__texte {
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+    padding: 22px 24px 8px;
+  }
+
+  .carte-chantier__commune {
+    font-family: var(--font-display);
+    font-size: 30px;
+    font-weight: 800;
+    line-height: 1;
+    letter-spacing: var(--tracking-display);
+    text-transform: uppercase;
+    color: var(--color-ink);
+  }
+
+  .carte-chantier__titre {
+    font-weight: 650;
+    color: var(--color-ink);
+  }
+
+  .carte-chantier__accroche {
+    font-size: var(--size-small);
+    color: var(--color-muted);
+  }
+
+  .carte-chantier__voir {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    margin-top: auto;
+    padding: 14px 24px 22px;
+    font-size: var(--size-small);
+    font-weight: 700;
+    color: var(--color-accent);
+  }
+
+  @media (min-width: 960px) {
+    .realisations__haut {
+      grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
+      gap: 64px;
+    }
+  }
+</style>

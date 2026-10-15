@@ -1,4 +1,5 @@
 ---
+/** La bande des quatre chiffres, juste sous le haut de page. Seulement des chiffres confirmés. */
 import { t, type Langue } from '../../i18n';
 
 interface Props {
@@ -9,69 +10,62 @@ const { langue } = Astro.props;
 const chiffres = t(langue).accueil.chiffres;
 ---
 
-<div class="wrap chiffres-bande">
-<ul class="chiffres" aria-label={chiffres.aria}>
-  {
-    chiffres.liste.map((chiffre, i) => (
-      <li class:list={['chiffre', { 'chiffre--rouge': i === 2 }]}>
-        <span class="chiffre__valeur">{chiffre.valeur}</span>
-        <span class="chiffre__libelle">{chiffre.libelle}</span>
-      </li>
-    ))
-  }
-</ul>
-</div>
+<section class="chiffres-section" aria-label={chiffres.aria}>
+  <ul class="wrap chiffres">
+    {
+      chiffres.liste.map((chiffre, i) => (
+        <li class:list={['chiffre', { 'chiffre--rouge': i === 2 }]} data-reveal style={`--delai: ${i * 90}ms`}>
+          <span class="chiffre__valeur">{chiffre.valeur}</span>
+          <span class="chiffre__libelle">{chiffre.libelle}</span>
+        </li>
+      ))
+    }
+  </ul>
+</section>
 
 <style>
-  .chiffres-bande {
-    margin-top: calc(var(--section-gap) * 0.6);
+  .chiffres-section {
+    padding-block: clamp(40px, 6vw, 72px);
+    border-bottom: 1px solid var(--color-border);
   }
 
-  /* Une bande de quatre chiffres sous le haut de page. */
   .chiffres {
     display: grid;
     grid-template-columns: repeat(2, 1fr);
-    margin: 0;
-    padding: 0;
+    gap: 28px 16px;
+    margin-block: 0;
     list-style: none;
-    background: var(--color-card);
-    border: 1px solid var(--color-border);
-    border-radius: var(--radius-tile);
-    box-shadow: var(--shadow-lift);
-    overflow: hidden;
   }
 
   .chiffre {
     display: flex;
     flex-direction: column;
-    justify-content: space-between;
-    gap: 14px;
-    padding: 22px 22px 24px;
-    border-top: 1px solid var(--color-border);
-  }
-
-  .chiffre:nth-child(-n + 2) {
-    border-top: 0;
-  }
-
-  .chiffre:nth-child(even) {
-    border-left: 1px solid var(--color-border);
+    gap: 10px;
+    padding-left: 18px;
+    border-left: 2px solid var(--color-border);
   }
 
   .chiffre__valeur {
-    font-size: clamp(36px, 4vw, 56px);
-    font-weight: 700;
-    line-height: 1;
-    letter-spacing: -0.04em;
+    font-family: var(--font-display);
+    font-size: clamp(40px, 5.2vw, 76px);
+    font-weight: 800;
+    line-height: 0.9;
+    letter-spacing: var(--tracking-display);
+    text-transform: uppercase;
     font-variant-numeric: tabular-nums;
     color: var(--color-ink);
   }
 
   .chiffre__libelle {
+    max-width: 20ch;
     font-size: var(--size-small);
     font-weight: 500;
     line-height: 1.35;
     color: var(--color-text);
+  }
+
+  .chiffre--rouge {
+    border-left-color: var(--color-accent);
   }
 
   .chiffre--rouge .chiffre__valeur {
@@ -81,16 +75,11 @@ const chiffres = t(langue).accueil.chiffres;
   @media (min-width: 900px) {
     .chiffres {
       grid-template-columns: repeat(4, 1fr);
+      gap: 32px;
     }
 
     .chiffre {
-      padding: 30px 32px 32px;
-      border-top: 0;
-      border-left: 1px solid var(--color-border);
-    }
-
-    .chiffre:first-child {
-      border-left: 0;
+      padding-left: 24px;
     }
   }
 </style>

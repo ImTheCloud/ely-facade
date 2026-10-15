@@ -48,6 +48,112 @@ export const nl = {
     allerAuContenu: 'Naar de inhoud',
   },
 
+  communes: { mons: 'Bergen', namur: 'Namen', halle: 'Halle', charleroi: 'Charleroi', evere: 'Evere' },
+
+  /** De vijf vakgebieden (uitsluitend de gevel). */
+  metiers: {
+    crepi: {
+      titre: 'Gevelpleister',
+      court: 'Nieuwe of te vernieuwen gevel, alle afwerkingen en systemen, inclusief isolatie langs buiten.',
+    },
+    peinture: {
+      titre: 'Gevelschilderwerk',
+      court: 'Een opgefriste gevel, in de kleur van uw keuze.',
+    },
+    nettoyage: {
+      titre: 'Gevelreiniging',
+      court: 'Alle methodes, alle ondergronden.',
+    },
+    rejointoiement: {
+      titre: 'Voegwerk',
+      court: 'Netjes vernieuwde voegen, alle methodes en alle ondergronden.',
+    },
+    briques: {
+      titre: 'Herstel van bakstenen',
+      court: 'Beschadigde bakstenen vervangen, voegen vernieuwd, scheuren behandeld, gevelstenen.',
+    },
+  },
+
+  /** De werven: feiten die op de foto's te zien zijn of door Elisei bevestigd, niets anders. */
+  chantiers: {
+    umons: {
+      titre: 'Universiteit van Bergen',
+      accroche: 'Gevels van gebouwen van de Universiteit van Bergen (UMONS)',
+      texte:
+        'Drie gebouwen van de Universiteit van Bergen: een binnenplaats, een gebouw met vier verdiepingen en een lange gevel. De foto’s volgen de werf, van de steiger tot de afgewerkte gevel.',
+      batiments: ['Binnenplaats', 'Gebouw met vier verdiepingen', 'Lange gevel'],
+    },
+    'namur-immeuble': {
+      titre: 'Gebouw met drie verdiepingen',
+      accroche: 'Een gevel van A tot Z',
+      texte: 'Een gebouw met drie verdiepingen in Namen, met een witte en grijze gevel. Onze ploegen hebben de gevel van A tot Z uitgevoerd.',
+      batiments: [],
+    },
+    'namur-balcons': {
+      titre: 'Gebouw met balkons',
+      accroche: 'Vijf bouwlagen, van de steiger tot de witte gevel',
+      texte: 'Een gebouw met balkons en vijf bouwlagen in Namen, op een heuvel. Onze ploegen hebben de gevel van A tot Z uitgevoerd.',
+      batiments: [],
+    },
+    halle: {
+      titre: 'Woning',
+      accroche: 'Een woning in Halle, de gemeente van ons kantoor',
+      texte: 'Een woning in Halle: de zijgevel in de steiger, daarna de afgewerkte woning.',
+      batiments: [],
+    },
+    charleroi: {
+      titre: 'Rijwoningen',
+      accroche: 'Twee rijen aaneengesloten woningen',
+      texte: 'Twee rijen aaneengesloten woningen in Charleroi, in de steiger en daarna afgewerkt.',
+      batiments: [],
+    },
+    evere: {
+      titre: 'Appartementsgebouw',
+      accroche: 'Een gebouw in Evere',
+      texte: 'Een appartementsgebouw in Evere, ’s avonds gefotografeerd.',
+      batiments: [],
+    },
+  },
+
+  /** De alternatieve tekst van elke foto (de gemeente, nooit het adres). */
+  photos: {
+    'accueil/hero-namur': 'Gebouw met drie verdiepingen in Namen, afgewerkte witte en grijze gevel, van bovenaf gezien',
+    'namur-immeuble-3-etages/pendant-face': 'Gebouw met drie verdiepingen in de steiger, van voren gezien, in Namen',
+    'namur-immeuble-3-etages/pendant-rue': 'Hetzelfde gebouw in de steiger, met een werfcontainer ervoor, in Namen',
+    'namur-immeuble-3-etages/apres-rue': 'Het afgewerkte gebouw met drie verdiepingen, witte en grijze gevel, vanaf de straat, in Namen',
+    'namur-immeuble-balcons/pendant-debut-1': 'Het gebouw met balkons op de heuvel, bij het begin van de werken, in Namen',
+    'namur-immeuble-balcons/pendant-debut-2': 'Het gebouw met balkons volledig in de steiger, bij het begin van de werken, in Namen',
+    'namur-immeuble-balcons/pendant-loin-1': 'Het gebouw met balkons in de steiger, van ver gezien, in Namen',
+    'namur-immeuble-balcons/pendant-loin-2': 'Het gebouw in de steiger met netten, vanaf de straat, in Namen',
+    'namur-immeuble-balcons/pendant-loin-3': 'Het gebouw in de steiger boven het grasveld, in Namen',
+    'namur-immeuble-balcons/pendant-grue': 'Het gebouw met balkons in de steiger, rechts een kraan, in Namen',
+    'namur-immeuble-balcons/pendant-cote-gauche': 'Hoek van het gebouw met balkons in de steiger, in Namen',
+    'namur-immeuble-balcons/apres-cote-gauche': 'Dezelfde hoek afgewerkt, witte gevel onder een blauwe hemel, in Namen',
+    'namur-immeuble-balcons/apres-coin': 'Het afgewerkte gebouw met balkons, witte gevel, in Namen',
+    'halle-maison/pendant-pignon': 'Zijgevel van een woning in de steiger, in Halle',
+    'halle-maison/apres-pignon': 'Dezelfde zijgevel afgewerkt, in Halle',
+    'halle-maison/final-entree': 'De ingang van de afgewerkte woning, in Halle',
+    'halle-maison/final-angle': 'Hoek van de woning met het grote raam, in Halle',
+    'halle-maison/final-baie-vitree': 'Gevel van de woning met de glazen pui, in Halle',
+    'charleroi-rangee-1/pendant': 'Rij woningen in de steiger, in Charleroi',
+    'charleroi-rangee-1/apres': 'De afgewerkte rij woningen, crèmekleurige gevel, in Charleroi',
+    'charleroi-rangee-2/pendant': 'Tweede rij woningen in de steiger, in Charleroi',
+    'charleroi-rangee-2/apres': 'De tweede rij afgewerkt, witte gevel, bij zonsondergang, in Charleroi',
+    'charleroi-vue-ensemble/apres': 'De twee afgewerkte rijen woningen, aan weerszijden van de straat, in Charleroi',
+    'mons-umons-immeuble-angle/etape-1-membrane-1': 'Gebouw met vier verdiepingen van de Universiteit van Bergen in de steiger, bij valavond',
+    'mons-umons-immeuble-angle/etape-1-membrane-2': 'Hetzelfde gebouw in de steiger, vanaf het kruispunt, in Bergen',
+    'mons-umons-immeuble-angle/etape-1-membrane-3': 'Hetzelfde gebouw in de steiger, vanaf de overkant van de straat, in Bergen',
+    'mons-umons-immeuble-angle/etape-1-membrane-4': 'Hetzelfde gebouw in de steiger, aan het einde van de dag, in Bergen',
+    'mons-umons-immeuble-angle/etape-2-sous-couche': 'Het gebouw met de crèmekleurige onderlaag, ramen nog afgeschermd, in Bergen',
+    'mons-umons-immeuble-angle/etape-3-termine': 'Het afgewerkte gebouw, witte gevel, met nog één steigertoren, in Bergen',
+    'mons-umons-cour/etape-1-membrane': 'Binnenplaats van de Universiteit van Bergen in de steiger, bij het begin van de werken',
+    'mons-umons-cour/etape-2-isolation': 'De binnenplaats in de steiger, met de platen geplaatst, in Bergen',
+    'mons-umons-cour/etape-3-aile-terminee': 'De binnenplaats van de Universiteit van Bergen, afgewerkte witte gevel',
+    'mons-umons-longue-facade/pendant': 'Lange gevel van de Universiteit van Bergen in de steiger',
+    'mons-umons-longue-facade/apres': 'Dezelfde lange gevel afgewerkt, in Bergen',
+    'evere-immeuble/nuit': 'Appartementsgebouw op een straathoek, ’s avonds, in Evere',
+  } as Record<string, string>,
+
   pages: {
     accueil: {
       titre: 'Ely Facade | Gevelrenovatie in heel België',
@@ -72,12 +178,90 @@ export const nl = {
       appeler: 'Bel',
       preuvesAria: 'Onze beloften',
       preuves: ['Gratis plaatsbezoek', 'Minstens 10\u00a0jaar garantie', 'Overal in België'],
-      alt: 'Gebouw met drie verdiepingen in Namen, afgewerkte witte en grijze gevel, van bovenaf gezien',
       film: {
         etapes: ['Bergen · Universiteit van Bergen', 'Namen · Gebouw met balkons', 'Namen · Gebouw met drie verdiepingen'],
       },
     },
 
+
+    /** De emotionele zinnen tussen de secties. Het woord tussen haakjes wordt rood onderstreept. */
+    emotions: {
+      durer: { phrase: 'Een gevel die [blijft].', note: 'Minstens 10 jaar garantie' },
+      premiere: { phrase: 'Het eerste wat men van [uw huis] ziet.', note: '' },
+      jeunesse: { phrase: 'Elke gevel krijgt een [tweede jeugd].', note: '' },
+      exigence: { phrase: 'Een huis of een universiteit: [dezelfde zorg].', note: '' },
+    },
+
+    avantApres: {
+      pastille: 'Voor en na',
+      titre: 'Het verschil is zichtbaar.',
+      texte: 'Schuif met de cursor: dezelfde gevel tijdens de werken en daarna afgewerkt.',
+      aide: 'Schuif om te vergelijken',
+      avant: 'Tijdens de werken',
+      apres: 'Afgewerkt',
+      aria: 'De gevel tijdens de werken en afgewerkt vergelijken',
+      voir: 'Bekijk de werf',
+    },
+
+    etapes: {
+      pastille: 'De stappen van een gevel',
+      titre: 'Van steiger tot afgewerkte [gevel].',
+      texte:
+        'Een werf van de Universiteit van Bergen, stap voor stap. Dit is de volgorde van elke gevel met buitenisolatie en pleisterwerk.',
+      lieu: 'Bergen · Universiteit van Bergen',
+      etape: 'Stap',
+      liste: {
+        preparation: {
+          titre: 'Voorbereiding en steiger',
+          texte: 'De steiger wordt opgebouwd, de ondergrond voorbereid, de ramen en openingen worden afgeschermd.',
+          legendes: ['Steiger en bescherming', 'Steiger en bescherming'],
+        },
+        isolation: {
+          titre: 'Plaatsen van de isolatie',
+          texte: 'De isolatieplaten worden over de hele gevel geplaatst, gelijmd en geplugd.',
+          legendes: ['Tijdens de werken', 'Tijdens de werken'],
+        },
+        sousEnduit: {
+          titre: 'Gewapende onderlaag',
+          texte: 'Een glasvezelnet wordt in de onderlaag ingebed, met versterkingen rond de ramen en bovenaan de gevel.',
+          legendes: ['Onderlaag'],
+        },
+        finition: {
+          titre: 'Afwerkingspleister',
+          texte: 'Na het drogen geeft de afwerkingspleister de gevel zijn uitzicht en kleur, naar keuze.',
+          legendes: ['Afwerking'],
+        },
+        termine: {
+          titre: 'Afgewerkte gevel',
+          texte: 'De steiger wordt weggenomen. Uw gevel heeft minstens 10 jaar garantie.',
+          legendes: ['Afgewerkte gevel, binnenplaats'],
+        },
+      },
+    },
+
+    umons: {
+      pastille: 'Referentiewerf',
+      texte:
+        'Gevels van gebouwen van de Universiteit van Bergen (UMONS): een binnenplaats, een gebouw met vier verdiepingen en een lange gevel. Van het grote openbare gebouw tot de woning werken we met dezelfde zorg.',
+      voir: 'De werf in beeld',
+    },
+
+    realisations: {
+      pastille: 'Onze realisaties',
+      titre: 'Wat u ziet, zijn [onze werven].',
+      texte: 'Gevels in Bergen, Namen, Charleroi, Halle en Evere. Ons kantoor is in Halle en we werken overal in België.',
+      photos: 'foto’s',
+      photo: 'foto',
+      voir: 'Bekijk de werf',
+      precedent: 'Vorige werven',
+      suivant: 'Volgende werven',
+      toutes: 'Al onze realisaties',
+      carte: {
+        aria: 'Kaart van België: ons kantoor in Halle en de gemeenten van onze werven',
+        bureau: 'Ons kantoor',
+        legende: 'Overal in België',
+      },
+    },
 
     chiffres: {
       aria: 'Ely Facade in cijfers',
@@ -93,38 +277,7 @@ export const nl = {
       surtitre: 'Ons vak',
       titre: 'Alles voor uw gevel.',
       texte: 'Uitsluitend de gevel: dat is ons vak, en we doen niets anders.',
-      liste: [
-        {
-          icone: 'truelle',
-          cle: 'crepi',
-          titre: 'Gevelpleister',
-          texte: 'Nieuwe of te vernieuwen gevel, alle afwerkingen en systemen, inclusief isolatie langs buiten.',
-        },
-        {
-          icone: 'rouleau',
-          cle: 'peinture',
-          titre: 'Gevelschilderwerk',
-          texte: 'Een opgefriste gevel, in de kleur van uw keuze.',
-        },
-        {
-          icone: 'goutte',
-          cle: 'nettoyage',
-          titre: 'Gevelreiniging',
-          texte: 'Alle methodes, alle ondergronden.',
-        },
-        {
-          icone: 'joint',
-          cle: 'rejointoiement',
-          titre: 'Voegwerk',
-          texte: 'Netjes vernieuwde voegen, alle methodes en alle ondergronden.',
-        },
-        {
-          icone: 'brique',
-          cle: 'briques',
-          titre: 'Herstel van bakstenen',
-          texte: 'Beschadigde bakstenen vervangen, voegen vernieuwd, scheuren behandeld, gevelstenen.',
-        },
-      ],
+      voir: 'Meer weten',
     },
 
     equipe: {
@@ -152,7 +305,7 @@ export const nl = {
         },
         {
           titre: 'U ontvangt de offerte',
-          texte: 'Uiterlijk enkele dagen na het bezoek.',
+          texte: 'Na het bezoek stuurt Elisei u de offerte, tegen een prijs per vierkante meter gevel.',
         },
         {
           titre: 'De werken starten',
@@ -168,6 +321,11 @@ export const nl = {
         {
           question: 'Kost het bezoek iets?',
           reponse: 'Nee. Elisei komt gratis en zonder verplichting langs en stuurt u daarna de offerte.',
+        },
+        {
+          question: 'Hoe wordt de prijs berekend?',
+          reponse:
+            'Per vierkante meter gevel: de prijs hangt af van de oppervlakte en de gekozen materialen. Elisei geeft hem u in de offerte, na het gratis plaatsbezoek.',
         },
         {
           question: 'Waar werken jullie?',
@@ -192,16 +350,39 @@ export const nl = {
       ],
     },
 
-    appel: {
-      titre: 'Laten we praten over uw gevel.',
-      texte: 'Gratis plaatsbezoek, zonder verplichting. Schrijf of bel ons.',
+    devis: {
+      titre: 'Uw gevel verdient te stralen. [Laten we praten].',
+      texte:
+        'Beschrijf uw werken in drie stappen. Elisei komt gratis en vrijblijvend bij u langs en stuurt u daarna de offerte.',
+      direct: 'Of rechtstreeks',
+      calculateur: {
+        titre: 'Hoe groot is uw gevel?',
+        texte: 'Een schatting volstaat: de breedte van de gevel en het aantal bouwlagen.',
+        largeur: 'Breedte (m)',
+        niveaux: 'Bouwlagen',
+        niveauxAide: 'gelijkvloers inbegrepen',
+        moins: 'Eén bouwlaag minder',
+        plus: 'Eén bouwlaag meer',
+        hypothese: 'Berekend met 3 m per bouwlaag.',
+        resultat: 'Geschatte oppervlakte',
+        unite: 'm²',
+        utiliser: 'Toevoegen aan mijn aanvraag',
+        ajoute: 'Toegevoegd aan uw aanvraag',
+        note: 'Elisei meet alles nauwkeurig op tijdens het gratis plaatsbezoek.',
+      },
+      photos: {
+        titre: 'Toon ons uw gevel',
+        texte: 'Stuur twee of drie foto’s van uw gevel via WhatsApp, met uw gemeente.',
+        bouton: 'Mijn foto’s versturen',
+        message: 'Goedendag, hier zijn enkele foto’s van mijn gevel voor een offerteaanvraag. Mijn gemeente: ',
+      },
     },
 
     contact: {
       surtitre: 'Contact en offerte',
       titre: 'Uw offerte, zonder verplichting.',
       texte:
-        'Beschrijf uw werken in drie stappen. Elisei komt gratis bij u langs en stuurt u daarna uiterlijk enkele dagen later de offerte.',
+        'Beschrijf uw werken in drie stappen. Elisei komt gratis en vrijblijvend bij u langs en stuurt u daarna de offerte.',
       direct: 'Of rechtstreeks',
       telephone: 'Telefoon',
       email: 'E-mail',

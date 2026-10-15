@@ -1,0 +1,297 @@
+---
+/**
+ * La fin de l'accueil (#devis) : le formulaire de devis directement sur la page, un calculateur
+ * de surface qui le pré-remplit, et l'envoi de photos par WhatsApp. Tous les boutons « visite gratuite » mènent ici.
+ */
+import Bouton from '../Bouton.astro';
+import FormulaireDevis from '../FormulaireDevis.astro';
+import Icon from '../Icon.astro';
+import Souligne from '../Souligne.astro';
+import { entreprise, lienWhatsApp } from '../../data/entreprise';
+import { t, type Langue } from '../../i18n';
+
+interface Props {
+  langue: Langue;
+}
+
+const { langue } = Astro.props;
+const textes = t(langue);
+const devis = textes.accueil.devis;
+const calcul = devis.calculateur;
+---
+
+<section class="section devis" id="devis" aria-labelledby="devis-titre">
+  <div class="wrap devis__grille">
+    <div class="devis__tete" data-reveal>
+      <h2 id="devis-titre" data-trait><Souligne texte={devis.titre} /></h2>
+      <p>{devis.texte}</p>
+    </div>
+
+    <div class="devis__formulaire" data-reveal style="--delai: 120ms">
+      <FormulaireDevis langue={langue} />
+    </div>
+
+    <aside class="devis__aides">
+      <!-- Calculateur de surface : seulement avec JavaScript (sinon, Elisei mesure sur place). -->
+      <div class="aide calcul" data-calcul hidden>
+        <p class="aide__titre">{calcul.titre}</p>
+        <p class="aide__texte">{calcul.texte}</p>
+        <div class="calcul__champs">
+          <label class="calcul__champ">
+            <span>{calcul.largeur}</span>
+            <input type="number" min="1" max="300" step="0.5" value="8" inputmode="decimal" data-largeur />
+          </label>
+          <div class="calcul__champ">
+            <label for="calcul-niveaux">
+              {calcul.niveaux} <small>({calcul.niveauxAide})</small>
+            </label>
+            <div class="calcul__pas">
+              <button type="button" data-moins aria-label={calcul.moins}>−</button>
+              <input id="calcul-niveaux" type="number" min="1" max="30" step="1" value="2" inputmode="numeric" data-niveaux />
+              <button type="button" data-plus aria-label={calcul.plus}>+</button>
+            </div>
+          </div>
+        </div>
+        <p class="calcul__resultat">
+          <span>{calcul.resultat}</span>
+          <output data-resultat aria-live="polite">48 {calcul.unite}</output>
+        </p>
+        <p class="calcul__hypothese">{calcul.hypothese} {calcul.note}</p>
+        <button type="button" class="calcul__utiliser" data-utiliser data-ajoute={calcul.ajoute} data-unite={calcul.unite}>
+          <Icon nom="check" taille={18} epaisseur={2.4} />
+          <span>{calcul.utiliser}</span>
+        </button>
+      </div>
+
+      <div class="aide">
+        <p class="aide__titre">{devis.photos.titre}</p>
+        <p class="aide__texte">{devis.photos.texte}</p>
+        <Bouton href={lienWhatsApp(devis.photos.message)} variante="whatsapp" icone="whatsapp" target="_blank" rel="noopener">
+          {devis.photos.bouton}
+        </Bouton>
+      </div>
+
+      <div class="aide aide--direct">
+        <p class="aide__titre">{devis.direct}</p>
+        <a href={`tel:${entreprise.telephoneLien}`}>
+          <Icon nom="telephone" taille={18} />
+          {entreprise.telephoneAffiche}
+        </a>
+        <a href={`mailto:${entreprise.email}`} class="aide__email">
+          <Icon nom="email" taille={18} />
+          {entreprise.email}
+        </a>
+      </div>
+    </aside>
+  </div>
+</section>
+
+<script>
+  import '~/scripts/calcul';
+</script>
+
+<style>
+  .devis {
+    background: linear-gradient(180deg, var(--color-bg) 0%, var(--color-accent-soft) 100%);
+  }
+
+  .devis__grille {
+    display: grid;
+    gap: 32px;
+    grid-template-areas:
+      'tete'
+      'formulaire'
+      'aides';
+  }
+
+  .devis__tete {
+    grid-area: tete;
+    display: flex;
+    flex-direction: column;
+    gap: 22px;
+  }
+
+  .devis__tete h2 {
+    max-width: 14ch;
+  }
+
+  .devis__tete p {
+    max-width: 48ch;
+    font-size: var(--size-lead);
+    line-height: 1.55;
+  }
+
+  .devis__formulaire {
+    grid-area: formulaire;
+  }
+
+  .devis__aides {
+    grid-area: aides;
+    display: grid;
+    gap: var(--tile-gap);
+    align-content: start;
+  }
+
+  .aide {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 12px;
+    padding: 24px;
+    border: 1px solid var(--color-border);
+    border-radius: var(--radius-tile);
+    background: var(--color-card);
+    box-shadow: var(--shadow-tile);
+  }
+
+  .aide__titre {
+    font-family: var(--font-display);
+    font-size: 21px;
+    font-weight: 800;
+    letter-spacing: -0.01em;
+    color: var(--color-ink);
+  }
+
+  .aide__texte {
+    font-size: var(--size-small);
+  }
+
+  .aide--direct a {
+    display: inline-flex;
+    align-items: center;
+    gap: 10px;
+    min-height: 44px;
+    color: var(--color-ink);
+    font-weight: 650;
+    text-decoration: none;
+  }
+
+  .aide--direct a:hover {
+    color: var(--color-accent);
+  }
+
+  .aide__email {
+    overflow-wrap: anywhere;
+  }
+
+  /* --- Calculateur --- */
+  .calcul__champs {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 12px;
+    width: 100%;
+  }
+
+  .calcul__champ {
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+    font-size: var(--size-tiny);
+    font-weight: 650;
+    color: var(--color-ink);
+  }
+
+  .calcul__champ small {
+    font-weight: 500;
+    color: var(--color-muted);
+  }
+
+  .calcul__champ input {
+    width: 100%;
+    min-height: 48px;
+    padding: 0 12px;
+    border: 1.5px solid var(--color-border-field);
+    border-radius: 12px;
+    background: #fff;
+    font: 650 18px/1 var(--font-text);
+    color: var(--color-ink);
+    text-align: center;
+    -moz-appearance: textfield;
+  }
+
+  .calcul__champ input::-webkit-outer-spin-button,
+  .calcul__champ input::-webkit-inner-spin-button {
+    -webkit-appearance: none;
+    margin: 0;
+  }
+
+  .calcul__pas {
+    display: grid;
+    grid-template-columns: 44px 1fr 44px;
+    gap: 6px;
+  }
+
+  .calcul__pas button {
+    min-height: 48px;
+    border: 0;
+    border-radius: 12px;
+    background: var(--color-surface);
+    font: 600 22px/1 var(--font-text);
+    color: var(--color-ink);
+    cursor: pointer;
+  }
+
+  .calcul__pas button:hover {
+    background: var(--color-border);
+  }
+
+  .calcul__resultat {
+    display: flex;
+    align-items: baseline;
+    justify-content: space-between;
+    gap: 12px;
+    width: 100%;
+    padding-top: 6px;
+    border-top: 1px dashed var(--color-border);
+    font-size: var(--size-small);
+    font-weight: 600;
+  }
+
+  .calcul__resultat output {
+    font-family: var(--font-display);
+    font-size: 40px;
+    font-weight: 800;
+    letter-spacing: -0.03em;
+    color: var(--color-ink);
+  }
+
+  .calcul__hypothese {
+    font-size: var(--size-tiny);
+    color: var(--color-muted);
+  }
+
+  .calcul__utiliser {
+    display: inline-flex;
+    align-items: center;
+    gap: 10px;
+    min-height: 48px;
+    padding: 0 20px;
+    border: 0;
+    border-radius: var(--radius-pill);
+    background: var(--color-ink);
+    color: #fff;
+    font: 650 15px/1 var(--font-text);
+    cursor: pointer;
+    transition: background-color var(--speed) var(--ease);
+  }
+
+  .calcul__utiliser:hover {
+    background: #343b42;
+  }
+
+  .calcul__utiliser.est-ajoute {
+    background: var(--color-whatsapp);
+  }
+
+  @media (min-width: 1000px) {
+    .devis__grille {
+      grid-template-columns: minmax(0, 0.9fr) minmax(0, 1.1fr);
+      grid-template-areas:
+        'tete formulaire'
+        'aides formulaire';
+      column-gap: 72px;
+      row-gap: 40px;
+      align-items: start;
+    }
+  }
+</style>

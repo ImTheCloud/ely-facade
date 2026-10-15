@@ -7,14 +7,27 @@
 - [x] 2. Nettoyage : anciennes photos (`src/assets/photos/*.jpg`, `paires/`, `accueil.jpg`), anciens avant/après, étapes, galerie et leurs textes FR/NL supprimés.
 - [x] 3. Références : sites Framer bloqués par le réseau de la session ; capture Ironwood étudiée et fiches publiques résumées dans `docs/references/README.md`.
 - [x] 4. En-tête et haut de page en 3 variantes (voir `docs/variantes.md`) : A « Mise au point », B « Film d'ouverture », C « La façade qui brille » (sur l'accueil). En-tête posé dans la photo (logo blanc avec la brique rouge, liens blancs, bouton clair), blanc flouté au défilement. Titres en Bricolage Grotesque (capitales, 800, -0,03 em). Cadrage du toit calculé au pixel près pour toutes les tailles d'écran. **À faire dès que Claudiu a choisi** : supprimer les variantes non retenues (liste dans `docs/variantes.md`).
-- [ ] 5. Reste de l'accueil
+- [x] 5. Reste de l'accueil, dans l'ordre : phrase « Une façade refaite pour durer » → 4 chiffres → phrase « La première chose qu'on voit de chez vous » → avant/après (UMons cour en premier, puis Namur ×2, Halle, Charleroi) → phrase sur photo « Chaque façade a sa seconde jeunesse » → les étapes d'une façade (UMons, 7 photos, récit au défilement) → phrase « Une maison ou une université » → UMons, chantier de référence → réalisations (carte de Belgique + bande de 6 chantiers) → métiers (bande ardoise) → équipe → méthode → FAQ (+ « Comment est calculé le prix ? ») → devis (formulaire sur la page, calculateur de surface, photos par WhatsApp). Toutes les photos sont utilisées (accueil + pages Réalisations à l'étape 6).
 - [ ] 6. Pages
 - [ ] 7. SEO
 - [ ] 8. Vérifications finales
 - [ ] 9. README
 - [ ] 10. Rapport final
 
+### Idées originales (section 9 de la reprise)
+1. **« La façade qui brille »** (haut de page C, sur l'accueil) : un reflet de lumière passe une fois sur les seules surfaces blanches de la façade (masque calculé depuis la photo), puis sur le mot « briller » ; la brique rouge du logo se pose comme point final du titre. Pourquoi : le titre devient vrai sous les yeux du visiteur, et la marque signe la page. Où : `Hero.astro`, `scripts/importer-photos.mjs` (masque).
+2. **« Faites avancer le chantier »** : les étapes d'une façade racontées au défilement, la photo de l'UMons reste fixe et passe de l'échafaudage à la façade terminée, avec des pastilles 1 → 5. Pourquoi : montre le savoir-faire sans jargon, avec de vraies photos. Où : `Etapes.astro`, `scripts/etapes.ts`.
+3. **Calculateur de surface** : largeur × niveaux → surface estimée, ajoutée au formulaire de devis d'un clic. Pourquoi : la surface est la première question d'Elisei ; le client n'a plus à la deviner. Aucun prix affiché. Où : `Devis.astro`, `scripts/calcul.ts`.
+4. **Carte de Belgique des chantiers** : dessin simplifié, le bureau de Halle en brique rouge qui pulse, les communes de chantiers qui apparaissent une à une, « Partout en Belgique ». Pourquoi : rassure sur la zone d'intervention en un coup d'œil. Où : `CarteBelgique.astro`.
+5. **« Montrez-nous votre façade »** : un bouton WhatsApp avec un message déjà écrit pour envoyer 2-3 photos et sa commune. Pourquoi : le contact le plus simple pour un particulier. Où : `Devis.astro`.
+6. **La brique rouge comme signature** : point de la pastille, puces, numéros d'étapes, soulignements des mots clés qui se tracent en rouge. Où : `global.css` (`.brique`, `.souligne`).
+7. **Phrases d'émotion mot par mot** (décision 20) : les mots s'éclaircissent un à un, puis le mot clé se souligne en rouge ; une phrase sur photo plein cadre qui glisse au défilement. Où : `Phrase.astro`, `Souligne.astro`.
+
 ### Décisions prises seul (à relire par Claudiu)
+- Avant/après : seules les paires prises presque du même endroit sont en curseur (UMons cour, UMons longue façade, Namur trois étages), cadrées pour que les façades se superposent. Pour Halle, Charleroi et Namur balcons, les angles sont trop différents : les deux photos sont côte à côte dans le même cadre (un curseur aurait l'air cassé).
+- Cour de l'UMons : la photo « pendant » utilisée est `etape-2-isolation` (même cour, angle proche de la photo « après ») ; `etape-1-membrane` est trop éloignée pour un curseur. Elle reste sur la page du chantier.
+- Délais retirés : « le devis en quelques jours maximum » n'est plus affiché (décision 11 : pas de délai non confirmé).
+- Étapes d'une façade : textes généraux de l'ordre confirmé par Elisei ; les légendes des photos ne disent que ce qu'on voit (« Échafaudage et protections », « Pendant les travaux », « Sous-couche », « Finition », « Façade terminée »).
 - Haut de page par défaut : variante C. C'est la seule où le titre ne tombe pas sur les fenêtres (décision 12) ; les détails sont dans un panneau de verre pour rester lisibles devant la façade blanche.
 - Téléphone : cadrage sur l'aile gauche de l'immeuble (toit et façade en haut, route et pelouse en bas sous le texte) ; le cadrage sur l'angle droit mettait le texte sur la façade.
 - Police des titres : Bricolage Grotesque, version « taille optique » (plus fine et serrée aux grandes tailles). Gardée : le rendu en capture est convaincant, Sora et Manrope n'ont pas été nécessaires.

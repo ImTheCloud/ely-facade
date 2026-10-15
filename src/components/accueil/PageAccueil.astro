@@ -1,12 +1,17 @@
 ---
 /** L'accueil complet, partagé par / , /nl/ et les pages de comparaison des variantes du haut de page. */
-import Appel from './Appel.astro';
+import AvantApres from './AvantApres.astro';
 import Chiffres from './Chiffres.astro';
+import Devis from './Devis.astro';
 import Equipe from './Equipe.astro';
+import Etapes from './Etapes.astro';
 import Faq from './Faq.astro';
 import Hero from './Hero.astro';
 import Methode from './Methode.astro';
 import Metiers from './Metiers.astro';
+import Phrase from './Phrase.astro';
+import Realisations from './Realisations.astro';
+import Umons from './Umons.astro';
 import BaseLayout from '~/layouts/BaseLayout.astro';
 import { VARIANTES_HERO, VARIANTE_HERO_ACCUEIL, type VarianteHero } from '~/data/hero';
 import { t, type Langue } from '~/i18n';
@@ -19,17 +24,27 @@ interface Props {
 }
 
 const { langue, variante = VARIANTE_HERO_ACCUEIL, comparaison = false } = Astro.props;
-const page = t(langue).pages.accueil;
+const textes = t(langue);
+const page = textes.pages.accueil;
+const emotions = textes.accueil.emotions;
 ---
 
 <BaseLayout langue={langue} titre={page.titre} description={page.description} surPhoto noindex={comparaison}>
   <Hero langue={langue} variante={variante} />
+  <Phrase langue={langue} phrase={emotions.durer.phrase} note={emotions.durer.note} />
   <Chiffres langue={langue} />
+  <Phrase langue={langue} phrase={emotions.premiere.phrase} />
+  <AvantApres langue={langue} />
+  <Phrase langue={langue} phrase={emotions.jeunesse.phrase} fond="photo" image="namur-immeuble-balcons/apres-cote-gauche" />
+  <Etapes langue={langue} />
+  <Phrase langue={langue} phrase={emotions.exigence.phrase} />
+  <Umons langue={langue} />
+  <Realisations langue={langue} />
   <Metiers langue={langue} />
   <Equipe langue={langue} />
   <Methode langue={langue} />
   <Faq langue={langue} />
-  <Appel langue={langue} />
+  <Devis langue={langue} />
 
   {
     comparaison ? (

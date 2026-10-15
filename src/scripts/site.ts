@@ -1,7 +1,7 @@
 /**
  * Le « moteur » commun à toutes les pages :
  * - défilement fluide (Lenis), coupé si la personne préfère moins d'animations ;
- * - apparitions au défilement ([data-reveal]).
+ * - apparitions au défilement ([data-reveal] ; [data-mots] mot par mot ; [data-trait] pour les soulignements).
  *
  * Tout reste utilisable sans JavaScript : ce script ne fait qu'ajouter du mouvement.
  */
@@ -44,4 +44,4 @@ const observateur = new IntersectionObserver(
   },
   { rootMargin: '0px 0px -8% 0px', threshold: 0.12 },
 );
-document.querySelectorAll('[data-reveal]').forEach((el) => observateur.observe(el));
+document.querySelectorAll('[data-reveal], [data-mots], [data-trait]').forEach((el) => observateur.observe(el));

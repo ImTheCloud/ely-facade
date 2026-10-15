@@ -1,5 +1,7 @@
 ---
+/** Les cinq métiers, chacun mène à sa page. Uniquement la façade. */
 import Icon from '../Icon.astro';
+import { METIERS, lienMetier } from '../../data/metiers';
 import { t, type Langue } from '../../i18n';
 
 interface Props {
@@ -7,24 +9,34 @@ interface Props {
 }
 
 const { langue } = Astro.props;
-const metiers = t(langue).accueil.metiers;
+const textes = t(langue);
+const section = textes.accueil.metiers;
 ---
 
-<section class="metiers" id="metiers">
+<section class="section section--ardoise metiers" id="metiers">
   <div class="wrap">
-    <div class="metiers__tete" data-reveal>
-      <p class="surtitre">{metiers.surtitre}</p>
-      <h2>{metiers.titre}</h2>
-      <p class="metiers__texte">{metiers.texte}</p>
+    <div class="tete" data-reveal>
+      <p class="surtitre">{section.surtitre}</p>
+      <h2>{section.titre}</h2>
+      <p>{section.texte}</p>
     </div>
 
     <ul class="metiers__liste">
       {
-        metiers.liste.map((metier, i) => (
-          <li class="carte tuile-bento" data-reveal style={`--delai: ${i * 70}ms`}>
-            <span class="carte__icone"><Icon nom={metier.icone} taille={28} /></span>
-            <h3>{metier.titre}</h3>
-            <p>{metier.texte}</p>
+        METIERS.map((metier, i) => (
+          <li data-reveal style={`--delai: ${i * 70}ms`}>
+            <a class="metier" href={lienMetier(metier.cle, langue)}>
+              <span class="metier__icone">
+                <Icon nom={metier.icone} taille={28} />
+              </span>
+              <span class="metier__num" aria-hidden="true">0{i + 1}</span>
+              <h3>{textes.metiers[metier.cle].titre}</h3>
+              <p>{textes.metiers[metier.cle].court}</p>
+              <span class="metier__voir">
+                {section.voir}
+                <Icon nom="fleche" taille={16} />
+              </span>
+            </a>
           </li>
         ))
       }
@@ -34,20 +46,8 @@ const metiers = t(langue).accueil.metiers;
 
 <style>
   .metiers {
-    margin-top: var(--section-gap);
-  }
-
-  .metiers__tete {
-    display: flex;
-    flex-direction: column;
-    align-items: flex-start;
-    gap: 20px;
-    max-width: 760px;
-    margin-bottom: 40px;
-  }
-
-  .metiers__texte {
-    font-size: var(--size-lead);
+    border-radius: 36px;
+    margin-inline: clamp(0px, 1.2vw, 16px);
   }
 
   .metiers__liste {
@@ -58,31 +58,82 @@ const metiers = t(langue).accueil.metiers;
     list-style: none;
   }
 
-  .carte {
+  .metier {
+    position: relative;
     display: flex;
     flex-direction: column;
     gap: 12px;
+    height: 100%;
     padding: 28px;
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    border-radius: var(--radius-tile);
+    background: rgba(255, 255, 255, 0.04);
+    color: rgba(255, 255, 255, 0.78);
+    text-decoration: none;
     transition:
-      transform var(--speed) var(--ease),
-      box-shadow var(--speed) var(--ease);
+      background-color var(--speed) var(--ease),
+      border-color var(--speed) var(--ease),
+      transform var(--speed) var(--ease);
   }
 
-  .carte:hover {
+  .metier:hover {
+    background: rgba(255, 255, 255, 0.08);
+    border-color: rgba(255, 255, 255, 0.22);
     transform: translateY(-4px);
-    box-shadow: var(--shadow-lift);
   }
 
-  .carte__icone {
+  .metier:focus-visible {
+    outline: 3px solid #fff;
+    outline-offset: 3px;
+  }
+
+  .metier__icone {
     display: inline-flex;
     align-items: center;
     justify-content: center;
     width: 56px;
     height: 56px;
-    margin-bottom: 12px;
+    margin-bottom: 10px;
     border-radius: 18px;
-    background: var(--color-accent-soft);
-    color: var(--color-accent);
+    background: var(--color-accent);
+    color: #fff;
+  }
+
+  .metier__num {
+    position: absolute;
+    top: 26px;
+    right: 28px;
+    font-family: var(--font-display);
+    font-size: 15px;
+    font-weight: 700;
+    color: rgba(255, 255, 255, 0.4);
+  }
+
+  .metier h3 {
+    color: #fff;
+    font-size: clamp(22px, 1.9vw, 28px);
+    font-weight: 800;
+  }
+
+  .metier p {
+    flex: 1;
+  }
+
+  .metier__voir {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    margin-top: 6px;
+    font-weight: 700;
+    color: #fff;
+  }
+
+  .metier__voir :global(svg) {
+    transition: transform var(--speed) var(--ease);
+  }
+
+  .metier:hover .metier__voir :global(svg) {
+    transform: translateX(4px);
   }
 
   @media (min-width: 700px) {
@@ -96,15 +147,13 @@ const metiers = t(langue).accueil.metiers;
       grid-template-columns: repeat(6, 1fr);
     }
 
-    .carte {
+    .metiers__liste li {
       grid-column: span 2;
-      min-height: 280px;
     }
 
     /* Cinq tuiles : trois en haut, deux plus larges en bas. */
-    .carte:nth-child(n + 4) {
+    .metiers__liste li:nth-child(n + 4) {
       grid-column: span 3;
-      min-height: 0;
     }
   }
 </style>

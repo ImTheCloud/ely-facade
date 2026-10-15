@@ -1,4 +1,5 @@
 ---
+/** Qui vient chez vous : les deux frères qui dirigent Ely Facade, et leur équipe. */
 import { t, type Langue } from '../../i18n';
 
 interface Props {
@@ -9,57 +10,53 @@ const { langue } = Astro.props;
 const equipe = t(langue).accueil.equipe;
 ---
 
-<section class="equipe">
-  <div class="wrap">
-    <div class="equipe__tuile tuile-bento" data-reveal>
-      <div class="equipe__texte">
-        <p class="surtitre">{equipe.surtitre}</p>
-        <h2>{equipe.titre}</h2>
-        <p>{equipe.texte}</p>
-      </div>
-
-      <ul class="equipe__personnes">
-        {
-          equipe.personnes.map((personne) => (
-            <li>
-              <span class="equipe__avatar" aria-hidden="true">{personne.initiale}</span>
-              <span class="equipe__nom">{personne.prenom} Ungureanu</span>
-              <span class="equipe__role">{personne.role}</span>
-            </li>
-          ))
-        }
-      </ul>
+<section class="section equipe" id="equipe">
+  <div class="wrap equipe__grille">
+    <div class="equipe__texte" data-reveal>
+      <p class="surtitre">{equipe.surtitre}</p>
+      <h2>{equipe.titre}</h2>
+      <p>{equipe.texte}</p>
     </div>
+
+    <ul class="equipe__personnes">
+      {
+        equipe.personnes.map((personne, i) => (
+          <li data-reveal style={`--delai: ${120 + i * 120}ms`}>
+            <span class="equipe__initiale" aria-hidden="true">
+              {personne.initiale}
+            </span>
+            <span class="equipe__nom">{personne.prenom}</span>
+            <span class="equipe__role">{personne.role}</span>
+          </li>
+        ))
+      }
+    </ul>
   </div>
 </section>
 
 <style>
-  .equipe {
-    margin-top: var(--section-gap);
-  }
-
-  .equipe__tuile {
+  .equipe__grille {
     display: grid;
-    gap: 36px;
-    padding: 28px;
-    background: linear-gradient(160deg, #ffffff 0%, var(--color-surface) 100%);
+    gap: 40px;
+    align-items: center;
   }
 
   .equipe__texte {
     display: flex;
     flex-direction: column;
     align-items: flex-start;
-    gap: 20px;
+    gap: 22px;
   }
 
   .equipe__texte p:last-child {
-    max-width: 52ch;
+    max-width: 50ch;
     font-size: var(--size-lead);
-    line-height: 1.55;
+    line-height: 1.6;
   }
 
   .equipe__personnes {
     display: grid;
+    grid-template-columns: repeat(2, 1fr);
     gap: var(--tile-gap);
     margin: 0;
     padding: 0;
@@ -67,47 +64,59 @@ const equipe = t(langue).accueil.equipe;
   }
 
   .equipe__personnes li {
-    display: grid;
-    grid-template-columns: auto 1fr;
-    column-gap: 16px;
-    align-items: center;
-    padding: 20px;
-    background: var(--color-card);
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+    padding: 24px;
+    overflow: hidden;
     border: 1px solid var(--color-border);
-    border-radius: var(--radius-md);
+    border-radius: var(--radius-tile);
+    background: var(--color-card);
+    box-shadow: var(--shadow-tile);
   }
 
-  .equipe__avatar {
-    grid-row: span 2;
-    display: inline-flex;
-    align-items: center;
-    justify-content: center;
-    width: 56px;
-    height: 56px;
-    border-radius: 50%;
-    background: var(--color-accent-soft);
-    color: var(--color-accent);
-    font-size: 24px;
+  /* Une grande initiale en filigrane, la brique rouge au-dessus du prénom. */
+  .equipe__initiale {
+    font-family: var(--font-display);
+    font-size: clamp(88px, 11vw, 150px);
     font-weight: 800;
+    line-height: 0.8;
+    letter-spacing: -0.04em;
+    color: var(--color-surface);
+    -webkit-text-stroke: 1px var(--color-border);
+    margin-bottom: 18px;
   }
 
   .equipe__nom {
-    font-size: 18px;
-    font-weight: 700;
+    display: inline-flex;
+    align-items: center;
+    gap: 10px;
+    font-family: var(--font-display);
+    font-size: clamp(24px, 2.2vw, 32px);
+    font-weight: 800;
+    letter-spacing: -0.02em;
+    text-transform: uppercase;
     color: var(--color-ink);
+  }
+
+  .equipe__nom::before {
+    content: '';
+    width: 14px;
+    height: 7px;
+    border-radius: 2px;
+    background: var(--color-accent);
   }
 
   .equipe__role {
     font-size: var(--size-small);
-    color: var(--color-muted);
+    color: var(--color-text);
   }
 
-  @media (min-width: 900px) {
-    .equipe__tuile {
-      grid-template-columns: 1.3fr 1fr;
-      align-items: center;
-      gap: 64px;
-      padding: 64px;
+  @media (min-width: 960px) {
+    .equipe__grille {
+      grid-template-columns: minmax(0, 1.1fr) minmax(0, 1fr);
+      gap: 72px;
     }
   }
 </style>

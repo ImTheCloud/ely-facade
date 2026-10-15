@@ -1,0 +1,175 @@
+---
+/**
+ * Carte épurée de la Belgique (dessin simplifié, pas une carte exacte) : le bureau de Halle
+ * et les communes de nos chantiers. Les points apparaissent l'un après l'autre quand la carte arrive à l'écran.
+ */
+import type { Commune } from '../data/chantiers';
+import { t, type Langue } from '../i18n';
+
+interface Props {
+  langue: Langue;
+  class?: string;
+}
+
+const { langue, class: classe } = Astro.props;
+const textes = t(langue);
+
+/** Longitude, latitude → coordonnées du dessin (projection simple, latitude moyenne 50,6°). */
+const X = (lon: number) => Math.round((lon - 2.45) * 137 * 10) / 10;
+const Y = (lat: number) => Math.round((51.56 - lat) * 216 * 10) / 10;
+
+// Frontière simplifiée : côte, Pays-Bas, Allemagne, Luxembourg, France.
+const frontiere: [number, number][] = [
+  [2.545, 51.089], [2.75, 51.17], [3.03, 51.25], [3.37, 51.37], [3.52, 51.29], [3.79, 51.26], [3.98, 51.24],
+  [4.24, 51.37], [4.39, 51.36], [4.53, 51.48], [4.67, 51.43], [4.86, 51.48], [5.06, 51.47], [5.1, 51.36],
+  [5.24, 51.31], [5.48, 51.3], [5.67, 51.18], [5.84, 51.16], [5.75, 51.04], [5.77, 50.95], [5.69, 50.8],
+  [5.68, 50.76], [5.98, 50.76], [6.02, 50.75], [6.09, 50.72], [6.26, 50.64], [6.18, 50.55], [6.36, 50.48],
+  [6.4, 50.33], [6.25, 50.3], [6.14, 50.14], [6.03, 50.17], [5.97, 50.07], [5.87, 50.02], [5.77, 49.88],
+  [5.74, 49.8], [5.9, 49.66], [5.82, 49.55], [5.47, 49.5], [5.31, 49.63], [5.1, 49.77], [4.86, 49.8],
+  [4.86, 49.95], [4.88, 50.15], [4.7, 50.1], [4.68, 49.99], [4.43, 49.94], [4.15, 49.98], [4.21, 50.27],
+  [3.87, 50.33], [3.71, 50.31], [3.66, 50.45], [3.29, 50.53], [3.23, 50.71], [3.04, 50.78], [2.86, 50.7],
+  [2.66, 50.81], [2.55, 50.94],
+];
+const trace = `M${frontiere.map(([lon, lat]) => `${X(lon)} ${Y(lat)}`).join('L')}Z`;
+
+// Les points : le bureau d'abord, puis les communes des chantiers. dx/dy : place de l'étiquette.
+const points: { commune: Commune; lon: number; lat: number; bureau?: boolean; ancre: 'start' | 'end'; dx: number; dy: number }[] = [
+  { commune: 'halle', lon: 4.235, lat: 50.735, bureau: true, ancre: 'end', dx: -16, dy: 5 },
+  { commune: 'evere', lon: 4.402, lat: 50.87, ancre: 'start', dx: 13, dy: -6 },
+  { commune: 'mons', lon: 3.952, lat: 50.455, ancre: 'end', dx: -13, dy: 5 },
+  { commune: 'charleroi', lon: 4.444, lat: 50.411, ancre: 'start', dx: 12, dy: 18 },
+  { commune: 'namur', lon: 4.867, lat: 50.466, ancre: 'start', dx: 13, dy: 5 },
+];
+---
+
+<figure class:list={['carte', classe]} data-reveal>
+  <svg viewBox="0 0 560 460" role="img" aria-label={textes.accueil.realisations.carte.aria}>
+    <path class="carte__pays" d={trace}></path>
+    {
+      points.map((point, i) => (
+        <g class:list={['carte__point', { 'carte__point--bureau': point.bureau }]} style={`--i: ${i}`} transform={`translate(${X(point.lon)} ${Y(point.lat)})`}>
+          {point.bureau ? (
+            <>
+              <circle class="carte__onde" r="20" />
+              <rect x="-11" y="-6" width="22" height="12" rx="3" />
+            </>
+          ) : (
+            <circle r="6.5" />
+          )}
+          <text x={point.dx} y={point.dy} text-anchor={point.ancre}>
+            {textes.communes[point.commune]}
+            {point.bureau && <tspan class="carte__bureau" x={point.dx} dy="20">{textes.accueil.realisations.carte.bureau}</tspan>}
+          </text>
+        </g>
+      ))
+    }
+  </svg>
+  <figcaption class="carte__legende">
+    <span class="brique" aria-hidden="true"></span>
+    {textes.accueil.realisations.carte.legende}
+  </figcaption>
+</figure>
+
+<style>
+  .carte {
+    position: relative;
+    margin: 0;
+  }
+
+  .carte svg {
+    display: block;
+    width: 100%;
+    height: auto;
+    overflow: visible;
+  }
+
+  .carte__pays {
+    fill: var(--color-card);
+    stroke: var(--color-ink);
+    stroke-width: 1.6;
+    stroke-linejoin: round;
+    filter: drop-shadow(0 18px 30px rgba(31, 36, 41, 0.12));
+  }
+
+  .carte__point circle {
+    fill: var(--color-ink);
+    stroke: #fff;
+    stroke-width: 3;
+  }
+
+  .carte__point--bureau rect {
+    fill: var(--color-accent);
+    stroke: #fff;
+    stroke-width: 3;
+  }
+
+  .carte__point circle.carte__onde {
+    fill: rgba(200, 32, 43, 0.14);
+    stroke: none;
+  }
+
+  .carte__point text {
+    font-family: var(--font-display);
+    font-size: 17px;
+    font-weight: 750;
+    letter-spacing: -0.01em;
+    fill: var(--color-ink);
+    paint-order: stroke;
+    stroke: var(--color-bg);
+    stroke-width: 5px;
+    stroke-linejoin: round;
+  }
+
+  .carte__bureau {
+    font-family: var(--font-text);
+    font-size: 13px;
+    font-weight: 600;
+    fill: var(--color-accent);
+  }
+
+  .carte__legende {
+    position: absolute;
+    right: 0;
+    bottom: 4%;
+    display: inline-flex;
+    align-items: center;
+    gap: 10px;
+    padding: 9px 16px;
+    border: 1px solid var(--color-border);
+    border-radius: var(--radius-pill);
+    background: var(--color-card);
+    box-shadow: var(--shadow-tile);
+    font-size: var(--size-small);
+    font-weight: 650;
+    color: var(--color-ink);
+  }
+
+  @media (prefers-reduced-motion: no-preference) {
+    :global(.js) .carte__point {
+      opacity: 0;
+      transition: opacity 600ms var(--ease-out);
+      transition-delay: calc(400ms + var(--i) * 220ms);
+    }
+
+    :global(.js) .carte.est-visible .carte__point {
+      opacity: 1;
+    }
+
+    .carte__onde {
+      transform-box: fill-box;
+      transform-origin: center;
+      animation: onde 2.8s var(--ease-out) infinite;
+    }
+
+    @keyframes onde {
+      from {
+        transform: scale(0.4);
+        opacity: 1;
+      }
+      to {
+        transform: scale(1.6);
+        opacity: 0;
+      }
+    }
+  }
+</style>

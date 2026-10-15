@@ -28,7 +28,8 @@ interface Props {
 }
 
 const { langue, variante } = Astro.props;
-const hero = t(langue).accueil.hero;
+const textes = t(langue);
+const hero = textes.accueil.hero;
 
 /** Écran en portrait (téléphone, tablette debout) : cadrage vertical dédié, le toit juste sous l'en-tête. */
 const PORTRAIT = '(max-aspect-ratio: 4/5)';
@@ -78,7 +79,7 @@ const motFinal = derniere.replace(/\.$/, '');
         src={bureau.src}
         srcset={bureau.srcSet.attribute}
         sizes="100vw"
-        alt={hero.alt}
+        alt={textes.photos['accueil/hero-namur']}
         width={heroPhoto.image.width}
         height={heroPhoto.image.height}
         fetchpriority="high"

@@ -1,0 +1,133 @@
+---
+/**
+ * Avant / après : un grand curseur par chantier, la commune en légende.
+ * En premier, la cour intérieure de l'Université de Mons (décision 15), puis Namur (×2), Halle et Charleroi.
+ * Quand les deux photos ne sont pas prises du même endroit, elles sont montrées côte à côte (Duo).
+ */
+import Comparateur from '../Comparateur.astro';
+import Duo from '../Duo.astro';
+import Icon from '../Icon.astro';
+import { chantier, type CleChantier } from '../../data/chantiers';
+import { chemin, t, type Langue } from '../../i18n';
+
+interface Props {
+  langue: Langue;
+}
+
+const { langue } = Astro.props;
+const textes = t(langue);
+const section = textes.accueil.avantApres;
+
+const lien = (cle: CleChantier) => `${chemin('realisations', langue)}${chantier(cle).slug[langue]}/`;
+const vedette = { cle: 'umons' as const, paire: chantier('umons').paires[0] };
+const autres = (['namur-immeuble', 'namur-balcons', 'halle', 'charleroi'] as const).map((cle) => ({
+  cle,
+  paire: chantier(cle).paires[0],
+}));
+---
+
+<section class="section avant-apres" id="avant-apres">
+  <div class="wrap">
+    <div class="tete" data-reveal>
+      <p class="surtitre">{section.pastille}</p>
+      <h2>{section.titre}</h2>
+      <p>{section.texte}</p>
+    </div>
+
+    <figure class="cas cas--vedette" data-reveal>
+      <Comparateur langue={langue} paire={vedette.paire} sizes="(min-width: 1360px) 1280px, 100vw" />
+      <figcaption class="cas__legende">
+        <span>
+          <strong>{textes.communes[chantier(vedette.cle).commune]}</strong> · {textes.chantiers[vedette.cle].titre}, {
+            textes.chantiers.umons.batiments[0].toLowerCase()
+          }
+        </span>
+        <a href={lien(vedette.cle)}>{section.voir}<Icon nom="fleche" taille={16} /></a>
+      </figcaption>
+    </figure>
+
+    <div class="grille">
+      {
+        autres.map((cas, i) => (
+          <figure class="cas" data-reveal style={`--delai: ${(i % 2) * 120}ms`}>
+            {cas.paire.mode === 'curseur' ? (
+              <Comparateur langue={langue} paire={cas.paire} sizes="(min-width: 1360px) 630px, (min-width: 800px) 50vw, 100vw" />
+            ) : (
+              <Duo langue={langue} paire={cas.paire} sizes="(min-width: 1360px) 315px, (min-width: 800px) 25vw, 50vw" />
+            )}
+            <figcaption class="cas__legende">
+              <span>
+                <strong>{textes.communes[chantier(cas.cle).commune]}</strong> · {textes.chantiers[cas.cle].titre}
+              </span>
+              <a href={lien(cas.cle)}>
+                {section.voir}
+                <Icon nom="fleche" taille={16} />
+              </a>
+            </figcaption>
+          </figure>
+        ))
+      }
+    </div>
+  </div>
+</section>
+
+<style>
+  .cas {
+    display: flex;
+    flex-direction: column;
+    gap: 14px;
+    margin: 0;
+  }
+
+  .cas--vedette {
+    margin-bottom: clamp(32px, 4vw, 48px);
+  }
+
+  .cas__legende {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    justify-content: space-between;
+    gap: 6px 20px;
+    padding-inline: 4px;
+    font-size: var(--size-small);
+    color: var(--color-text);
+  }
+
+  .cas__legende strong {
+    color: var(--color-ink);
+  }
+
+  .cas__legende a {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    min-height: 44px;
+    color: var(--color-ink);
+    font-weight: 650;
+    text-decoration: none;
+  }
+
+  .cas__legende a:hover {
+    color: var(--color-accent);
+  }
+
+  .cas__legende a :global(svg) {
+    transition: transform var(--speed) var(--ease);
+  }
+
+  .cas__legende a:hover :global(svg) {
+    transform: translateX(3px);
+  }
+
+  .grille {
+    display: grid;
+    gap: clamp(28px, 3vw, 40px) var(--tile-gap);
+  }
+
+  @media (min-width: 800px) {
+    .grille {
+      grid-template-columns: repeat(2, 1fr);
+    }
+  }
+</style>

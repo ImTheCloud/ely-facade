@@ -1,0 +1,96 @@
+---
+/**
+ * Avant / après côte à côte : quand les deux photos ne sont pas prises du même endroit,
+ * un curseur les superposerait mal. Même cadre arrondi que le curseur, coupé en deux.
+ */
+import { Image } from 'astro:assets';
+import { photo, type Paire } from '../data/chantiers';
+import { t, type Langue } from '../i18n';
+
+interface Props {
+  langue: Langue;
+  paire: Paire;
+  /** Largeur affichée de chaque moitié. */
+  sizes?: string;
+  class?: string;
+}
+
+const { langue, paire, sizes = '50vw', class: classe } = Astro.props;
+const textes = t(langue);
+const libelles = textes.accueil.avantApres;
+const position = (c: Paire['cadreAvant']) => `object-position: ${c?.px ?? 50}% ${c?.py ?? 50}%`;
+const image = { widths: [360, 540, 720, 960], sizes, format: 'webp' as const, quality: 76, loading: 'lazy' as const };
+---
+
+<div class:list={['duo', classe]} style={`--ratio: ${paire.ratio}`}>
+  <figure class="duo__moitie">
+    <Image src={photo(paire.avant)} alt={textes.photos[paire.avant]} style={position(paire.cadreAvant)} {...image} />
+    <figcaption class="duo__etiquette">{libelles.avant}</figcaption>
+  </figure>
+  <figure class="duo__moitie">
+    <Image src={photo(paire.apres)} alt={textes.photos[paire.apres]} style={position(paire.cadreApres)} {...image} />
+    <figcaption class="duo__etiquette duo__etiquette--apres">{libelles.apres}</figcaption>
+  </figure>
+</div>
+
+<style>
+  .duo {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 4px;
+    aspect-ratio: var(--ratio);
+    overflow: hidden;
+    border-radius: var(--radius-tile);
+    background: var(--color-card);
+  }
+
+  .duo__moitie {
+    position: relative;
+    margin: 0;
+    overflow: hidden;
+  }
+
+  .duo__moitie :global(img) {
+    display: block;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    transition: transform 900ms var(--ease-out);
+  }
+
+  .duo:hover .duo__moitie :global(img) {
+    transform: scale(1.03);
+  }
+
+  .duo__etiquette {
+    position: absolute;
+    top: 16px;
+    left: 16px;
+    padding: 8px 14px;
+    border-radius: var(--radius-pill);
+    background: rgba(var(--voile), 0.55);
+    backdrop-filter: blur(12px);
+    -webkit-backdrop-filter: blur(12px);
+    font-size: var(--size-tiny);
+    font-weight: 650;
+    color: #fff;
+  }
+
+  .duo__etiquette--apres {
+    background: rgba(255, 255, 255, 0.86);
+    color: var(--color-ink);
+  }
+
+  @media (max-width: 599px) {
+    .duo {
+      border-radius: var(--radius-md);
+    }
+
+    .duo__etiquette {
+      top: 10px;
+      left: 10px;
+      padding: 6px 11px;
+      font-size: 12px;
+    }
+  }
+</style>

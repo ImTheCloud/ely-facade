@@ -1,0 +1,300 @@
+---
+/**
+ * « Les étapes d'une façade » : le chantier de l'immeuble de quatre étages de l'Université de Mons.
+ * Sur grand écran (avec JavaScript), la photo reste fixe à gauche et change d'étape en fondu
+ * pendant que les textes défilent à droite. Sur téléphone, ou sans JavaScript, chaque étape montre ses photos.
+ * L'ordre des étapes est celui confirmé par Elisei ; les légendes ne disent que ce qu'on voit.
+ */
+import { Image } from 'astro:assets';
+import Souligne from '../Souligne.astro';
+import { ETAPES_FACADE, photo } from '../../data/chantiers';
+import { t, type Langue } from '../../i18n';
+
+interface Props {
+  langue: Langue;
+}
+
+const { langue } = Astro.props;
+const textes = t(langue);
+const section = textes.accueil.etapes;
+
+// Toutes les photos, dans l'ordre : chacune est un « plan » de la scène.
+let numero = 0;
+const etapes = ETAPES_FACADE.map((etape, i) => ({
+  ...etape,
+  numero: i + 1,
+  texte: section.liste[etape.cle],
+  plans: etape.photos.map((chemin, j) => ({ chemin, index: numero++, legende: section.liste[etape.cle].legendes[j] })),
+}));
+const plans = etapes.flatMap((etape) => etape.plans.map((plan) => ({ ...plan, etape: etape.numero })));
+const image = { widths: [480, 768, 1080, 1440], format: 'webp' as const, quality: 74, loading: 'lazy' as const };
+---
+
+<section class="section etapes" id="etapes" data-etapes>
+  <div class="wrap">
+    <div class="tete" data-reveal>
+      <p class="surtitre">{section.pastille}</p>
+      <h2 data-trait><Souligne texte={section.titre} /></h2>
+      <p>{section.texte}</p>
+    </div>
+
+    <div class="etapes__corps">
+      <!-- La scène : seulement sur grand écran avec JavaScript (les photos accessibles sont celles des étapes). -->
+      <div class="scene" aria-hidden="true">
+        <div class="scene__cadre">
+          {
+            plans.map((plan) => (
+              <figure class:list={['scene__plan', { 'est-actif': plan.index === 0 }]} data-plan={plan.index}>
+                <Image src={photo(plan.chemin)} alt="" sizes="(min-width: 1360px) 700px, 52vw" {...image} />
+                <figcaption>
+                  <span class="brique" aria-hidden="true" />
+                  {plan.legende} · {section.lieu}
+                </figcaption>
+              </figure>
+            ))
+          }
+        </div>
+        <ol class="scene__repere">
+          {etapes.map((etape) => <li data-repere={etape.numero}>{etape.numero}</li>)}
+        </ol>
+      </div>
+
+      <ol class="etapes__liste">
+        {
+          etapes.map((etape) => (
+            <li class="etape" data-reveal data-numero={etape.numero} data-plans={etape.plans.map((plan) => plan.index).join(' ')}>
+              <div class="etape__texte">
+                <span class="etape__num">
+                  {section.etape} {etape.numero}
+                </span>
+                <h3>{etape.texte.titre}</h3>
+                <p>{etape.texte.texte}</p>
+              </div>
+              {etape.plans.map((plan) => (
+                <figure class="etape__photo">
+                  <Image src={photo(plan.chemin)} alt={textes.photos[plan.chemin]} sizes="100vw" {...image} />
+                  <figcaption>
+                    {plan.legende} · {section.lieu}
+                  </figcaption>
+                </figure>
+              ))}
+            </li>
+          ))
+        }
+      </ol>
+    </div>
+  </div>
+</section>
+
+<script>
+  import '~/scripts/etapes';
+</script>
+
+<style>
+  .etapes__corps {
+    position: relative;
+  }
+
+  .scene {
+    display: none;
+  }
+
+  .etapes__liste {
+    display: grid;
+    gap: 56px;
+    margin: 0;
+    padding: 0;
+    list-style: none;
+  }
+
+  .etape {
+    display: grid;
+    gap: 18px;
+  }
+
+  .etape__texte {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+  }
+
+  .etape__num {
+    display: inline-flex;
+    align-items: center;
+    gap: 10px;
+    font-size: var(--size-tiny);
+    font-weight: 700;
+    letter-spacing: 0.06em;
+    text-transform: uppercase;
+    color: var(--color-accent);
+  }
+
+  .etape__num::before {
+    content: '';
+    width: 13px;
+    height: 7px;
+    border-radius: 2px;
+    background: var(--color-accent);
+  }
+
+  .etape h3 {
+    font-size: clamp(24px, 2.4vw, 34px);
+    font-weight: 800;
+    letter-spacing: -0.02em;
+  }
+
+  .etape p {
+    max-width: 46ch;
+    font-size: var(--size-lead);
+    line-height: 1.55;
+  }
+
+  .etape__photo {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    margin: 0;
+  }
+
+  .etape__photo :global(img) {
+    display: block;
+    width: 100%;
+    height: auto;
+    aspect-ratio: 4 / 3;
+    object-fit: cover;
+    border-radius: var(--radius-md);
+  }
+
+  .etape__photo figcaption {
+    font-size: var(--size-tiny);
+    color: var(--color-muted);
+  }
+
+  /* ---------------------------------------------------------------------
+     Grand écran avec JavaScript : la photo fixe à gauche, les textes à droite.
+     --------------------------------------------------------------------- */
+  @media (min-width: 960px) {
+    :global(.js) .etapes__corps {
+      display: grid;
+      grid-template-columns: minmax(0, 1.15fr) minmax(0, 0.85fr);
+      gap: 64px;
+      align-items: start;
+    }
+
+    :global(.js) .scene {
+      position: sticky;
+      top: calc(var(--header-h) + 24px);
+      display: grid;
+      grid-template-columns: 1fr auto;
+      gap: 20px;
+      height: calc(100vh - var(--header-h) - 64px);
+      max-height: 760px;
+    }
+
+    .scene__cadre {
+      position: relative;
+      overflow: hidden;
+      border-radius: var(--radius-tile);
+      background: var(--color-surface);
+      box-shadow: var(--shadow-lift);
+    }
+
+    .scene__plan {
+      position: absolute;
+      inset: 0;
+      margin: 0;
+      opacity: 0;
+      transition: opacity 800ms var(--ease);
+    }
+
+    .scene__plan.est-actif {
+      opacity: 1;
+    }
+
+    .scene__plan :global(img) {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      transform: scale(1.06);
+      transition: transform 2400ms var(--ease-out);
+    }
+
+    .scene__plan.est-actif :global(img) {
+      transform: none;
+    }
+
+    .scene__plan figcaption {
+      position: absolute;
+      left: 16px;
+      bottom: 16px;
+      display: inline-flex;
+      align-items: center;
+      gap: 10px;
+      padding: 9px 14px;
+      border-radius: var(--radius-pill);
+      background: rgba(255, 255, 255, 0.9);
+      backdrop-filter: blur(12px);
+      -webkit-backdrop-filter: blur(12px);
+      font-size: var(--size-tiny);
+      font-weight: 650;
+      color: var(--color-ink);
+    }
+
+    .scene__repere {
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      gap: 10px;
+      margin: 0;
+      padding: 0;
+      list-style: none;
+    }
+
+    .scene__repere li {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      width: 40px;
+      height: 40px;
+      border: 1px solid var(--color-border);
+      border-radius: 50%;
+      background: var(--color-card);
+      font-size: 14px;
+      font-weight: 700;
+      color: var(--color-muted);
+      transition:
+        background-color 400ms var(--ease),
+        color 400ms var(--ease),
+        border-color 400ms var(--ease);
+    }
+
+    .scene__repere li.est-actif {
+      border-color: var(--color-ink);
+      background: var(--color-ink);
+      color: #fff;
+    }
+
+    :global(.js) .etapes__liste {
+      gap: 0;
+    }
+
+    /* Chaque étape occupe de la hauteur : c'est le défilement qui fait avancer le chantier. */
+    :global(.js) .etape {
+      min-height: 62vh;
+      align-content: center;
+      gap: 0;
+    }
+
+    :global(.js) .etape__photo {
+      position: absolute;
+      width: 1px;
+      height: 1px;
+      overflow: hidden;
+      clip-path: inset(50%);
+    }
+
+    :global(.js) .etape:last-child {
+      min-height: 70vh;
+    }
+  }
+</style>

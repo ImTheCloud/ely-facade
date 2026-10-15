@@ -13,6 +13,7 @@
 import Bouton from './Bouton.astro';
 import Icon from './Icon.astro';
 import { entreprise, lienWhatsApp } from '~/data/entreprise';
+import { METIERS } from '~/data/metiers';
 import { chemin, t, type Langue } from '~/i18n';
 import '~/styles/formulaire.css';
 
@@ -27,7 +28,7 @@ const id = 'devis-form';
 
 /** Les travaux proposés : les 5 métiers de façade, plus « autre ». */
 const choix = [
-  ...textes.accueil.metiers.liste.map((metier) => ({ nom: metier.titre, icone: metier.icone, cle: metier.cle })),
+  ...METIERS.map((metier) => ({ nom: textes.metiers[metier.cle].titre, icone: metier.icone, cle: metier.cle })),
   { nom: f.autre, icone: 'autre' as const, cle: 'autre' },
 ];
 ---
