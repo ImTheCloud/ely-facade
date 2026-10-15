@@ -354,6 +354,10 @@ const motFinal = derniere.replace(/\.$/, '');
   }
 
   @media (max-width: 599px) {
+    .hero {
+      --hero-marge-bas: 22px;
+    }
+
     .hero__contenu,
     .hero__details {
       gap: 14px;
@@ -363,8 +367,9 @@ const motFinal = derniere.replace(/\.$/, '');
       gap: 14px;
     }
 
+    /* Le titre est l'essentiel : le plus grand possible, sur la pelouse et la route. */
     .hero__titre {
-      font-size: clamp(36px, 10.6vw, 50px);
+      font-size: clamp(38px, 13.2vw, 72px);
     }
 
     .hero__texte {

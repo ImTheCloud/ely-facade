@@ -1,11 +1,9 @@
 ---
 /**
- * Avant / après : un grand curseur par chantier, la commune en légende.
- * En premier, la cour intérieure de l'Université de Mons (décision 15), puis Namur (×2), Halle et Charleroi.
- * Quand les deux photos ne sont pas prises du même endroit, elles sont montrées côte à côte (Duo).
+ * Avant / après : un grand curseur pour le chantier de référence (la cour intérieure de l'Université de Mons),
+ * puis un curseur par chantier, la commune en légende. Chaque photo est cadrée pour que les deux façades se superposent au mieux.
  */
 import Comparateur from '../Comparateur.astro';
-import Duo from '../Duo.astro';
 import Icon from '../Icon.astro';
 import { chantier, lienChantier } from '../../data/chantiers';
 import { t, type Langue } from '../../i18n';
@@ -49,11 +47,7 @@ const autres = (['namur-immeuble', 'namur-balcons', 'halle', 'charleroi'] as con
       {
         autres.map((cas, i) => (
           <figure class="cas" data-reveal style={`--delai: ${(i % 2) * 120}ms`}>
-            {cas.paire.mode === 'curseur' ? (
-              <Comparateur langue={langue} paire={cas.paire} sizes="(min-width: 1360px) 630px, (min-width: 800px) 50vw, 100vw" />
-            ) : (
-              <Duo langue={langue} paire={cas.paire} sizes="(min-width: 1360px) 315px, (min-width: 800px) 25vw, 50vw" />
-            )}
+            <Comparateur langue={langue} paire={cas.paire} sizes="(min-width: 1360px) 630px, (min-width: 800px) 50vw, 100vw" />
             <figcaption class="cas__legende">
               <span>
                 <strong>{textes.communes[chantier(cas.cle).commune]}</strong> · {textes.chantiers[cas.cle].titre}
@@ -79,7 +73,7 @@ const autres = (['namur-immeuble', 'namur-balcons', 'halle', 'charleroi'] as con
   }
 
   .cas--vedette {
-    margin-bottom: clamp(32px, 4vw, 48px);
+    margin-bottom: clamp(24px, 3vw, 36px);
   }
 
   .cas__legende {
@@ -121,7 +115,7 @@ const autres = (['namur-immeuble', 'namur-balcons', 'halle', 'charleroi'] as con
 
   .grille {
     display: grid;
-    gap: clamp(28px, 3vw, 40px) var(--tile-gap);
+    gap: clamp(20px, 2.4vw, 32px) var(--tile-gap);
   }
 
   @media (min-width: 800px) {

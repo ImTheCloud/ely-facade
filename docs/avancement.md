@@ -4,9 +4,21 @@
 
 **Le site est complet et sur `main`.** Toutes les pages existent en français et en néerlandais : accueil, Services et 5 métiers, Réalisations et 5 pages de chantier, À propos, Contact (devis), mentions légales, vie privée, 404. Référencement, accessibilité et vérifications faits (voir les étapes ci-dessous).
 
-- **Haut de page choisi : C « La façade qui brille »** (choix de Claudiu). Les variantes A et B et les pages de comparaison sont supprimées. Ajustements demandés : pas de pastille, pas de liste des métiers dans le panneau, accroche « De la petite maison à l'immeuble à appartements, et jusqu'aux bâtiments d'une université. », engagements réduits à « Garantie 10 ans minimum » et « Partout en Belgique » (la visite gratuite est dans le bouton). Sur téléphone, tout le texte est posé sur la pelouse et la route.
+- **Haut de page choisi : C « La façade qui brille »** (choix de Claudiu). Les variantes A et B et les pages de comparaison sont supprimées. Ajustements demandés : pas de pastille, pas de liste des métiers dans le panneau, accroche « Rénovation de façades pour tous les bâtiments. », engagements réduits à « Garantie 10 ans minimum » et « Partout en Belgique » (la visite gratuite est dans le bouton). Sur téléphone, tout le texte est posé sur la pelouse et la route.
 - **En ligne : pas encore.** Les déploiements Netlify sont en pause (`ignore = "exit 0"` dans `netlify.toml`).
 - **Façon de travailler** : chaque nouveau changement se fait dans **une nouvelle branche** partie de `main`, puis est fusionné dans `main` une fois validé.
+
+### Branche `ameliorations-accueil` (16 octobre 2026, à tester par Claudiu avant fusion)
+- **Haut de page** : accroche raccourcie ; sur téléphone le titre est plus grand et tout le texte reste sur la pelouse et la route.
+- **Chiffres** : 6 chiffres confirmés (6 ans, 50+, 2 frères, 8 personnes, 5 métiers, 12/12 mois) ; la garantie n'y est plus (déjà en haut). Retirés de la page À propos (doublon avec l'équipe).
+- **Moins de répétitions** : phrases « La première chose qu'on voit de chez vous » et « Chaque façade a sa seconde jeunesse » (photo) supprimées ; garantie et « gratuit » retirés des endroits proches de leur première mention ; Umons sans la phrase déjà dite par le titre.
+- **Espaces** entre les sections réduits (44 px téléphone, 72 px ordinateur au lieu de 72 et 120).
+- **Avant/après** : un curseur partout (Namur ×2, Halle, Charleroi) ; les paires aux angles différents sont cadrées au mieux, à revoir à l'œil.
+- **Étapes** : 4 étapes (la 4e est « Façade terminée », avec la cour de l'UMons comme autre point de vue). Plus de défilement collant : pastilles numérotées et bouton « Étape suivante », une étape à la fois.
+- **Carte de Belgique** refaite : bureau de Halle en brique rouge, points sombres pour les chantiers, villes repères, toucher une commune montre ses chantiers (liste de communes sous la carte sur téléphone). Texte « quelques chantiers » partout (plus jamais « toutes nos réalisations »).
+- **Équipe** : « Deux frères, une équipe de 8. »
+- **Formulaire sur téléphone** : tuiles en 2 colonnes, boutons Continuer / Envoyer collés en bas de l'écran.
+- **Email** : bouton Email ajouté dans la barre du bas sur téléphone et dans le bandeau d'appel des pages intérieures.
 
 ### Reste à faire côté Claudiu
 - Tester sur un vrai iPhone (Safari n'a pas pu être testé dans la session cloud).

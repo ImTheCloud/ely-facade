@@ -1,7 +1,7 @@
 ---
 /**
  * Barre collée en bas de l'écran, sur mobile uniquement.
- * Elle apparaît dès qu'on a quitté le haut de la page : appeler, WhatsApp
+ * Elle apparaît dès qu'on a quitté le haut de la page : appeler, WhatsApp, email
  * et devis restent toujours au pouce.
  */
 import Icon from './Icon.astro';
@@ -25,8 +25,13 @@ const textes = t(langue);
     <Icon nom="whatsapp" taille={22} />
     <span>WhatsApp</span>
   </a>
-  <a href={lienDevis(langue)} class="dock__devis">
-    {textes.actions.devis}
+  <a href={`mailto:${entreprise.email}`} class="dock__lien" aria-label={textes.actions.email}>
+    <Icon nom="email" taille={22} />
+    <span>{textes.actions.emailCourt}</span>
+  </a>
+  <a href={lienDevis(langue)} class="dock__devis" aria-label={textes.actions.devis}>
+    <span class="dock__devis-long" aria-hidden="true">{textes.actions.devis}</span>
+    <span class="dock__devis-court" aria-hidden="true">{textes.actions.devisCourt}</span>
     <Icon nom="fleche-diag" taille={18} epaisseur={2.2} />
   </a>
 </nav>
@@ -62,8 +67,8 @@ const textes = t(langue);
     z-index: 55;
     display: flex;
     align-items: center;
-    gap: 6px;
-    padding: 10px 12px calc(10px + env(safe-area-inset-bottom, 0px));
+    gap: 2px;
+    padding: 10px 10px calc(10px + env(safe-area-inset-bottom, 0px));
     background: rgba(255, 255, 255, 0.94);
     border-top: 1px solid var(--color-border);
     border-radius: 24px 24px 0 0;
@@ -84,7 +89,7 @@ const textes = t(langue);
     align-items: center;
     justify-content: center;
     gap: 3px;
-    min-width: 64px;
+    min-width: 54px;
     min-height: 52px;
     border-radius: 16px;
     color: var(--color-ink);
@@ -109,7 +114,8 @@ const textes = t(langue);
     justify-content: center;
     gap: 8px;
     min-height: 52px;
-    padding: 0 16px;
+    margin-left: 6px;
+    padding: 0 14px;
     border-radius: var(--radius-pill);
     background: var(--color-accent);
     box-shadow: var(--shadow-accent);
@@ -118,6 +124,25 @@ const textes = t(langue);
     font-weight: 700;
     text-decoration: none;
     white-space: nowrap;
+  }
+
+  .dock__devis-court {
+    display: none;
+  }
+
+  /* Petits écrans : « Devis » tout court, pour que les quatre boutons tiennent. */
+  @media (max-width: 389px) {
+    .dock__devis-long {
+      display: none;
+    }
+
+    .dock__devis-court {
+      display: inline;
+    }
+
+    .dock__lien {
+      min-width: 50px;
+    }
   }
 
   :global(body.menu-ouvert) .dock {

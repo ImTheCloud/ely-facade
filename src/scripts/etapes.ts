@@ -1,48 +1,36 @@
 /**
- * « Les étapes d'une façade » sur grand écran : la photo de la scène suit l'étape lue.
- * L'étape lue est celle qui passe au milieu de l'écran ; une étape à deux photos montre la seconde
- * dans sa deuxième moitié. Sur téléphone, rien à faire : chaque étape montre ses propres photos.
+ * « Les étapes d'une façade » : on choisit l'étape avec les pastilles numérotées, avec le bouton « Étape suivante »
+ * ou avec les flèches du clavier. Une seule étape est visible à la fois ; rien ne bouge au défilement.
  */
 const section = document.querySelector<HTMLElement>('[data-etapes]');
 
 if (section) {
-  const grandEcran = window.matchMedia('(min-width: 960px)');
-  const etapes = [...section.querySelectorAll<HTMLElement>('.etape')];
-  const plans = [...section.querySelectorAll<HTMLElement>('.scene__plan')];
-  const reperes = [...section.querySelectorAll<HTMLElement>('[data-repere]')];
-  let actif = -1;
-  let enAttente = false;
+  const onglets = [...section.querySelectorAll<HTMLButtonElement>('[data-onglet]')];
+  const etapes = [...section.querySelectorAll<HTMLElement>('[data-etape]')];
 
-  const montrer = (index: number, numero: number) => {
-    if (index === actif) return;
-    actif = index;
-    plans.forEach((plan) => plan.classList.toggle('est-actif', Number(plan.dataset.plan) === index));
-    reperes.forEach((repere) => repere.classList.toggle('est-actif', Number(repere.dataset.repere) <= numero));
+  const montrer = (index: number, focus = false) => {
+    onglets.forEach((onglet, i) => {
+      const actif = i === index;
+      onglet.classList.toggle('est-actif', actif);
+      onglet.setAttribute('aria-selected', String(actif));
+      onglet.tabIndex = actif ? 0 : -1;
+    });
+    etapes.forEach((etape, i) => etape.classList.toggle('est-actif', i === index));
+    if (focus) onglets[index].focus();
   };
 
-  const mettreAJour = () => {
-    enAttente = false;
-    if (!grandEcran.matches) return;
-    const milieu = window.innerHeight / 2;
-    // L'étape qui contient le milieu de l'écran (ou la plus proche).
-    let choisie = etapes[0];
-    for (const etape of etapes) {
-      if (etape.getBoundingClientRect().top <= milieu) choisie = etape;
-    }
-    const zone = choisie.getBoundingClientRect();
-    const progression = Math.min(0.999, Math.max(0, (milieu - zone.top) / zone.height));
-    const indices = (choisie.dataset.plans ?? '0').split(' ').map(Number);
-    montrer(indices[Math.floor(progression * indices.length)], Number(choisie.dataset.numero));
-  };
+  onglets.forEach((onglet, i) => {
+    onglet.addEventListener('click', () => montrer(i));
+    onglet.addEventListener('keydown', (evenement) => {
+      const suivant = evenement.key === 'ArrowRight' || evenement.key === 'ArrowDown';
+      const precedent = evenement.key === 'ArrowLeft' || evenement.key === 'ArrowUp';
+      if (!suivant && !precedent) return;
+      evenement.preventDefault();
+      montrer((i + (suivant ? 1 : -1) + onglets.length) % onglets.length, true);
+    });
+  });
 
-  const demander = () => {
-    if (enAttente) return;
-    enAttente = true;
-    requestAnimationFrame(mettreAJour);
-  };
-
-  window.addEventListener('scroll', demander, { passive: true });
-  window.addEventListener('resize', demander);
-  grandEcran.addEventListener('change', demander);
-  mettreAJour();
+  etapes.forEach((etape, i) => {
+    etape.querySelector('[data-suivante]')?.addEventListener('click', () => montrer(Math.min(i + 1, etapes.length - 1)));
+  });
 }

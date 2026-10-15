@@ -15,6 +15,9 @@ export const nl = {
     whatsapp: 'Schrijf ons op WhatsApp',
     appeler: 'Bel ons',
     contactAria: 'Contacteer ons',
+    email: 'Stuur een e-mail',
+    emailCourt: 'E-mail',
+    devisCourt: 'Offerte',
   },
 
   deuxPoints: ': ',
@@ -240,12 +243,12 @@ export const nl = {
   /** De pagina « Realisaties » en de pagina’s per werf. */
   realisationsPage: {
     surtitre: 'Onze realisaties',
-    titre: 'Onze werven, in beeld.',
+    titre: 'Enkele van onze werven.',
     texte:
-      'Gevels in Bergen, Namen, Charleroi, Halle en Evere, van de steiger tot de afgewerkte gevel. Alleen de gemeente wordt vermeld: nooit het adres van onze klanten.',
+      'Een selectie van gevels in Bergen, Namen, Charleroi, Halle en Evere, van de steiger tot de afgewerkte gevel. Alleen de gemeente wordt vermeld: nooit het adres van onze klanten.',
     avantApres: 'Voor en na',
     photos: 'De werf in beeld',
-    retour: 'Al onze realisaties',
+    retour: 'Terug naar de realisaties',
     autres: 'Andere werven',
     agrandir: 'Foto vergroten',
     fermer: 'Sluiten',
@@ -282,7 +285,7 @@ export const nl = {
     ],
     equipe: {
       titre: 'Een team van 8 personen',
-      texte: 'Een team van 8 personen, zelfstandigen, op onze werven overal in België.',
+      texte: 'Zelfstandigen die op elke werf met Elisei en Simi samenwerken.',
     },
     engagementsTitre: 'Onze beloften',
     engagements: [
@@ -401,7 +404,7 @@ export const nl = {
     realisations: {
       titre: 'Onze realisaties | Ely Facade',
       description:
-        'Onze gevelwerven in beeld: Universiteit van Bergen, Namen, Charleroi, Halle en Evere, van de steiger tot de afgewerkte gevel.',
+        'Enkele gevelwerven in beeld: Universiteit van Bergen, Namen, Charleroi, Halle en Evere, van de steiger tot de afgewerkte gevel.',
     },
     apropos: {
       titre: 'Over ons | Ely Facade',
@@ -431,7 +434,7 @@ export const nl = {
     hero: {
       /** Eén regel per item: de titel past altijd op drie regels. Het laatste woord krijgt het licht. */
       titre: ['Uw gevel', 'verdient te', 'stralen.'],
-      texte: 'Van een kleine woning tot een appartementsgebouw, en zelfs de gebouwen van een universiteit.',
+      texte: 'Gevelrenovatie voor alle gebouwen.',
       bouton: 'Plan mijn gratis plaatsbezoek',
       appeler: 'Bel',
       preuvesAria: 'Onze beloften',
@@ -441,9 +444,7 @@ export const nl = {
 
     /** De emotionele zinnen tussen de secties. Het woord tussen haakjes wordt rood onderstreept. */
     emotions: {
-      durer: { phrase: 'Een gevel die [blijft].', note: 'Minstens 10\u00a0jaar garantie' },
-      premiere: { phrase: 'Het eerste wat men van [uw huis] ziet.' },
-      jeunesse: { phrase: 'Elke gevel krijgt een [tweede jeugd].' },
+      durer: { phrase: 'Een gevel die [blijft].' },
       exigence: { phrase: 'Een huis of een universiteit: [dezelfde zorg].' },
     },
 
@@ -464,6 +465,7 @@ export const nl = {
         'Een werf van de Universiteit van Bergen, stap voor stap. Dit is de volgorde van elke gevel met buitenisolatie en pleisterwerk.',
       lieu: 'Bergen · Universiteit van Bergen',
       etape: 'Stap',
+      suivante: 'Volgende stap',
       liste: {
         preparation: {
           titre: 'Voorbereiding en steiger',
@@ -480,40 +482,35 @@ export const nl = {
           texte: 'Een glasvezelnet wordt in de onderlaag ingebed, met versterkingen rond de ramen en bovenaan de gevel.',
           legendes: ['Onderlaag'],
         },
-        finition: {
-          titre: 'Afwerkingspleister',
-          texte: 'Na het drogen geeft de afwerkingspleister de gevel zijn uitzicht en kleur, naar keuze.',
-          legendes: ['Afwerking'],
-        },
         termine: {
           titre: 'Afgewerkte gevel',
-          texte: 'De steiger wordt weggenomen. Uw gevel heeft minstens 10\u00a0jaar garantie.',
-          legendes: ['Afgewerkte gevel, binnenplaats'],
+          texte: 'Na het drogen geeft de afwerkingspleister de gevel zijn uitzicht en kleur, naar keuze. Alleen de steiger moet nog weg.',
+          legendes: ['Afgewerkte gevel', 'Afgewerkte gevel, ander standpunt'],
         },
       },
     },
 
     umons: {
       pastille: 'Referentiewerf',
-      texte:
-        'Gevels van gebouwen van de Universiteit van Bergen (UMONS): een binnenplaats, een gebouw met vier verdiepingen en een lange gevel. Van het grote openbare gebouw tot de woning werken we met dezelfde zorg.',
+      texte: 'Gevels van gebouwen van de Universiteit van Bergen (UMONS), van de steiger tot de afgewerkte gevel.',
       voir: 'De werf in beeld',
     },
 
     realisations: {
       pastille: 'Onze realisaties',
-      titre: 'Wat u ziet, zijn [onze werven].',
-      texte: 'Gevels in Bergen, Namen, Charleroi, Halle en Evere. Ons kantoor is in Halle en we werken overal in België.',
+      titre: 'Enkele [werven] uit vele.',
+      texte: 'Een selectie van gevels, van de steiger tot de afgewerkte gevel. Tik op een punt op de kaart om de werf te zien.',
       photos: 'foto’s',
       photo: 'foto',
       voir: 'Bekijk de werf',
       precedent: 'Vorige werven',
       suivant: 'Volgende werven',
-      toutes: 'Al onze realisaties',
+      toutes: 'Bekijk meer werven',
       carte: {
-        aria: 'Kaart van België: ons kantoor in Halle en de gemeenten van onze werven',
-        bureau: 'Ons kantoor',
-        legende: 'Overal in België',
+        aria: 'Kaart van België: ons kantoor in Halle en de gemeenten van enkele van onze werven',
+        bureau: 'Ons kantoor, in Halle',
+        chantier: 'Een van onze werven',
+        villes: { anvers: 'Antwerpen', gand: 'Gent', liege: 'Luik' },
       },
     },
 
@@ -522,8 +519,10 @@ export const nl = {
       liste: [
         { valeur: '6 jaar', libelle: 'ervaring van onze zaakvoerder' },
         { valeur: '50+', libelle: 'werven uitgevoerd door onze zaakvoerders' },
-        { valeur: '10 jaar', libelle: 'garantie minimum' },
+        { valeur: '2', libelle: 'broers aan het hoofd van het bedrijf' },
         { valeur: '8', libelle: 'personen in het team' },
+        { valeur: '5', libelle: 'gevelvakken' },
+        { valeur: '12/12', libelle: 'maanden werk per jaar, ook in de winter' },
       ],
     },
 
@@ -536,9 +535,9 @@ export const nl = {
 
     equipe: {
       surtitre: 'Wie bij u langskomt',
-      titre: 'Twee broers, één team.',
+      titre: 'Twee broers, een team van 8.',
       texte:
-        'Elisei en Simi Ungureanu leiden Ely Facade. Elisei zorgt voor het bezoek en de offerte. Simi leidt de werken op de werf. Ze werken met een team van 8 personen, zelfstandigen.',
+        'Elisei en Simi Ungureanu leiden Ely Facade. Elisei zorgt voor het bezoek en de offerte. Simi leidt de werken op de werf, met een team van zelfstandigen.',
       personnes: [
         { prenom: 'Elisei', initiale: 'E', role: 'Bezoek en offerte' },
         { prenom: 'Simi', initiale: 'S', role: 'Leiding van de werven' },
@@ -563,7 +562,7 @@ export const nl = {
         },
         {
           titre: 'De werken starten',
-          texte: 'Als de offerte u bevalt. Minimum 10 jaar garantie.',
+          texte: 'Als de offerte u bevalt.',
         },
       ],
     },
@@ -606,8 +605,7 @@ export const nl = {
 
     devis: {
       titre: 'Uw gevel verdient te stralen. [Laten we praten].',
-      texte:
-        'Beschrijf uw werken in drie stappen. Elisei komt gratis en vrijblijvend bij u langs en stuurt u daarna de offerte.',
+      texte: 'Beschrijf uw werken in drie stappen.',
       direct: 'Of rechtstreeks',
       calculateur: {
         titre: 'Hoe groot is uw gevel?',
@@ -635,8 +633,7 @@ export const nl = {
     contact: {
       surtitre: 'Contact en offerte',
       titre: 'Uw offerte, zonder verplichting.',
-      texte:
-        'Beschrijf uw werken in drie stappen. Elisei komt gratis en vrijblijvend bij u langs en stuurt u daarna de offerte.',
+      texte: 'Beschrijf uw werken in drie stappen. Elisei komt gratis bij u langs en stuurt u daarna de offerte.',
       direct: 'Of rechtstreeks',
       telephone: 'Telefoon',
       email: 'E-mail',

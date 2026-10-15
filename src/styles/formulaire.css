@@ -506,3 +506,144 @@
     grid-template-columns: 1fr 1fr;
   }
 }
+
+/* ==========================================================================
+   Téléphone : tout est plus compact, et le bouton « Continuer » / « Envoyer »
+   reste collé en bas de l'écran, toujours visible.
+   ========================================================================== */
+@media (max-width: 599px) {
+  .formulaire {
+    padding: 18px 14px 0;
+  }
+
+  .formulaire.formulaire--js .formulaire__progression {
+    gap: 8px;
+    margin-bottom: 14px;
+  }
+
+  .formulaire .etape > legend {
+    margin-bottom: 12px;
+  }
+
+  .formulaire .etape__question {
+    font-size: 22px;
+  }
+
+  .formulaire .tuiles {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 8px;
+  }
+
+  .formulaire .tuile {
+    flex-direction: row;
+    align-items: center;
+    gap: 8px;
+    min-width: 0;
+    min-height: 58px;
+    padding: 8px;
+  }
+
+  .formulaire .tuile:hover {
+    transform: none;
+  }
+
+  .formulaire .tuile__icone {
+    flex-shrink: 0;
+    width: 32px;
+    height: 32px;
+    border-radius: 10px;
+  }
+
+  .formulaire .tuile__icone svg {
+    width: 20px;
+    height: 20px;
+  }
+
+  /* Les longs mots néerlandais (« Gevelschilderwerk ») se coupent proprement au lieu de faire déborder la page. */
+  .formulaire .tuile__nom {
+    min-width: 0;
+    font-size: 13.5px;
+    overflow-wrap: anywhere;
+    hyphens: auto;
+    -webkit-hyphens: auto;
+  }
+
+  /* La case ronde ne tient pas dans une petite tuile : la tuile choisie se reconnaît à son bord et à son icône rouges. */
+  .formulaire .tuile__coche {
+    display: none;
+  }
+
+  .formulaire .question {
+    margin-bottom: 14px;
+  }
+
+  .formulaire .pastille span {
+    min-height: 44px;
+    padding: 0 16px;
+  }
+
+  .formulaire .champ {
+    gap: 6px;
+    margin-bottom: 12px;
+  }
+
+  .formulaire .champ input,
+  .formulaire .champ textarea {
+    min-height: 48px;
+    padding: 10px 14px;
+  }
+
+  .formulaire .champ textarea {
+    min-height: 84px;
+  }
+
+  .formulaire .formulaire__erreur {
+    margin-bottom: 4px;
+  }
+
+  /* La barre des boutons suit l'écran : elle reste visible tant que le formulaire l'est. */
+  .formulaire.formulaire--js .formulaire__nav {
+    position: sticky;
+    bottom: 0;
+    z-index: 5;
+    margin: 0 -14px;
+    padding: 10px 14px calc(10px + env(safe-area-inset-bottom, 0px));
+    border-top: 1px solid var(--color-border);
+    border-radius: 0 0 var(--radius-tile) var(--radius-tile);
+    background: rgba(255, 255, 255, 0.96);
+    backdrop-filter: blur(10px);
+    -webkit-backdrop-filter: blur(10px);
+  }
+
+  .formulaire .formulaire__nav {
+    flex-wrap: nowrap;
+  }
+
+  .formulaire .formulaire__nav .bouton {
+    flex: 1;
+    min-height: 50px;
+    padding: 0 16px;
+    font-size: 16px;
+  }
+
+  /* « Retour » devient une flèche ronde (le mot reste lu par les lecteurs d'écran) : une seule rangée de boutons. */
+  .formulaire .formulaire__nav .formulaire__retour {
+    flex-shrink: 0;
+    justify-content: center;
+    width: 50px;
+    height: 50px;
+    padding: 0;
+    border: 1.5px solid var(--color-border);
+    border-radius: 50%;
+    text-decoration: none;
+  }
+
+  .formulaire .formulaire__retour-texte {
+    position: absolute;
+    width: 1px;
+    height: 1px;
+    overflow: hidden;
+    clip-path: inset(50%);
+    white-space: nowrap;
+  }
+}

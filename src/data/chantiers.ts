@@ -42,12 +42,7 @@ export interface Cadrage {
 export interface Paire {
   avant: string;
   apres: string;
-  /**
-   * « curseur » : les deux photos sont prises du même endroit, on les superpose.
-   * « duo » : les angles sont trop différents pour un curseur, les deux photos sont côte à côte.
-   */
-  mode: 'curseur' | 'duo';
-  /** Rapport largeur / hauteur du cadre (curseur). */
+  /** Rapport largeur / hauteur du cadre du curseur. */
   ratio: number;
   cadreAvant?: Cadrage;
   cadreApres?: Cadrage;
@@ -89,14 +84,12 @@ export const CHANTIERS: Chantier[] = [
       {
         avant: 'mons-umons-cour/etape-2-isolation',
         apres: 'mons-umons-cour/etape-3-aile-terminee',
-        mode: 'curseur',
         ratio: 16 / 9,
         cadreAvant: { zoom: 1.13, tx: -13, ty: -5 },
       },
       {
         avant: 'mons-umons-longue-facade/pendant',
         apres: 'mons-umons-longue-facade/apres',
-        mode: 'curseur',
         ratio: 16 / 9,
         cadreAvant: { zoom: 1.12, tx: -11.8, ty: -5.6 },
       },
@@ -117,7 +110,6 @@ export const CHANTIERS: Chantier[] = [
       {
         avant: 'namur-immeuble-3-etages/pendant-rue',
         apres: 'namur-immeuble-3-etages/apres-rue',
-        mode: 'curseur',
         ratio: 4 / 3,
         cadreApres: { zoom: 1.08, tx: -1, ty: -8 },
       },
@@ -143,7 +135,6 @@ export const CHANTIERS: Chantier[] = [
       {
         avant: 'namur-immeuble-balcons/pendant-cote-gauche',
         apres: 'namur-immeuble-balcons/apres-cote-gauche',
-        mode: 'duo',
         ratio: 4 / 3,
         cadreAvant: { py: 40 },
         cadreApres: { px: 33 },
@@ -166,7 +157,6 @@ export const CHANTIERS: Chantier[] = [
       {
         avant: 'halle-maison/pendant-pignon',
         apres: 'halle-maison/apres-pignon',
-        mode: 'duo',
         ratio: 4 / 3,
         cadreAvant: { px: 40 },
         cadreApres: { px: 62 },
@@ -189,7 +179,6 @@ export const CHANTIERS: Chantier[] = [
       {
         avant: 'charleroi-rangee-2/pendant',
         apres: 'charleroi-rangee-2/apres',
-        mode: 'duo',
         ratio: 4 / 3,
         cadreAvant: { px: 58 },
         cadreApres: { px: 45 },
@@ -197,7 +186,6 @@ export const CHANTIERS: Chantier[] = [
       {
         avant: 'charleroi-rangee-1/pendant',
         apres: 'charleroi-rangee-1/apres',
-        mode: 'duo',
         ratio: 4 / 3,
         cadreAvant: { px: 50 },
         cadreApres: { px: 30 },
@@ -226,13 +214,12 @@ export function lienChantier(cle: CleChantier, langue: Langue): string {
 
 /**
  * « Les étapes d'une façade » : l'immeuble de quatre étages de l'Université de Mons, dans l'ordre
- * confirmé par Elisei (le 15 octobre 2026), puis la cour intérieure terminée pour l'étape finale.
- * Chaque étape montre une ou deux photos.
+ * confirmé par Elisei (le 15 octobre 2026). La dernière étape montre l'immeuble terminé, puis la cour intérieure
+ * (un autre point de vue sur la même université). Chaque étape montre une ou deux photos.
  */
-export const ETAPES_FACADE: { cle: 'preparation' | 'isolation' | 'sousEnduit' | 'finition' | 'termine'; photos: string[] }[] = [
+export const ETAPES_FACADE: { cle: 'preparation' | 'isolation' | 'sousEnduit' | 'termine'; photos: string[] }[] = [
   { cle: 'preparation', photos: ['mons-umons-immeuble-angle/etape-1-membrane-1', 'mons-umons-immeuble-angle/etape-1-membrane-2'] },
   { cle: 'isolation', photos: ['mons-umons-immeuble-angle/etape-1-membrane-3', 'mons-umons-immeuble-angle/etape-1-membrane-4'] },
   { cle: 'sousEnduit', photos: ['mons-umons-immeuble-angle/etape-2-sous-couche'] },
-  { cle: 'finition', photos: ['mons-umons-immeuble-angle/etape-3-termine'] },
-  { cle: 'termine', photos: ['mons-umons-cour/etape-3-aile-terminee'] },
+  { cle: 'termine', photos: ['mons-umons-immeuble-angle/etape-3-termine', 'mons-umons-cour/etape-3-aile-terminee'] },
 ];

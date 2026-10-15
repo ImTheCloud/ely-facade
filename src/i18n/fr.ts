@@ -15,6 +15,9 @@ export const fr = {
     whatsapp: 'Écrire sur WhatsApp',
     appeler: 'Appeler',
     contactAria: 'Nous contacter',
+    email: 'Écrire un email',
+    emailCourt: 'Email',
+    devisCourt: 'Devis',
   },
 
   deuxPoints: '\u00a0: ',
@@ -240,12 +243,12 @@ export const fr = {
   /** La page « Réalisations » et les pages de chaque chantier. */
   realisationsPage: {
     surtitre: 'Nos réalisations',
-    titre: 'Nos chantiers, en photos.',
+    titre: 'Quelques-uns de nos chantiers.',
     texte:
-      'Des façades à Mons, Namur, Charleroi, Halle et Evere, de l’échafaudage à la façade terminée. Seule la commune est indiquée\u00a0: jamais l’adresse de nos clients.',
+      'Une sélection de façades à Mons, Namur, Charleroi, Halle et Evere, de l’échafaudage à la façade terminée. Seule la commune est indiquée\u00a0: jamais l’adresse de nos clients.',
     avantApres: 'Avant, après',
     photos: 'Le chantier en photos',
-    retour: 'Toutes nos réalisations',
+    retour: 'Retour aux réalisations',
     autres: 'D’autres chantiers',
     agrandir: 'Agrandir la photo',
     fermer: 'Fermer',
@@ -282,7 +285,7 @@ export const fr = {
     ],
     equipe: {
       titre: 'Une équipe de 8 personnes',
-      texte: 'Une équipe de 8 personnes, des indépendants, sur nos chantiers partout en Belgique.',
+      texte: 'Des indépendants qui travaillent avec Elisei et Simi sur chaque chantier.',
     },
     engagementsTitre: 'Nos engagements',
     engagements: [
@@ -401,7 +404,7 @@ export const fr = {
     realisations: {
       titre: 'Nos réalisations | Ely Facade',
       description:
-        'Nos chantiers de façade en photos\u00a0: Université de Mons, Namur, Charleroi, Halle et Evere, de l’échafaudage à la façade terminée.',
+        'Quelques chantiers de façade en photos\u00a0: Université de Mons, Namur, Charleroi, Halle et Evere, de l’échafaudage à la façade terminée.',
     },
     apropos: {
       titre: 'À propos | Ely Facade',
@@ -431,7 +434,7 @@ export const fr = {
     hero: {
       /** Une ligne par entrée : le titre tient toujours sur trois lignes. Le dernier mot est mis en lumière. */
       titre: ['Votre façade', 'mérite de', 'briller.'],
-      texte: 'De la petite maison à l’immeuble à appartements, et jusqu’aux bâtiments d’une université.',
+      texte: 'Rénovation de façades pour tous les bâtiments.',
       bouton: 'Demander ma visite gratuite',
       appeler: 'Appeler le',
       preuvesAria: 'Nos engagements',
@@ -441,9 +444,7 @@ export const fr = {
 
     /** Les phrases d'émotion entre les sections. Le mot entre crochets se souligne en rouge. */
     emotions: {
-      durer: { phrase: 'Une façade refaite pour [durer].', note: 'Garantie de 10\u00a0ans minimum' },
-      premiere: { phrase: 'La première chose qu’on voit de [chez vous].' },
-      jeunesse: { phrase: 'Chaque façade a sa [seconde jeunesse].' },
+      durer: { phrase: 'Une façade refaite pour [durer].' },
       exigence: { phrase: 'Une maison ou une université\u00a0: la [même exigence].' },
     },
 
@@ -464,6 +465,7 @@ export const fr = {
         'Un chantier de l’Université de Mons, étape par étape. C’est l’ordre de toute façade isolée par l’extérieur et crépie.',
       lieu: 'Mons · Université de Mons',
       etape: 'Étape',
+      suivante: 'Étape suivante',
       liste: {
         preparation: {
           titre: 'Préparation et échafaudage',
@@ -480,40 +482,35 @@ export const fr = {
           texte: 'Un treillis en fibre de verre est noyé dans le sous-enduit, avec des renforts autour des fenêtres et en haut de façade.',
           legendes: ['Sous-couche'],
         },
-        finition: {
-          titre: 'Enduit de finition',
-          texte: 'Après séchage, l’enduit de finition donne à la façade son aspect et sa teinte, au choix.',
-          legendes: ['Finition'],
-        },
         termine: {
           titre: 'Façade terminée',
-          texte: 'L’échafaudage est retiré. Votre façade est garantie 10\u00a0ans minimum.',
-          legendes: ['Façade terminée, cour intérieure'],
+          texte: 'Après séchage, l’enduit de finition donne à la façade son aspect et sa teinte, au choix. Il ne reste plus qu’à retirer l’échafaudage.',
+          legendes: ['Façade terminée', 'Façade terminée, autre point de vue'],
         },
       },
     },
 
     umons: {
       pastille: 'Chantier de référence',
-      texte:
-        'Façades de bâtiments de l’Université de Mons (UMons)\u00a0: une cour intérieure, un immeuble de quatre étages et une longue façade. Du grand bâtiment public à la maison, nous travaillons avec le même soin.',
+      texte: 'Des façades de bâtiments de l’Université de Mons (UMons), de l’échafaudage à la façade terminée.',
       voir: 'Le chantier en photos',
     },
 
     realisations: {
       pastille: 'Nos réalisations',
-      titre: 'Ce que vous voyez, ce sont [nos chantiers].',
-      texte: 'Des façades à Mons, Namur, Charleroi, Halle et Evere. Notre bureau est à Halle et nous intervenons partout en Belgique.',
+      titre: 'Quelques [chantiers] parmi tant d’autres.',
+      texte: 'Une sélection de façades, de l’échafaudage à la façade terminée. Touchez un point de la carte pour voir le chantier.',
       photos: 'photos',
       photo: 'photo',
       voir: 'Voir le chantier',
       precedent: 'Chantiers précédents',
       suivant: 'Chantiers suivants',
-      toutes: 'Toutes nos réalisations',
+      toutes: 'Voir plus de chantiers',
       carte: {
-        aria: 'Carte de la Belgique\u00a0: notre bureau à Halle et les communes de nos chantiers',
-        bureau: 'Notre bureau',
-        legende: 'Partout en Belgique',
+        aria: 'Carte de la Belgique\u00a0: notre bureau à Halle et les communes de quelques-uns de nos chantiers',
+        bureau: 'Notre bureau, à Halle',
+        chantier: 'Un de nos chantiers',
+        villes: { anvers: 'Anvers', gand: 'Gand', liege: 'Liège' },
       },
     },
 
@@ -522,8 +519,10 @@ export const fr = {
       liste: [
         { valeur: '6 ans', libelle: 'de métier pour notre gérant' },
         { valeur: '50+', libelle: 'chantiers réalisés par nos gérants' },
-        { valeur: '10 ans', libelle: 'de garantie minimum' },
+        { valeur: '2', libelle: 'frères à la tête de l’entreprise' },
         { valeur: '8', libelle: 'personnes dans l’équipe' },
+        { valeur: '5', libelle: 'métiers de façade' },
+        { valeur: '12/12', libelle: 'mois de travail par an, même l’hiver' },
       ],
     },
 
@@ -536,9 +535,9 @@ export const fr = {
 
     equipe: {
       surtitre: 'Qui vient chez vous',
-      titre: 'Deux frères, une équipe.',
+      titre: 'Deux frères, une équipe de 8.',
       texte:
-        'Elisei et Simi Ungureanu dirigent Ely Facade. Elisei s’occupe de la visite et du devis. Simi dirige les travaux sur le chantier. Ils travaillent avec une équipe de 8 personnes, des indépendants.',
+        'Elisei et Simi Ungureanu dirigent Ely Facade. Elisei s’occupe de la visite et du devis. Simi dirige les travaux sur le chantier, avec une équipe d’indépendants.',
       personnes: [
         { prenom: 'Elisei', initiale: 'E', role: 'Visite et devis' },
         { prenom: 'Simi', initiale: 'S', role: 'Direction des chantiers' },
@@ -563,7 +562,7 @@ export const fr = {
         },
         {
           titre: 'Les travaux commencent',
-          texte: 'Si le devis vous convient. Garantie de 10 ans minimum.',
+          texte: 'Si le devis vous convient.',
         },
       ],
     },
@@ -606,8 +605,7 @@ export const fr = {
 
     devis: {
       titre: 'Votre façade mérite de briller. [Parlons-en].',
-      texte:
-        'Décrivez vos travaux en trois étapes. Elisei se déplace gratuitement chez vous, sans engagement, puis vous envoie le devis.',
+      texte: 'Décrivez vos travaux en trois étapes.',
       direct: 'Ou directement',
       calculateur: {
         titre: 'Quelle surface fait votre façade\u00a0?',
@@ -635,8 +633,7 @@ export const fr = {
     contact: {
       surtitre: 'Contact et devis',
       titre: 'Votre devis, sans engagement.',
-      texte:
-        'Décrivez-nous vos travaux en trois étapes. Elisei se déplace gratuitement chez vous, sans engagement, puis vous envoie le devis.',
+      texte: 'Décrivez-nous vos travaux en trois étapes. Elisei se déplace gratuitement chez vous, puis vous envoie le devis.',
       direct: 'Ou directement',
       telephone: 'Téléphone',
       email: 'Email',

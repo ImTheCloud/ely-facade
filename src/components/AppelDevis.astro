@@ -34,6 +34,9 @@ const lien = travaux ? `${chemin('contact', langue)}?travaux=${travaux}#devis` :
         <Bouton href={lienWhatsApp(textes.whatsappMessage)} variante="whatsapp" icone="whatsapp" large target="_blank" rel="noopener">
           WhatsApp
         </Bouton>
+        <Bouton href={`mailto:${entreprise.email}`} variante="secondaire" icone="email" large>
+          {textes.actions.emailCourt}
+        </Bouton>
       </div>
     </div>
   </div>

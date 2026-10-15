@@ -125,7 +125,7 @@ const donnees = {
           <ol class="etapes-crepi__liste">
             {etapes.map((etape, i) => (
               <li data-reveal style={`--delai: ${i * 80}ms`}>
-                <Image src={photo(etape.photo)} alt={textes.photos[etape.photo]} widths={[360, 540, 720]} sizes="(min-width: 1100px) 240px, (min-width: 640px) 45vw, 100vw" format="webp" quality={74} />
+                <Image src={photo(etape.photo)} alt={textes.photos[etape.photo]} widths={[360, 540, 720]} sizes="(min-width: 1100px) 300px, (min-width: 640px) 45vw, 100vw" format="webp" quality={74} />
                 <span class="etapes-crepi__num">{textes.accueil.etapes.etape} {i + 1}</span>
                 <h3>{etape.texte.titre}</h3>
                 <p>{etape.texte.texte}</p>
@@ -315,7 +315,7 @@ const donnees = {
 
   @media (min-width: 1100px) {
     .etapes-crepi__liste {
-      grid-template-columns: repeat(5, 1fr);
+      grid-template-columns: repeat(4, 1fr);
     }
   }
 

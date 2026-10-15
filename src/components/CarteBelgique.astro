@@ -1,9 +1,13 @@
 ---
 /**
- * Carte épurée de la Belgique (dessin simplifié, pas une carte exacte) : le bureau de Halle
- * et les communes de nos chantiers. Les points apparaissent l'un après l'autre quand la carte arrive à l'écran.
+ * Carte de la Belgique (dessin simplifié, pas une carte exacte) : le bureau de Halle (brique rouge) et les communes
+ * de quelques-uns de nos chantiers (points sombres). On touche une commune pour voir ses chantiers sous la carte.
+ * Les points sont de vrais boutons posés sur le dessin ; sans JavaScript, la carte reste lisible et les chantiers
+ * sont dans la bande de photos juste dessous.
  */
-import type { Commune } from '../data/chantiers';
+import { Image } from 'astro:assets';
+import Icon from './Icon.astro';
+import { CHANTIERS, lienChantier, photo, type Commune } from '../data/chantiers';
 import { t, type Langue } from '../i18n';
 
 interface Props {
@@ -13,10 +17,15 @@ interface Props {
 
 const { langue, class: classe } = Astro.props;
 const textes = t(langue);
+const carte = textes.accueil.realisations.carte;
 
+const LARGEUR = 560;
+const HAUTEUR = 460;
 /** Longitude, latitude → coordonnées du dessin (projection simple, latitude moyenne 50,6°). */
 const X = (lon: number) => Math.round((lon - 2.45) * 137 * 10) / 10;
 const Y = (lat: number) => Math.round((51.56 - lat) * 216 * 10) / 10;
+const pct = (v: number, total: number) => `${Math.round((v / total) * 1000) / 10}%`;
+const place = (lon: number, lat: number) => `left: ${pct(X(lon), LARGEUR)}; top: ${pct(Y(lat), HAUTEUR)}`;
 
 // Frontière simplifiée : côte, Pays-Bas, Allemagne, Luxembourg, France.
 const frontiere: [number, number][] = [
@@ -47,144 +56,580 @@ const trace =
     .join('') +
   'Z';
 
-// Les points : le bureau d'abord, puis les communes des chantiers. dx/dy : place de l'étiquette.
-const points: { commune: Commune; lon: number; lat: number; bureau?: boolean; ancre: 'start' | 'end'; dx: number; dy: number }[] = [
-  { commune: 'halle', lon: 4.235, lat: 50.735, bureau: true, ancre: 'end', dx: -16, dy: 5 },
-  { commune: 'evere', lon: 4.402, lat: 50.87, ancre: 'start', dx: 13, dy: -6 },
-  { commune: 'mons', lon: 3.952, lat: 50.455, ancre: 'end', dx: -13, dy: 5 },
-  { commune: 'charleroi', lon: 4.444, lat: 50.411, ancre: 'start', dx: 12, dy: 18 },
-  { commune: 'namur', lon: 4.867, lat: 50.466, ancre: 'start', dx: 13, dy: 5 },
+/** Les communes de nos chantiers. cote : de quel côté du point s'écrit son nom. */
+const communes: { commune: Commune; lon: number; lat: number; cote: 'gauche' | 'droite' | 'bas'; dx?: number; dy?: number }[] = [
+  { commune: 'mons', lon: 3.952, lat: 50.455, cote: 'gauche' },
+  { commune: 'namur', lon: 4.867, lat: 50.466, cote: 'droite' },
+  { commune: 'charleroi', lon: 4.444, lat: 50.411, cote: 'bas' },
+  // Halle : le point du chantier est posé un peu à côté du bureau, pour ne pas le recouvrir.
+  { commune: 'halle', lon: 4.235, lat: 50.735, cote: 'droite', dx: 18, dy: 16 },
+  { commune: 'evere', lon: 4.402, lat: 50.87, cote: 'droite' },
 ];
+const bureau = { lon: 4.235, lat: 50.735 };
+/** Quelques grandes villes, seulement pour se repérer. */
+const villes = [
+  { nom: carte.villes.anvers, lon: 4.4, lat: 51.22, cote: 'droite' },
+  { nom: carte.villes.gand, lon: 3.72, lat: 51.05, cote: 'gauche' },
+  { nom: carte.villes.liege, lon: 5.57, lat: 50.63, cote: 'droite' },
+];
+
+const fiches = communes.map((c) => ({
+  ...c,
+  chantiers: CHANTIERS.filter((chantier) => chantier.commune === c.commune),
+}));
+const identifiant = 'carte';
 ---
 
-<figure class:list={['carte', classe]} data-reveal>
-  <svg viewBox="0 0 560 460" role="img" aria-label={textes.accueil.realisations.carte.aria}>
-    <path class="carte__pays" d={trace}></path>
+<figure class:list={['carte', classe]} data-reveal data-carte>
+  <div class="carte__dessin">
+    <svg viewBox={`0 0 ${LARGEUR} ${HAUTEUR}`} role="img" aria-label={carte.aria}>
+      <defs>
+        <linearGradient id={`${identifiant}-fond`} x1="0" y1="0" x2="0" y2="1">
+          <stop offset="0" stop-color="#ffffff" />
+          <stop offset="1" stop-color="#f1f1ee" />
+        </linearGradient>
+        <pattern id={`${identifiant}-points`} width="11" height="11" patternUnits="userSpaceOnUse">
+          <circle cx="1.6" cy="1.6" r="1.1" fill="#1f2429" fill-opacity="0.09" />
+        </pattern>
+        <clipPath id={`${identifiant}-pays`}><path d={trace}></path></clipPath>
+      </defs>
+      <path class="carte__ombre" d={trace}></path>
+      <path d={trace} fill={`url(#${identifiant}-fond)`}></path>
+      <rect width={LARGEUR} height={HAUTEUR} fill={`url(#${identifiant}-points)`} clip-path={`url(#${identifiant}-pays)`}></rect>
+      <path class="carte__pays" d={trace}></path>
+    </svg>
+
+    <div class="carte__reperes" aria-hidden="true">
+      {
+        villes.map((ville) => (
+          <span class={`ville ville--${ville.cote}`} style={place(ville.lon, ville.lat)}>
+            <i></i>
+            <span>{ville.nom}</span>
+          </span>
+        ))
+      }
+    </div>
+
+    <!-- Le bureau de Halle : la brique rouge du logo. -->
+    <div class="bureau" style={place(bureau.lon, bureau.lat)}>
+      <span class="bureau__onde" aria-hidden="true"></span>
+      <span class="bureau__brique" aria-hidden="true"></span>
+      <span class="bureau__nom">{carte.bureau}</span>
+    </div>
+
+    <div class="carte__points">
+      {
+        fiches.map((fiche, i) => (
+          <button
+            type="button"
+            class:list={['point', `point--${fiche.cote}`, { 'est-actif': i === 0 }]}
+            style={`${place(fiche.lon, fiche.lat)}; --i: ${i}; --dx: ${fiche.dx ?? 0}px; --dy: ${fiche.dy ?? 0}px`}
+            aria-pressed={i === 0 ? 'true' : 'false'}
+            aria-controls={`${identifiant}-${fiche.commune}`}
+            data-point={fiche.commune}
+          >
+            <span class="point__rond" aria-hidden="true"></span>
+            <span class="point__nom">{textes.communes[fiche.commune]}</span>
+          </button>
+        ))
+      }
+    </div>
+  </div>
+
+  <ul class="carte__legende" aria-hidden="true">
+    <li><span class="legende__brique"></span>{carte.bureau}</li>
+    <li><span class="legende__rond"></span>{carte.chantier}</li>
+  </ul>
+
+  <!-- Téléphone : les communes se choisissent aussi ici, plus faciles à toucher que les points serrés de la carte. -->
+  <div class="carte__choix" role="group" aria-label={textes.accueil.realisations.pastille}>
     {
-      points.map((point, i) => (
-        <g class:list={['carte__point', { 'carte__point--bureau': point.bureau }]} style={`--i: ${i}`} transform={`translate(${X(point.lon)} ${Y(point.lat)})`}>
-          {point.bureau ? (
-            <>
-              <circle class="carte__onde" r="20" />
-              <rect x="-11" y="-6" width="22" height="12" rx="3" />
-            </>
-          ) : (
-            <circle r="6.5" />
-          )}
-          <text x={point.dx} y={point.dy} text-anchor={point.ancre}>
-            {textes.communes[point.commune]}
-            {point.bureau && <tspan class="carte__bureau" x={point.dx} dy="20">{textes.accueil.realisations.carte.bureau}</tspan>}
-          </text>
-        </g>
+      fiches.map((fiche, i) => (
+        <button type="button" class:list={['choix', { 'est-actif': i === 0 }]} aria-pressed={i === 0 ? 'true' : 'false'} aria-controls={`${identifiant}-${fiche.commune}`} data-point={fiche.commune}>
+          {textes.communes[fiche.commune]}
+        </button>
       ))
     }
-  </svg>
-  <figcaption class="carte__legende">
-    <span class="brique" aria-hidden="true"></span>
-    {textes.accueil.realisations.carte.legende}
-  </figcaption>
+  </div>
+
+  <div class="carte__fiches">
+    {
+      fiches.map((fiche, i) => (
+        <div class:list={['fiche', { 'est-actif': i === 0 }]} id={`${identifiant}-${fiche.commune}`} role="group" aria-label={textes.communes[fiche.commune]} data-fiche={fiche.commune}>
+          {fiche.chantiers.map((c) => {
+            const infos = textes.chantiers[c.cle];
+            const contenu = (
+              <>
+                <Image
+                  src={photo(c.couverture)}
+                  alt={textes.photos[c.couverture]}
+                  widths={[160, 240, 320]}
+                  sizes="120px"
+                  format="webp"
+                  quality={72}
+                  loading="lazy"
+                />
+                <span class="fiche__texte">
+                  <span class="fiche__commune">{textes.communes[c.commune]}</span>
+                  <span class="fiche__titre">{infos.titre}</span>
+                  {c.slug && (
+                    <span class="fiche__voir">
+                      {textes.accueil.realisations.voir}
+                      <Icon nom="fleche" taille={16} />
+                    </span>
+                  )}
+                </span>
+              </>
+            );
+            return c.slug ? (
+              <a class="fiche__chantier" href={lienChantier(c.cle, langue)}>
+                {contenu}
+              </a>
+            ) : (
+              <div class="fiche__chantier">{contenu}</div>
+            );
+          })}
+        </div>
+      ))
+    }
+  </div>
 </figure>
+
+<script>
+  import '~/scripts/carte';
+</script>
 
 <style>
   .carte {
     position: relative;
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
     margin: 0;
+  }
+
+  .carte__dessin {
+    position: relative;
+    aspect-ratio: 560 / 460;
   }
 
   .carte svg {
     display: block;
     width: 100%;
-    height: auto;
+    height: 100%;
     overflow: visible;
   }
 
+  .carte__ombre {
+    fill: rgba(31, 36, 41, 0.14);
+    filter: blur(14px);
+    transform: translateY(14px);
+  }
+
   .carte__pays {
-    fill: var(--color-card);
+    fill: none;
     stroke: var(--color-ink);
-    stroke-width: 1.6;
-    stroke-linejoin: round;
-    filter: drop-shadow(0 18px 30px rgba(31, 36, 41, 0.12));
-  }
-
-  .carte__point circle {
-    fill: var(--color-ink);
-    stroke: #fff;
-    stroke-width: 3;
-  }
-
-  .carte__point--bureau rect {
-    fill: var(--color-accent);
-    stroke: #fff;
-    stroke-width: 3;
-  }
-
-  .carte__point circle.carte__onde {
-    fill: rgba(200, 32, 43, 0.14);
-    stroke: none;
-  }
-
-  .carte__point text {
-    font-family: var(--font-display);
-    font-size: 17px;
-    font-weight: 750;
-    letter-spacing: -0.01em;
-    fill: var(--color-ink);
-    paint-order: stroke;
-    stroke: var(--color-bg);
-    stroke-width: 5px;
+    stroke-width: 1.8;
     stroke-linejoin: round;
   }
 
-  .carte__bureau {
-    font-family: var(--font-text);
-    font-size: 13px;
+  /* --- Repères : grandes villes, discrètes --- */
+  .carte__reperes {
+    position: absolute;
+    inset: 0;
+    pointer-events: none;
+  }
+
+  .ville {
+    position: absolute;
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    font-size: 12.5px;
     font-weight: 600;
-    fill: var(--color-accent);
+    letter-spacing: 0.01em;
+    color: var(--color-muted);
+    transform: translate(-3px, -50%);
+    white-space: nowrap;
   }
 
-  .carte__legende {
+  .ville i {
+    flex-shrink: 0;
+    width: 7px;
+    height: 7px;
+    border: 1.5px solid var(--color-muted);
+    border-radius: 50%;
+    background: #fff;
+  }
+
+  .ville--gauche {
+    flex-direction: row-reverse;
+    transform: translate(calc(-100% + 3px), -50%);
+  }
+
+  /* --- Le bureau --- */
+  .bureau {
+    position: absolute;
+    display: flex;
+    align-items: center;
+    flex-direction: row-reverse;
+    gap: 10px;
+    transform: translate(calc(-100% + 15px), -50%);
+    pointer-events: none;
+  }
+
+  .bureau__brique {
+    position: relative;
+    flex-shrink: 0;
+    width: 30px;
+    height: 17px;
+    border: 3px solid #fff;
+    border-radius: 4px;
+    background: var(--color-accent);
+    box-shadow: 0 6px 14px -4px rgba(200, 32, 43, 0.65);
+  }
+
+  .bureau__onde {
     position: absolute;
     right: 0;
-    bottom: 4%;
+    top: 50%;
+    width: 56px;
+    height: 56px;
+    margin: -28px 0 0;
+    border-radius: 50%;
+    background: rgba(200, 32, 43, 0.16);
+    transform: translateX(calc(50% - 15px));
+  }
+
+  .bureau__nom {
+    padding: 5px 12px;
+    border-radius: var(--radius-pill);
+    background: var(--color-accent);
+    box-shadow: var(--shadow-accent);
+    font-size: 13px;
+    font-weight: 700;
+    line-height: 1.2;
+    color: #fff;
+    white-space: nowrap;
+  }
+
+  /* --- Les communes de chantiers : de vrais boutons, zone tactile de 44 px --- */
+  .carte__points {
+    position: absolute;
+    inset: 0;
+  }
+
+  .point {
+    position: absolute;
+    display: flex;
+    align-items: center;
+    gap: 2px;
+    min-width: 44px;
+    min-height: 44px;
+    padding: 0;
+    border: 0;
+    background: none;
+    color: var(--color-ink);
+    font: inherit;
+    cursor: pointer;
+    transform: translate(calc(-22px + var(--dx)), calc(-50% + var(--dy)));
+  }
+
+  .point--gauche {
+    flex-direction: row-reverse;
+    transform: translate(calc(-100% + 22px + var(--dx)), calc(-50% + var(--dy)));
+  }
+
+  /* Le nom sous le point (communes trop proches pour écrire à côté). */
+  .point--bas {
+    flex-direction: column;
+    align-items: center;
+    gap: 0;
+    transform: translate(calc(-50% + var(--dx)), calc(-22px + var(--dy)));
+  }
+
+  .point--bas .point__nom {
+    margin-top: -6px;
+  }
+
+  .point__rond {
+    position: relative;
+    flex-shrink: 0;
+    width: 44px;
+    height: 44px;
+  }
+
+  .point__rond::before {
+    content: '';
+    position: absolute;
+    inset: 12px;
+    border: 3px solid #fff;
+    border-radius: 50%;
+    background: var(--color-ink);
+    box-shadow: 0 4px 12px -2px rgba(31, 36, 41, 0.5);
+    transition:
+      transform var(--speed) var(--ease),
+      background-color var(--speed) var(--ease);
+  }
+
+  .point__nom {
+    padding: 5px 11px;
+    border-radius: var(--radius-pill);
+    background: rgba(255, 255, 255, 0.92);
+    box-shadow: 0 1px 2px rgba(31, 36, 41, 0.1);
+    font-family: var(--font-display);
+    font-size: 15px;
+    font-weight: 750;
+    line-height: 1.1;
+    letter-spacing: -0.01em;
+    white-space: nowrap;
+    transition:
+      background-color var(--speed) var(--ease),
+      color var(--speed) var(--ease);
+  }
+
+  .point:hover .point__rond::before {
+    transform: scale(1.18);
+  }
+
+  .point.est-actif .point__rond::before {
+    background: var(--color-accent);
+    transform: scale(1.3);
+  }
+
+  .point.est-actif .point__nom {
+    background: var(--color-ink);
+    color: #fff;
+  }
+
+  .point:focus-visible {
+    outline: 3px solid var(--color-accent);
+    outline-offset: 2px;
+    border-radius: 12px;
+  }
+
+  /* --- Légende --- */
+  .carte__legende {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 6px 22px;
+    margin: 0;
+    padding: 0;
+    list-style: none;
+    font-size: var(--size-tiny);
+    font-weight: 600;
+    color: var(--color-text);
+  }
+
+  .carte__legende li {
     display: inline-flex;
     align-items: center;
-    gap: 10px;
-    padding: 9px 16px;
-    border: 1px solid var(--color-border);
+    gap: 9px;
+  }
+
+  .legende__brique {
+    width: 20px;
+    height: 12px;
+    border-radius: 3px;
+    background: var(--color-accent);
+  }
+
+  .legende__rond {
+    width: 13px;
+    height: 13px;
+    border: 2.5px solid #fff;
+    border-radius: 50%;
+    background: var(--color-ink);
+    box-shadow: 0 0 0 1px var(--color-border);
+  }
+
+  /* --- Choix de la commune (téléphone) --- */
+  .carte__choix {
+    display: none;
+    flex-wrap: wrap;
+    gap: 8px;
+  }
+
+  .choix {
+    min-height: 44px;
+    padding: 0 18px;
+    border: 1.5px solid var(--color-border);
     border-radius: var(--radius-pill);
     background: var(--color-card);
+    color: var(--color-ink);
+    font: 650 15px/1 var(--font-text);
+    cursor: pointer;
+    transition:
+      background-color var(--speed) var(--ease),
+      color var(--speed) var(--ease),
+      border-color var(--speed) var(--ease);
+  }
+
+  .choix.est-actif {
+    border-color: var(--color-ink);
+    background: var(--color-ink);
+    color: #fff;
+  }
+
+  .choix:focus-visible {
+    outline: 3px solid var(--color-accent);
+    outline-offset: 2px;
+  }
+
+  @media (max-width: 699px) {
+    :global(.js) .carte__choix {
+      display: flex;
+    }
+  }
+
+  /* --- La fiche de la commune choisie --- */
+  .carte__fiches {
+    display: grid;
+  }
+
+  .fiche {
+    display: none;
+    gap: 10px;
+  }
+
+  .fiche.est-actif {
+    display: grid;
+  }
+
+  .fiche__chantier {
+    display: flex;
+    align-items: center;
+    gap: 16px;
+    padding: 10px;
+    border: 1px solid var(--color-border);
+    border-radius: var(--radius-md);
+    background: var(--color-card);
     box-shadow: var(--shadow-tile);
-    font-size: var(--size-small);
+    color: inherit;
+    text-decoration: none;
+    transition:
+      transform var(--speed) var(--ease),
+      box-shadow var(--speed) var(--ease);
+  }
+
+  a.fiche__chantier:hover {
+    transform: translateY(-2px);
+    box-shadow: var(--shadow-lift);
+  }
+
+  a.fiche__chantier:focus-visible {
+    outline: 3px solid var(--color-accent);
+    outline-offset: 3px;
+  }
+
+  .fiche__chantier :global(img) {
+    flex-shrink: 0;
+    width: 112px;
+    height: 84px;
+    object-fit: cover;
+    border-radius: 12px;
+  }
+
+  .fiche__texte {
+    display: flex;
+    flex-direction: column;
+    gap: 3px;
+    min-width: 0;
+  }
+
+  .fiche__commune {
+    font-family: var(--font-display);
+    font-size: 24px;
+    font-weight: 800;
+    line-height: 1;
+    letter-spacing: var(--tracking-display);
+    text-transform: uppercase;
+    color: var(--color-ink);
+  }
+
+  .fiche__titre {
     font-weight: 650;
     color: var(--color-ink);
   }
 
+  .fiche__voir {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    margin-top: 2px;
+    font-size: var(--size-small);
+    font-weight: 700;
+    color: var(--color-accent);
+  }
+
   @media (prefers-reduced-motion: no-preference) {
-    :global(.js) .carte__point {
+    :global(.js) .point,
+    :global(.js) .bureau,
+    :global(.js) .ville {
       opacity: 0;
       transition: opacity 600ms var(--ease-out);
-      transition-delay: calc(400ms + var(--i) * 220ms);
+      transition-delay: calc(300ms + var(--i, 0) * 180ms);
     }
 
-    :global(.js) .carte.est-visible .carte__point {
+    :global(.js) .carte.est-visible .point,
+    :global(.js) .carte.est-visible .bureau,
+    :global(.js) .carte.est-visible .ville {
       opacity: 1;
     }
 
-    .carte__onde {
-      transform-box: fill-box;
-      transform-origin: center;
+    .bureau__onde {
       animation: onde 2.8s var(--ease-out) infinite;
+    }
+
+    .fiche.est-actif {
+      animation: fiche-entre 420ms var(--ease-out);
     }
 
     @keyframes onde {
       from {
-        transform: scale(0.4);
+        transform: translateX(calc(50% - 15px)) scale(0.4);
         opacity: 1;
       }
       to {
-        transform: scale(1.6);
+        transform: translateX(calc(50% - 15px)) scale(1.5);
         opacity: 0;
       }
+    }
+
+    @keyframes fiche-entre {
+      from {
+        opacity: 0;
+        transform: translateY(8px);
+      }
+    }
+  }
+
+  /* Téléphone : pas de noms sur la carte (trop serrés), les communes se choisissent sous la carte. */
+  @media (max-width: 699px) {
+    .point__nom,
+    .bureau__nom {
+      display: none;
+    }
+
+    .point,
+    .point--bas {
+      min-width: 40px;
+      min-height: 40px;
+      transform: translate(calc(-20px + var(--dx)), calc(-50% + var(--dy)));
+    }
+
+    .point__rond {
+      width: 40px;
+      height: 40px;
+    }
+
+    .point__rond::before {
+      inset: 10px;
+    }
+
+    .fiche__chantier :global(img) {
+      width: 92px;
+      height: 72px;
     }
   }
 </style>

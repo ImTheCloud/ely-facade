@@ -4,7 +4,6 @@ import { Image } from 'astro:assets';
 import AppelDevis from '../AppelDevis.astro';
 import CarteBelgique from '../CarteBelgique.astro';
 import IntroPage from '../IntroPage.astro';
-import Chiffres from '../accueil/Chiffres.astro';
 import BaseLayout from '~/layouts/BaseLayout.astro';
 import { photo } from '~/data/chantiers';
 import { entreprise } from '~/data/entreprise';
@@ -62,7 +61,6 @@ const imageIntro = 'halle-maison/final-entree';
         <p>{a.equipe.texte}</p>
       </div>
     </div>
-    <Chiffres langue={langue} />
   </section>
 
   <section class="section engagements">
@@ -237,16 +235,11 @@ const imageIntro = 'halle-maison/final-entree';
 
   /* --- Équipe --- */
   .equipe {
-    padding-bottom: 0;
     background: var(--color-surface);
   }
 
   .equipe .tete {
     margin-bottom: 0;
-  }
-
-  .equipe :global(.chiffres-section) {
-    border-bottom: 0;
   }
 
   /* --- Engagements --- */

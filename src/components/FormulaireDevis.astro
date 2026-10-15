@@ -155,7 +155,7 @@ const choix = [
     <div class="formulaire__nav">
       <button type="button" class="formulaire__retour" data-precedent hidden>
         <Icon nom="fleche-gauche" taille={18} />
-        {f.precedent}
+        <span class="formulaire__retour-texte">{f.precedent}</span>
       </button>
       <Bouton type="button" variante="accent" iconeApres="fleche" large class="formulaire__suivant" data-suivant>
         {f.suivant}

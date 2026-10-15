@@ -1,11 +1,12 @@
 ---
 /**
- * « Les étapes d'une façade » : le chantier de l'immeuble de quatre étages de l'Université de Mons.
- * Sur grand écran (avec JavaScript), la photo reste fixe à gauche et change d'étape en fondu
- * pendant que les textes défilent à droite. Sur téléphone, ou sans JavaScript, chaque étape montre ses photos.
+ * « Les étapes d'une façade » : le chantier de l'immeuble de quatre étages de l'Université de Mons, en 4 étapes.
+ * On choisit l'étape avec les pastilles numérotées (ou « Étape suivante ») : la photo et le texte changent,
+ * rien ne bouge au défilement. Sans JavaScript, les quatre étapes s'affichent l'une sous l'autre.
  * L'ordre des étapes est celui confirmé par Elisei ; les légendes ne disent que ce qu'on voit.
  */
 import { Image } from 'astro:assets';
+import Icon from '../Icon.astro';
 import Souligne from '../Souligne.astro';
 import { ETAPES_FACADE, photo } from '../../data/chantiers';
 import { t, type Langue } from '../../i18n';
@@ -18,16 +19,13 @@ const { langue } = Astro.props;
 const textes = t(langue);
 const section = textes.accueil.etapes;
 
-// Toutes les photos, dans l'ordre : chacune est un « plan » de la scène.
-let numero = 0;
 const etapes = ETAPES_FACADE.map((etape, i) => ({
   ...etape,
   numero: i + 1,
   texte: section.liste[etape.cle],
-  plans: etape.photos.map((chemin, j) => ({ chemin, index: numero++, legende: section.liste[etape.cle].legendes[j] })),
+  plans: etape.photos.map((chemin, j) => ({ chemin, legende: section.liste[etape.cle].legendes[j] })),
 }));
-const plans = etapes.flatMap((etape) => etape.plans.map((plan) => ({ ...plan, etape: etape.numero })));
-const image = { widths: [480, 768, 1080, 1440], format: 'webp' as const, quality: 74, loading: 'lazy' as const };
+const image = { widths: [480, 768, 1080, 1440], sizes: '(min-width: 900px) 52vw, 100vw', format: 'webp' as const, quality: 74 };
 ---
 
 <section class="section etapes" id="etapes" data-etapes>
@@ -38,50 +36,65 @@ const image = { widths: [480, 768, 1080, 1440], format: 'webp' as const, quality
       <p>{section.texte}</p>
     </div>
 
-    <div class="etapes__corps">
-      <!-- La scène : seulement sur grand écran avec JavaScript (les photos accessibles sont celles des étapes). -->
-      <div class="scene" aria-hidden="true">
-        <div class="scene__cadre">
-          {
-            plans.map((plan) => (
-              <figure class:list={['scene__plan', { 'est-actif': plan.index === 0 }]} data-plan={plan.index}>
-                <Image src={photo(plan.chemin)} alt="" sizes="(min-width: 1360px) 700px, 52vw" {...image} />
-                <figcaption>
-                  <span class="brique" aria-hidden="true" />
-                  {plan.legende} · {section.lieu}
-                </figcaption>
-              </figure>
-            ))
-          }
-        </div>
-        <ol class="scene__repere">
-          {etapes.map((etape) => <li data-repere={etape.numero}>{etape.numero}</li>)}
-        </ol>
-      </div>
-
-      <ol class="etapes__liste">
+    <div class="etapes__corps" data-reveal>
+      <!-- Les pastilles : seulement avec JavaScript. -->
+      <div class="etapes__onglets" role="tablist" aria-label={section.pastille}>
         {
-          etapes.map((etape) => (
-            <li class="etape" data-reveal data-numero={etape.numero} data-plans={etape.plans.map((plan) => plan.index).join(' ')}>
-              <div class="etape__texte">
-                <span class="etape__num">
-                  {section.etape} {etape.numero}
-                </span>
-                <h3>{etape.texte.titre}</h3>
-                <p>{etape.texte.texte}</p>
-              </div>
-              {etape.plans.map((plan) => (
-                <figure class="etape__photo">
-                  <Image src={photo(plan.chemin)} alt={textes.photos[plan.chemin]} sizes="100vw" {...image} />
-                  <figcaption>
-                    {plan.legende} · {section.lieu}
-                  </figcaption>
-                </figure>
-              ))}
-            </li>
+          etapes.map((etape, i) => (
+            <button
+              type="button"
+              role="tab"
+              id={`etape-onglet-${etape.numero}`}
+              aria-controls={`etape-${etape.numero}`}
+              aria-selected={i === 0 ? 'true' : 'false'}
+              tabindex={i === 0 ? 0 : -1}
+              class:list={['onglet', { 'est-actif': i === 0 }]}
+              data-onglet
+            >
+              <span class="onglet__num">{etape.numero}</span>
+              <span class="onglet__titre">{etape.texte.titre}</span>
+            </button>
           ))
         }
-      </ol>
+      </div>
+
+      <div class="etapes__liste">
+        {
+          etapes.map((etape, i) => (
+            <div
+              class:list={['etape', { 'est-actif': i === 0 }]}
+              id={`etape-${etape.numero}`}
+              role="tabpanel"
+              aria-labelledby={`etape-onglet-${etape.numero}`}
+              data-etape
+            >
+              <div class:list={['etape__photos', `etape__photos--${etape.plans.length}`]}>
+                {etape.plans.map((plan) => (
+                  <figure>
+                    <Image src={photo(plan.chemin)} alt={textes.photos[plan.chemin]} loading={i === 0 ? 'eager' : 'lazy'} {...image} />
+                    <figcaption>{plan.legende}</figcaption>
+                  </figure>
+                ))}
+              </div>
+
+              <div class="etape__texte">
+                <span class="etape__num">
+                  {section.etape} {etape.numero} / {etapes.length}
+                </span>
+                <h3 id={`etape-titre-${etape.numero}`}>{etape.texte.titre}</h3>
+                <p>{etape.texte.texte}</p>
+                <p class="etape__lieu">{section.lieu}</p>
+                {i < etapes.length - 1 && (
+                  <button type="button" class="etape__suivante" data-suivante>
+                    {section.suivante}
+                    <Icon nom="fleche" taille={18} />
+                  </button>
+                )}
+              </div>
+            </div>
+          ))
+        }
+      </div>
     </div>
   </div>
 </section>
@@ -91,17 +104,13 @@ const image = { widths: [480, 768, 1080, 1440], format: 'webp' as const, quality
 </script>
 
 <style>
-  .etapes__corps {
-    position: relative;
-  }
-
-  .scene {
+  .etapes__onglets {
     display: none;
   }
 
   .etapes__liste {
     display: grid;
-    gap: 56px;
+    gap: 40px;
     margin: 0;
     padding: 0;
     list-style: none;
@@ -109,13 +118,60 @@ const image = { widths: [480, 768, 1080, 1440], format: 'webp' as const, quality
 
   .etape {
     display: grid;
-    gap: 18px;
+    gap: 20px;
   }
 
+  /* --- Photos : un cadre de taille fixe, une ou deux photos --- */
+  .etape__photos {
+    display: grid;
+    gap: 6px;
+    aspect-ratio: 5 / 4;
+    overflow: hidden;
+    border-radius: var(--radius-tile);
+    background: var(--color-surface);
+    box-shadow: var(--shadow-lift);
+  }
+
+  .etape__photos--2 {
+    grid-template-columns: 1fr 1fr;
+  }
+
+  .etape__photos figure {
+    position: relative;
+    margin: 0;
+    min-height: 0;
+    overflow: hidden;
+  }
+
+  .etape__photos :global(img) {
+    display: block;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+  }
+
+  .etape__photos figcaption {
+    position: absolute;
+    left: 12px;
+    bottom: 12px;
+    max-width: calc(100% - 24px);
+    padding: 7px 13px;
+    border-radius: var(--radius-pill);
+    background: rgba(255, 255, 255, 0.92);
+    backdrop-filter: blur(12px);
+    -webkit-backdrop-filter: blur(12px);
+    font-size: 12.5px;
+    font-weight: 650;
+    line-height: 1.25;
+    color: var(--color-ink);
+  }
+
+  /* --- Texte --- */
   .etape__texte {
     display: flex;
     flex-direction: column;
-    gap: 10px;
+    align-items: flex-start;
+    gap: 12px;
   }
 
   .etape__num {
@@ -138,171 +194,161 @@ const image = { widths: [480, 768, 1080, 1440], format: 'webp' as const, quality
   }
 
   .etape h3 {
-    font-size: clamp(24px, 2.4vw, 34px);
+    font-size: clamp(26px, 2.6vw, 38px);
     font-weight: 800;
+    line-height: 1.1;
     letter-spacing: -0.02em;
   }
 
-  .etape p {
-    max-width: 46ch;
+  .etape__texte p {
+    max-width: 44ch;
     font-size: var(--size-lead);
     line-height: 1.55;
   }
 
-  .etape__photo {
-    display: flex;
-    flex-direction: column;
-    gap: 10px;
-    margin: 0;
-  }
-
-  .etape__photo :global(img) {
-    display: block;
-    width: 100%;
-    height: auto;
-    aspect-ratio: 4 / 3;
-    object-fit: cover;
-    border-radius: var(--radius-md);
-  }
-
-  .etape__photo figcaption {
+  .etape__texte .etape__lieu {
     font-size: var(--size-tiny);
     color: var(--color-muted);
   }
 
+  .etape__suivante {
+    display: none;
+  }
+
   /* ---------------------------------------------------------------------
-     Grand écran avec JavaScript : la photo fixe à gauche, les textes à droite.
+     Avec JavaScript : une étape à la fois, choisie avec les pastilles.
      --------------------------------------------------------------------- */
-  @media (min-width: 960px) {
-    :global(.js) .etapes__corps {
-      display: grid;
-      grid-template-columns: minmax(0, 1.15fr) minmax(0, 0.85fr);
-      gap: 64px;
-      align-items: start;
+  :global(.js) .etapes__onglets {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 8px;
+    margin-bottom: 24px;
+  }
+
+  :global(.js) .etape:not(.est-actif) {
+    display: none;
+  }
+
+  :global(.js) .etape__suivante {
+    display: inline-flex;
+    align-items: center;
+    gap: 10px;
+    min-height: 48px;
+    margin-top: 6px;
+    padding: 0 22px;
+    border: 0;
+    border-radius: var(--radius-pill);
+    background: var(--color-ink);
+    color: #fff;
+    font: 650 15px/1 var(--font-text);
+    cursor: pointer;
+    transition: background-color var(--speed) var(--ease);
+  }
+
+  :global(.js) .etape__suivante:hover {
+    background: #343b42;
+  }
+
+  :global(.js) .etape__suivante:focus-visible,
+  .onglet:focus-visible {
+    outline: 3px solid var(--color-accent);
+    outline-offset: 3px;
+  }
+
+  /* Pastille d'étape : sur téléphone, le numéro seulement ; sur grand écran, le numéro et le titre. */
+  .onglet {
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 8px;
+    min-height: 56px;
+    padding: 10px 4px;
+    border: 1px solid var(--color-border);
+    border-radius: var(--radius-md);
+    background: var(--color-card);
+    color: var(--color-muted);
+    font-family: inherit;
+    text-align: center;
+    cursor: pointer;
+    transition:
+      background-color var(--speed) var(--ease),
+      color var(--speed) var(--ease),
+      border-color var(--speed) var(--ease);
+  }
+
+  .onglet__num {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 32px;
+    height: 32px;
+    border-radius: 50%;
+    background: var(--color-surface);
+    font-size: 15px;
+    font-weight: 750;
+    color: var(--color-ink);
+    transition:
+      background-color var(--speed) var(--ease),
+      color var(--speed) var(--ease);
+  }
+
+  .onglet__titre {
+    display: none;
+    font-size: 15px;
+    font-weight: 650;
+    line-height: 1.25;
+  }
+
+  .onglet:hover {
+    border-color: var(--color-ink);
+  }
+
+  .onglet.est-actif {
+    border-color: var(--color-ink);
+    background: var(--color-ink);
+    color: #fff;
+  }
+
+  .onglet.est-actif .onglet__num {
+    background: var(--color-accent);
+    color: #fff;
+  }
+
+  @media (prefers-reduced-motion: no-preference) {
+    :global(.js) .etape.est-actif {
+      animation: etape-entre 520ms var(--ease-out) both;
     }
 
-    :global(.js) .scene {
-      position: sticky;
-      top: calc(var(--header-h) + 24px);
-      display: grid;
-      grid-template-columns: 1fr auto;
-      gap: 20px;
-      height: calc(100vh - var(--header-h) - 64px);
-      max-height: 760px;
-    }
-
-    .scene__cadre {
-      position: relative;
-      overflow: hidden;
-      border-radius: var(--radius-tile);
-      background: var(--color-surface);
-      box-shadow: var(--shadow-lift);
-    }
-
-    .scene__plan {
-      position: absolute;
-      inset: 0;
-      margin: 0;
-      opacity: 0;
-      transition: opacity 800ms var(--ease);
-    }
-
-    .scene__plan.est-actif {
-      opacity: 1;
-    }
-
-    .scene__plan :global(img) {
-      width: 100%;
-      height: 100%;
-      object-fit: cover;
-      transform: scale(1.06);
-      transition: transform 2400ms var(--ease-out);
-    }
-
-    .scene__plan.est-actif :global(img) {
-      transform: none;
-    }
-
-    /* « Moins d'animations » : les photos se relaient en fondu, sans léger zoom. */
-    @media (prefers-reduced-motion: reduce) {
-      .scene__plan :global(img) {
-        transform: none;
-        transition: none;
+    @keyframes etape-entre {
+      from {
+        opacity: 0;
+        transform: translateY(14px);
       }
     }
+  }
 
-    .scene__plan figcaption {
-      position: absolute;
-      left: 16px;
-      bottom: 16px;
-      display: inline-flex;
+  @media (min-width: 900px) {
+    .etape {
+      grid-template-columns: minmax(0, 1.25fr) minmax(0, 1fr);
+      gap: 56px;
       align-items: center;
-      gap: 10px;
-      padding: 9px 14px;
-      border-radius: var(--radius-pill);
-      background: rgba(255, 255, 255, 0.9);
-      backdrop-filter: blur(12px);
-      -webkit-backdrop-filter: blur(12px);
-      font-size: var(--size-tiny);
-      font-weight: 650;
-      color: var(--color-ink);
     }
 
-    .scene__repere {
-      display: flex;
-      flex-direction: column;
-      justify-content: center;
-      gap: 10px;
-      margin: 0;
-      padding: 0;
-      list-style: none;
+    .etapes__liste {
+      gap: 64px;
     }
 
-    .scene__repere li {
-      display: flex;
+    .onglet {
+      flex-direction: row;
       align-items: center;
-      justify-content: center;
-      width: 40px;
-      height: 40px;
-      border: 1px solid var(--color-border);
-      border-radius: 50%;
-      background: var(--color-card);
-      font-size: 14px;
-      font-weight: 700;
-      color: var(--color-muted);
-      transition:
-        background-color 400ms var(--ease),
-        color 400ms var(--ease),
-        border-color 400ms var(--ease);
+      gap: 14px;
+      padding: 12px 16px;
+      text-align: left;
     }
 
-    .scene__repere li.est-actif {
-      border-color: var(--color-ink);
-      background: var(--color-ink);
-      color: #fff;
-    }
-
-    :global(.js) .etapes__liste {
-      gap: 0;
-    }
-
-    /* Chaque étape occupe de la hauteur : c'est le défilement qui fait avancer le chantier. */
-    :global(.js) .etape {
-      min-height: 62vh;
-      align-content: center;
-      gap: 0;
-    }
-
-    :global(.js) .etape__photo {
-      position: absolute;
-      width: 1px;
-      height: 1px;
-      overflow: hidden;
-      clip-path: inset(50%);
-    }
-
-    :global(.js) .etape:last-child {
-      min-height: 70vh;
+    .onglet__titre {
+      display: block;
     }
   }
 </style>

@@ -1,63 +1,33 @@
 ---
 /**
- * Une phrase d'émotion entre deux sections : très grand titre, beaucoup d'air.
+ * Une phrase d'émotion entre deux sections : très grand titre, sur fond clair.
  * Les mots s'éclaircissent un à un quand la phrase arrive à l'écran, puis le mot clé se souligne en rouge.
- * fond : « clair » (blanc), « photo » (une photo de chantier plein cadre, qui glisse doucement au défilement).
  */
-import { Image } from 'astro:assets';
 import Souligne from '../Souligne.astro';
-import { photo } from '../../data/chantiers';
-import { t, type Langue } from '../../i18n';
 
 interface Props {
-  langue: Langue;
   phrase: string;
-  note?: string;
-  fond?: 'clair' | 'photo';
-  /** Chemin de la photo de fond (fond = photo). */
-  image?: string;
 }
 
-const { langue, phrase, note, fond = 'clair', image } = Astro.props;
-const textes = t(langue);
+const { phrase } = Astro.props;
 ---
 
-<section class:list={['phrase', `phrase--${fond}`]}>
-  {
-    fond === 'photo' && image && (
-      <div class="phrase__fond" aria-hidden="true">
-        <Image src={photo(image)} alt="" widths={[768, 1280, 1920, 2400]} sizes="100vw" format="webp" quality={72} />
-      </div>
-    )
-  }
-  <div class="wrap phrase__contenu">
+<section class="phrase">
+  <div class="wrap">
     <p class="phrase__texte" data-mots>
       <Souligne texte={phrase} mots />
     </p>
-    {
-      note && (
-        <p class="phrase__note" data-reveal style="--delai: 500ms">
-          <span class="brique" aria-hidden="true" />
-          {note}
-        </p>
-      )
-    }
   </div>
-  {fond === 'photo' && image && <p class="sr-only">{textes.photos[image]}</p>}
 </section>
 
 <style>
   .phrase {
-    position: relative;
-    padding-block: clamp(64px, 9vw, 128px);
-    overflow: clip;
+    padding-block: clamp(40px, 6vw, 88px) clamp(8px, 2vw, 24px);
   }
 
-  .phrase__contenu {
+  .phrase .wrap {
     display: flex;
-    flex-direction: column;
-    align-items: center;
-    gap: 28px;
+    justify-content: center;
     text-align: center;
   }
 
@@ -71,71 +41,5 @@ const textes = t(langue);
     text-transform: uppercase;
     text-wrap: balance;
     color: var(--color-ink);
-  }
-
-  .phrase__note {
-    display: inline-flex;
-    align-items: center;
-    gap: 12px;
-    font-size: var(--size-lead);
-    font-weight: 600;
-    color: var(--color-text);
-  }
-
-  /* --- Sur une photo plein cadre --- */
-  .phrase--photo {
-    padding-block: clamp(120px, 18vw, 240px);
-    color: #fff;
-    background: rgb(var(--voile));
-  }
-
-  .phrase__fond {
-    position: absolute;
-    inset: -12% 0;
-  }
-
-  .phrase__fond :global(img) {
-    width: 100%;
-    height: 100%;
-    object-fit: cover;
-  }
-
-  .phrase__fond::after {
-    content: '';
-    position: absolute;
-    inset: 0;
-    background: linear-gradient(to bottom, rgba(var(--voile), 0.55), rgba(var(--voile), 0.35) 50%, rgba(var(--voile), 0.6));
-  }
-
-  .phrase--photo .phrase__contenu {
-    position: relative;
-  }
-
-  .phrase--photo .phrase__texte {
-    color: #fff;
-    text-shadow: 0 4px 40px rgba(var(--voile), 0.4);
-  }
-
-  .phrase--photo .phrase__note {
-    color: rgba(255, 255, 255, 0.92);
-  }
-
-  /* La photo glisse plus lentement que la page (navigateurs récents). */
-  @supports (animation-timeline: view()) {
-    @media (prefers-reduced-motion: no-preference) {
-      .phrase__fond {
-        animation: phrase-fond linear both;
-        animation-timeline: view();
-      }
-
-      @keyframes phrase-fond {
-        from {
-          transform: translateY(-8%);
-        }
-        to {
-          transform: translateY(8%);
-        }
-      }
-    }
   }
 </style>

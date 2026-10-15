@@ -6,7 +6,6 @@
 import { Image, getImage } from 'astro:assets';
 import AppelDevis from '../AppelDevis.astro';
 import Comparateur from '../Comparateur.astro';
-import Duo from '../Duo.astro';
 import Icon from '../Icon.astro';
 import IntroPage from '../IntroPage.astro';
 import BaseLayout from '~/layouts/BaseLayout.astro';
@@ -69,11 +68,7 @@ let index = 0;
           <div class="paires">
             {c.paires.map((paire) => (
               <div class="paire" data-reveal>
-                {paire.mode === 'curseur' ? (
-                  <Comparateur langue={langue} paire={paire} sizes="(min-width: 1360px) 1280px, 100vw" />
-                ) : (
-                  <Duo langue={langue} paire={paire} sizes="(min-width: 1360px) 640px, 50vw" />
-                )}
+                <Comparateur langue={langue} paire={paire} sizes="(min-width: 1360px) 1280px, 100vw" />
               </div>
             ))}
           </div>
