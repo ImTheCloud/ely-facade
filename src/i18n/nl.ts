@@ -211,7 +211,7 @@ export const nl = {
     surtitre: 'Ons vak',
     titre: 'Uitsluitend de gevel.',
     texte:
-      'Gevelpleister, schilderwerk, reiniging, voegwerk, herstel van bakstenen: vijf vakken, één specialiteit. Van de kleine garage tot het gebouw met meerdere verdiepingen.',
+      'De hele gevel, van A tot Z, op elke werf: gevelpleister, schilderwerk, reiniging, voegwerk, herstel van bakstenen… Van de kleine garage tot het gebouw met meerdere verdiepingen.',
     pourQui: {
       titre: 'Voor alle gebouwen',
       texte: 'Woningen, appartementsgebouwen, handelspanden, mede-eigendommen en bedrijven: van de kleine garage tot het gebouw met meerdere verdiepingen.',
@@ -289,7 +289,7 @@ export const nl = {
     },
     engagementsTitre: 'Onze beloften',
     engagements: [
-      { titre: 'Uitsluitend de gevel', texte: 'Dat is ons vak, en we doen niets anders.' },
+      { titre: 'De hele gevel, van A tot Z', texte: 'Op elk type werf: dat is ons vak.' },
       { titre: 'Gratis plaatsbezoek', texte: 'Vrijblijvend, overal in België.' },
       { titre: 'Minstens 10\u00a0jaar garantie', texte: 'Op de gevelwerken.' },
       { titre: 'Het hele jaar', texte: 'Ook in de winter en op zaterdag.' },
@@ -399,7 +399,7 @@ export const nl = {
     services: {
       titre: 'Onze gevelvakken | Ely Facade',
       description:
-        'Gevelpleister, schilderwerk, reiniging, voegwerk en herstel van bakstenen: uitsluitend de gevel, overal in België. Gratis plaatsbezoek, minstens 10\u00a0jaar garantie.',
+        'De hele gevel, van A tot Z: gevelpleister, schilderwerk, reiniging, voegwerk, herstel van bakstenen… Overal in België. Gratis plaatsbezoek, minstens 10\u00a0jaar garantie.',
     },
     realisations: {
       titre: 'Onze realisaties | Ely Facade',
@@ -521,7 +521,7 @@ export const nl = {
         { valeur: '50+', libelle: 'werven uitgevoerd door onze zaakvoerders' },
         { valeur: '2', libelle: 'broers aan het hoofd van het bedrijf' },
         { valeur: '8', libelle: 'personen in het team' },
-        { valeur: '5', libelle: 'gevelvakken' },
+        { valeur: 'A tot Z', libelle: 'de hele gevel, op elk type werf' },
         { valeur: '12/12', libelle: 'maanden werk per jaar, ook in de winter' },
         { valeur: '10 jaar', libelle: 'garantie minimum' },
         { valeur: '0\u00a0€', libelle: 'voor het plaatsbezoek, zonder verplichting' },
@@ -531,7 +531,7 @@ export const nl = {
     metiers: {
       surtitre: 'Ons vak',
       titre: 'Alles voor uw gevel.',
-      texte: 'Uitsluitend de gevel: dat is ons vak, en we doen niets anders.',
+      texte: 'De hele gevel, van A tot Z: van de kleine garage tot het gebouw.',
       voir: 'Meer weten',
     },
 
@@ -600,7 +600,7 @@ export const nl = {
         },
         {
           question: 'Doen jullie metselwerk of dakwerken?',
-          reponse: 'Nee. We doen enkel de gevel: gevelpleister, schilderwerk, reiniging, voegwerk en herstel van bakstenen. We metselen geen muren.',
+          reponse: 'Nee. We doen enkel de gevel, maar dan van A tot Z: gevelpleister, schilderwerk, reiniging, voegwerk, herstel van bakstenen… We metselen geen muren.',
         },
       ],
     },

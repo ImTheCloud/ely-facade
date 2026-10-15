@@ -211,7 +211,7 @@ export const fr = {
     surtitre: 'Nos métiers',
     titre: 'Uniquement la façade.',
     texte:
-      'Crépi, peinture, nettoyage, rejointoiement, réparation de briques\u00a0: cinq métiers, une seule spécialité. Du petit garage à l’immeuble de plusieurs étages.',
+      'Toute la façade, de A à Z, sur tous les chantiers\u00a0: crépi, peinture, nettoyage, rejointoiement, réparation de briques… Du petit garage à l’immeuble de plusieurs étages.',
     pourQui: {
       titre: 'Pour tous les bâtiments',
       texte: 'Maisons, immeubles, commerces, copropriétés et sociétés\u00a0: du petit garage à l’immeuble de plusieurs étages.',
@@ -289,7 +289,7 @@ export const fr = {
     },
     engagementsTitre: 'Nos engagements',
     engagements: [
-      { titre: 'Uniquement la façade', texte: 'C’est notre métier, et nous ne faisons que ça.' },
+      { titre: 'Toute la façade, de A à Z', texte: 'Sur tous types de chantiers\u00a0: c’est notre métier.' },
       { titre: 'Visite gratuite', texte: 'Sans engagement, partout en Belgique.' },
       { titre: 'Garantie de 10\u00a0ans minimum', texte: 'Sur les travaux de façade.' },
       { titre: 'Toute l’année', texte: 'Aussi l’hiver et le samedi.' },
@@ -399,7 +399,7 @@ export const fr = {
     services: {
       titre: 'Nos métiers de façade | Ely Facade',
       description:
-        'Crépi, peinture, nettoyage, rejointoiement et réparation de briques\u00a0: uniquement la façade, partout en Belgique. Visite gratuite, garantie de 10\u00a0ans minimum.',
+        'Toute la façade, de A à Z\u00a0: crépi, peinture, nettoyage, rejointoiement, réparation de briques… Partout en Belgique. Visite gratuite, garantie de 10\u00a0ans minimum.',
     },
     realisations: {
       titre: 'Nos réalisations | Ely Facade',
@@ -521,7 +521,7 @@ export const fr = {
         { valeur: '50+', libelle: 'chantiers réalisés par nos gérants' },
         { valeur: '2', libelle: 'frères à la tête de l’entreprise' },
         { valeur: '8', libelle: 'personnes dans l’équipe' },
-        { valeur: '5', libelle: 'métiers de façade' },
+        { valeur: 'A à Z', libelle: 'toute la façade, sur tous types de chantiers' },
         { valeur: '12/12', libelle: 'mois de travail par an, même l’hiver' },
         { valeur: '10 ans', libelle: 'de garantie minimum' },
         { valeur: '0\u00a0€', libelle: 'pour la visite, sans engagement' },
@@ -531,7 +531,7 @@ export const fr = {
     metiers: {
       surtitre: 'Nos métiers',
       titre: 'Tout pour votre façade.',
-      texte: 'Uniquement la façade\u00a0: c’est notre métier, et nous ne faisons que ça.',
+      texte: 'Toute la façade, de A à Z\u00a0: du petit garage à l’immeuble.',
       voir: 'En savoir plus',
     },
 
@@ -600,7 +600,7 @@ export const fr = {
         },
         {
           question: 'Faites-vous de la maçonnerie ou de la toiture\u00a0?',
-          reponse: 'Non. Nous ne faisons que la façade\u00a0: crépi, peinture, nettoyage, rejointoiement et réparation de briques. Nous ne montons pas de murs.',
+          reponse: 'Non. Nous ne faisons que la façade, mais de A à Z\u00a0: crépi, peinture, nettoyage, rejointoiement, réparation de briques… Nous ne montons pas de murs.',
         },
       ],
     },
