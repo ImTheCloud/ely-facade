@@ -437,7 +437,7 @@ export const nl = {
       bouton: 'Plan mijn gratis plaatsbezoek',
       appeler: 'Bel',
       preuvesAria: 'Onze beloften',
-      preuves: ['Gratis plaatsbezoek', 'Minstens 10\u00a0jaar garantie', 'Overal in België'],
+      preuves: ['Minstens 10\u00a0jaar garantie', 'Overal in België'],
       film: {
         etapes: ['Bergen · Universiteit van Bergen', 'Namen · Gebouw met balkons', 'Namen · Gebouw met drie verdiepingen'],
       },

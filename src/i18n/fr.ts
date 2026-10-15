@@ -437,7 +437,7 @@ export const fr = {
       bouton: 'Demander ma visite gratuite',
       appeler: 'Appeler le',
       preuvesAria: 'Nos engagements',
-      preuves: ['Visite sur place gratuite', 'Garantie 10\u00a0ans minimum', 'Partout en Belgique'],
+      preuves: ['Garantie 10\u00a0ans minimum', 'Partout en Belgique'],
       film: {
         etapes: ['Mons · Université de Mons', 'Namur · Immeuble à balcons', 'Namur · Immeuble de trois étages'],
       },
