@@ -1,6 +1,11 @@
 ---
-/** Qui vient chez vous : les deux frères qui dirigent Ely Facade, et leur équipe. */
+/**
+ * Qui vient chez vous : les deux frères, en grand. Un portrait par frère, son prénom posé sur la photo,
+ * une phrase qui dit ce qu'il fait, puis deux lignes. Les photos se dévoilent comme un rideau à l'arrivée,
+ * glissent doucement au défilement (navigateurs récents) et tout se coupe avec « moins d'animations ».
+ */
 import { Image } from 'astro:assets';
+import Souligne from '../Souligne.astro';
 import { portraits } from '../../data/equipe';
 import { t, type Langue } from '../../i18n';
 
@@ -13,128 +18,236 @@ const equipe = t(langue).accueil.equipe;
 ---
 
 <section class="section equipe" id="equipe">
-  <div class="wrap equipe__grille">
-    <div class="equipe__texte" data-reveal>
-      <p class="surtitre">{equipe.surtitre}</p>
-      <h2>{equipe.titre}</h2>
-      <p>{equipe.texte}</p>
-    </div>
+  <div class="wrap">
+    <header class="equipe__tete" data-reveal>
+      <div class="equipe__titre">
+        <p class="surtitre">{equipe.surtitre}</p>
+        <h2>{equipe.titre}</h2>
+      </div>
+      <p class="equipe__texte">{equipe.texte}</p>
+    </header>
 
-    <ul class="equipe__personnes">
+    <div class="equipe__duo">
       {
         equipe.personnes.map((personne, i) => (
-          <li data-reveal style={`--delai: ${120 + i * 120}ms`}>
-            <Image
-              class="equipe__portrait"
-              src={portraits.accueil[personne.prenom as 'Elisei' | 'Simi']}
-              alt={`${equipe.portrait} ${personne.prenom} Ungureanu`}
-              widths={[240, 400]}
-              sizes="(min-width: 960px) 220px, 42vw"
-              format="webp"
-              quality={80}
-              loading="lazy"
-            />
-            <span class="equipe__nom">{personne.prenom}</span>
-            <span class="equipe__role">{personne.role}</span>
-          </li>
+          <article class="frere" data-reveal style={`--delai: ${i * 160}ms`}>
+            <figure class="frere__photo">
+              <Image
+                src={portraits.accueil[personne.prenom as 'Elisei' | 'Simi']}
+                alt={`${equipe.portrait} ${personne.prenom} Ungureanu`}
+                widths={[480, 800, 1000]}
+                sizes="(min-width: 1100px) 500px, (min-width: 700px) 45vw, 100vw"
+                format="webp"
+                quality={82}
+                loading="lazy"
+              />
+              <h3 class="frere__nom">{personne.prenom}</h3>
+            </figure>
+            <div class="frere__texte">
+              <p class="frere__role">{personne.role}</p>
+              <p class="frere__phrase">
+                <Souligne texte={personne.phrase} />
+              </p>
+              <p class="frere__detail">{personne.texte}</p>
+            </div>
+          </article>
         ))
       }
-    </ul>
+    </div>
   </div>
 </section>
 
 <style>
-  .equipe__grille {
-    display: grid;
-    gap: 40px;
-    align-items: center;
+  .equipe {
+    background: linear-gradient(180deg, var(--color-bg) 0%, var(--color-surface) 100%);
   }
 
-  .equipe__texte {
+  .equipe__tete {
+    display: grid;
+    gap: 18px;
+    margin-bottom: clamp(28px, 4vw, 56px);
+  }
+
+  .equipe__titre {
     display: flex;
     flex-direction: column;
     align-items: flex-start;
     gap: 22px;
   }
 
-  .equipe__texte p:last-child {
-    max-width: 50ch;
+  .equipe__titre h2 {
+    max-width: 12ch;
+  }
+
+  .equipe__texte {
+    max-width: 44ch;
     font-size: var(--size-lead);
-    line-height: 1.6;
+    line-height: 1.55;
   }
 
-  .equipe__personnes {
+  .equipe__duo {
     display: grid;
-    grid-template-columns: repeat(2, 1fr);
-    gap: var(--tile-gap);
-    margin: 0;
-    padding: 0;
-    list-style: none;
+    gap: 40px;
   }
 
-  .equipe__personnes li {
-    position: relative;
+  .frere {
     display: flex;
     flex-direction: column;
-    gap: 4px;
-    padding: 24px;
-    overflow: hidden;
-    border: 1px solid var(--color-border);
-    border-radius: var(--radius-tile);
-    background: var(--color-card);
-    box-shadow: var(--shadow-tile);
+    gap: 22px;
   }
 
-  /* Le portrait en haut de la carte, la brique rouge au-dessus du prénom. */
-  .equipe__personnes li {
-    padding: 14px 14px 22px;
-  }
-
-  .equipe__personnes li :global(.equipe__portrait) {
-    display: block;
-    width: 100%;
-    height: auto;
+  /* Le portrait : le prénom en très grand, posé sur la photo, sur un voile ardoise. */
+  .frere__photo {
+    position: relative;
+    margin: 0;
     aspect-ratio: 4 / 5;
-    margin-bottom: 14px;
-    border-radius: 18px;
+    overflow: hidden;
+    border-radius: 32px;
+    background: var(--color-ink);
+    box-shadow: var(--shadow-lift);
+    isolation: isolate;
+  }
+
+  .frere__photo :global(img) {
+    position: absolute;
+    inset: -4% 0;
+    width: 100%;
+    height: 108%;
     object-fit: cover;
-    object-position: 50% 22%;
+    object-position: 50% 28%;
+    transition: transform 1400ms var(--ease-out);
   }
 
-  .equipe__nom,
-  .equipe__role {
-    padding-inline: 8px;
+  .frere__photo::after {
+    content: '';
+    position: absolute;
+    inset: 0;
+    z-index: 1;
+    background: linear-gradient(to top, rgba(var(--voile), 0.78) 0%, rgba(var(--voile), 0.35) 24%, rgba(var(--voile), 0) 46%);
+    pointer-events: none;
   }
 
-  .equipe__nom {
+  .frere__nom {
+    position: absolute;
+    left: clamp(18px, 3vw, 32px);
+    bottom: clamp(14px, 2.4vw, 26px);
+    z-index: 2;
+    display: flex;
+    align-items: flex-end;
+    gap: 14px;
+    font-family: var(--font-display);
+    font-size: clamp(54px, 9vw, 96px);
+    font-weight: 800;
+    line-height: 0.82;
+    letter-spacing: var(--tracking-display);
+    text-transform: uppercase;
+    color: #fff;
+    text-shadow: 0 6px 40px rgba(var(--voile), 0.45);
+  }
+
+  .frere__nom::after {
+    content: '';
+    width: 0.3em;
+    height: 0.15em;
+    margin-bottom: 0.06em;
+    border-radius: 0.03em;
+    background: var(--color-accent);
+  }
+
+  .frere:hover .frere__photo :global(img) {
+    transform: scale(1.04);
+  }
+
+  .frere__texte {
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+    padding-inline: 6px;
+  }
+
+  .frere__role {
     display: inline-flex;
     align-items: center;
     gap: 10px;
-    font-family: var(--font-display);
-    font-size: clamp(24px, 2.2vw, 32px);
-    font-weight: 800;
-    letter-spacing: -0.02em;
+    font-size: var(--size-tiny);
+    font-weight: 700;
+    letter-spacing: 0.06em;
     text-transform: uppercase;
-    color: var(--color-ink);
+    color: var(--color-accent);
   }
 
-  .equipe__nom::before {
+  .frere__role::before {
     content: '';
-    width: 14px;
+    width: 13px;
     height: 7px;
     border-radius: 2px;
     background: var(--color-accent);
   }
 
-  .equipe__role {
-    font-size: var(--size-small);
-    color: var(--color-text);
+  .frere__phrase {
+    max-width: 22ch;
+    font-family: var(--font-display);
+    font-size: clamp(26px, 2.6vw, 38px);
+    font-weight: 800;
+    line-height: 1.02;
+    letter-spacing: var(--tracking-display);
+    text-transform: uppercase;
+    text-wrap: balance;
+    color: var(--color-ink);
   }
 
-  @media (min-width: 960px) {
-    .equipe__grille {
-      grid-template-columns: minmax(0, 1.1fr) minmax(0, 1fr);
-      gap: 72px;
+  .frere__detail {
+    max-width: 40ch;
+    font-size: var(--size-body);
+    line-height: 1.6;
+  }
+
+  @media (min-width: 700px) {
+    .equipe__tete {
+      grid-template-columns: minmax(0, 1.3fr) minmax(0, 1fr);
+      align-items: end;
+      gap: 48px;
+    }
+
+    .equipe__duo {
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      gap: clamp(24px, 4vw, 64px);
+      max-width: 1040px;
+      margin-inline: auto;
+    }
+
+    /* Le second frère est décalé vers le bas : une composition plutôt qu'une grille. */
+    .frere:nth-child(2) {
+      margin-top: clamp(40px, 7vw, 110px);
+    }
+  }
+
+  /* Le rideau : la photo se dévoile de haut en bas à l'arrivée (seulement avec JavaScript et sans « moins d'animations »). */
+  @media (prefers-reduced-motion: no-preference) {
+    :global(.js) .frere__photo {
+      clip-path: inset(0 0 100% 0 round 32px);
+      transition: clip-path 1200ms var(--ease-out) calc(var(--delai, 0ms) + 150ms);
+    }
+
+    :global(.js) .frere.est-visible .frere__photo {
+      clip-path: inset(0 0 0 0 round 32px);
+    }
+
+    /* Les photos glissent plus lentement que la page (navigateurs récents). */
+    @supports (animation-timeline: view()) {
+      .frere__photo :global(img) {
+        animation: frere-glisse linear both;
+        animation-timeline: view();
+      }
+
+      @keyframes frere-glisse {
+        from {
+          transform: translateY(-3.5%);
+        }
+        to {
+          transform: translateY(3.5%);
+        }
+      }
     }
   }
 </style>

@@ -79,6 +79,7 @@ document.querySelectorAll<HTMLElement>('[data-carte]').forEach((carte) => {
     if (ouverte) fermer(false);
     window.clearTimeout(minuteur);
 
+    carte.classList.add('carte--touchee');
     origine = declencheur;
     ouverte = fiche;
     marquer(commune);

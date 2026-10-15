@@ -297,7 +297,15 @@ const estActif = (href: string) => cheminActuel.startsWith(href);
     align-items: center;
     min-height: var(--tap-min);
     text-decoration: none;
-    flex-shrink: 0;
+    /* Le logo se réduit avant que le bouton Menu ne sorte de l'écran. */
+    flex-shrink: 1;
+    min-width: 0;
+  }
+
+  .entete__logo :global(.logo) {
+    max-width: 100%;
+    object-fit: contain;
+    object-position: left center;
   }
 
   .entete__nav,
@@ -458,9 +466,10 @@ const estActif = (href: string) => cheminActuel.startsWith(href);
     padding: 6px 0;
   }
 
-  @media (max-width: 380px) {
+  @media (max-width: 430px) {
     .entete__barre {
       gap: 6px;
+      padding-inline: max(14px, env(safe-area-inset-left, 0px)) max(14px, env(safe-area-inset-right, 0px));
     }
 
     .entete__logo :global(.logo) {

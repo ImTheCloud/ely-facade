@@ -296,7 +296,7 @@ export const nl = {
     surtitre: 'Over ons',
     titre: 'Twee broers, één team.',
     texte:
-      'Ely Facade wordt geleid door twee broers, Elisei en Simi Ungureanu. Elisei komt bij u langs voor het bezoek en de offerte; Simi leidt de werken op de werf. Ons kantoor is in Halle en we werken overal in België.',
+      'Ely Facade wordt geleid door twee broers, Elisei en Simi Ungureanu. Elisei komt bij u langs voor het bezoek en de offerte en werkt daarna mee op de werf; Simi leidt de werken. Ons kantoor is in Halle en we werken overal in België.',
     nom: {
       titre: 'Ely, zoals Elisei',
       texte: 'De naam van het bedrijf komt van de voornaam van Elisei, de zaakvoerder.',
@@ -304,13 +304,15 @@ export const nl = {
     personnes: [
       {
         prenom: 'Elisei',
-        role: 'Zaakvoerder · Bezoek en offerte',
-        texte: 'Hij komt uw gevel bekijken, meet hem op en stuurt u de offerte. Zes jaar ervaring in gevelwerk.',
+        role: 'Zaakvoerder · Bezoek, offerte en werf',
+        phrase: 'Op uw gevel, van de eerste blik tot de [laatste afwerking].',
+        texte: 'Hij komt uw gevel bekijken, meet hem op en stuurt u de offerte, en sluit zich daarna op de werf aan bij het team. Zes jaar ervaring in gevelwerk.',
       },
       {
         prenom: 'Simi',
         role: 'Leiding van de werven',
-        texte: 'Hij leidt de ploeg op de werf, van de steiger tot de afwerking.',
+        phrase: 'De werf, [dat is hij]. Van de steiger tot de afwerking.',
+        texte: 'Hij leidt de ploeg op de werf, van de voorbereiding tot de afwerking, tot de steiger weer weg is.',
       },
     ],
     equipe: {
@@ -537,6 +539,7 @@ export const nl = {
       toutes: 'Bekijk meer werven',
       carte: {
         aria: 'Kaart van België: ons kantoor in Halle en de gemeenten van enkele van onze werven',
+        astuce: 'Tik op een punt',
         bureau: 'Ons kantoor',
         bureauHalle: 'Ons kantoor, in Halle',
         chantier: 'Een van onze werven',
@@ -569,11 +572,20 @@ export const nl = {
       surtitre: 'Wie bij u langskomt',
       portrait: 'Portret van',
       titre: 'Twee broers, een team van 8.',
-      texte:
-        'Elisei en Simi Ungureanu leiden Ely Facade. Elisei zorgt voor het bezoek en de offerte. Simi leidt de werken op de werf, met een team van zelfstandigen.',
+      texte: 'Elisei en Simi Ungureanu leiden Ely Facade, met een team van zelfstandigen. Ze staan allebei op het terrein.',
       personnes: [
-        { prenom: 'Elisei', role: 'Bezoek en offerte' },
-        { prenom: 'Simi', role: 'Leiding van de werven' },
+        {
+          prenom: 'Elisei',
+          role: 'Bezoek, offerte en werf',
+          phrase: 'Op uw gevel, van de eerste blik tot de [laatste afwerking].',
+          texte: 'Hij komt uw gevel bekijken, meet ze op en stuurt u de offerte. Daarna sluit hij zich op de werf aan bij het team.',
+        },
+        {
+          prenom: 'Simi',
+          role: 'Leiding van de werven',
+          phrase: 'De werf, [dat is hij]. Van de steiger tot de afwerking.',
+          texte: 'Hij leidt het team op de werf, van de voorbereiding tot de afwerking, tot de steiger weer weg is.',
+        },
       ],
     },
 

@@ -296,7 +296,7 @@ export const fr = {
     surtitre: 'À propos',
     titre: 'Deux frères, une équipe.',
     texte:
-      'Ely Facade est dirigée par deux frères, Elisei et Simi Ungureanu. Elisei vient chez vous pour la visite et le devis\u00a0; Simi dirige les travaux sur le chantier. Notre bureau est à Halle et nous intervenons partout en Belgique.',
+      'Ely Facade est dirigée par deux frères, Elisei et Simi Ungureanu. Elisei vient chez vous pour la visite et le devis, puis travaille sur le chantier\u00a0; Simi dirige les travaux. Notre bureau est à Halle et nous intervenons partout en Belgique.',
     nom: {
       titre: 'Ely, comme Elisei',
       texte: 'Le nom de l’entreprise vient du prénom d’Elisei, son gérant.',
@@ -304,13 +304,15 @@ export const fr = {
     personnes: [
       {
         prenom: 'Elisei',
-        role: 'Gérant · Visite et devis',
-        texte: 'Il vient voir votre façade, la mesure et vous envoie le devis. Six ans de métier dans la façade.',
+        role: 'Gérant · Visite, devis et chantier',
+        phrase: 'Sur votre façade, du premier regard à la [dernière touche].',
+        texte: 'Il vient voir votre façade, la mesure et vous envoie le devis, puis rejoint l’équipe sur le chantier. Six ans de métier dans la façade.',
       },
       {
         prenom: 'Simi',
         role: 'Direction des chantiers',
-        texte: 'Il dirige l’équipe sur le chantier, de l’échafaudage à la finition.',
+        phrase: 'Le chantier, [c’est lui]. De l’échafaudage à la finition.',
+        texte: 'Il dirige l’équipe sur le chantier, de la préparation à la finition, jusqu’au retrait de l’échafaudage.',
       },
     ],
     equipe: {
@@ -537,6 +539,7 @@ export const fr = {
       toutes: 'Voir plus de chantiers',
       carte: {
         aria: 'Carte de la Belgique\u00a0: notre bureau à Halle et les communes de quelques-uns de nos chantiers',
+        astuce: 'Touchez un point',
         bureau: 'Notre bureau',
         bureauHalle: 'Notre bureau, à Halle',
         chantier: 'Un de nos chantiers',
@@ -569,11 +572,20 @@ export const fr = {
       surtitre: 'Qui vient chez vous',
       portrait: 'Portrait de',
       titre: 'Deux frères, une équipe de 8.',
-      texte:
-        'Elisei et Simi Ungureanu dirigent Ely Facade. Elisei s’occupe de la visite et du devis. Simi dirige les travaux sur le chantier, avec une équipe d’indépendants.',
+      texte: 'Elisei et Simi Ungureanu dirigent Ely Facade, avec une équipe d’indépendants. Ils sont tous les deux sur le terrain.',
       personnes: [
-        { prenom: 'Elisei', role: 'Visite et devis' },
-        { prenom: 'Simi', role: 'Direction des chantiers' },
+        {
+          prenom: 'Elisei',
+          role: 'Visite, devis et chantier',
+          phrase: 'Sur votre façade, du premier regard à la [dernière touche].',
+          texte: 'Il vient voir votre façade, la mesure et vous envoie le devis. Puis il rejoint l’équipe sur le chantier.',
+        },
+        {
+          prenom: 'Simi',
+          role: 'Direction des chantiers',
+          phrase: 'Le chantier, [c’est lui]. De l’échafaudage à la finition.',
+          texte: 'Il dirige l’équipe sur le chantier, de la préparation à la finition, jusqu’au retrait de l’échafaudage.',
+        },
       ],
     },
 

@@ -9,7 +9,7 @@
 import { Image } from 'astro:assets';
 import Comparateur from './Comparateur.astro';
 import Icon from './Icon.astro';
-import Logo from './Logo.astro';
+import MaisonBureau from './MaisonBureau.astro';
 import { CHANTIERS, lienChantier, photo, type Commune } from '../data/chantiers';
 import { t, type Langue } from '../i18n';
 
@@ -94,11 +94,10 @@ const identifiant = 'carte';
         <pattern id={`${identifiant}-points`} width="11" height="11" patternUnits="userSpaceOnUse">
           <circle cx="1.6" cy="1.6" r="1.1" fill="#1f2429" fill-opacity="0.09" />
         </pattern>
-        <clipPath id={`${identifiant}-pays`}><path d={trace}></path></clipPath>
       </defs>
       <path class="carte__ombre" d={trace}></path>
       <path d={trace} fill={`url(#${identifiant}-fond)`}></path>
-      <rect width={LARGEUR} height={HAUTEUR} fill={`url(#${identifiant}-points)`} clip-path={`url(#${identifiant}-pays)`}></rect>
+      <path d={trace} fill={`url(#${identifiant}-points)`}></path>
       <path class="carte__pays" d={trace}></path>
     </svg>
 
@@ -113,15 +112,16 @@ const identifiant = 'carte';
       }
     </div>
 
-    <!-- Le bureau de Halle : le logo de l'entreprise, le nom en rouge. -->
+    <!-- Le bureau de Halle : une petite maison dessinée au trait, avec la brique rouge du logo. -->
     <div class="bureau" style={place(bureau.lon, bureau.lat)}>
-      <span class="bureau__onde" aria-hidden="true"></span>
-      <span class="bureau__point" aria-hidden="true"></span>
-      <span class="bureau__carte">
-        <Logo class="bureau__logo" />
-        <span class="bureau__nom">{carte.bureau}</span>
-      </span>
+      <MaisonBureau class="bureau__maison" />
+      <span class="bureau__nom">{carte.bureau}</span>
     </div>
+
+    <span class="carte__astuce" aria-hidden="true">
+      <Icon nom="toucher" taille={16} epaisseur={2} />
+      {carte.astuce}
+    </span>
 
     <div class="carte__points">
       {
@@ -143,7 +143,7 @@ const identifiant = 'carte';
   </div>
 
   <ul class="carte__legende" aria-hidden="true">
-    <li><span class="legende__point"></span>{carte.bureauHalle}</li>
+    <li><MaisonBureau class="legende__maison" />{carte.bureauHalle}</li>
     <li><span class="legende__rond"></span>{carte.chantier}</li>
   </ul>
 
@@ -233,10 +233,10 @@ const identifiant = 'carte';
     overflow: visible;
   }
 
+  /* Une ombre toute simple (sans flou : plus léger pour le téléphone). */
   .carte__ombre {
-    fill: rgba(31, 36, 41, 0.14);
-    filter: blur(14px);
-    transform: translateY(14px);
+    fill: rgba(31, 36, 41, 0.09);
+    transform: translateY(9px);
   }
 
   .carte__pays {
@@ -280,61 +280,53 @@ const identifiant = 'carte';
     transform: translate(calc(-100% + 3px), -50%);
   }
 
-  /* --- Le bureau : le logo, le nom en rouge --- */
+  /* --- Le bureau : une petite maison dessinée, le nom en rouge --- */
   .bureau {
     position: absolute;
-    display: flex;
-    align-items: center;
-    flex-direction: row-reverse;
-    gap: 6px;
-    transform: translate(calc(-100% + 8px), -50%);
+    width: 54px;
+    /* Le pied de la maison est posé sur Halle, la maison part vers le haut et la gauche. */
+    transform: translate(-100%, calc(-100% + 3px));
     pointer-events: none;
-  }
-
-  .bureau__point {
-    position: relative;
-    flex-shrink: 0;
-    width: 16px;
-    height: 16px;
-    border: 3px solid #fff;
-    border-radius: 50%;
-    background: var(--color-accent);
-    box-shadow: 0 4px 10px -2px rgba(200, 32, 43, 0.7);
-  }
-
-  .bureau__onde {
-    position: absolute;
-    right: 0;
-    top: 50%;
-    width: 52px;
-    height: 52px;
-    margin-top: -26px;
-    border-radius: 50%;
-    background: rgba(200, 32, 43, 0.16);
-    transform: translateX(calc(50% - 8px));
-  }
-
-  .bureau__carte {
-    display: flex;
-    flex-direction: column;
-    align-items: flex-start;
-    gap: 3px;
-    padding: 6px 10px 5px;
-    border-radius: 12px;
-    background: rgba(255, 255, 255, 0.95);
-    box-shadow: 0 6px 16px -6px rgba(31, 36, 41, 0.4);
-  }
-
-  .bureau .bureau__carte :global(.logo) {
-    height: 20px;
+    filter: drop-shadow(0 6px 5px rgba(31, 36, 41, 0.2));
   }
 
   .bureau__nom {
+    position: absolute;
+    top: 100%;
+    right: 0;
+    margin-top: 1px;
     font-size: 12px;
-    font-weight: 700;
-    line-height: 1.1;
+    font-weight: 750;
+    line-height: 1;
     color: var(--color-accent);
     white-space: nowrap;
+    paint-order: stroke;
+    stroke: #fff;
+    -webkit-text-stroke: 3px #fff;
+  }
+
+  /* L'astuce : on peut toucher les points. Elle disparaît dès le premier toucher. */
+  .carte__astuce {
+    position: absolute;
+    left: 0;
+    bottom: 3%;
+    z-index: 2;
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    padding: 8px 14px 8px 12px;
+    border-radius: var(--radius-pill);
+    background: var(--color-ink);
+    box-shadow: 0 8px 18px -8px rgba(31, 36, 41, 0.6);
+    color: #fff;
+    font-size: 13px;
+    font-weight: 650;
+    pointer-events: none;
+    transition: opacity 300ms var(--ease);
+  }
+
+  .carte--touchee .carte__astuce {
+    opacity: 0;
   }
 
   /* --- Les communes de chantiers : de vrais boutons, zone tactile de 44 px --- */
@@ -451,13 +443,9 @@ const identifiant = 'carte';
     gap: 9px;
   }
 
-  .legende__point {
-    width: 13px;
-    height: 13px;
-    border: 2.5px solid #fff;
-    border-radius: 50%;
-    background: var(--color-accent);
-    box-shadow: 0 0 0 1px var(--color-border);
+  .carte__legende :global(.legende__maison) {
+    width: 24px;
+    flex-shrink: 0;
   }
 
   .legende__rond {
@@ -725,33 +713,46 @@ const identifiant = 'carte';
   @media (prefers-reduced-motion: no-preference) {
     :global(.js) .point,
     :global(.js) .bureau,
-    :global(.js) .ville {
+    :global(.js) .ville,
+    :global(.js) .carte__astuce {
       opacity: 0;
-      transition: opacity 600ms var(--ease-out);
-      transition-delay: calc(300ms + var(--i, 0) * 180ms);
+      transition: opacity 450ms var(--ease-out);
+      transition-delay: calc(120ms + var(--i, 0) * 90ms);
     }
 
     :global(.js) .carte.est-visible .point,
     :global(.js) .carte.est-visible .bureau,
-    :global(.js) .carte.est-visible .ville {
+    :global(.js) .carte.est-visible .ville,
+    :global(.js) .carte.est-visible .carte__astuce {
       opacity: 1;
     }
 
-    .bureau__onde {
-      animation: onde 2.8s var(--ease-out) infinite;
+    :global(.js) .carte--touchee .carte__astuce {
+      opacity: 0;
     }
 
-    @keyframes onde {
+    /* Un anneau qui bat trois fois sur chaque point, pour dire « touchez-moi », puis le calme. */
+    :global(.js) .carte.est-visible:not(.carte--touchee) .point__rond::after {
+      content: '';
+      position: absolute;
+      inset: 11px;
+      border-radius: 50%;
+      border: 2px solid var(--color-ink);
+      opacity: 0;
+      animation: anneau 1600ms var(--ease-out) 3;
+      animation-delay: calc(700ms + var(--i, 0) * 200ms);
+    }
+
+    @keyframes anneau {
       from {
-        transform: translateX(calc(50% - 8px)) scale(0.4);
-        opacity: 1;
+        opacity: 0.55;
+        transform: scale(0.8);
       }
       to {
-        transform: translateX(calc(50% - 8px)) scale(1.5);
         opacity: 0;
+        transform: scale(2.3);
       }
     }
-
   }
 
   /* Téléphone : pas de noms sur la carte (trop serrés), les communes se choisissent aussi sous la carte. */
@@ -761,12 +762,8 @@ const identifiant = 'carte';
       display: none;
     }
 
-    .bureau .bureau__carte {
-      padding: 5px 8px;
-    }
-
-    .bureau .bureau__carte :global(.logo) {
-      height: 16px;
+    .bureau {
+      width: 42px;
     }
 
     .point,
