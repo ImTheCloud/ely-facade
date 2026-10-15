@@ -62,22 +62,21 @@ h3 {
   overflow-wrap: break-word;
 }
 
-/* Les grands titres : capitales, très gras, serrés. */
-h1,
-h2 {
-  font-weight: 800;
-  text-transform: uppercase;
-  letter-spacing: var(--tracking-display);
-}
-
+/* Le titre de page : capitales, très gras, serrés (court, il se lit comme un logo). */
 h1 {
   font-size: var(--size-h1);
+  font-weight: 800;
   line-height: 0.92;
+  letter-spacing: var(--tracking-display);
+  text-transform: uppercase;
 }
 
+/* Les titres de section sont des phrases : en minuscules, gras sans excès, pour se lire sans effort. */
 h2 {
   font-size: var(--size-h2);
-  line-height: 0.94;
+  font-weight: 750;
+  line-height: 1.02;
+  letter-spacing: var(--tracking-phrase);
 }
 
 h3 {

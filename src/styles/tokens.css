@@ -28,6 +28,8 @@
   /* Les titres : capitales, très gras, interlettrage serré. */
   --font-display: 'Bricolage Grotesque Variable', 'DM Sans Variable', 'Helvetica Neue', Arial, sans-serif;
   --tracking-display: -0.03em;
+  /* Phrases et titres en minuscules : un peu moins serrés, pour se lire d'un coup d'œil. */
+  --tracking-phrase: -0.018em;
 
   /* --- Voile sur les photos : ardoise bleutée, accordée au ciel de Namur --- */
   --voile: 14, 26, 40;
