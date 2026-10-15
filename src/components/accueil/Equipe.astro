@@ -30,8 +30,8 @@ const equipe = t(langue).accueil.equipe;
     <div class="equipe__duo">
       {
         equipe.personnes.map((personne, i) => (
-          <article class="frere" data-reveal style={`--delai: ${i * 160}ms`}>
-            <figure class="frere__photo">
+          <article class="frere" style={`--i: ${i}`}>
+            <figure class="frere__photo" data-reveal style={`--delai: ${i * 160}ms`}>
               <Image
                 src={portraits.accueil[personne.prenom as 'Elisei' | 'Simi']}
                 alt={`${equipe.portrait} ${personne.prenom} Ungureanu`}
@@ -43,7 +43,7 @@ const equipe = t(langue).accueil.equipe;
               />
               <h3 class="frere__nom">{personne.prenom}</h3>
             </figure>
-            <div class="frere__texte">
+            <div class="frere__texte" data-reveal style={`--delai: ${i * 160 + 200}ms`}>
               <p class="frere__role">{personne.role}</p>
               <p class="frere__phrase">
                 <Souligne texte={personne.phrase} />
@@ -85,15 +85,26 @@ const equipe = t(langue).accueil.equipe;
     line-height: 1.55;
   }
 
+  /* Téléphone : les deux portraits côte à côte sur le même écran, les phrases dessous. */
   .equipe__duo {
     display: grid;
-    gap: 40px;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    column-gap: 10px;
+    row-gap: 28px;
   }
 
   .frere {
-    display: flex;
-    flex-direction: column;
-    gap: 22px;
+    display: contents;
+  }
+
+  .frere__photo {
+    grid-row: 1;
+    grid-column: calc(var(--i) + 1);
+  }
+
+  .frere__texte {
+    grid-column: 1 / -1;
+    grid-row: calc(var(--i) + 2);
   }
 
   /* Le portrait : le prénom en très grand, posé sur la photo, sur un voile ardoise. */
@@ -102,7 +113,7 @@ const equipe = t(langue).accueil.equipe;
     margin: 0;
     aspect-ratio: 4 / 5;
     overflow: hidden;
-    border-radius: 32px;
+    border-radius: 22px;
     background: var(--color-ink);
     box-shadow: var(--shadow-lift);
     isolation: isolate;
@@ -114,7 +125,7 @@ const equipe = t(langue).accueil.equipe;
     width: 100%;
     height: 108%;
     object-fit: cover;
-    object-position: 50% 28%;
+    object-position: 50% 40%;
     transition: transform 1400ms var(--ease-out);
   }
 
@@ -129,14 +140,14 @@ const equipe = t(langue).accueil.equipe;
 
   .frere__nom {
     position: absolute;
-    left: clamp(18px, 3vw, 32px);
-    bottom: clamp(14px, 2.4vw, 26px);
+    left: 12px;
+    bottom: 12px;
     z-index: 2;
     display: flex;
     align-items: flex-end;
-    gap: 14px;
+    gap: 8px;
     font-family: var(--font-display);
-    font-size: clamp(54px, 9vw, 96px);
+    font-size: clamp(30px, 9.6vw, 44px);
     font-weight: 800;
     line-height: 0.82;
     letter-spacing: var(--tracking-display);
@@ -187,7 +198,7 @@ const equipe = t(langue).accueil.equipe;
   .frere__phrase {
     max-width: 22ch;
     font-family: var(--font-display);
-    font-size: clamp(26px, 2.6vw, 38px);
+    font-size: clamp(24px, 2.6vw, 38px);
     font-weight: 800;
     line-height: 1.02;
     letter-spacing: var(--tracking-display);
@@ -203,6 +214,33 @@ const equipe = t(langue).accueil.equipe;
   }
 
   @media (min-width: 700px) {
+    .equipe__duo {
+      column-gap: clamp(24px, 4vw, 64px);
+    }
+
+    .frere {
+      display: flex;
+      flex-direction: column;
+      gap: 22px;
+    }
+
+    .frere__photo,
+    .frere__texte {
+      grid-row: auto;
+      grid-column: auto;
+    }
+
+    .frere__photo {
+      border-radius: 32px;
+    }
+
+    .frere__nom {
+      left: clamp(18px, 3vw, 32px);
+      bottom: clamp(14px, 2.4vw, 26px);
+      gap: 14px;
+      font-size: clamp(54px, 9vw, 96px);
+    }
+
     .equipe__tete {
       grid-template-columns: minmax(0, 1.3fr) minmax(0, 1fr);
       align-items: end;
@@ -210,8 +248,7 @@ const equipe = t(langue).accueil.equipe;
     }
 
     .equipe__duo {
-      grid-template-columns: repeat(2, minmax(0, 1fr));
-      gap: clamp(24px, 4vw, 64px);
+      row-gap: 0;
       max-width: 1040px;
       margin-inline: auto;
     }
@@ -225,12 +262,25 @@ const equipe = t(langue).accueil.equipe;
   /* Le rideau : la photo se dévoile de haut en bas à l'arrivée (seulement avec JavaScript et sans « moins d'animations »). */
   @media (prefers-reduced-motion: no-preference) {
     :global(.js) .frere__photo {
-      clip-path: inset(0 0 100% 0 round 32px);
-      transition: clip-path 1200ms var(--ease-out) calc(var(--delai, 0ms) + 150ms);
+      clip-path: inset(0 0 100% 0 round 22px);
+      transition:
+        clip-path 1200ms var(--ease-out) calc(var(--delai, 0ms) + 150ms),
+        opacity 800ms var(--ease-out) var(--delai, 0ms),
+        transform 800ms var(--ease-out) var(--delai, 0ms);
     }
 
-    :global(.js) .frere.est-visible .frere__photo {
-      clip-path: inset(0 0 0 0 round 32px);
+    :global(.js) .frere__photo.est-visible {
+      clip-path: inset(0 0 0 0 round 22px);
+    }
+
+    @media (min-width: 700px) {
+      :global(.js) .frere__photo {
+        clip-path: inset(0 0 100% 0 round 32px);
+      }
+
+      :global(.js) .frere__photo.est-visible {
+        clip-path: inset(0 0 0 0 round 32px);
+      }
     }
 
     /* Les photos glissent plus lentement que la page (navigateurs récents). */
