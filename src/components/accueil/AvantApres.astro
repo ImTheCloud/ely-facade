@@ -1,7 +1,7 @@
 ---
 /**
- * Avant / après : un grand curseur pour le chantier de référence (la cour intérieure de l'Université de Mons),
- * puis un curseur par chantier, la commune en légende. Chaque photo est cadrée pour que les deux façades se superposent au mieux.
+ * Avant / après : un grand curseur pour Namur (toujours en premier), puis un curseur par chantier, la commune en légende.
+ * Chaque photo est cadrée pour que les deux façades se superposent au mieux.
  */
 import Comparateur from '../Comparateur.astro';
 import Icon from '../Icon.astro';
@@ -16,10 +16,10 @@ const { langue } = Astro.props;
 const textes = t(langue);
 const section = textes.accueil.avantApres;
 
-const vedette = { cle: 'umons' as const, paire: chantier('umons').paires[0] };
-const autres = (['namur-immeuble', 'namur-balcons', 'halle', 'charleroi'] as const).map((cle) => ({
+const vedette = { cle: 'namur-immeuble' as const, paire: { ...chantier('namur-immeuble').paires[0], ratio: 16 / 9 } };
+const autres = (['umons', 'namur-balcons', 'halle', 'charleroi'] as const).map((cle) => ({
   cle,
-  paire: chantier(cle).paires[0],
+  paire: { ...chantier(cle).paires[0], ratio: 4 / 3 },
 }));
 ---
 
@@ -35,9 +35,7 @@ const autres = (['namur-immeuble', 'namur-balcons', 'halle', 'charleroi'] as con
       <Comparateur langue={langue} paire={vedette.paire} sizes="(min-width: 1360px) 1280px, 100vw" />
       <figcaption class="cas__legende">
         <span>
-          <strong>{textes.communes[chantier(vedette.cle).commune]}</strong> · {textes.chantiers[vedette.cle].titre}, {
-            textes.chantiers.umons.batiments[0].toLowerCase()
-          }
+          <strong>{textes.communes[chantier(vedette.cle).commune]}</strong> · {textes.chantiers[vedette.cle].titre}
         </span>
         <a href={lienChantier(vedette.cle, langue)}>{section.voir}<Icon nom="fleche" taille={16} /></a>
       </figcaption>
