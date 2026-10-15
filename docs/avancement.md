@@ -9,7 +9,7 @@
 - **Façon de travailler** : chaque nouveau changement se fait dans **une nouvelle branche** partie de `main`, puis est fusionné dans `main` une fois validé.
 
 ### Branche `ameliorations-accueil` (16 octobre 2026, à tester par Claudiu avant fusion)
-- **Équipe en diptyque** : les deux portraits se touchent comme deux panneaux d'une même façade, séparés par un joint blanc et la brique rouge ; ils s'ouvrent depuis le joint à l'arrivée, puis la brique se pose ; « Ungureanu » en très grand, au trait, glisse derrière au défilement. Prénoms face à face (Elisei à gauche, Simi à droite), textes numérotés 01 / 02. Côte à côte sur téléphone.
+- **Équipe sur fond blanc** : Elisei et Simi détourés (sur le Mac, sans service en ligne), côte à côte devant « UNGUREANU » écrit en très grand ; une ligne de sol avec la brique rouge ; sous eux, prénom, rôle, phrase et deux lignes (chacun sous son frère sur ordinateur). Le nom monte, puis les frères se posent. La photo de Simi à Paris n'est plus utilisée (supprimée).
 - **Plus fluide au défilement** : plus de flou derrière l'en-tête et la barre du bas sur téléphone (fond blanc presque opaque), ni derrière les étiquettes avant/après ; motif à points et ombre de la maison retirés de la carte.
 - **Bouton Menu** : reste sombre même sur la photo du haut (blanc sur ciel clair, il se voyait mal), liseré clair, texte qui ne se coupe jamais.
 - **Haut de page** : accroche raccourcie ; sur téléphone le titre est plus grand et tout le texte reste sur la pelouse et la route.
