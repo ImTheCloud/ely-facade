@@ -567,12 +567,13 @@ export const nl = {
 
     equipe: {
       surtitre: 'Wie bij u langskomt',
+      portrait: 'Portret van',
       titre: 'Twee broers, een team van 8.',
       texte:
         'Elisei en Simi Ungureanu leiden Ely Facade. Elisei zorgt voor het bezoek en de offerte. Simi leidt de werken op de werf, met een team van zelfstandigen.',
       personnes: [
-        { prenom: 'Elisei', initiale: 'E', role: 'Bezoek en offerte' },
-        { prenom: 'Simi', initiale: 'S', role: 'Leiding van de werven' },
+        { prenom: 'Elisei', role: 'Bezoek en offerte' },
+        { prenom: 'Simi', role: 'Leiding van de werven' },
       ],
     },
 

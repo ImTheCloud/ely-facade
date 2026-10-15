@@ -567,12 +567,13 @@ export const fr = {
 
     equipe: {
       surtitre: 'Qui vient chez vous',
+      portrait: 'Portrait de',
       titre: 'Deux frères, une équipe de 8.',
       texte:
         'Elisei et Simi Ungureanu dirigent Ely Facade. Elisei s’occupe de la visite et du devis. Simi dirige les travaux sur le chantier, avec une équipe d’indépendants.',
       personnes: [
-        { prenom: 'Elisei', initiale: 'E', role: 'Visite et devis' },
-        { prenom: 'Simi', initiale: 'S', role: 'Direction des chantiers' },
+        { prenom: 'Elisei', role: 'Visite et devis' },
+        { prenom: 'Simi', role: 'Direction des chantiers' },
       ],
     },
 

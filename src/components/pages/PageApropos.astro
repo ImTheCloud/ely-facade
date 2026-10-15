@@ -6,6 +6,7 @@ import CarteBelgique from '../CarteBelgique.astro';
 import IntroPage from '../IntroPage.astro';
 import BaseLayout from '~/layouts/BaseLayout.astro';
 import { photo } from '~/data/chantiers';
+import { portraits } from '~/data/equipe';
 import { entreprise } from '~/data/entreprise';
 import { chemin, t, type Langue } from '~/i18n';
 
@@ -41,9 +42,16 @@ const imageIntro = 'halle-maison/final-entree';
         {
           a.personnes.map((personne, i) => (
             <li data-reveal style={`--delai: ${i * 120}ms`}>
-              <span class="personnes__initiale" aria-hidden="true">
-                {personne.prenom.charAt(0)}
-              </span>
+              <Image
+                class="personnes__portrait"
+                src={portraits.apropos[personne.prenom as 'Elisei' | 'Simi']}
+                alt={`${textes.accueil.equipe.portrait} ${personne.prenom} Ungureanu`}
+                widths={[360, 600, 900]}
+                sizes="(min-width: 1000px) 330px, (min-width: 700px) 45vw, 100vw"
+                format="webp"
+                quality={80}
+                loading="lazy"
+              />
               <h3>{personne.prenom}</h3>
               <p class="personnes__role">{personne.role}</p>
               <p>{personne.texte}</p>
@@ -188,23 +196,15 @@ const imageIntro = 'halle-maison/final-entree';
     box-shadow: var(--shadow-tile);
   }
 
-  .personnes__initiale {
-    display: inline-flex;
-    align-items: center;
-    justify-content: center;
-    width: 64px;
-    height: 64px;
-    margin-bottom: 8px;
+  .personnes li :global(.personnes__portrait) {
+    display: block;
+    width: 100%;
+    height: auto;
+    aspect-ratio: 1 / 1;
+    margin-bottom: 10px;
     border-radius: 20px;
-    background: var(--color-ink);
-    color: #fff;
-    font-family: var(--font-display);
-    font-size: 30px;
-    font-weight: 800;
-  }
-
-  .personnes li:last-child .personnes__initiale {
-    background: var(--color-accent);
+    object-fit: cover;
+    object-position: 50% 25%;
   }
 
   .personnes h3 {

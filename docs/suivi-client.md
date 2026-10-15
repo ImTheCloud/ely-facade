@@ -65,3 +65,10 @@ Domaine elyfacade.be + elyfacade.com, email pro, fiche Google Business (Halle), 
 - Délai du devis : « quelques jours maximum après la visite » n'est plus affiché sur le site (décision 11). À confirmer avec Elisei si on veut l'afficher.
 - Page Crépi : l'immeuble de Namur (trois étages) et les maisons de Charleroi sont montrés comme « façades en crépi », avec l'UMons. Confirmer que ce sont bien des façades crépies (sinon les retirer de cette liste).
 - **Liste complète des services de façade (16 octobre 2026)** : Claudiu indique qu'ils font « tout dans la façade, de A à Z, sur n'importe quel chantier ». Le site dit maintenant « toute la façade, de A à Z » (le chiffre « 5 métiers » est retiré) et cite les cinq métiers connus avec « … ». Claudiu a confirmé l'isolation par l'extérieur, l'échafaudage et le traitement des fissures : ils ont maintenant chacun leur page (8 services au total). À demander à Elisei : la liste exacte du reste (pose de membrane / pare-pluie, plaquettes de parement en page à part, hydrofuge, peinture des menuiseries, bardage, etc.). Rien d'autre n'est affiché tant que ce n'est pas confirmé.
+- **Isolation thermique et acoustique (16 octobre 2026)** : Claudiu a montré la formulation « Isolation thermique & acoustique », l'activité « installation d'isolation » dans la fiche publique d'Elisei (BCE) et son titre LinkedIn « Exécutant de travaux en façade ». La page « Isolation par l'extérieur » ne dit pour l'instant que ce qui est confirmé par les étapes de chantier ; « thermique et acoustique » n'est pas affiché tant qu'Elisei n'a pas confirmé que c'est bien ce qu'ils posent.
+
+## Photos d'Elisei et de Simi (16 octobre 2026)
+
+- Fournies par Claudiu, qui autorise leur usage sur le site. Elisei : la photo en costume (fond sombre, celle de son profil LinkedIn). Simi : deux photos, Paris (veste grise) et le lac (lunettes de soleil).
+- Importées sans métadonnées dans `src/assets/equipe/` (`elisei.jpg`, `simi-paris.jpg`, `simi-lac.jpg`). Utilisées dans « Deux frères, une équipe de 8 » (accueil : Elisei + Simi Paris) et dans la page À propos (Elisei + Simi lac).
+- À faire valider par Elisei et Simi avec le reste du site.

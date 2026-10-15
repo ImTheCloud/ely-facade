@@ -1,5 +1,7 @@
 ---
 /** Qui vient chez vous : les deux frères qui dirigent Ely Facade, et leur équipe. */
+import { Image } from 'astro:assets';
+import { portraits } from '../../data/equipe';
 import { t, type Langue } from '../../i18n';
 
 interface Props {
@@ -22,9 +24,16 @@ const equipe = t(langue).accueil.equipe;
       {
         equipe.personnes.map((personne, i) => (
           <li data-reveal style={`--delai: ${120 + i * 120}ms`}>
-            <span class="equipe__initiale" aria-hidden="true">
-              {personne.initiale}
-            </span>
+            <Image
+              class="equipe__portrait"
+              src={portraits.accueil[personne.prenom as 'Elisei' | 'Simi']}
+              alt={`${equipe.portrait} ${personne.prenom} Ungureanu`}
+              widths={[240, 400]}
+              sizes="(min-width: 960px) 220px, 42vw"
+              format="webp"
+              quality={80}
+              loading="lazy"
+            />
             <span class="equipe__nom">{personne.prenom}</span>
             <span class="equipe__role">{personne.role}</span>
           </li>
@@ -76,16 +85,25 @@ const equipe = t(langue).accueil.equipe;
     box-shadow: var(--shadow-tile);
   }
 
-  /* Une grande initiale en filigrane, la brique rouge au-dessus du prénom. */
-  .equipe__initiale {
-    font-family: var(--font-display);
-    font-size: clamp(88px, 11vw, 150px);
-    font-weight: 800;
-    line-height: 0.8;
-    letter-spacing: -0.04em;
-    color: var(--color-surface);
-    -webkit-text-stroke: 1px var(--color-border);
-    margin-bottom: 18px;
+  /* Le portrait en haut de la carte, la brique rouge au-dessus du prénom. */
+  .equipe__personnes li {
+    padding: 14px 14px 22px;
+  }
+
+  .equipe__personnes li :global(.equipe__portrait) {
+    display: block;
+    width: 100%;
+    height: auto;
+    aspect-ratio: 4 / 5;
+    margin-bottom: 14px;
+    border-radius: 18px;
+    object-fit: cover;
+    object-position: 50% 22%;
+  }
+
+  .equipe__nom,
+  .equipe__role {
+    padding-inline: 8px;
   }
 
   .equipe__nom {
