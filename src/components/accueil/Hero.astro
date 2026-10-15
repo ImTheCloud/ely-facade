@@ -125,11 +125,6 @@ const motFinal = derniere.replace(/\.$/, '');
 
   <div class="hero__contenu">
     <div class="hero__principal">
-      <p class="hero__pastille" data-entree style="--n: 0">
-        <span class="hero__brique" aria-hidden="true"></span>
-        {hero.pastille}
-      </p>
-
       <h1 class="hero__titre">
         {
           lignes.map((ligne, i) => (
@@ -153,11 +148,11 @@ const motFinal = derniere.replace(/\.$/, '');
           </span>
         </span>
       </h1>
+
+      <p class="hero__texte" data-entree style="--n: 4">{hero.texte}</p>
     </div>
 
     <div class="hero__details">
-      <p class="hero__texte" data-entree style="--n: 4">{hero.texte}</p>
-
       <div class="hero__actions" data-entree style="--n: 5">
         <a class="hero__bouton" href="#devis">
           <span>{hero.bouton}</span>
@@ -308,31 +303,6 @@ const motFinal = derniere.replace(/\.$/, '');
     gap: 22px;
   }
 
-  /* --- Pastille d'accroche : verre clair, la brique rouge du logo en guise de point --- */
-  .hero__pastille {
-    display: inline-flex;
-    align-items: center;
-    gap: 10px;
-    padding: 9px 16px 9px 13px;
-    border: 1px solid rgba(255, 255, 255, 0.34);
-    border-radius: var(--radius-pill);
-    background: rgba(255, 255, 255, 0.12);
-    backdrop-filter: blur(12px) saturate(1.3);
-    -webkit-backdrop-filter: blur(12px) saturate(1.3);
-    font-size: 13px;
-    font-weight: 600;
-    letter-spacing: 0.01em;
-  }
-
-  .hero__brique {
-    flex-shrink: 0;
-    width: 13px;
-    height: 7px;
-    border-radius: 2px;
-    background: var(--color-accent);
-    box-shadow: 0 0 0 2px rgba(200, 32, 43, 0.22);
-  }
-
   /* --- Titre --- */
   .hero__titre {
     color: #fff;
@@ -478,19 +448,8 @@ const motFinal = derniere.replace(/\.$/, '');
       gap: 14px;
     }
 
-    .hero__pastille {
-      padding: 7px 13px 7px 11px;
-      font-size: 12px;
-    }
-
     .hero__titre {
       font-size: clamp(36px, 10.6vw, 50px);
-    }
-
-    /* Téléphone : rien sur la façade. Seuls le titre, le bouton et les engagements, posés sur la pelouse et la route. */
-    .hero__pastille,
-    .hero__texte {
-      display: none;
     }
 
     .hero__texte {

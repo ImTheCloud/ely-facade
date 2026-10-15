@@ -429,11 +429,9 @@ export const fr = {
 
   accueil: {
     hero: {
-      pastille: 'Rénovation de façades · Toute la Belgique',
       /** Une ligne par entrée : le titre tient toujours sur trois lignes. Le dernier mot est mis en lumière. */
       titre: ['Votre façade', 'mérite de', 'briller.'],
-      texte:
-        'Crépi, peinture, nettoyage, rejointoiement, réparation de briques\u00a0: de la petite maison à l’immeuble.',
+      texte: 'De la petite maison à l’immeuble à appartements, et jusqu’aux bâtiments d’une université.',
       bouton: 'Demander ma visite gratuite',
       appeler: 'Appeler le',
       preuvesAria: 'Nos engagements',

@@ -429,11 +429,9 @@ export const nl = {
 
   accueil: {
     hero: {
-      pastille: 'Gevelrenovatie · Heel België',
       /** Eén regel per item: de titel past altijd op drie regels. Het laatste woord krijgt het licht. */
       titre: ['Uw gevel', 'verdient te', 'stralen.'],
-      texte:
-        'Gevelpleister, schilderwerk, reiniging, voegwerk, herstel van bakstenen: van het kleine huis tot het appartementsgebouw.',
+      texte: 'Van een kleine woning tot een appartementsgebouw, en zelfs de gebouwen van een universiteit.',
       bouton: 'Plan mijn gratis plaatsbezoek',
       appeler: 'Bel',
       preuvesAria: 'Onze beloften',
