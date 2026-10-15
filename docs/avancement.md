@@ -5,7 +5,7 @@
 ### Étapes
 - [x] 1. Photos contrôlées à l'œil : plaques masquées (2 à Mons : `mons-umons-immeuble-angle/etape-1-membrane-2`, `etape-2-sous-couche`), panneau de chantier et numéros peints sur des portes de garage masqués (Charleroi, `charleroi-rangee-1/pendant`), personnes et voiture recadrées hors de `namur-immeuble-3-etages/pendant-face`. Ciel prolongé au-dessus du toit de la photo d'accueil (le faîte touchait le bord) : reflet du ciel de la photo puis dégradé, sans rien inventer d'autre (`prolongerCiel()` dans `scripts/importer-photos.mjs`). Cadrage vertical pour téléphone : `accueil/hero-namur-mobile.jpg`.
 - [x] 2. Nettoyage : anciennes photos (`src/assets/photos/*.jpg`, `paires/`, `accueil.jpg`), anciens avant/après, étapes, galerie et leurs textes FR/NL supprimés.
-- [ ] 3. Références
+- [x] 3. Références : sites Framer bloqués par le réseau de la session ; capture Ironwood étudiée et fiches publiques résumées dans `docs/references/README.md`.
 - [ ] 4. En-tête et haut de page en 3 variantes
 - [ ] 5. Reste de l'accueil
 - [ ] 6. Pages
