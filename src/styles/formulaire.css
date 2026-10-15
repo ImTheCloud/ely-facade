@@ -205,6 +205,26 @@
   outline-offset: 2px;
 }
 
+/* « Façade complète » : une grande tuile sur toute la largeur. */
+.formulaire .tuile--large {
+  grid-column: 1 / -1;
+  min-height: 0;
+  flex-direction: row;
+  align-items: center;
+}
+
+.formulaire .tuile--large .tuile__nom {
+  font-size: 16px;
+}
+
+.formulaire .champ--autre {
+  margin: 14px 0 0;
+}
+
+.formulaire .champ--autre[hidden] {
+  display: none;
+}
+
 /* --- Petites questions à pastilles (un seul choix) --- */
 .formulaire .question {
   min-width: 0;
@@ -549,8 +569,8 @@
 
   .formulaire .tuile__icone {
     flex-shrink: 0;
-    width: 32px;
-    height: 32px;
+    width: 30px;
+    height: 30px;
     border-radius: 10px;
   }
 
@@ -562,7 +582,7 @@
   /* Les longs mots néerlandais (« Gevelschilderwerk ») se coupent proprement au lieu de faire déborder la page. */
   .formulaire .tuile__nom {
     min-width: 0;
-    font-size: 13.5px;
+    font-size: 13px;
     overflow-wrap: anywhere;
     hyphens: auto;
     -webkit-hyphens: auto;

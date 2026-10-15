@@ -465,7 +465,6 @@ export const fr = {
         'Un chantier de l’Université de Mons, étape par étape. C’est l’ordre de toute façade isolée par l’extérieur et crépie.',
       lieu: 'Mons · Université de Mons',
       etape: 'Étape',
-      suivante: 'Étape suivante',
       liste: {
         preparation: {
           titre: 'Préparation et échafaudage',
@@ -508,7 +507,8 @@ export const fr = {
       toutes: 'Voir plus de chantiers',
       carte: {
         aria: 'Carte de la Belgique\u00a0: notre bureau à Halle et les communes de quelques-uns de nos chantiers',
-        bureau: 'Notre bureau, à Halle',
+        bureau: 'Notre bureau',
+        bureauHalle: 'Notre bureau, à Halle',
         chantier: 'Un de nos chantiers',
         villes: { anvers: 'Anvers', gand: 'Gand', liege: 'Liège' },
       },
@@ -523,6 +523,8 @@ export const fr = {
         { valeur: '8', libelle: 'personnes dans l’équipe' },
         { valeur: '5', libelle: 'métiers de façade' },
         { valeur: '12/12', libelle: 'mois de travail par an, même l’hiver' },
+        { valeur: '10 ans', libelle: 'de garantie minimum' },
+        { valeur: '0\u00a0€', libelle: 'pour la visite, sans engagement' },
       ],
     },
 
@@ -606,10 +608,10 @@ export const fr = {
     devis: {
       titre: 'Votre façade mérite de briller. [Parlons-en].',
       texte: 'Décrivez vos travaux en trois étapes.',
-      direct: 'Ou directement',
       calculateur: {
-        titre: 'Quelle surface fait votre façade\u00a0?',
-        texte: 'Une estimation suffit\u00a0: la largeur de la façade et le nombre de niveaux.',
+        titre: 'Simulateur de surface',
+        texte:
+          'Vous ne connaissez pas la surface de votre façade\u00a0? Ce simulateur l’estime à partir de sa largeur et de son nombre de niveaux, puis l’ajoute à votre demande.',
         largeur: 'Largeur (m)',
         niveaux: 'Niveaux',
         niveauxAide: 'rez-de-chaussée compris',
@@ -621,12 +623,6 @@ export const fr = {
         utiliser: 'Ajouter à ma demande',
         ajoute: 'Ajouté à votre demande',
         note: 'Elisei mesurera précisément sur place, lors de la visite gratuite.',
-      },
-      photos: {
-        titre: 'Montrez-nous votre façade',
-        texte: 'Envoyez deux ou trois photos de votre façade sur WhatsApp, avec votre commune.',
-        bouton: 'Envoyer mes photos',
-        message: 'Bonjour, voici quelques photos de ma façade pour une demande de devis. Ma commune\u00a0: ',
       },
     },
 
@@ -648,7 +644,11 @@ export const fr = {
 
     q1: 'Quels travaux avez-vous en tête\u00a0?',
     q1Aide: 'Plusieurs choix possibles',
+    complet: 'Façade complète, de A à Z',
     autre: 'Autre chose',
+    autrePrecision: 'Dites-nous de quoi il s’agit',
+    autreExemple: 'Ex.\u00a0: une fissure à réparer',
+    erreurAutre: 'Dites-nous en quelques mots de quoi il s’agit.',
 
     q2: 'Parlez-nous de votre façade',
     batiment: 'Type de bâtiment',
@@ -663,6 +663,7 @@ export const fr = {
     email: 'Email',
     message: 'Un mot sur votre projet',
     messageExemple: 'Ex.\u00a0: façade avant d’une maison mitoyenne, crépi abîmé par endroits…',
+    photosAide: 'Vous pourrez envoyer des photos de votre façade sur WhatsApp juste après.',
     consentement: 'J’accepte que mes données soient utilisées pour répondre à ma demande.',
     consentementLien: 'Vie privée',
 
@@ -693,6 +694,7 @@ export const fr = {
     sujetFormulaire: 'Nouvelle demande de devis · site Ely Facade',
     recap: {
       travaux: 'Travaux',
+      autre: 'Autre',
       batiment: 'Bâtiment',
       surface: 'Surface de façade (m²)',
       message: 'Projet',

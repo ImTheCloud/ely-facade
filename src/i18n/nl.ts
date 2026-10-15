@@ -465,7 +465,6 @@ export const nl = {
         'Een werf van de Universiteit van Bergen, stap voor stap. Dit is de volgorde van elke gevel met buitenisolatie en pleisterwerk.',
       lieu: 'Bergen · Universiteit van Bergen',
       etape: 'Stap',
-      suivante: 'Volgende stap',
       liste: {
         preparation: {
           titre: 'Voorbereiding en steiger',
@@ -508,7 +507,8 @@ export const nl = {
       toutes: 'Bekijk meer werven',
       carte: {
         aria: 'Kaart van België: ons kantoor in Halle en de gemeenten van enkele van onze werven',
-        bureau: 'Ons kantoor, in Halle',
+        bureau: 'Ons kantoor',
+        bureauHalle: 'Ons kantoor, in Halle',
         chantier: 'Een van onze werven',
         villes: { anvers: 'Antwerpen', gand: 'Gent', liege: 'Luik' },
       },
@@ -523,6 +523,8 @@ export const nl = {
         { valeur: '8', libelle: 'personen in het team' },
         { valeur: '5', libelle: 'gevelvakken' },
         { valeur: '12/12', libelle: 'maanden werk per jaar, ook in de winter' },
+        { valeur: '10 jaar', libelle: 'garantie minimum' },
+        { valeur: '0\u00a0€', libelle: 'voor het plaatsbezoek, zonder verplichting' },
       ],
     },
 
@@ -606,10 +608,10 @@ export const nl = {
     devis: {
       titre: 'Uw gevel verdient te stralen. [Laten we praten].',
       texte: 'Beschrijf uw werken in drie stappen.',
-      direct: 'Of rechtstreeks',
       calculateur: {
-        titre: 'Hoe groot is uw gevel?',
-        texte: 'Een schatting volstaat: de breedte van de gevel en het aantal bouwlagen.',
+        titre: 'Simulator voor de oppervlakte',
+        texte:
+          'Kent u de oppervlakte van uw gevel niet? Deze simulator schat ze op basis van de breedte en het aantal bouwlagen en voegt ze toe aan uw aanvraag.',
         largeur: 'Breedte (m)',
         niveaux: 'Bouwlagen',
         niveauxAide: 'gelijkvloers inbegrepen',
@@ -621,12 +623,6 @@ export const nl = {
         utiliser: 'Toevoegen aan mijn aanvraag',
         ajoute: 'Toegevoegd aan uw aanvraag',
         note: 'Elisei meet alles nauwkeurig op tijdens het gratis plaatsbezoek.',
-      },
-      photos: {
-        titre: 'Toon ons uw gevel',
-        texte: 'Stuur twee of drie foto’s van uw gevel via WhatsApp, met uw gemeente.',
-        bouton: 'Mijn foto’s versturen',
-        message: 'Goedendag, hier zijn enkele foto’s van mijn gevel voor een offerteaanvraag. Mijn gemeente: ',
       },
     },
 
@@ -648,7 +644,11 @@ export const nl = {
 
     q1: 'Welke werken hebt u in gedachten?',
     q1Aide: 'Meerdere keuzes mogelijk',
+    complet: 'Volledige gevel, van A tot Z',
     autre: 'Iets anders',
+    autrePrecision: 'Vertel ons waarover het gaat',
+    autreExemple: 'Bv.: een scheur herstellen',
+    erreurAutre: 'Vertel ons in een paar woorden waarover het gaat.',
 
     q2: 'Vertel ons over uw gevel',
     batiment: 'Type gebouw',
@@ -663,6 +663,7 @@ export const nl = {
     email: 'E-mail',
     message: 'Een woordje over uw project',
     messageExemple: 'Bv.: voorgevel van een gesloten bebouwing, pleisterwerk hier en daar beschadigd…',
+    photosAide: 'Foto’s van uw gevel kunt u daarna via WhatsApp sturen.',
     consentement: 'Ik ga ermee akkoord dat mijn gegevens worden gebruikt om op mijn aanvraag te antwoorden.',
     consentementLien: 'Privacy',
 
@@ -693,6 +694,7 @@ export const nl = {
     sujetFormulaire: 'Nieuwe offerteaanvraag · website Ely Facade',
     recap: {
       travaux: 'Werken',
+      autre: 'Iets anders',
       batiment: 'Gebouw',
       surface: 'Geveloppervlakte (m²)',
       message: 'Project',

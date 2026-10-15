@@ -14,7 +14,7 @@ const chiffres = t(langue).accueil.chiffres;
   <ul class="wrap chiffres">
     {
       chiffres.liste.map((chiffre, i) => (
-        <li class:list={['chiffre', { 'chiffre--rouge': i === 3 }]} data-reveal style={`--delai: ${i * 90}ms`}>
+        <li class:list={['chiffre', { 'chiffre--rouge': i === 6 }]} data-reveal style={`--delai: ${i * 90}ms`}>
           <span class="chiffre__valeur">{chiffre.valeur}</span>
           <span class="chiffre__libelle">{chiffre.libelle}</span>
         </li>
@@ -74,8 +74,8 @@ const chiffres = t(langue).accueil.chiffres;
 
   @media (min-width: 900px) {
     .chiffres {
-      grid-template-columns: repeat(3, 1fr);
-      gap: 40px 32px;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 44px 32px;
     }
 
     .chiffre {
@@ -83,7 +83,7 @@ const chiffres = t(langue).accueil.chiffres;
     }
 
     .chiffre__valeur {
-      font-size: clamp(44px, 4.6vw, 68px);
+      font-size: clamp(40px, 4.2vw, 60px);
     }
   }
 </style>

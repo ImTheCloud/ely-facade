@@ -26,8 +26,9 @@ const textes = t(langue);
 const f = textes.formulaire;
 const id = 'devis-form';
 
-/** Les travaux proposés : les 5 métiers de façade, plus « autre ». */
+/** Les travaux proposés : la façade complète, les 5 métiers de façade, plus « autre ». */
 const choix = [
+  { nom: f.complet, icone: 'facade' as const, cle: 'complet' },
   ...METIERS.map((metier) => ({ nom: textes.metiers[metier.cle].titre, icone: metier.icone, cle: metier.cle })),
   { nom: f.autre, icone: 'autre' as const, cle: 'autre' },
 ];
@@ -41,7 +42,7 @@ const choix = [
   data-whatsapp={entreprise.whatsappNumero}
   data-intro-suite={f.suiteIntro}
   data-sujet-suite={f.suiteSujet}
-  data-recap={JSON.stringify([['travaux', f.recap.travaux], ['batiment', f.recap.batiment], ['surface', f.recap.surface], ['message', f.recap.message], '', ['nom', f.recap.nom], ['telephone', f.recap.telephone], ['email', f.recap.email]])}
+  data-recap={JSON.stringify([['travaux', f.recap.travaux], ['autre_precision', f.recap.autre], ['batiment', f.recap.batiment], ['surface', f.recap.surface], ['message', f.recap.message], '', ['nom', f.recap.nom], ['telephone', f.recap.telephone], ['email', f.recap.email]])}
   data-deux-points={textes.deuxPoints}
   data-noms-etapes={JSON.stringify(f.etapes)}
   data-erreur-choix={f.erreurChoix}
@@ -75,14 +76,19 @@ const choix = [
       <div class="tuiles">
         {
           choix.map((option) => (
-            <label class="tuile">
-              <input type="checkbox" name="travaux" value={option.nom} data-cles={option.cle} />
+            <label class:list={['tuile', { 'tuile--large': option.cle === 'complet' }]}>
+              <input type="checkbox" name="travaux" value={option.nom} data-cles={option.cle} data-autre-case={option.cle === 'autre' ? '' : undefined} />
               <span class="tuile__icone"><Icon nom={option.icone} taille={24} /></span>
               <span class="tuile__nom">{option.nom}</span>
               <span class="tuile__coche" aria-hidden="true"><Icon nom="check" taille={14} epaisseur={3} /></span>
             </label>
           ))
         }
+      </div>
+      <!-- Quand « Autre chose » est coché : on dit de quoi il s'agit. -->
+      <div class="champ champ--autre" data-autre-champ>
+        <label for={`${id}-autre`}>{f.autrePrecision}</label>
+        <input type="text" id={`${id}-autre`} name="autre_precision" placeholder={f.autreExemple} data-erreur={f.erreurAutre} />
       </div>
     </fieldset>
 
@@ -138,6 +144,7 @@ const choix = [
       <div class="champ">
         <label for={`${id}-message`}>{f.message} <span class="champ__facultatif">({f.facultatif})</span></label>
         <textarea id={`${id}-message`} name="message" rows="3" placeholder={f.messageExemple}></textarea>
+        <span class="champ__aide">{f.photosAide}</span>
       </div>
 
       <label class="consentement">

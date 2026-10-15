@@ -7,6 +7,7 @@
  */
 import { Image } from 'astro:assets';
 import Icon from './Icon.astro';
+import Logo from './Logo.astro';
 import { CHANTIERS, lienChantier, photo, type Commune } from '../data/chantiers';
 import { t, type Langue } from '../i18n';
 
@@ -58,8 +59,8 @@ const trace =
 
 /** Les communes de nos chantiers. cote : de quel côté du point s'écrit son nom. */
 const communes: { commune: Commune; lon: number; lat: number; cote: 'gauche' | 'droite' | 'bas'; dx?: number; dy?: number }[] = [
-  { commune: 'mons', lon: 3.952, lat: 50.455, cote: 'gauche' },
   { commune: 'namur', lon: 4.867, lat: 50.466, cote: 'droite' },
+  { commune: 'mons', lon: 3.952, lat: 50.455, cote: 'gauche' },
   { commune: 'charleroi', lon: 4.444, lat: 50.411, cote: 'bas' },
   // Halle : le point du chantier est posé un peu à côté du bureau, pour ne pas le recouvrir.
   { commune: 'halle', lon: 4.235, lat: 50.735, cote: 'droite', dx: 18, dy: 16 },
@@ -110,11 +111,14 @@ const identifiant = 'carte';
       }
     </div>
 
-    <!-- Le bureau de Halle : la brique rouge du logo. -->
+    <!-- Le bureau de Halle : le logo de l'entreprise, le nom en rouge. -->
     <div class="bureau" style={place(bureau.lon, bureau.lat)}>
       <span class="bureau__onde" aria-hidden="true"></span>
-      <span class="bureau__brique" aria-hidden="true"></span>
-      <span class="bureau__nom">{carte.bureau}</span>
+      <span class="bureau__point" aria-hidden="true"></span>
+      <span class="bureau__carte">
+        <Logo class="bureau__logo" />
+        <span class="bureau__nom">{carte.bureau}</span>
+      </span>
     </div>
 
     <div class="carte__points">
@@ -137,7 +141,7 @@ const identifiant = 'carte';
   </div>
 
   <ul class="carte__legende" aria-hidden="true">
-    <li><span class="legende__brique"></span>{carte.bureau}</li>
+    <li><span class="legende__point"></span>{carte.bureauHalle}</li>
     <li><span class="legende__rond"></span>{carte.chantier}</li>
   </ul>
 
@@ -267,49 +271,60 @@ const identifiant = 'carte';
     transform: translate(calc(-100% + 3px), -50%);
   }
 
-  /* --- Le bureau --- */
+  /* --- Le bureau : le logo, le nom en rouge --- */
   .bureau {
     position: absolute;
     display: flex;
     align-items: center;
     flex-direction: row-reverse;
-    gap: 10px;
-    transform: translate(calc(-100% + 15px), -50%);
+    gap: 6px;
+    transform: translate(calc(-100% + 8px), -50%);
     pointer-events: none;
   }
 
-  .bureau__brique {
+  .bureau__point {
     position: relative;
     flex-shrink: 0;
-    width: 30px;
-    height: 17px;
+    width: 16px;
+    height: 16px;
     border: 3px solid #fff;
-    border-radius: 4px;
+    border-radius: 50%;
     background: var(--color-accent);
-    box-shadow: 0 6px 14px -4px rgba(200, 32, 43, 0.65);
+    box-shadow: 0 4px 10px -2px rgba(200, 32, 43, 0.7);
   }
 
   .bureau__onde {
     position: absolute;
     right: 0;
     top: 50%;
-    width: 56px;
-    height: 56px;
-    margin: -28px 0 0;
+    width: 52px;
+    height: 52px;
+    margin-top: -26px;
     border-radius: 50%;
     background: rgba(200, 32, 43, 0.16);
-    transform: translateX(calc(50% - 15px));
+    transform: translateX(calc(50% - 8px));
+  }
+
+  .bureau__carte {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 3px;
+    padding: 6px 10px 5px;
+    border-radius: 12px;
+    background: rgba(255, 255, 255, 0.95);
+    box-shadow: 0 6px 16px -6px rgba(31, 36, 41, 0.4);
+  }
+
+  .bureau .bureau__carte :global(.logo) {
+    height: 20px;
   }
 
   .bureau__nom {
-    padding: 5px 12px;
-    border-radius: var(--radius-pill);
-    background: var(--color-accent);
-    box-shadow: var(--shadow-accent);
-    font-size: 13px;
+    font-size: 12px;
     font-weight: 700;
-    line-height: 1.2;
-    color: #fff;
+    line-height: 1.1;
+    color: var(--color-accent);
     white-space: nowrap;
   }
 
@@ -427,11 +442,13 @@ const identifiant = 'carte';
     gap: 9px;
   }
 
-  .legende__brique {
-    width: 20px;
-    height: 12px;
-    border-radius: 3px;
+  .legende__point {
+    width: 13px;
+    height: 13px;
+    border: 2.5px solid #fff;
+    border-radius: 50%;
     background: var(--color-accent);
+    box-shadow: 0 0 0 1px var(--color-border);
   }
 
   .legende__rond {
@@ -587,11 +604,11 @@ const identifiant = 'carte';
 
     @keyframes onde {
       from {
-        transform: translateX(calc(50% - 15px)) scale(0.4);
+        transform: translateX(calc(50% - 8px)) scale(0.4);
         opacity: 1;
       }
       to {
-        transform: translateX(calc(50% - 15px)) scale(1.5);
+        transform: translateX(calc(50% - 8px)) scale(1.5);
         opacity: 0;
       }
     }
@@ -609,6 +626,14 @@ const identifiant = 'carte';
     .point__nom,
     .bureau__nom {
       display: none;
+    }
+
+    .bureau .bureau__carte {
+      padding: 5px 8px;
+    }
+
+    .bureau .bureau__carte :global(.logo) {
+      height: 16px;
     }
 
     .point,

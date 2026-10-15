@@ -191,6 +191,23 @@ function initialiser(bloc: HTMLElement) {
     });
   }
 
+  // « Autre chose » coché : le champ « de quoi s'agit-il » apparaît et devient obligatoire.
+  const caseAutre = form.querySelector<HTMLInputElement>('[data-autre-case]');
+  const champAutre = form.querySelector<HTMLElement>('[data-autre-champ]');
+  const saisieAutre = champAutre?.querySelector<HTMLInputElement>('input');
+  const basculerAutre = () => {
+    if (!caseAutre || !champAutre || !saisieAutre) return;
+    champAutre.hidden = !caseAutre.checked;
+    saisieAutre.required = caseAutre.checked;
+    saisieAutre.removeAttribute('aria-invalid');
+  };
+  caseAutre?.addEventListener('change', () => {
+    basculerAutre();
+    if (caseAutre.checked) saisieAutre?.focus({ preventScroll: true });
+  });
+  form.addEventListener('reset', () => setTimeout(basculerAutre));
+  basculerAutre();
+
   afficher(0, false);
 }
 

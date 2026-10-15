@@ -10,14 +10,14 @@
 
 ### Branche `ameliorations-accueil` (16 octobre 2026, à tester par Claudiu avant fusion)
 - **Haut de page** : accroche raccourcie ; sur téléphone le titre est plus grand et tout le texte reste sur la pelouse et la route.
-- **Chiffres** : 6 chiffres confirmés (6 ans, 50+, 2 frères, 8 personnes, 5 métiers, 12/12 mois) ; la garantie n'y est plus (déjà en haut). Retirés de la page À propos (doublon avec l'équipe).
+- **Chiffres** : 8 chiffres confirmés (6 ans, 50+, 2 frères, 8 personnes, 5 métiers, 12/12 mois, 10 ans de garantie, 0 € la visite). Retirés de la page À propos (doublon avec l'équipe).
 - **Moins de répétitions** : phrases « La première chose qu'on voit de chez vous » et « Chaque façade a sa seconde jeunesse » (photo) supprimées ; garantie et « gratuit » retirés des endroits proches de leur première mention ; Umons sans la phrase déjà dite par le titre.
 - **Espaces** entre les sections réduits (44 px téléphone, 72 px ordinateur au lieu de 72 et 120).
 - **Avant/après** : un curseur partout (Namur ×2, Halle, Charleroi) ; les paires aux angles différents sont cadrées au mieux, à revoir à l'œil.
-- **Étapes** : 4 étapes (la 4e est « Façade terminée », avec la cour de l'UMons comme autre point de vue). Plus de défilement collant : pastilles numérotées et bouton « Étape suivante », une étape à la fois.
-- **Carte de Belgique** refaite : bureau de Halle en brique rouge, points sombres pour les chantiers, villes repères, toucher une commune montre ses chantiers (liste de communes sous la carte sur téléphone). Texte « quelques chantiers » partout (plus jamais « toutes nos réalisations »).
+- **Étapes** : 4 étapes l'une sous l'autre (la 4e est « Façade terminée », avec la cour de l'UMons comme autre point de vue). Chaque photo a son cadre ; sur ordinateur le texte reste en vue à gauche.
+- **Carte de Belgique** refaite : bureau de Halle avec le logo et le nom en rouge, Namur en premier partout (liste, bande, carte), points sombres pour les chantiers, villes repères, toucher une commune montre ses chantiers (liste de communes sous la carte sur téléphone). Texte « quelques chantiers » partout (plus jamais « toutes nos réalisations »).
 - **Équipe** : « Deux frères, une équipe de 8. »
-- **Formulaire sur téléphone** : tuiles en 2 colonnes, boutons Continuer / Envoyer collés en bas de l'écran.
+- **Formulaire** : tuile « Façade complète, de A à Z » ; « Autre chose » ouvre un champ pour préciser ; sur téléphone, tuiles en 2 colonnes et boutons Continuer / Envoyer collés en bas de l'écran. Les blocs « Montrez-nous votre façade » et « Ou directement » sont retirés (les photos se proposent après l'envoi, sur WhatsApp) ; le calculateur devient un « simulateur de surface » expliqué, à droite du formulaire sur ordinateur.
 - **Email** : bouton Email ajouté dans la barre du bas sur téléphone et dans le bandeau d'appel des pages intérieures.
 
 ### Reste à faire côté Claudiu
