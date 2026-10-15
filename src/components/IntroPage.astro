@@ -22,6 +22,8 @@ interface Props {
 const { langue, fil, surtitre, titre, texte, image } = Astro.props;
 const textes = t(langue);
 const avecVisuel = Astro.slots.has('visuel');
+// Le titre ne passe jamais à la ligne au milieu d'un mot : sa taille s'adapte au mot le plus long (« Gevelschilderwerk »).
+const motLePlusLong = Math.max(...titre.split(/\s+/).map((mot) => mot.length));
 ---
 
 {
@@ -42,7 +44,7 @@ const avecVisuel = Astro.slots.has('visuel');
       <div class="wrap intro__contenu">
         <FilAriane langue={langue} etapes={fil} clair />
         {surtitre && <p class="intro__pastille">{surtitre}</p>}
-        <h1>{titre}</h1>
+        <h1 style={`--mot: ${motLePlusLong}`}>{titre}</h1>
         {texte && <p class="intro__texte">{texte}</p>}
         <slot />
       </div>
@@ -53,7 +55,7 @@ const avecVisuel = Astro.slots.has('visuel');
         <div class="intro__contenu">
           <FilAriane langue={langue} etapes={fil} />
           {surtitre && <p class="surtitre">{surtitre}</p>}
-          <h1>{titre}</h1>
+          <h1 style={`--mot: ${motLePlusLong}`}>{titre}</h1>
           {texte && <p class="intro__texte">{texte}</p>}
           <slot />
         </div>
@@ -84,11 +86,14 @@ const avecVisuel = Astro.slots.has('visuel');
     flex-direction: column;
     align-items: flex-start;
     gap: 22px;
+    width: 100%;
+    container-type: inline-size;
   }
 
+  /* 0,66 em : la largeur d’une capitale de la police des titres (plus large aux petites tailles), avec une marge. */
   .intro h1 {
-    max-width: 14ch;
-    font-size: clamp(42px, 6.4vw, 96px);
+    max-width: max(14ch, calc(var(--mot) * 0.66em));
+    font-size: min(clamp(42px, 6.4vw, 96px), calc(100cqi / (var(--mot) * 0.66)));
   }
 
   .intro__texte {

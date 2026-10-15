@@ -474,7 +474,20 @@ const estActif = (href: string) => cheminActuel.startsWith(href);
     }
 
     .entete__langue-mobile :global(.langues__lien) {
-      min-width: 34px;
+      min-width: 40px;
+    }
+  }
+
+  /* Très petits écrans : le bouton menu garde seulement ses traits (son nom reste lu par les lecteurs d'écran). */
+  @media (max-width: 340px) {
+    .entete__burger {
+      justify-content: center;
+      width: 46px;
+      padding: 0;
+    }
+
+    .entete__burger > span:first-child {
+      display: none;
     }
   }
 
@@ -535,6 +548,30 @@ const estActif = (href: string) => cheminActuel.startsWith(href);
     .entete__langue-mobile,
     .panneau {
       display: none;
+    }
+  }
+
+  /* « Moins d'animations » : l'en-tête et le menu apparaissent sans glisser, en fondu seulement. */
+  @media (prefers-reduced-motion: reduce) {
+    .entete,
+    .panneau,
+    .panneau__nav a {
+      transform: none !important;
+    }
+
+    .entete {
+      transition:
+        background-color 300ms var(--ease),
+        border-color 300ms var(--ease);
+    }
+
+    .entete--cache {
+      visibility: hidden;
+    }
+
+    .panneau__nav a {
+      transition: opacity 300ms var(--ease);
+      transition-delay: 0ms;
     }
   }
 </style>

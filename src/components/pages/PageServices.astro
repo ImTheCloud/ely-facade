@@ -74,7 +74,7 @@ const s = textes.services;
 
   .ligne-metier {
     display: grid;
-    grid-template-columns: auto 1fr auto;
+    grid-template-columns: auto minmax(0, 1fr) auto;
     align-items: center;
     gap: 16px 20px;
     padding-block: 26px;
@@ -144,9 +144,22 @@ const s = textes.services;
     color: var(--color-accent);
   }
 
+  /* Téléphone : l'icône et la flèche en haut, le nom du métier dessous sur toute la largeur (« Gevelschilderwerk » est long). */
+  @media (max-width: 599px) {
+    .ligne-metier__texte {
+      grid-column: 1 / -1;
+      grid-row: 2;
+    }
+
+    .ligne-metier__voir {
+      grid-column: 3;
+      grid-row: 1;
+    }
+  }
+
   @media (min-width: 900px) {
     .ligne-metier {
-      grid-template-columns: 48px auto 1fr auto;
+      grid-template-columns: 48px auto minmax(0, 1fr) auto;
       gap: 28px;
       padding-block: 34px;
     }

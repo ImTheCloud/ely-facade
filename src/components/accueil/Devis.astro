@@ -31,7 +31,7 @@ const calcul = devis.calculateur;
       <FormulaireDevis langue={langue} />
     </div>
 
-    <aside class="devis__aides">
+    <div class="devis__aides">
       <!-- Calculateur de surface : seulement avec JavaScript (sinon, Elisei mesure sur place). -->
       <div class="aide calcul" data-calcul hidden>
         <p class="aide__titre">{calcul.titre}</p>
@@ -82,7 +82,7 @@ const calcul = devis.calculateur;
           {entreprise.email}
         </a>
       </div>
-    </aside>
+    </div>
   </div>
 </section>
 

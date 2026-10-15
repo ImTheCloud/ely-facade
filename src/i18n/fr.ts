@@ -1,6 +1,5 @@
 /** Tous les textes d'interface en français. Le NL suit exactement la même structure. */
 export const fr = {
-  code: 'fr',
   htmlLang: 'fr-BE',
   pays: 'Belgique',
 
@@ -15,6 +14,7 @@ export const fr = {
     devis: 'Demander un devis',
     whatsapp: 'Écrire sur WhatsApp',
     appeler: 'Appeler',
+    contactAria: 'Nous contacter',
   },
 
   deuxPoints: '\u00a0: ',
@@ -43,6 +43,8 @@ export const fr = {
     droits: 'Tous droits réservés',
     zone: 'Bureau à Halle · Partout en Belgique',
     entreprise: 'L’entreprise',
+    menuAria: 'Plan du site',
+    languesAria: 'Langue du site',
   },
 
   accessibilite: {
@@ -137,31 +139,25 @@ export const fr = {
       titre: 'Immeuble de trois étages',
       accroche: 'Une façade réalisée de A à Z',
       texte: 'Un immeuble de trois étages à Namur, en façade blanche et grise. Nos équipes ont réalisé la façade de A à Z.',
-      batiments: [],
     },
     'namur-balcons': {
       titre: 'Immeuble à balcons',
       accroche: 'Cinq niveaux, de l’échafaudage à la façade blanche',
       texte: 'Un immeuble à balcons de cinq niveaux à Namur, sur sa colline. Nos équipes ont réalisé la façade de A à Z.',
-      batiments: [],
     },
     halle: {
       titre: 'Maison',
       accroche: 'Une maison à Halle, la commune de notre bureau',
       texte: 'Une maison à Halle\u00a0: le pignon sous échafaudage, puis la maison terminée.',
-      batiments: [],
     },
     charleroi: {
       titre: 'Rangées de maisons',
       accroche: 'Deux rangées de maisons mitoyennes',
       texte: 'Deux rangées de maisons mitoyennes à Charleroi, sous échafaudage puis terminées.',
-      batiments: [],
     },
     evere: {
       titre: 'Immeuble d’appartements',
       accroche: 'Un immeuble à Evere',
-      texte: 'Un immeuble d’appartements à Evere, photographié de nuit.',
-      batiments: [],
     },
   },
 
@@ -238,7 +234,6 @@ export const fr = {
     devis: {
       titre: 'Un projet pour votre façade\u00a0?',
       texte: 'Visite sur place gratuite, sans engagement. Le devis est établi au mètre carré de façade.',
-      bouton: 'Demander ma visite gratuite',
     },
   },
 
@@ -452,16 +447,15 @@ export const fr = {
     /** Les phrases d'émotion entre les sections. Le mot entre crochets se souligne en rouge. */
     emotions: {
       durer: { phrase: 'Une façade refaite pour [durer].', note: 'Garantie de 10\u00a0ans minimum' },
-      premiere: { phrase: 'La première chose qu’on voit de [chez vous].', note: '' },
-      jeunesse: { phrase: 'Chaque façade a sa [seconde jeunesse].', note: '' },
-      exigence: { phrase: 'Une maison ou une université\u00a0: la [même exigence].', note: '' },
+      premiere: { phrase: 'La première chose qu’on voit de [chez vous].' },
+      jeunesse: { phrase: 'Chaque façade a sa [seconde jeunesse].' },
+      exigence: { phrase: 'Une maison ou une université\u00a0: la [même exigence].' },
     },
 
     avantApres: {
       pastille: 'Avant, après',
       titre: 'La différence se voit.',
       texte: 'Faites glisser le curseur\u00a0: la même façade pendant les travaux, puis une fois terminée.',
-      aide: 'Glissez pour comparer',
       avant: 'Pendant les travaux',
       apres: 'Terminé',
       aria: 'Comparer la façade pendant les travaux et une fois terminée',

@@ -25,11 +25,11 @@ const liens = liensNavigation(langue);
       <a href={chemin('accueil', langue)} class="pied__logo" aria-label={textes.entete.accueilAria}>
         <Logo />
       </a>
-      <SelecteurLangue langue={langue} cheminActuel={cheminActuel} />
+      <SelecteurLangue langue={langue} cheminActuel={cheminActuel} etiquette={textes.piedDePage.languesAria} />
     </div>
 
     <div class="pied__colonnes">
-      <nav class="pied__col" aria-label={textes.entete.menuAria}>
+      <nav class="pied__col" aria-label={textes.piedDePage.menuAria}>
         <span class="pied__titre">{textes.entete.menu}</span>
         {liens.map((lien) => <a href={lien.href}>{lien.libelle}</a>)}
       </nav>
@@ -94,7 +94,7 @@ const liens = liensNavigation(langue);
     display: flex;
     flex-direction: column;
     align-items: flex-start;
-    gap: 6px;
+    gap: 0;
     font-size: var(--size-small);
     color: var(--color-text);
   }
@@ -109,7 +109,7 @@ const liens = liensNavigation(langue);
   .pied__col a {
     display: inline-flex;
     align-items: center;
-    min-height: 32px;
+    min-height: 44px;
     color: var(--color-ink);
     font-weight: 550;
     text-decoration: none;

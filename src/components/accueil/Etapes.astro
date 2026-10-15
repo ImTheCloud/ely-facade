@@ -223,6 +223,14 @@ const image = { widths: [480, 768, 1080, 1440], format: 'webp' as const, quality
       transform: none;
     }
 
+    /* « Moins d'animations » : les photos se relaient en fondu, sans léger zoom. */
+    @media (prefers-reduced-motion: reduce) {
+      .scene__plan :global(img) {
+        transform: none;
+        transition: none;
+      }
+    }
+
     .scene__plan figcaption {
       position: absolute;
       left: 16px;

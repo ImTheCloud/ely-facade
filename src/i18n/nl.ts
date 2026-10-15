@@ -1,6 +1,5 @@
 /** Alle interfaceteksten in het Nederlands. Dezelfde structuur als fr.ts. */
 export const nl = {
-  code: 'nl',
   htmlLang: 'nl-BE',
   pays: 'België',
 
@@ -15,6 +14,7 @@ export const nl = {
     devis: 'Offerte aanvragen',
     whatsapp: 'Schrijf ons op WhatsApp',
     appeler: 'Bel ons',
+    contactAria: 'Contacteer ons',
   },
 
   deuxPoints: ': ',
@@ -43,6 +43,8 @@ export const nl = {
     droits: 'Alle rechten voorbehouden',
     zone: 'Kantoor in Halle · Overal in België',
     entreprise: 'Het bedrijf',
+    menuAria: 'Sitemap',
+    languesAria: 'Taal van de website',
   },
 
   accessibilite: {
@@ -137,31 +139,25 @@ export const nl = {
       titre: 'Gebouw met drie verdiepingen',
       accroche: 'Een gevel van A tot Z',
       texte: 'Een gebouw met drie verdiepingen in Namen, met een witte en grijze gevel. Onze ploegen hebben de gevel van A tot Z uitgevoerd.',
-      batiments: [],
     },
     'namur-balcons': {
       titre: 'Gebouw met balkons',
       accroche: 'Vijf bouwlagen, van de steiger tot de witte gevel',
       texte: 'Een gebouw met balkons en vijf bouwlagen in Namen, op een heuvel. Onze ploegen hebben de gevel van A tot Z uitgevoerd.',
-      batiments: [],
     },
     halle: {
       titre: 'Woning',
       accroche: 'Een woning in Halle, de gemeente van ons kantoor',
       texte: 'Een woning in Halle: de zijgevel in de steiger, daarna de afgewerkte woning.',
-      batiments: [],
     },
     charleroi: {
       titre: 'Rijwoningen',
       accroche: 'Twee rijen aaneengesloten woningen',
       texte: 'Twee rijen aaneengesloten woningen in Charleroi, in de steiger en daarna afgewerkt.',
-      batiments: [],
     },
     evere: {
       titre: 'Appartementsgebouw',
       accroche: 'Een gebouw in Evere',
-      texte: 'Een appartementsgebouw in Evere, ’s avonds gefotografeerd.',
-      batiments: [],
     },
   },
 
@@ -238,7 +234,6 @@ export const nl = {
     devis: {
       titre: 'Een project voor uw gevel?',
       texte: 'Gratis en vrijblijvend plaatsbezoek. De offerte wordt opgemaakt per vierkante meter gevel.',
-      bouton: 'Plan mijn gratis plaatsbezoek',
     },
   },
 
@@ -452,16 +447,15 @@ export const nl = {
     /** De emotionele zinnen tussen de secties. Het woord tussen haakjes wordt rood onderstreept. */
     emotions: {
       durer: { phrase: 'Een gevel die [blijft].', note: 'Minstens 10\u00a0jaar garantie' },
-      premiere: { phrase: 'Het eerste wat men van [uw huis] ziet.', note: '' },
-      jeunesse: { phrase: 'Elke gevel krijgt een [tweede jeugd].', note: '' },
-      exigence: { phrase: 'Een huis of een universiteit: [dezelfde zorg].', note: '' },
+      premiere: { phrase: 'Het eerste wat men van [uw huis] ziet.' },
+      jeunesse: { phrase: 'Elke gevel krijgt een [tweede jeugd].' },
+      exigence: { phrase: 'Een huis of een universiteit: [dezelfde zorg].' },
     },
 
     avantApres: {
       pastille: 'Voor en na',
       titre: 'Het verschil is zichtbaar.',
       texte: 'Schuif met de cursor: dezelfde gevel tijdens de werken en daarna afgewerkt.',
-      aide: 'Schuif om te vergelijken',
       avant: 'Tijdens de werken',
       apres: 'Afgewerkt',
       aria: 'De gevel tijdens de werken en afgewerkt vergelijken',

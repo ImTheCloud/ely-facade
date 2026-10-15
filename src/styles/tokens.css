@@ -16,6 +16,7 @@
   --color-accent: #c8202b;       /* rouge du logo : touches seulement */
   --color-accent-dark: #a31923;  /* rouge au survol */
   --color-accent-soft: #fceeee;  /* fond rosé très pâle */
+  --color-accent-clair: #f0646b; /* rouge lisible sur l'ardoise (5:1) */
   --color-border: #e6e6e2;       /* bordures des tuiles */
   --color-border-field: #8b9097; /* bordure des champs : lisible */
   --color-erreur: #b3261e;
@@ -64,6 +65,14 @@
   --ease: cubic-bezier(0.22, 0.61, 0.36, 1);
   --ease-out: cubic-bezier(0.16, 1, 0.3, 1);
   --speed: 220ms;
+}
+
+/* Très petits téléphones : les mots longs du néerlandais (« aaneengesloten ») tiennent sur une ligne. */
+@media (max-width: 359px) {
+  :root {
+    --size-h1: 38px;
+    --size-h2: 30px;
+  }
 }
 
 @media (min-width: 900px) {

@@ -11,9 +11,11 @@ interface Props {
   cheminActuel: string;
   /** Version resserrée (en-tête sur téléphone). */
   compact?: boolean;
+  /** Nom du sélecteur pour les lecteurs d'écran, s'il y en a plusieurs sur la page (pied de page). */
+  etiquette?: string;
 }
 
-const { langue, cheminActuel, compact = false } = Astro.props;
+const { langue, cheminActuel, compact = false, etiquette } = Astro.props;
 const textes = t(langue);
 
 const options = LANGUES.map((code) => ({
@@ -25,7 +27,7 @@ const options = LANGUES.map((code) => ({
 }));
 ---
 
-<nav class:list={['langues', { 'langues--compact': compact }]} aria-label={textes.langues.choisirAria}>
+<nav class:list={['langues', { 'langues--compact': compact }]} aria-label={etiquette ?? textes.langues.choisirAria}>
   {
     options.map((option) => (
       <a
@@ -86,7 +88,7 @@ const options = LANGUES.map((code) => ({
   }
 
   .langues--compact .langues__lien {
-    min-width: 38px;
+    min-width: 44px;
     padding: 0 6px;
     font-size: 12px;
   }

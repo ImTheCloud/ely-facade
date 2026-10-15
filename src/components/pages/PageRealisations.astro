@@ -84,6 +84,7 @@ const base = chemin('realisations', langue);
 
   .chantiers__liste {
     display: grid;
+    grid-template-columns: minmax(0, 1fr);
     gap: clamp(28px, 3vw, 40px) var(--tile-gap);
     margin: 0;
     padding: 0;
@@ -174,7 +175,7 @@ const base = chemin('realisations', langue);
 
   @media (min-width: 900px) {
     .chantiers__liste {
-      grid-template-columns: repeat(2, 1fr);
+      grid-template-columns: repeat(2, minmax(0, 1fr));
     }
 
     .chantier--vedette {

@@ -1,6 +1,6 @@
 /**
  * Fabrique, à partir des SVG du logo (design/logo), les fichiers du site :
- * copie dans src/assets/marque, favicon, icône iPhone et image de partage (WhatsApp, Facebook).
+ * logo (normal et blanc) dans src/assets/marque, favicon, icône iPhone et image de partage (WhatsApp, Facebook).
  * À relancer si le logo change : node scripts/generer-marque.mjs
  */
 import sharp from 'sharp';
@@ -9,7 +9,7 @@ import fs from 'node:fs';
 const source = 'design/logo';
 const marque = 'src/assets/marque';
 fs.mkdirSync(marque, { recursive: true });
-for (const nom of ['logo.svg', 'icone.svg']) fs.copyFileSync(`${source}/${nom}`, `${marque}/${nom}`);
+fs.copyFileSync(`${source}/logo.svg`, `${marque}/logo.svg`);
 
 // Version blanche pour l'en-tête posé sur la photo : tout en blanc sauf la brique rouge de la maison.
 const logoSource = fs.readFileSync(`${source}/logo.svg`, 'utf8');

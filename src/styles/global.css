@@ -58,6 +58,8 @@ h3 {
   font-weight: 700;
   color: var(--color-ink);
   text-wrap: balance;
+  /* Dernier recours sur les très petits écrans : un mot trop long (néerlandais) passe à la ligne plutôt que de déborder. */
+  overflow-wrap: break-word;
 }
 
 /* Les grands titres : capitales, très gras, serrés. */

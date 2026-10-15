@@ -1,12 +1,12 @@
 ---
 import PageChantier from '~/components/pages/PageChantier.astro';
-import { CHANTIERS, type CleChantier } from '~/data/chantiers';
+import { SLUGS_CHANTIERS, type CleChantierAvecPage } from '~/i18n/slugs';
 
 export function getStaticPaths() {
-  return CHANTIERS.flatMap((c) => (c.slug ? [{ params: { slug: c.slug.fr }, props: { cle: c.cle } }] : []));
+  return (Object.keys(SLUGS_CHANTIERS) as CleChantierAvecPage[]).map((cle) => ({ params: { slug: SLUGS_CHANTIERS[cle].fr }, props: { cle } }));
 }
 
-const { cle } = Astro.props as { cle: CleChantier };
+const { cle } = Astro.props as { cle: CleChantierAvecPage };
 ---
 
 <PageChantier langue="fr" cle={cle} />

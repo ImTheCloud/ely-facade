@@ -21,3 +21,5 @@ export const SLUGS_CHANTIERS = {
   halle: { fr: 'halle-maison', nl: 'halle-woning' },
   charleroi: { fr: 'charleroi-maisons', nl: 'charleroi-woningen' },
 } as const satisfies Record<string, Record<Langue, string>>;
+
+export type CleChantierAvecPage = keyof typeof SLUGS_CHANTIERS;

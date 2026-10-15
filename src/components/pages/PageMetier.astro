@@ -219,6 +219,7 @@ const donnees = {
 
   .points__grille {
     display: grid;
+    grid-template-columns: minmax(0, 1fr);
     gap: 32px;
   }
 
@@ -241,6 +242,14 @@ const donnees = {
     font-size: var(--size-lead);
     font-weight: 600;
     color: var(--color-ink);
+    overflow-wrap: break-word;
+  }
+
+  @media (max-width: 399px) {
+    .points__liste li {
+      gap: 12px;
+      padding: 14px 16px;
+    }
   }
 
   .points__coche {

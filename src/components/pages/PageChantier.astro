@@ -10,12 +10,13 @@ import Duo from '../Duo.astro';
 import Icon from '../Icon.astro';
 import IntroPage from '../IntroPage.astro';
 import BaseLayout from '~/layouts/BaseLayout.astro';
-import { CHANTIERS, chantier as trouver, lienChantier, photo, type CleChantier } from '~/data/chantiers';
+import { CHANTIERS, chantier as trouver, lienChantier, photo } from '~/data/chantiers';
 import { chemin, t, type Langue } from '~/i18n';
+import type { CleChantierAvecPage } from '~/i18n/slugs';
 
 interface Props {
   langue: Langue;
-  cle: CleChantier;
+  cle: CleChantierAvecPage;
 }
 
 const { langue, cle } = Astro.props;
@@ -31,7 +32,7 @@ const lien = lienChantier(cle, langue);
 const groupesUmons: Record<string, number> = { 'mons-umons-cour': 0, 'mons-umons-immeuble-angle': 1, 'mons-umons-longue-facade': 2 };
 const groupes =
   cle === 'umons'
-    ? [0, 1, 2].map((n) => ({ titre: fiche.batiments[n], photos: c.photos.filter((p) => groupesUmons[p.split('/')[0]] === n) }))
+    ? [0, 1, 2].map((n) => ({ titre: textes.chantiers.umons.batiments[n], photos: c.photos.filter((p) => groupesUmons[p.split('/')[0]] === n) }))
     : [{ titre: '', photos: c.photos }];
 
 const grandes = Object.fromEntries(
