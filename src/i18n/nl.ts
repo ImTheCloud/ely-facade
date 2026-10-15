@@ -63,14 +63,21 @@ export const nl = {
 
   accueil: {
     hero: {
-      surtitre: 'Gevelrenovatie · Heel België',
-      titreDebut: 'Geef uw gevel',
-      titreFin: 'zijn glans terug.',
+      pastille: 'Gevelrenovatie · Heel België',
+      /** Eén regel per item: de titel past altijd op drie regels. Het laatste woord krijgt het licht. */
+      titre: ['Uw gevel', 'verdient te', 'stralen.'],
       texte:
-        'Gevelpleister, schilderwerk, reiniging, voegwerk, herstel van bakstenen: wij brengen uw gevel weer in orde, van het kleine huis tot het appartementsgebouw.',
-      note: 'Gratis plaatsbezoek, zonder verplichting.',
-      alt: 'Afgewerkt wit en grijs gebouw, van boven gezien, in Namen',
+        'Gevelpleister, schilderwerk, reiniging, voegwerk, herstel van bakstenen: van het kleine huis tot het appartementsgebouw. Gratis plaatsbezoek, minstens 10\u00a0jaar garantie.',
+      bouton: 'Plan mijn gratis plaatsbezoek',
+      appeler: 'Bel',
+      preuvesAria: 'Onze beloften',
+      preuves: ['Gratis plaatsbezoek', 'Minstens 10\u00a0jaar garantie', 'Overal in België'],
+      alt: 'Gebouw met drie verdiepingen in Namen, afgewerkte witte en grijze gevel, van bovenaf gezien',
+      film: {
+        etapes: ['Bergen · Universiteit van Bergen', 'Namen · Gebouw met balkons', 'Namen · Gebouw met drie verdiepingen'],
+      },
     },
+
 
     chiffres: {
       aria: 'Ely Facade in cijfers',

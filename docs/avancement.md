@@ -6,7 +6,7 @@
 - [x] 1. Photos contrôlées à l'œil : plaques masquées (2 à Mons : `mons-umons-immeuble-angle/etape-1-membrane-2`, `etape-2-sous-couche`), panneau de chantier et numéros peints sur des portes de garage masqués (Charleroi, `charleroi-rangee-1/pendant`), personnes et voiture recadrées hors de `namur-immeuble-3-etages/pendant-face`. Ciel prolongé au-dessus du toit de la photo d'accueil (le faîte touchait le bord) : reflet du ciel de la photo puis dégradé, sans rien inventer d'autre (`prolongerCiel()` dans `scripts/importer-photos.mjs`). Cadrage vertical pour téléphone : `accueil/hero-namur-mobile.jpg`.
 - [x] 2. Nettoyage : anciennes photos (`src/assets/photos/*.jpg`, `paires/`, `accueil.jpg`), anciens avant/après, étapes, galerie et leurs textes FR/NL supprimés.
 - [x] 3. Références : sites Framer bloqués par le réseau de la session ; capture Ironwood étudiée et fiches publiques résumées dans `docs/references/README.md`.
-- [ ] 4. En-tête et haut de page en 3 variantes
+- [x] 4. En-tête et haut de page en 3 variantes (voir `docs/variantes.md`) : A « Mise au point », B « Film d'ouverture », C « La façade qui brille » (sur l'accueil). En-tête posé dans la photo (logo blanc avec la brique rouge, liens blancs, bouton clair), blanc flouté au défilement. Titres en Bricolage Grotesque (capitales, 800, -0,03 em). Cadrage du toit calculé au pixel près pour toutes les tailles d'écran. **À faire dès que Claudiu a choisi** : supprimer les variantes non retenues (liste dans `docs/variantes.md`).
 - [ ] 5. Reste de l'accueil
 - [ ] 6. Pages
 - [ ] 7. SEO
@@ -15,6 +15,10 @@
 - [ ] 10. Rapport final
 
 ### Décisions prises seul (à relire par Claudiu)
+- Haut de page par défaut : variante C. C'est la seule où le titre ne tombe pas sur les fenêtres (décision 12) ; les détails sont dans un panneau de verre pour rester lisibles devant la façade blanche.
+- Téléphone : cadrage sur l'aile gauche de l'immeuble (toit et façade en haut, route et pelouse en bas sous le texte) ; le cadrage sur l'angle droit mettait le texte sur la façade.
+- Police des titres : Bricolage Grotesque, version « taille optique » (plus fine et serrée aux grandes tailles). Gardée : le rendu en capture est convaincant, Sora et Manrope n'ont pas été nécessaires.
+- Masques des photos : la couleur des aplats est maintenant la couleur moyenne de la zone masquée (avant : celle de toute la photo, d'où des rectangles gris visibles).
 - Ciel prolongé sur la photo d'accueil (retouche, comme le ciel déjà retouché par Claudiu) : c'était le seul moyen que le toit « respire » sous l'en-tête.
 - WebKit (iPhone) n'a pas pu être installé dans la session cloud (téléchargement bloqué par le réseau) : tests faits avec Chromium en émulation iPhone et Android. À revérifier sur un vrai iPhone.
 - « Charleroi : 2 chantiers, 23 maisons » (nom du dossier photo) n'est pas affiché : chiffre non confirmé (noté dans `docs/suivi-client.md`).

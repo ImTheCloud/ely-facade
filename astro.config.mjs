@@ -18,8 +18,8 @@ export default defineConfig({
   },
   integrations: [
     sitemap({
-      // La page 404 est en noindex : elle n'a rien à faire dans le sitemap.
-      filter: (page) => !page.includes('/404/'),
+      // La page 404 et les pages de comparaison des variantes sont en noindex : hors sitemap.
+      filter: (page) => !page.includes('/404/') && !page.includes('/variantes/'),
 
       // Les adresses sont traduites (/services/ ↔ /nl/diensten/) : on relie
       // les deux langues nous-mêmes, avec la même table que le sélecteur de langue.

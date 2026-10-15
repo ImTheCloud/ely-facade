@@ -53,35 +53,24 @@ body {
 h1,
 h2,
 h3 {
-  font-family: var(--font-text);
+  margin: 0;
+  font-family: var(--font-display);
   font-weight: 700;
   color: var(--color-ink);
-  margin: 0;
   text-wrap: balance;
 }
 
-h1 {
-  font-size: var(--size-h1);
-  line-height: 1.02;
-  letter-spacing: -0.04em;
-  font-weight: 800;
-}
-
+/* Les grands titres : capitales, très gras, serrés. */
+h1,
 h2 {
-  font-size: var(--size-h2);
-  line-height: 1.05;
-  letter-spacing: -0.035em;
-}
-
-h3 {
-  font-size: var(--size-h3);
-  line-height: 1.2;
-  letter-spacing: -0.02em;
+  font-weight: 800;
+  text-transform: uppercase;
+  letter-spacing: var(--tracking-display);
 }
 
 h1 {
   font-size: var(--size-h1);
-  line-height: 0.9;
+  line-height: 0.92;
 }
 
 h2 {
@@ -91,8 +80,8 @@ h2 {
 
 h3 {
   font-size: var(--size-h3);
-  line-height: 1.05;
-  letter-spacing: 0.01em;
+  line-height: 1.15;
+  letter-spacing: -0.015em;
 }
 
 p {

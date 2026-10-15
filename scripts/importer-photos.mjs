@@ -16,13 +16,13 @@ const NA = 'Namur/';
 const NB = 'NamurAutrechantier/';
 const UM = 'UMons Université/';
 
-/** [fichier source, destination, options { crop:[x0,y0,x1,y1], masques:[[x0,y0,x1,y1]], ciel, largeur, hauteur }] */
+/** [fichier source, destination, options { crop:[x0,y0,x1,y1], masques:[[x0,y0,x1,y1]], ciel, largeur, hauteur, masqueFacade }] */
 const photos = [
   // Accueil
   // Ciel prolongé au-dessus du toit (le faîte touche le bord de la photo) : voir prolongerCiel().
-  [NA + 'Photo pour Page principale.jpeg', 'accueil/hero-namur', { ciel: 0.3, largeur: 2400 }],
-  // Cadrage vertical pour téléphone : l'angle de l'immeuble, beaucoup de ciel au-dessus du toit.
-  [NA + 'Photo pour Page principale.jpeg', 'accueil/hero-namur-mobile', { ciel: 0.42, crop: [47, 0, 84, 100], largeur: 1400, hauteur: 2800 }],
+  [NA + 'Photo pour Page principale.jpeg', 'accueil/hero-namur', { ciel: 0.3, largeur: 2400, masqueFacade: true }],
+  // Cadrage vertical pour téléphone : l'aile gauche et le toit en haut, la route et la pelouse en bas (sous le texte).
+  [NA + 'Photo pour Page principale.jpeg', 'accueil/hero-namur-mobile', { ciel: 0.3, crop: [5, 13, 34, 100], largeur: 1400, hauteur: 2800, masqueFacade: true }],
 
   // Namur : immeuble de 3 étages
   [NA + 'Avant-apres copie 2/apres.jpeg', 'namur-immeuble-3-etages/apres-rue', { masques: [[1, 66.3, 7.4, 70]] }],
@@ -159,8 +159,30 @@ async function prolongerCiel(buffer, fraction) {
     .toBuffer();
 }
 
+/**
+ * Masque des surfaces blanches de la façade (PNG transparent, même cadrage que la photo) :
+ * le reflet de lumière du haut de page ne passe que sur elles. Le ciel bleu et la verdure restent hors du masque.
+ */
+async function masqueFacade(fichier) {
+  const { data, info } = await sharp(fichier).resize({ width: 1200 }).raw().toBuffer({ resolveWithObject: true });
+  const alpha = Buffer.alloc(info.width * info.height);
+  for (let i = 0, p = 0; i < alpha.length; i++, p += info.channels) {
+    const r = data[p], g = data[p + 1], b = data[p + 2];
+    const min = Math.min(r, g, b), ecart = Math.max(r, g, b) - min;
+    const clair = Math.min(1, Math.max(0, (min - 125) / 70));
+    const neutre = Math.min(1, Math.max(0, 1 - (ecart - 14) / 26));
+    alpha[i] = Math.round(255 * clair * neutre);
+  }
+  const blanc = await sharp({ create: { width: info.width, height: info.height, channels: 3, background: '#ffffff' } }).raw().toBuffer();
+  const masque = await sharp(alpha, { raw: { width: info.width, height: info.height, channels: 1 } }).blur(1.5).extractChannel(0).raw().toBuffer();
+  await sharp(blanc, { raw: { width: info.width, height: info.height, channels: 3 } })
+    .joinChannel(masque, { raw: { width: info.width, height: info.height, channels: 1 } })
+    .png({ compressionLevel: 9, palette: false })
+    .toFile(fichier.replace(/\.jpg$/, '-masque.png'));
+}
+
 for (const [source, destination, options = {}] of photos) {
-  const { crop, masques = [], ciel, largeur = 2000, hauteur = largeur } = options;
+  const { crop, masques = [], ciel, largeur = 2000, hauteur = largeur, masqueFacade: avecMasque } = options;
   const original = await sharp(SRC + source).rotate().removeAlpha().toBuffer();
   const meta = await sharp(original).metadata();
   const W = meta.width;
@@ -173,7 +195,8 @@ for (const [source, destination, options = {}] of photos) {
     const top = Math.round((y0 / 100) * H);
     const width = Math.round((x1 / 100) * W) - left;
     const height = Math.round((y1 / 100) * H) - top;
-    const stats = await sharp(original).extract({ left, top, width, height }).stats();
+    // stats() lit l'image d'entrée, pas le résultat de extract() : on isole d'abord la zone.
+    const stats = await sharp(await sharp(original).extract({ left, top, width, height }).toBuffer()).stats();
     const [r, g, b] = stats.channels.map((c) => Math.round(c.mean));
     pieces.push({ input: { create: { width, height, channels: 3, background: { r, g, b } } }, left, top });
   }
@@ -193,5 +216,6 @@ for (const [source, destination, options = {}] of photos) {
   const fichier = `${OUT}${destination}.jpg`;
   fs.mkdirSync(fichier.slice(0, fichier.lastIndexOf('/')), { recursive: true });
   await image.resize({ width: largeur, height: hauteur, fit: 'inside', withoutEnlargement: true }).jpeg({ quality: 84, mozjpeg: true }).toFile(fichier);
+  if (avecMasque) await masqueFacade(fichier);
 }
 console.log(`${photos.length} photos importées dans ${OUT}`);

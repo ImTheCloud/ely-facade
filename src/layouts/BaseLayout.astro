@@ -4,10 +4,12 @@
 // Polices hébergées sur le site : aucun appel à Google Fonts.
 
 import '@fontsource-variable/dm-sans';
+import '@fontsource-variable/bricolage-grotesque/opsz.css';
 import '../styles/global.css';
 
 // Préchargées : sinon le navigateur ne les découvre qu'après avoir lu le CSS.
 import policeTexte from '@fontsource-variable/dm-sans/files/dm-sans-latin-wght-normal.woff2?url';
+import policeTitres from '@fontsource-variable/bricolage-grotesque/files/bricolage-grotesque-latin-opsz-normal.woff2?url';
 import imagePartage from '../assets/partage.png';
 import BarreMobile from '../components/BarreMobile.astro';
 import DonneesStructurees from '../components/DonneesStructurees.astro';
@@ -21,9 +23,11 @@ interface Props {
   description: string;
   /** Les pages légales et la 404 ne doivent pas remonter dans Google. */
   noindex?: boolean;
+  /** La page commence par une grande photo : l'en-tête se pose dedans, en blanc. */
+  surPhoto?: boolean;
 }
 
-const { langue, titre, description, noindex = false } = Astro.props;
+const { langue, titre, description, noindex = false, surPhoto = false } = Astro.props;
 const textes = t(langue);
 
 const cheminActuel = Astro.url.pathname;
@@ -85,6 +89,7 @@ const urlPartage = new URL(imagePartage.src, Astro.site).href;
     </script>
 
     <link rel="preload" href={policeTexte} as="font" type="font/woff2" crossorigin />
+    <link rel="preload" href={policeTitres} as="font" type="font/woff2" crossorigin />
 
     <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
     <link rel="icon" type="image/png" href="/favicon.png" />
@@ -123,7 +128,7 @@ const urlPartage = new URL(imagePartage.src, Astro.site).href;
   <body>
     <a class="skip-link" href="#contenu">{textes.accessibilite.allerAuContenu}</a>
 
-    <Entete langue={langue} cheminActuel={cheminActuel} />
+    <Entete langue={langue} cheminActuel={cheminActuel} surPhoto={surPhoto} />
 
     <main id="contenu">
       <slot />

@@ -1,191 +1,1010 @@
 ---
-/** Haut de page : une grande photo plein écran, le titre et les boutons à gauche. Rien ne bouge au défilement. */
-import { Image } from 'astro:assets';
-import Bouton from '../Bouton.astro';
-import { heroPhoto } from '../../data/chantiers';
-import { entreprise, lienDevis } from '../../data/entreprise';
+/**
+ * Haut de l'accueil : la photo de Namur en plein écran, l'en-tête posé dedans, le titre en bas à gauche.
+ *
+ * Trois variantes pour que Claudiu choisisse (voir docs/variantes.md) :
+ * - a « Mise au point » : la photo arrive floue et un peu zoomée, puis se pose et devient nette ;
+ *   le titre se révèle ligne par ligne.
+ * - b « Film d'ouverture » : trois façades terminées par l'équipe se succèdent en fondu (Mons, Namur),
+ *   puis le film s'arrête sur la photo de Namur.
+ * - c « La façade qui brille » : un reflet de lumière passe sur les surfaces blanches de la façade et sur le mot
+ *   « briller » ; le point du titre est la brique rouge du logo ; texte réparti en bas à gauche et à droite.
+ *
+ * Dans tous les cas : le bouton et le téléphone sont là tout de suite, rien ne bloque le chargement,
+ * tout se coupe avec prefers-reduced-motion et la photo seule reste belle sans JavaScript.
+ */
+import { getImage } from 'astro:assets';
+import Icon from '../Icon.astro';
+import masqueBureau from '../../assets/photos/accueil/hero-namur-masque.png';
+import masqueMobile from '../../assets/photos/accueil/hero-namur-mobile-masque.png';
+import { heroPhoto, photo } from '../../data/chantiers';
+import type { VarianteHero } from '../../data/hero';
+import { entreprise } from '../../data/entreprise';
 import { t, type Langue } from '../../i18n';
 
 interface Props {
   langue: Langue;
+  variante: VarianteHero;
 }
 
-const { langue } = Astro.props;
-const textes = t(langue);
-const hero = textes.accueil.hero;
+const { langue, variante } = Astro.props;
+const hero = t(langue).accueil.hero;
+
+/** Écran en portrait (téléphone, tablette debout) : cadrage vertical dédié, le toit juste sous l'en-tête. */
+const PORTRAIT = '(max-aspect-ratio: 4/5)';
+
+const bureau = await getImage({ src: heroPhoto.image, widths: [768, 1152, 1536, 1920, 2400], format: 'webp', quality: 78 });
+const mobile = await getImage({ src: heroPhoto.mobile, widths: [480, 720, 1010], format: 'webp', quality: 76 });
+
+// Variante a : une toute petite version de la photo, agrandie, sert d'image floue de départ.
+const flou = variante === 'a' ? await getImage({ src: heroPhoto.image, width: 48, format: 'webp', quality: 60 }) : undefined;
+const flouMobile = variante === 'a' ? await getImage({ src: heroPhoto.mobile, width: 24, format: 'webp', quality: 60 }) : undefined;
+
+// Variante b : les images du film (façades terminées), chargées après la photo principale.
+const film =
+  variante === 'b'
+    ? await Promise.all(
+        ['mons-umons-cour/etape-3-aile-terminee', 'namur-immeuble-balcons/apres-cote-gauche'].map((chemin) =>
+          getImage({ src: photo(chemin), widths: [768, 1280, 1920], format: 'webp', quality: 74 }),
+        ),
+      )
+    : [];
+
+// Variante c : masques des surfaces blanches de la façade, pour le reflet.
+const masques =
+  variante === 'c'
+    ? {
+        bureau: await getImage({ src: masqueBureau, width: 1200, format: 'webp', quality: 55 }),
+        mobile: await getImage({ src: masqueMobile, width: 720, format: 'webp', quality: 55 }),
+      }
+    : undefined;
+
+// Le dernier mot du titre reçoit la lumière ; en variante c, son point devient la brique rouge du logo.
+const lignes = hero.titre.slice(0, -1);
+const derniere = hero.titre[hero.titre.length - 1];
+const motFinal = derniere.replace(/\.$/, '');
 ---
 
-<section class="hero">
-  <div class="hero__photo">
-    <Image
-      src={heroPhoto.image}
-      alt={hero.alt}
-      widths={[640, 960, 1280, 1600, 2000, 2400]}
-      sizes="100vw"
-      format="webp"
-      loading="eager"
-      fetchpriority="high"
-      style="object-position: 50% 40%"
-    />
-  </div>
-  <div class="hero__voile"></div>
+<section
+  class:list={['hero', `hero--${variante}`]}
+  data-hero={variante}
+  style={masques ? `--masque: url('${masques.bureau.src}'); --masque-mobile: url('${masques.mobile.src}')` : undefined}
+>
+  <div class="hero__media">
+    <picture>
+      <source media={PORTRAIT} srcset={mobile.srcSet.attribute} sizes="100vw" type="image/webp" />
+      <img
+        class="hero__photo"
+        src={bureau.src}
+        srcset={bureau.srcSet.attribute}
+        sizes="100vw"
+        alt={hero.alt}
+        width={heroPhoto.image.width}
+        height={heroPhoto.image.height}
+        fetchpriority="high"
+        loading="eager"
+        decoding="async"
+      />
+    </picture>
 
-  <div class="hero__texte">
-    <div class="hero__contenu">
-      <p class="hero__surtitre">{hero.surtitre}</p>
-      <h1>{hero.titreDebut} <span class="hero__rouge">{hero.titreFin}</span></h1>
-      <p class="hero__lead">{hero.texte}</p>
-      <div class="hero__actions">
-        <Bouton href={lienDevis(langue)} variante="accent" iconeApres="fleche-diag" large>{textes.actions.devis}</Bouton>
-        <Bouton href={`tel:${entreprise.telephoneLien}`} variante="secondaire" icone="telephone" large class="hero__tel">
-          {entreprise.telephoneAffiche}
-        </Bouton>
+    {
+      flou && flouMobile && (
+        <picture class="hero__flou" aria-hidden="true">
+          <source media={PORTRAIT} srcset={flouMobile.src} />
+          <img src={flou.src} alt="" />
+        </picture>
+      )
+    }
+
+    {
+      film.length > 0 && (
+        <div class="hero__film" aria-hidden="true" data-film>
+          {film.map((image, i) => (
+            <img
+              class="hero__plan"
+              style={`--i: ${i}`}
+              src={image.src}
+              srcset={image.srcSet.attribute}
+              sizes="100vw"
+              alt=""
+              loading="eager"
+              fetchpriority="low"
+              decoding="async"
+            />
+          ))}
+          <div class="hero__carton" />
+        </div>
+      )
+    }
+
+    {masques && <div class="hero__reflet" aria-hidden="true"><span /></div>}
+  </div>
+
+  <div class="hero__voile" aria-hidden="true"></div>
+
+  <div class="hero__contenu">
+    <div class="hero__principal">
+      <p class="hero__pastille" data-entree style="--n: 0">
+        <span class="hero__brique" aria-hidden="true"></span>
+        {hero.pastille}
+      </p>
+
+      <h1 class="hero__titre">
+        {
+          lignes.map((ligne, i) => (
+            <span class="hero__ligne" style={`--n: ${i + 1}`}>
+              <span>{ligne}</span>{' '}
+            </span>
+          ))
+        }
+        <span class="hero__ligne" style={`--n: ${hero.titre.length}`}>
+          <span>
+            <span class="hero__lumiere" data-texte={motFinal}>{motFinal}</span>{
+              variante === 'c' ? (
+                <>
+                  <span class="hero__point" aria-hidden="true" />
+                  <span class="sr-only">.</span>
+                </>
+              ) : (
+                '.'
+              )
+            }
+          </span>
+        </span>
+      </h1>
+    </div>
+
+    <div class="hero__details">
+      <p class="hero__texte" data-entree style="--n: 4">{hero.texte}</p>
+
+      <div class="hero__actions" data-entree style="--n: 5">
+        <a class="hero__bouton" href="#devis">
+          <span>{hero.bouton}</span>
+          <span class="hero__fleche" aria-hidden="true"><Icon nom="fleche-diag" taille={18} epaisseur={2.2} /></span>
+        </a>
+        <a class="hero__tel" href={`tel:${entreprise.telephoneLien}`} aria-label={`${hero.appeler} ${entreprise.telephoneAffiche}`}>
+          <Icon nom="telephone" taille={18} />
+          <span>{entreprise.telephoneAffiche}</span>
+        </a>
       </div>
-      <p class="hero__note">{hero.note}</p>
+
+      <ul class="hero__preuves" aria-label={hero.preuvesAria} data-entree style="--n: 6">
+        {
+          hero.preuves.map((preuve) => (
+            <li>
+              <Icon nom="check" taille={16} epaisseur={2.4} />
+              {preuve}
+            </li>
+          ))
+        }
+      </ul>
     </div>
   </div>
+
+  {
+    variante === 'b' && (
+      <div class="hero__legende" aria-hidden="true" data-legende>
+        {hero.film.etapes.map((etape, i) => (
+          <span style={`--i: ${i}`}>{etape}</span>
+        ))}
+        <span class="hero__progression" />
+      </div>
+    )
+  }
 </section>
 
+<script>
+  import '~/scripts/hero';
+</script>
+
 <style>
+  /* =========================================================================
+     Base commune aux trois variantes
+     ========================================================================= */
   .hero {
+    --hero-marge-bas: clamp(24px, 5vh, 64px);
     position: relative;
-    height: 100svh;
-    min-height: 600px;
+    display: flex;
+    align-items: flex-end;
+    min-height: 100vh;
+    min-height: 100svh;
     overflow: hidden;
     color: #fff;
-    background: #14171a;
+    background: rgb(var(--voile));
+    isolation: isolate;
   }
 
+  .hero__media,
+  .hero__media picture,
   .hero__photo,
-  .hero__photo :global(img) {
+  .hero__flou img,
+  .hero__plan {
     position: absolute;
     inset: 0;
     width: 100%;
     height: 100%;
+  }
+
+  .hero__media {
+    z-index: -2;
+    overflow: hidden;
+    /* Les unités cqw / cqh ci-dessous se rapportent à cette boîte. */
+    container-type: size;
+  }
+
+  .hero__photo,
+  .hero__flou img,
+  .hero__plan {
+    display: block;
     object-fit: cover;
   }
 
-  /* Un voile sombre à gauche et en bas : le texte reste lisible, la façade reste visible à droite. */
+  /*
+   * Cadrage au pixel près : le faîte du toit se place toujours à « hauteur de l'en-tête + 52 px »,
+   * quelle que soit la taille de l'écran (jamais collé, jamais coupé), sans laisser de vide en bas.
+   * Photo bureau : hauteur = 73,17 % de la largeur, faîte à 23,08 % de la hauteur (= 16,89 % de la largeur).
+   */
+  .hero__media {
+    --faite: calc(var(--header-h) + 52px);
+    --cadrage: 50% min(0px, max(calc(var(--faite) - 16.89cqw), calc(100cqh - 73.17cqw)));
+  }
+
+  .hero__photo,
+  .hero__flou img {
+    object-position: var(--cadrage);
+  }
+
+  /* Photo téléphone : le ciel en haut, la route et la pelouse en bas ; on garde toujours le bas (le sol, sous le texte). */
+  @media (max-aspect-ratio: 4/5) {
+    .hero__media {
+      --cadrage: 50% 100%;
+    }
+  }
+
+  /* Le voile : ardoise bleutée, en haut (lisibilité de l'en-tête sur le ciel), à gauche et en bas (le texte). */
   .hero__voile {
     position: absolute;
     inset: 0;
+    z-index: -1;
+    pointer-events: none;
     background:
-      linear-gradient(to top, rgba(8, 14, 22, 0.78) 0%, rgba(8, 14, 22, 0.3) 45%, rgba(8, 14, 22, 0) 70%),
-      linear-gradient(to right, rgba(8, 14, 22, 0.5) 0%, rgba(8, 14, 22, 0.12) 55%, rgba(8, 14, 22, 0) 80%);
+      linear-gradient(to bottom, rgba(var(--voile), 0.5) 0%, rgba(var(--voile), 0.18) 14%, rgba(var(--voile), 0) 26%),
+      linear-gradient(to top, rgba(var(--voile), 0.74) 0%, rgba(var(--voile), 0.5) 24%, rgba(var(--voile), 0.1) 52%, rgba(var(--voile), 0) 66%),
+      linear-gradient(to right, rgba(var(--voile), 0.56) 0%, rgba(var(--voile), 0.3) 34%, rgba(var(--voile), 0) 56%);
   }
 
-  .hero__texte {
-    position: relative;
-    z-index: 2;
-    display: flex;
-    align-items: flex-end;
-    height: 100%;
-    max-width: calc(var(--content-max) + var(--gutter) * 2);
-    margin-inline: auto;
-    /* Le bas laisse la place à la barre Appeler / WhatsApp / Devis sur téléphone. */
-    padding: calc(var(--header-h) + 24px) var(--gutter) 108px;
+  /* Écran en portrait : le texte occupe le bas, le voile monte plus haut et reste doux en haut. */
+  @media (max-aspect-ratio: 4/5) {
+    .hero__voile {
+      background:
+        linear-gradient(to bottom, rgba(var(--voile), 0.45) 0%, rgba(var(--voile), 0.12) 12%, rgba(var(--voile), 0) 20%),
+        linear-gradient(to top, rgba(var(--voile), 0.86) 0%, rgba(var(--voile), 0.72) 30%, rgba(var(--voile), 0.38) 46%, rgba(var(--voile), 0) 62%);
+    }
   }
 
   .hero__contenu {
+    position: relative;
+    display: grid;
+    gap: 22px;
+    width: 100%;
+    max-width: calc(var(--content-max-large) + var(--gutter) * 2);
+    margin-inline: auto;
+    padding: calc(var(--header-h) + 32px) var(--gutter) calc(var(--hero-marge-bas) + env(safe-area-inset-bottom, 0px));
+  }
+
+  .hero__principal,
+  .hero__details {
     display: flex;
     flex-direction: column;
     align-items: flex-start;
-    gap: 18px;
-    max-width: 680px;
   }
 
-  .hero__surtitre {
+  .hero__principal {
+    gap: 20px;
+  }
+
+  .hero__details {
+    gap: 22px;
+  }
+
+  /* --- Pastille d'accroche : verre clair, la brique rouge du logo en guise de point --- */
+  .hero__pastille {
     display: inline-flex;
     align-items: center;
     gap: 10px;
-    padding: 8px 16px 8px 14px;
-    border: 1px solid rgba(255, 255, 255, 0.4);
+    padding: 9px 16px 9px 13px;
+    border: 1px solid rgba(255, 255, 255, 0.34);
     border-radius: var(--radius-pill);
-    background: rgba(255, 255, 255, 0.14);
-    backdrop-filter: blur(10px);
-    -webkit-backdrop-filter: blur(10px);
-    font-size: var(--size-tiny);
+    background: rgba(255, 255, 255, 0.12);
+    backdrop-filter: blur(12px) saturate(1.3);
+    -webkit-backdrop-filter: blur(12px) saturate(1.3);
+    font-size: 13px;
     font-weight: 600;
-    color: #fff;
+    letter-spacing: 0.01em;
   }
 
-  .hero__surtitre::before {
-    content: '';
-    width: 8px;
-    height: 8px;
-    border-radius: 50%;
+  .hero__brique {
+    flex-shrink: 0;
+    width: 13px;
+    height: 7px;
+    border-radius: 2px;
     background: var(--color-accent);
+    box-shadow: 0 0 0 2px rgba(200, 32, 43, 0.22);
   }
 
-  .hero__contenu h1 {
-    font-size: clamp(38px, 5.4vw, 84px);
-    line-height: 1;
-    letter-spacing: -0.035em;
-    text-transform: uppercase;
+  /* --- Titre --- */
+  .hero__titre {
     color: #fff;
-    text-shadow: 0 2px 40px rgba(0, 20, 50, 0.35);
+    font-size: clamp(44px, min(7.2vw, 11.6vh), 112px);
+    line-height: 0.9;
+    letter-spacing: var(--tracking-display);
+    text-wrap: nowrap;
+    filter: drop-shadow(0 4px 28px rgba(var(--voile), 0.28));
   }
 
-  .hero__rouge {
-    color: #ff7a81;
+  .hero__ligne {
+    display: block;
+    /* Chaque ligne est une fenêtre : le texte y glisse de bas en haut à l'arrivée. */
+    overflow: clip;
+    padding-block: 0.04em 0.06em;
+    margin-block: -0.04em -0.06em;
   }
 
-  .hero__lead {
+  .hero__ligne > span {
+    display: inline-block;
+  }
+
+  .hero__lumiere {
+    position: relative;
+  }
+
+  /* --- Texte, actions, preuves --- */
+  .hero__texte {
     max-width: 46ch;
-    font-size: 16px;
+    font-size: clamp(16px, 1.25vw, 19px);
     line-height: 1.55;
     color: rgba(255, 255, 255, 0.92);
-    text-shadow: 0 1px 18px rgba(0, 20, 50, 0.5);
+    text-shadow: 0 1px 16px rgba(var(--voile), 0.5);
   }
 
-  .hero__actions,
-  .hero__note {
-    display: none;
+  .hero__actions {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: 10px 22px;
   }
 
-  /* L'en-tête est un voile blanc flouté dès l'arrivée : lisible sur la photo. */
-  :global(body:has(.hero) .entete) {
-    background: rgba(251, 251, 250, 0.84);
-    border-bottom-color: var(--color-border);
-    backdrop-filter: blur(18px) saturate(1.5);
-    -webkit-backdrop-filter: blur(18px) saturate(1.5);
+  /* Le bouton principal : rouge, une petite flèche dans un carré arrondi (comme Ironwood, en plus doux). */
+  .hero__bouton {
+    display: inline-flex;
+    align-items: center;
+    gap: 14px;
+    min-height: 58px;
+    padding: 7px 7px 7px 24px;
+    border-radius: 16px;
+    background: var(--color-accent);
+    box-shadow: 0 16px 34px -14px rgba(200, 32, 43, 0.75);
+    color: #fff;
+    font-size: 16px;
+    font-weight: 650;
+    text-decoration: none;
+    transition:
+      background-color var(--speed) var(--ease),
+      transform var(--speed) var(--ease);
+  }
+
+  .hero__bouton:hover {
+    background: var(--color-accent-dark);
+    transform: translateY(-2px);
+  }
+
+  .hero__fleche {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 44px;
+    height: 44px;
+    border-radius: 11px;
+    background: rgba(255, 255, 255, 0.16);
+    transition: transform var(--speed) var(--ease);
+  }
+
+  .hero__bouton:hover .hero__fleche {
+    transform: translate(2px, -2px);
+  }
+
+  .hero__tel {
+    display: inline-flex;
+    align-items: center;
+    gap: 10px;
+    min-height: 48px;
+    color: #fff;
+    font-size: 17px;
+    font-weight: 650;
+    text-decoration: none;
+    text-shadow: 0 1px 14px rgba(var(--voile), 0.6);
+  }
+
+  .hero__tel span {
+    border-bottom: 1px solid rgba(255, 255, 255, 0.4);
+    transition: border-color var(--speed) var(--ease);
+  }
+
+  .hero__tel:hover span {
+    border-color: #fff;
+  }
+
+  .hero__bouton:focus-visible,
+  .hero__tel:focus-visible {
+    outline: 3px solid #fff;
+    outline-offset: 4px;
+  }
+
+  .hero__preuves {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 6px 20px;
+    margin: 0;
+    padding: 0;
+    list-style: none;
+    font-size: 14px;
+    font-weight: 600;
+    color: rgba(255, 255, 255, 0.9);
+  }
+
+  .hero__preuves li {
+    display: inline-flex;
+    align-items: center;
+    gap: 7px;
+  }
+
+  .hero__preuves :global(svg) {
+    color: #fff;
+    padding: 2px;
+    border-radius: 50%;
+    background: rgba(255, 255, 255, 0.18);
+    width: 18px;
+    height: 18px;
+  }
+
+  @media (max-width: 599px) {
+    .hero__contenu,
+    .hero__details {
+      gap: 14px;
+    }
+
+    .hero__principal {
+      gap: 14px;
+    }
+
+    .hero__pastille {
+      padding: 7px 13px 7px 11px;
+      font-size: 12px;
+    }
+
+    .hero__titre {
+      font-size: clamp(40px, 11.8vw, 56px);
+    }
+
+    .hero__texte {
+      font-size: 14.5px;
+      line-height: 1.5;
+    }
+
+    /* Une seule rangée : le bouton prend la place, le téléphone devient un carré à côté. */
+    .hero__actions {
+      flex-wrap: nowrap;
+      width: 100%;
+      gap: 10px;
+    }
+
+    .hero__bouton {
+      flex: 1;
+      justify-content: space-between;
+      min-width: 0;
+      font-size: 15px;
+      padding-left: 20px;
+    }
+
+    .hero__tel {
+      flex-shrink: 0;
+      justify-content: center;
+      width: 58px;
+      height: 58px;
+      border: 1px solid rgba(255, 255, 255, 0.34);
+      border-radius: 16px;
+      background: rgba(255, 255, 255, 0.14);
+      backdrop-filter: blur(12px);
+      -webkit-backdrop-filter: blur(12px);
+    }
+
+    .hero__tel span {
+      position: absolute;
+      width: 1px;
+      height: 1px;
+      overflow: hidden;
+      clip-path: inset(50%);
+      white-space: nowrap;
+    }
+
+    .hero__preuves {
+      font-size: 12px;
+      gap: 4px 12px;
+    }
+
+    .hero__preuves :global(svg) {
+      width: 16px;
+      height: 16px;
+    }
+  }
+
+  /* Petits téléphones : le texte du bouton passe avant la flèche. */
+  @media (max-width: 419px) {
+    .hero__bouton {
+      justify-content: center;
+      padding: 0 16px;
+    }
+
+    .hero__fleche {
+      display: none;
+    }
   }
 
   @media (min-width: 900px) {
-    .hero__texte {
-      align-items: center;
-      padding-bottom: 8vh;
+    .hero__contenu {
+      gap: 26px;
     }
 
-    .hero__lead {
-      font-size: var(--size-lead);
+    .hero__details {
+      gap: 26px;
+    }
+  }
+
+  /* =========================================================================
+     Entrées (communes) : rien n'est caché sans JavaScript ni avec « moins d'animations ».
+     ========================================================================= */
+  @media (prefers-reduced-motion: no-preference) {
+    :global(.js) .hero__ligne > span {
+      animation: ligne-monte 1000ms var(--ease-out) both;
+      animation-delay: calc(var(--depart, 450ms) + var(--n) * 110ms);
     }
 
-    .hero__actions {
-      display: flex;
-      flex-wrap: wrap;
-      gap: 12px;
-      margin-top: 6px;
+    :global(.js) .hero [data-entree] {
+      animation: entree 900ms var(--ease-out) both;
+      animation-delay: calc(var(--depart, 450ms) + var(--n) * 110ms);
     }
 
-    .hero__note {
+    @keyframes ligne-monte {
+      from {
+        transform: translateY(108%);
+      }
+    }
+
+    @keyframes entree {
+      from {
+        opacity: 0;
+        transform: translateY(18px);
+      }
+    }
+  }
+
+  /* =========================================================================
+     Variante a : mise au point
+     ========================================================================= */
+  .hero__flou img {
+    image-rendering: auto;
+  }
+
+  .hero__flou {
+    display: none;
+  }
+
+  @media (prefers-reduced-motion: no-preference) {
+    :global(.js) .hero--a .hero__flou {
       display: block;
-      font-size: var(--size-small);
+      animation: mise-au-point 1600ms var(--ease) 250ms both;
+    }
+
+    :global(.js) .hero--a .hero__photo,
+    :global(.js) .hero--a .hero__flou img {
+      animation: se-pose 2600ms var(--ease-out) both;
+    }
+
+    @keyframes mise-au-point {
+      to {
+        opacity: 0;
+        visibility: hidden;
+      }
+    }
+
+    @keyframes se-pose {
+      from {
+        transform: scale(1.09);
+      }
+    }
+  }
+
+  /* =========================================================================
+     Variante b : film d'ouverture (lancé par le script quand les images sont prêtes)
+     ========================================================================= */
+  .hero__film {
+    display: none;
+  }
+
+  .hero__legende {
+    display: none;
+  }
+
+  @media (prefers-reduced-motion: no-preference) {
+    :global(.js) .hero--b .hero__film {
+      display: block;
+      position: absolute;
+      inset: 0;
+    }
+
+    /* En attendant les images : un carton ardoise, le titre est déjà lisible dessus. */
+    .hero__carton {
+      position: absolute;
+      inset: 0;
+      background: rgb(var(--voile));
+    }
+
+    .hero__plan {
+      opacity: 0;
+    }
+
+    .hero--b.film-en-cours .hero__carton {
+      animation: disparait 700ms var(--ease) both;
+    }
+
+    .hero--b.film-en-cours .hero__plan {
+      animation:
+        plan 2300ms var(--ease) both,
+        travelling 3200ms linear both;
+      animation-delay: calc(var(--i) * 1700ms);
+    }
+
+    .hero--b.film-en-cours .hero__photo {
+      animation: se-pose 3000ms var(--ease-out) 3200ms both;
+    }
+
+    .hero--b.film-termine .hero__film {
+      display: none;
+    }
+
+    .hero--b.film-fini .hero__carton {
+      animation: disparait 500ms var(--ease) both;
+    }
+
+    @keyframes disparait {
+      to {
+        opacity: 0;
+        visibility: hidden;
+      }
+    }
+
+    /* Chaque plan entre en fondu (le premier est là d'emblée), reste, puis s'efface sur le suivant. */
+    .hero--b.film-en-cours .hero__plan:first-child {
+      animation-name: plan-premier, travelling;
+    }
+
+    @keyframes plan {
+      0% {
+        opacity: 0;
+      }
+      22%,
+      74% {
+        opacity: 1;
+      }
+      100% {
+        opacity: 0;
+      }
+    }
+
+    @keyframes plan-premier {
+      0%,
+      74% {
+        opacity: 1;
+      }
+      100% {
+        opacity: 0;
+      }
+    }
+
+    @keyframes travelling {
+      from {
+        transform: scale(1.12) translateX(1.5%);
+      }
+      to {
+        transform: scale(1.02);
+      }
+    }
+
+    /* La légende : la commune de chaque plan, et une fine barre qui avance. */
+    :global(.js) .hero--b .hero__legende {
+      position: absolute;
+      right: var(--gutter);
+      bottom: calc(var(--hero-marge-bas) + env(safe-area-inset-bottom, 0px));
+      z-index: 2;
+      display: none;
+      min-width: 230px;
+      padding: 10px 14px 12px;
+      border-radius: 14px;
+      background: rgba(255, 255, 255, 0.12);
+      border: 1px solid rgba(255, 255, 255, 0.24);
+      backdrop-filter: blur(12px);
+      -webkit-backdrop-filter: blur(12px);
+      font-size: 13px;
       font-weight: 600;
-      color: rgba(255, 255, 255, 0.82);
     }
 
-    .hero :global(.hero__tel) {
-      background: rgba(255, 255, 255, 0.14);
-      border-color: rgba(255, 255, 255, 0.45);
-      color: #fff;
-      backdrop-filter: blur(8px);
-      -webkit-backdrop-filter: blur(8px);
+    .hero--b.film-en-cours .hero__legende {
+      display: grid;
+      animation: legende-sort 600ms var(--ease) 5600ms both;
     }
 
-    .hero :global(.hero__tel:hover) {
-      border-color: #fff;
-      background: rgba(255, 255, 255, 0.22);
+    .hero__legende > span:not(.hero__progression) {
+      grid-area: 1 / 1;
+      opacity: 0;
+    }
+
+    .hero--b.film-en-cours .hero__legende > span:not(.hero__progression) {
+      animation: legende 1700ms var(--ease) both;
+      animation-delay: calc(var(--i) * 1700ms);
+    }
+
+    .hero--b.film-en-cours .hero__legende > span:last-of-type:not(.hero__progression) {
+      animation-name: legende-reste;
+    }
+
+    .hero__progression {
+      grid-area: 2 / 1;
+      height: 2px;
+      margin-top: 8px;
+      border-radius: 2px;
+      background: rgba(255, 255, 255, 0.85);
+      transform-origin: left;
+      transform: scaleX(0);
+    }
+
+    .hero--b.film-en-cours .hero__progression {
+      animation: progression 4600ms linear both;
+    }
+
+    @keyframes legende {
+      0% {
+        opacity: 0;
+        transform: translateY(6px);
+      }
+      15%,
+      85% {
+        opacity: 1;
+        transform: none;
+      }
+      100% {
+        opacity: 0;
+      }
+    }
+
+    @keyframes legende-reste {
+      0% {
+        opacity: 0;
+        transform: translateY(6px);
+      }
+      20%,
+      100% {
+        opacity: 1;
+        transform: none;
+      }
+    }
+
+    @keyframes progression {
+      to {
+        transform: scaleX(1);
+      }
+    }
+
+    @keyframes legende-sort {
+      to {
+        opacity: 0;
+        visibility: hidden;
+      }
+    }
+
+    @media (min-width: 900px) {
+      .hero--b.film-en-cours .hero__legende {
+        display: grid;
+      }
+    }
+  }
+
+  @media (max-width: 899px) {
+    .hero--b .hero__legende {
+      display: none !important;
+    }
+  }
+
+  /* =========================================================================
+     Variante c : la façade qui brille
+     ========================================================================= */
+  .hero__reflet {
+    display: none;
+  }
+
+  .hero__point {
+    display: inline-block;
+    width: 0.34em;
+    height: 0.17em;
+    margin-left: 0.07em;
+    border-radius: 0.035em;
+    background: var(--color-accent);
+    box-shadow: 0 0.04em 0.18em rgba(200, 32, 43, 0.45);
+  }
+
+  @media (min-width: 900px) {
+    /* Le titre en bas à gauche, sur la route et la pelouse ; les détails dans un panneau de verre à droite. */
+    .hero--c .hero__contenu {
+      grid-template-columns: 1fr minmax(340px, 410px);
+      align-items: end;
+      column-gap: 48px;
+    }
+
+    .hero--c .hero__details {
+      gap: 20px;
+      padding: 28px 28px 26px;
+      border: 1px solid rgba(255, 255, 255, 0.18);
+      border-radius: 28px;
+      /* Assez dense pour un contraste AA même devant la façade blanche. */
+      background: rgba(var(--voile), 0.56);
+      backdrop-filter: blur(18px) saturate(1.25);
+      -webkit-backdrop-filter: blur(18px) saturate(1.25);
+      box-shadow: 0 30px 60px -30px rgba(var(--voile), 0.6);
+    }
+
+    .hero--c .hero__actions {
+      flex-direction: column;
+      align-items: stretch;
+      width: 100%;
+      gap: 8px;
+    }
+
+    .hero--c .hero__bouton {
+      justify-content: space-between;
+    }
+
+    .hero--c .hero__tel {
+      align-self: flex-start;
+    }
+
+    .hero--c .hero__preuves {
+      flex-direction: column;
+      gap: 8px;
+    }
+
+    .hero--c .hero__voile {
+      background:
+        linear-gradient(to bottom, rgba(var(--voile), 0.5) 0%, rgba(var(--voile), 0.18) 14%, rgba(var(--voile), 0) 26%),
+        linear-gradient(to top, rgba(var(--voile), 0.84) 0%, rgba(var(--voile), 0.5) 22%, rgba(var(--voile), 0.08) 46%, rgba(var(--voile), 0) 60%),
+        linear-gradient(to right, rgba(var(--voile), 0.42) 0%, rgba(var(--voile), 0.12) 32%, rgba(var(--voile), 0) 50%);
+    }
+  }
+
+  @media (prefers-reduced-motion: no-preference) {
+    :global(.js) .hero--c .hero__reflet {
+      display: block;
+      position: absolute;
+      inset: 0;
+      overflow: hidden;
+      pointer-events: none;
+      -webkit-mask: var(--masque) var(--cadrage) / cover no-repeat;
+      mask: var(--masque) var(--cadrage) / cover no-repeat;
+    }
+
+    @media (max-aspect-ratio: 4/5) {
+      :global(.js) .hero--c .hero__reflet {
+        -webkit-mask: var(--masque-mobile) var(--cadrage) / cover no-repeat;
+        mask: var(--masque-mobile) var(--cadrage) / cover no-repeat;
+      }
+    }
+
+    /* Une bande de lumière inclinée, plus large que l'écran, qui traverse une seule fois. */
+    .hero__reflet span {
+      position: absolute;
+      inset: -20% auto -20% 0;
+      width: 46%;
+      /* Une lumière chaude, très légèrement dorée : la façade blanche s'illumine sur son passage. */
+      background: linear-gradient(
+        100deg,
+        rgba(255, 249, 238, 0) 0%,
+        rgba(255, 249, 238, 0.3) 32%,
+        rgba(255, 252, 245, 0.85) 50%,
+        rgba(255, 249, 238, 0.3) 68%,
+        rgba(255, 249, 238, 0) 100%
+      );
+      transform: translateX(-110%) skewX(-12deg);
+      animation: reflet 3400ms cubic-bezier(0.45, 0.05, 0.35, 1) 800ms both;
+    }
+
+    @keyframes reflet {
+      to {
+        transform: translateX(340%) skewX(-12deg);
+      }
+    }
+
+    /* Le mot « briller » scintille quand la lumière passe. */
+    :global(.js) .hero--c .hero__lumiere::after {
+      content: attr(data-texte);
+      position: absolute;
+      inset: 0;
+      color: transparent;
+      background: linear-gradient(100deg, transparent 35%, #fff 50%, transparent 65%) no-repeat;
+      background-size: 300% 100%;
+      background-position: 100% 0;
+      -webkit-background-clip: text;
+      background-clip: text;
+      text-shadow: none;
+      filter: drop-shadow(0 0 18px rgba(255, 236, 200, 0.9));
+      animation: scintille 1400ms var(--ease) 1100ms both;
+    }
+
+    :global(.js) .hero--c .hero__lumiere {
+      color: #eef2f6;
+    }
+
+    @keyframes scintille {
+      from {
+        background-position: 100% 0;
+      }
+      to {
+        background-position: 0% 0;
+      }
+    }
+
+    /* La brique rouge vient se poser à la fin. */
+    :global(.js) .hero--c .hero__point {
+      animation: brique 900ms cubic-bezier(0.3, 1.6, 0.5, 1) 2300ms both;
+    }
+
+    @keyframes brique {
+      from {
+        opacity: 0;
+        transform: translateY(-1.6em) rotate(-8deg);
+      }
+      60% {
+        opacity: 1;
+      }
+    }
+  }
+
+  /* =========================================================================
+     Au défilement (navigateurs récents) : la photo glisse plus lentement que le texte.
+     ========================================================================= */
+  @supports (animation-timeline: scroll()) {
+    @media (prefers-reduced-motion: no-preference) {
+      .hero__media {
+        animation: media-defile linear both;
+        animation-timeline: scroll(root);
+        animation-range: 0 100vh;
+      }
+
+      .hero__contenu {
+        animation: contenu-defile linear both;
+        animation-timeline: scroll(root);
+        animation-range: 0 80vh;
+      }
+
+      @keyframes media-defile {
+        to {
+          transform: translateY(22%);
+        }
+      }
+
+      @keyframes contenu-defile {
+        to {
+          transform: translateY(-12%);
+          opacity: 0.2;
+        }
+      }
     }
   }
 </style>

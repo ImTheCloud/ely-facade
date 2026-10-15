@@ -1,0 +1,87 @@
+---
+/** L'accueil complet, partagé par / , /nl/ et les pages de comparaison des variantes du haut de page. */
+import Appel from './Appel.astro';
+import Chiffres from './Chiffres.astro';
+import Equipe from './Equipe.astro';
+import Faq from './Faq.astro';
+import Hero from './Hero.astro';
+import Methode from './Methode.astro';
+import Metiers from './Metiers.astro';
+import BaseLayout from '~/layouts/BaseLayout.astro';
+import { VARIANTES_HERO, VARIANTE_HERO_ACCUEIL, type VarianteHero } from '~/data/hero';
+import { t, type Langue } from '~/i18n';
+
+interface Props {
+  langue: Langue;
+  variante?: VarianteHero;
+  /** Page de comparaison : hors Google et hors sitemap. */
+  comparaison?: boolean;
+}
+
+const { langue, variante = VARIANTE_HERO_ACCUEIL, comparaison = false } = Astro.props;
+const page = t(langue).pages.accueil;
+---
+
+<BaseLayout langue={langue} titre={page.titre} description={page.description} surPhoto noindex={comparaison}>
+  <Hero langue={langue} variante={variante} />
+  <Chiffres langue={langue} />
+  <Metiers langue={langue} />
+  <Equipe langue={langue} />
+  <Methode langue={langue} />
+  <Faq langue={langue} />
+  <Appel langue={langue} />
+
+  {
+    comparaison ? (
+      <nav class="variantes" aria-label="Variantes du haut de page">
+        {VARIANTES_HERO.map((v) => (
+          <a href={`/variantes/${v}/`} aria-current={v === variante ? 'page' : undefined}>
+            {v.toUpperCase()}
+          </a>
+        ))}
+      </nav>
+    ) : (
+      <script is:inline>
+        // ?hero=a|b|c mène à la page de comparaison de cette variante du haut de page.
+        (function () {
+          var v = new URLSearchParams(location.search).get('hero');
+          if (v && /^[abc]$/.test(v)) location.replace('/variantes/' + v + '/');
+        })();
+      </script>
+    )
+  }
+</BaseLayout>
+
+<style>
+  /* Petit sélecteur flottant, seulement sur les pages de comparaison. */
+  .variantes {
+    position: fixed;
+    left: 50%;
+    top: calc(var(--header-h) + 10px);
+    z-index: 50;
+    display: flex;
+    gap: 4px;
+    padding: 4px;
+    border-radius: var(--radius-pill);
+    background: rgba(255, 255, 255, 0.92);
+    box-shadow: var(--shadow-lift);
+    transform: translateX(-50%);
+  }
+
+  .variantes a {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    min-width: 44px;
+    min-height: 44px;
+    border-radius: var(--radius-pill);
+    color: var(--color-ink);
+    font-weight: 750;
+    text-decoration: none;
+  }
+
+  .variantes a[aria-current='page'] {
+    background: var(--color-ink);
+    color: #fff;
+  }
+</style>

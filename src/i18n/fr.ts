@@ -63,14 +63,21 @@ export const fr = {
 
   accueil: {
     hero: {
-      surtitre: 'Rénovation de façades · Toute la Belgique',
-      titreDebut: 'Redonnez à votre façade',
-      titreFin: 'tout son éclat.',
+      pastille: 'Rénovation de façades · Toute la Belgique',
+      /** Une ligne par entrée : le titre tient toujours sur trois lignes. Le dernier mot est mis en lumière. */
+      titre: ['Votre façade', 'mérite de', 'briller.'],
       texte:
-        'Crépi, peinture, nettoyage, rejointoiement, réparation de briques : nous remettons votre façade en état, de la petite maison à l’immeuble.',
-      note: 'Visite sur place gratuite, sans engagement.',
-      alt: 'Immeuble blanc et gris terminé, vu d’en haut, à Namur',
+        'Crépi, peinture, nettoyage, rejointoiement, réparation de briques\u00a0: de la petite maison à l’immeuble. Visite gratuite, garantie de 10\u00a0ans minimum.',
+      bouton: 'Demander ma visite gratuite',
+      appeler: 'Appeler le',
+      preuvesAria: 'Nos engagements',
+      preuves: ['Visite sur place gratuite', 'Garantie 10\u00a0ans minimum', 'Partout en Belgique'],
+      alt: 'Immeuble de trois étages à Namur, façade blanche et grise terminée, vu d’en haut',
+      film: {
+        etapes: ['Mons · Université de Mons', 'Namur · Immeuble à balcons', 'Namur · Immeuble de trois étages'],
+      },
     },
+
 
     chiffres: {
       aria: 'Ely Facade en chiffres',

@@ -11,6 +11,13 @@ const marque = 'src/assets/marque';
 fs.mkdirSync(marque, { recursive: true });
 for (const nom of ['logo.svg', 'icone.svg']) fs.copyFileSync(`${source}/${nom}`, `${marque}/${nom}`);
 
+// Version blanche pour l'en-tête posé sur la photo : tout en blanc sauf la brique rouge de la maison.
+const logoSource = fs.readFileSync(`${source}/logo.svg`, 'utf8');
+const logoBlanc = logoSource
+  .replaceAll('fill="#141414"', 'fill="#FFFFFF"')
+  .replace(/<path([^>]*?)fill="#C8202B"/g, '<path$1fill="#FFFFFF"');
+fs.writeFileSync(`${marque}/logo-blanc.svg`, logoBlanc);
+
 const icone = fs.readFileSync(`${source}/icone.svg`);
 const logo = fs.readFileSync(`${source}/logo.svg`);
 

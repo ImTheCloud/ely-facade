@@ -1,7 +1,9 @@
 ---
 /**
  * En-tête flottant.
- * - Transparent en haut de page, puis pilule floutée dès qu'on défile.
+ * - Sur une page qui commence par une grande photo (surPhoto) : posé dans la photo,
+ *   sans fond, logo et liens blancs, bouton clair ; il devient blanc flouté dès qu'on défile.
+ * - Ailleurs : transparent en haut de page, puis blanc flouté dès qu'on défile.
  * - Se cache quand on descend, revient dès qu'on remonte.
  * - Sur mobile : bouton « Menu » qui ouvre un panneau plein écran.
  */
@@ -14,19 +16,21 @@ import { chemin, liensNavigation, t, type Langue } from '../i18n';
 interface Props {
   langue: Langue;
   cheminActuel: string;
+  surPhoto?: boolean;
 }
 
-const { langue, cheminActuel } = Astro.props;
+const { langue, cheminActuel, surPhoto = false } = Astro.props;
 const textes = t(langue);
 const liens = liensNavigation(langue);
 const devis = lienDevis(langue);
 const estActif = (href: string) => cheminActuel.startsWith(href);
 ---
 
-<header class="entete" data-entete>
+<header class:list={['entete', { 'entete--photo': surPhoto }]} data-entete>
   <div class="entete__barre">
     <a href={chemin('accueil', langue)} class="entete__logo" aria-label={textes.entete.accueilAria}>
-      <Logo />
+      <Logo class="entete__logo-couleur" />
+      {surPhoto && <Logo blanc class="entete__logo-blanc" />}
     </a>
 
     <nav class="entete__nav" aria-label={textes.entete.menuAria}>
@@ -182,6 +186,91 @@ const estActif = (href: string) => cheminActuel.startsWith(href);
     transform: translateY(-110%);
   }
 
+  /* ---------------------------------------------------------------------
+     Posé sur la photo (en haut de l'accueil) : aucun fond, tout en blanc.
+     Dès qu'on défile ou qu'on ouvre le menu, il reprend son apparence claire.
+     --------------------------------------------------------------------- */
+  .entete__logo {
+    position: relative;
+  }
+
+  .entete :global(.entete__logo-blanc) {
+    position: absolute;
+    inset: 50% auto auto 0;
+    transform: translateY(-50%);
+    opacity: 0;
+    transition: opacity 300ms var(--ease);
+  }
+
+  .entete :global(.entete__logo-couleur) {
+    transition: opacity 300ms var(--ease);
+  }
+
+  .entete--photo:not(.entete--defile) :global(.entete__logo-blanc) {
+    opacity: 1;
+  }
+
+  .entete--photo:not(.entete--defile) :global(.entete__logo-couleur) {
+    opacity: 0;
+  }
+
+  :global(body.menu-ouvert) .entete--photo :global(.entete__logo-blanc) {
+    opacity: 0;
+  }
+
+  :global(body.menu-ouvert) .entete--photo :global(.entete__logo-couleur) {
+    opacity: 1;
+  }
+
+  .entete--photo:not(.entete--defile) .entete__burger {
+    background: #fff;
+    color: var(--color-ink);
+  }
+
+  .entete--photo:not(.entete--defile) .entete__burger-traits span {
+    background: var(--color-ink);
+  }
+
+  :global(body.menu-ouvert) .entete--photo .entete__burger {
+    background: var(--color-ink);
+    color: #fff;
+  }
+
+  :global(body.menu-ouvert) .entete--photo .entete__burger-traits span {
+    background: #fff;
+  }
+
+  /* Le sélecteur FR / NL en verre sur la photo. */
+  .entete--photo:not(.entete--defile) :global(.langues) {
+    background: rgba(255, 255, 255, 0.12);
+    border-color: rgba(255, 255, 255, 0.32);
+    backdrop-filter: blur(10px);
+    -webkit-backdrop-filter: blur(10px);
+  }
+
+  .entete--photo:not(.entete--defile) :global(.langues__lien) {
+    color: rgba(255, 255, 255, 0.86);
+  }
+
+  .entete--photo:not(.entete--defile) :global(.langues__lien--actif) {
+    background: #fff;
+    color: var(--color-ink);
+  }
+
+  :global(body.menu-ouvert) .entete--photo :global(.langues) {
+    background: var(--color-card);
+    border-color: var(--color-border);
+  }
+
+  :global(body.menu-ouvert) .entete--photo :global(.langues__lien) {
+    color: var(--color-muted);
+  }
+
+  :global(body.menu-ouvert) .entete--photo :global(.langues__lien--actif) {
+    background: var(--color-ink);
+    color: #fff;
+  }
+
   :global(body.menu-ouvert) .entete.entete {
     background: transparent;
     border-bottom-color: transparent;
@@ -197,7 +286,7 @@ const estActif = (href: string) => cheminActuel.startsWith(href);
     align-items: center;
     justify-content: space-between;
     gap: 10px;
-    max-width: calc(var(--content-max) + var(--gutter) * 2);
+    max-width: calc(var(--content-max-large) + var(--gutter) * 2);
     min-height: var(--header-h);
     margin: 0 auto;
     padding: 8px var(--gutter);
@@ -412,6 +501,27 @@ const estActif = (href: string) => cheminActuel.startsWith(href);
 
     .entete__nav a[aria-current='page'] {
       background: var(--color-surface);
+    }
+
+    .entete--photo:not(.entete--defile) .entete__nav a {
+      color: rgba(255, 255, 255, 0.9);
+      text-shadow: 0 1px 12px rgba(var(--voile), 0.35);
+    }
+
+    .entete--photo:not(.entete--defile) .entete__nav a:hover {
+      background: rgba(255, 255, 255, 0.14);
+      color: #fff;
+    }
+
+    /* Le bouton devient clair sur la photo, comme une pastille de lumière. */
+    .entete--photo:not(.entete--defile) .entete__actions :global(.bouton--accent) {
+      background: #fff;
+      color: var(--color-ink);
+      box-shadow: 0 10px 30px -12px rgba(var(--voile), 0.6);
+    }
+
+    .entete--photo:not(.entete--defile) .entete__actions :global(.bouton--accent:hover) {
+      background: #f1f3f5;
     }
 
     .entete__actions {
