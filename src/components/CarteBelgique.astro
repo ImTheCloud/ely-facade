@@ -1,11 +1,13 @@
 ---
 /**
  * Carte de la Belgique (dessin simplifié, pas une carte exacte) : le bureau de Halle (brique rouge) et les communes
- * de quelques-uns de nos chantiers (points sombres). On touche une commune pour voir ses chantiers sous la carte.
+ * de quelques-uns de nos chantiers (points sombres). On touche une commune : sur ordinateur, une petite fenêtre s'ouvre
+ * près du point ; sur téléphone, une feuille monte du bas. Elle montre l'avant/après du chantier et mène à sa page.
  * Les points sont de vrais boutons posés sur le dessin ; sans JavaScript, la carte reste lisible et les chantiers
  * sont dans la bande de photos juste dessous.
  */
 import { Image } from 'astro:assets';
+import Comparateur from './Comparateur.astro';
 import Icon from './Icon.astro';
 import Logo from './Logo.astro';
 import { CHANTIERS, lienChantier, photo, type Commune } from '../data/chantiers';
@@ -126,9 +128,9 @@ const identifiant = 'carte';
         fiches.map((fiche, i) => (
           <button
             type="button"
-            class:list={['point', `point--${fiche.cote}`, { 'est-actif': i === 0 }]}
+            class:list={['point', `point--${fiche.cote}`]}
             style={`${place(fiche.lon, fiche.lat)}; --i: ${i}; --dx: ${fiche.dx ?? 0}px; --dy: ${fiche.dy ?? 0}px`}
-            aria-pressed={i === 0 ? 'true' : 'false'}
+            aria-expanded="false"
             aria-controls={`${identifiant}-${fiche.commune}`}
             data-point={fiche.commune}
           >
@@ -149,48 +151,55 @@ const identifiant = 'carte';
   <div class="carte__choix" role="group" aria-label={textes.accueil.realisations.pastille}>
     {
       fiches.map((fiche, i) => (
-        <button type="button" class:list={['choix', { 'est-actif': i === 0 }]} aria-pressed={i === 0 ? 'true' : 'false'} aria-controls={`${identifiant}-${fiche.commune}`} data-point={fiche.commune}>
+        <button type="button" class="choix" aria-expanded="false" aria-controls={`${identifiant}-${fiche.commune}`} data-point={fiche.commune}>
           {textes.communes[fiche.commune]}
         </button>
       ))
     }
   </div>
 
-  <div class="carte__fiches">
+  <!-- Les fenêtres des communes : déplacées en fin de page par le script (elles s'affichent par-dessus tout). -->
+  <div data-popups>
+    <div class="popups__fond" data-fond hidden></div>
     {
-      fiches.map((fiche, i) => (
-        <div class:list={['fiche', { 'est-actif': i === 0 }]} id={`${identifiant}-${fiche.commune}`} role="group" aria-label={textes.communes[fiche.commune]} data-fiche={fiche.commune}>
-          {fiche.chantiers.map((c) => {
+      fiches.map((fiche) => (
+        <div class="popup" id={`${identifiant}-${fiche.commune}`} role="dialog" aria-label={textes.communes[fiche.commune]} tabindex="-1" hidden data-fiche={fiche.commune} data-lenis-prevent>
+          <span class="popup__poignee" aria-hidden="true"></span>
+          <div class="popup__tete">
+            <h3 class="popup__titre">{textes.communes[fiche.commune]}</h3>
+            <button type="button" class="popup__fermer" data-fermer aria-label={textes.realisationsPage.fermer}>
+              <Icon nom="croix" taille={20} epaisseur={2.2} />
+            </button>
+          </div>
+
+          {fiche.chantiers.length > 1 && (
+            <div class="popup__onglets" role="group" aria-label={textes.communes[fiche.commune]}>
+              {fiche.chantiers.map((c, k) => (
+                <button type="button" class:list={['onglet', { 'est-actif': k === 0 }]} aria-pressed={k === 0 ? 'true' : 'false'} data-onglet={k}>
+                  {textes.chantiers[c.cle].titre}
+                </button>
+              ))}
+            </div>
+          )}
+
+          {fiche.chantiers.map((c, k) => {
             const infos = textes.chantiers[c.cle];
-            const contenu = (
-              <>
-                <Image
-                  src={photo(c.couverture)}
-                  alt={textes.photos[c.couverture]}
-                  widths={[160, 240, 320]}
-                  sizes="120px"
-                  format="webp"
-                  quality={72}
-                  loading="lazy"
-                />
-                <span class="fiche__texte">
-                  <span class="fiche__commune">{textes.communes[c.commune]}</span>
-                  <span class="fiche__titre">{infos.titre}</span>
-                  {c.slug && (
-                    <span class="fiche__voir">
-                      {textes.accueil.realisations.voir}
-                      <Icon nom="fleche" taille={16} />
-                    </span>
-                  )}
-                </span>
-              </>
-            );
-            return c.slug ? (
-              <a class="fiche__chantier" href={lienChantier(c.cle, langue)}>
-                {contenu}
-              </a>
-            ) : (
-              <div class="fiche__chantier">{contenu}</div>
+            const paire = c.paires[0];
+            return (
+              <div class:list={['cas', { 'est-actif': k === 0 }]} data-cas={k}>
+                <p class="cas__titre">{infos.titre}</p>
+                {paire ? (
+                  <Comparateur langue={langue} paire={{ ...paire, ratio: 4 / 3 }} sizes="340px" />
+                ) : (
+                  <Image class="cas__photo" src={photo(c.couverture)} alt={textes.photos[c.couverture]} widths={[340, 680]} sizes="340px" format="webp" quality={74} loading="lazy" />
+                )}
+                {c.slug && (
+                  <a class="cas__lien" href={lienChantier(c.cle, langue)}>
+                    {textes.accueil.realisations.voir}
+                    <Icon nom="fleche" taille={18} epaisseur={2.2} />
+                  </a>
+                )}
+              </div>
             );
           })}
         </div>
@@ -499,64 +508,56 @@ const identifiant = 'carte';
     }
   }
 
-  /* --- La fiche de la commune choisie --- */
-  .carte__fiches {
-    display: grid;
-  }
-
-  .fiche {
-    display: none;
-    gap: 10px;
-  }
-
-  .fiche.est-actif {
-    display: grid;
-  }
-
-  .fiche__chantier {
-    display: flex;
-    align-items: center;
-    gap: 16px;
-    padding: 10px;
-    border: 1px solid var(--color-border);
-    border-radius: var(--radius-md);
-    background: var(--color-card);
-    box-shadow: var(--shadow-tile);
-    color: inherit;
-    text-decoration: none;
-    transition:
-      transform var(--speed) var(--ease),
-      box-shadow var(--speed) var(--ease);
-  }
-
-  a.fiche__chantier:hover {
-    transform: translateY(-2px);
-    box-shadow: var(--shadow-lift);
-  }
-
-  a.fiche__chantier:focus-visible {
-    outline: 3px solid var(--color-accent);
-    outline-offset: 3px;
-  }
-
-  .fiche__chantier :global(img) {
-    flex-shrink: 0;
-    width: 112px;
-    height: 84px;
-    object-fit: cover;
-    border-radius: 12px;
-  }
-
-  .fiche__texte {
+  /* --- Les fenêtres des communes (ordinateur : près du point ; téléphone : feuille qui monte du bas) --- */
+  .popup {
+    position: absolute;
+    z-index: 120;
     display: flex;
     flex-direction: column;
-    gap: 3px;
-    min-width: 0;
+    gap: 12px;
+    width: min(348px, calc(100vw - 24px));
+    max-height: calc(100dvh - 24px);
+    padding: 16px;
+    overflow-y: auto;
+    border-radius: 24px;
+    background: #fff;
+    box-shadow:
+      0 0 0 1px var(--color-border),
+      0 30px 60px -20px rgba(31, 36, 41, 0.45);
+    opacity: 0;
+    transform: translateY(8px) scale(0.98);
+    transition:
+      opacity 220ms var(--ease-out),
+      transform 220ms var(--ease-out);
   }
 
-  .fiche__commune {
+  .popup[hidden] {
+    display: none;
+  }
+
+  .popup.est-ouvert {
+    opacity: 1;
+    transform: none;
+  }
+
+  .popup:focus {
+    outline: none;
+  }
+
+  .popup__poignee {
+    display: none;
+  }
+
+  .popup__tete {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 12px;
+  }
+
+  .popup__titre {
     font-family: var(--font-display);
-    font-size: 24px;
+    font-size: 28px;
     font-weight: 800;
     line-height: 1;
     letter-spacing: var(--tracking-display);
@@ -564,19 +565,161 @@ const identifiant = 'carte';
     color: var(--color-ink);
   }
 
-  .fiche__titre {
+  .popup__fermer {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    flex-shrink: 0;
+    width: 44px;
+    height: 44px;
+    margin-right: -6px;
+    border: 0;
+    border-radius: 50%;
+    background: var(--color-surface);
+    color: var(--color-ink);
+    cursor: pointer;
+    transition: background-color var(--speed) var(--ease);
+  }
+
+  .popup__fermer:hover {
+    background: var(--color-border);
+  }
+
+  .popup__fermer:focus-visible,
+  .onglet:focus-visible,
+  .cas__lien:focus-visible {
+    outline: 3px solid var(--color-accent);
+    outline-offset: 2px;
+  }
+
+  .popup__onglets {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 6px;
+  }
+
+  .onglet {
+    min-height: 40px;
+    padding: 0 14px;
+    border: 1.5px solid var(--color-border);
+    border-radius: var(--radius-pill);
+    background: var(--color-card);
+    color: var(--color-ink);
+    font: 650 13.5px/1.1 var(--font-text);
+    cursor: pointer;
+    transition:
+      background-color var(--speed) var(--ease),
+      color var(--speed) var(--ease),
+      border-color var(--speed) var(--ease);
+  }
+
+  .onglet.est-actif {
+    border-color: var(--color-ink);
+    background: var(--color-ink);
+    color: #fff;
+  }
+
+  .cas {
+    display: none;
+    flex-direction: column;
+    gap: 12px;
+  }
+
+  .cas.est-actif {
+    display: flex;
+  }
+
+  .cas__titre {
+    font-size: var(--size-small);
     font-weight: 650;
     color: var(--color-ink);
   }
 
-  .fiche__voir {
+  .cas :global(.comparateur) {
+    border-radius: 16px;
+  }
+
+  .cas__photo {
+    display: block;
+    width: 100%;
+    height: auto;
+    aspect-ratio: 4 / 3;
+    object-fit: cover;
+    border-radius: 16px;
+  }
+
+  .cas__lien {
     display: inline-flex;
     align-items: center;
-    gap: 6px;
-    margin-top: 2px;
+    justify-content: center;
+    gap: 10px;
+    min-height: 50px;
+    padding: 0 22px;
+    border-radius: var(--radius-pill);
+    background: var(--color-accent);
+    box-shadow: var(--shadow-accent);
+    color: #fff;
     font-size: var(--size-small);
     font-weight: 700;
-    color: var(--color-accent);
+    text-decoration: none;
+    transition: background-color var(--speed) var(--ease);
+  }
+
+  .cas__lien:hover {
+    background: var(--color-accent-dark);
+  }
+
+  .popups__fond {
+    position: fixed;
+    inset: 0;
+    z-index: 110;
+    background: rgba(14, 26, 40, 0.55);
+    opacity: 0;
+    transition: opacity 320ms var(--ease);
+  }
+
+  .popups__fond[hidden] {
+    display: none;
+  }
+
+  .popups__fond.est-ouvert {
+    opacity: 1;
+  }
+
+  @media (max-width: 699px) {
+    .popup {
+      position: fixed;
+      inset: auto 0 0 0;
+      z-index: 120;
+      width: auto;
+      max-height: min(88dvh, 700px);
+      gap: 14px;
+      padding: 10px 18px calc(22px + env(safe-area-inset-bottom, 0px));
+      border-radius: 28px 28px 0 0;
+      opacity: 1;
+      transform: translateY(105%);
+      transition: transform 380ms var(--ease-out);
+    }
+
+    .popup.est-ouvert {
+      transform: none;
+    }
+
+    .popup__poignee {
+      display: block;
+      align-self: center;
+      width: 40px;
+      height: 5px;
+      border-radius: 3px;
+      background: var(--color-border);
+    }
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .popup,
+    .popups__fond {
+      transition: none;
+    }
   }
 
   @media (prefers-reduced-motion: no-preference) {
@@ -598,10 +741,6 @@ const identifiant = 'carte';
       animation: onde 2.8s var(--ease-out) infinite;
     }
 
-    .fiche.est-actif {
-      animation: fiche-entre 420ms var(--ease-out);
-    }
-
     @keyframes onde {
       from {
         transform: translateX(calc(50% - 8px)) scale(0.4);
@@ -613,15 +752,9 @@ const identifiant = 'carte';
       }
     }
 
-    @keyframes fiche-entre {
-      from {
-        opacity: 0;
-        transform: translateY(8px);
-      }
-    }
   }
 
-  /* Téléphone : pas de noms sur la carte (trop serrés), les communes se choisissent sous la carte. */
+  /* Téléphone : pas de noms sur la carte (trop serrés), les communes se choisissent aussi sous la carte. */
   @media (max-width: 699px) {
     .point__nom,
     .bureau__nom {
@@ -650,11 +783,6 @@ const identifiant = 'carte';
 
     .point__rond::before {
       inset: 10px;
-    }
-
-    .fiche__chantier :global(img) {
-      width: 92px;
-      height: 72px;
     }
   }
 </style>

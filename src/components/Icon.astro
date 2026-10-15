@@ -19,7 +19,8 @@ export type NomIcone =
   | 'facade'
   | 'isolation'
   | 'fissure'
-  | 'echafaudage';
+  | 'echafaudage'
+  | 'croix';
 
 interface Props {
   nom: NomIcone;
@@ -40,6 +41,7 @@ const chemins: Record<NomIcone, string> = {
   fissure: '<path d="M12 3l-2.5 5 4 3-3.5 4.5 2.5 2.5-1 3"/><path d="M4 21h16"/>',
   echafaudage:
     '<path d="M5 3v18M19 3v18"/><path d="M5 8h14M5 14h14"/><path d="M5 8l14 6M5 14L19 8"/>',
+  croix: '<path d="M6 6l12 12M18 6L6 18"/>',
   facade:
     '<path d="M4 21V7l8-4 8 4v14"/><path d="M2.5 21h19"/><path d="M8 10h2M14 10h2M8 14h2M14 14h2"/><path d="M10.5 21v-3.5h3V21"/>',
   autre: '<circle cx="6" cy="12" r="1.2"/><circle cx="12" cy="12" r="1.2"/><circle cx="18" cy="12" r="1.2"/>',
