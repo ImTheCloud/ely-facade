@@ -1,33 +1,25 @@
 ---
 /**
  * Haut de l'accueil : la photo de Namur en plein écran, l'en-tête posé dedans, le titre en bas à gauche.
- *
- * Trois variantes pour que Claudiu choisisse (voir docs/variantes.md) :
- * - a « Mise au point » : la photo arrive floue et un peu zoomée, puis se pose et devient nette ;
- *   le titre se révèle ligne par ligne.
- * - b « Film d'ouverture » : trois façades terminées par l'équipe se succèdent en fondu (Mons, Namur),
- *   puis le film s'arrête sur la photo de Namur.
- * - c « La façade qui brille » : un reflet de lumière passe sur les surfaces blanches de la façade et sur le mot
- *   « briller » ; le point du titre est la brique rouge du logo ; texte réparti en bas à gauche et à droite.
- *
- * Dans tous les cas : le bouton et le téléphone sont là tout de suite, rien ne bloque le chargement,
+ * « La façade qui brille » : un reflet de lumière passe une fois sur les surfaces blanches de la façade, puis sur le mot
+ * « briller » ; le point du titre est la brique rouge du logo. Sur ordinateur, le bouton, le téléphone et les engagements
+ * sont dans un panneau de verre à droite.
+ * Le bouton et le téléphone sont là tout de suite, rien ne bloque le chargement,
  * tout se coupe avec prefers-reduced-motion et la photo seule reste belle sans JavaScript.
  */
 import { getImage } from 'astro:assets';
 import Icon from '../Icon.astro';
 import masqueBureau from '../../assets/photos/accueil/hero-namur-masque.png';
 import masqueMobile from '../../assets/photos/accueil/hero-namur-mobile-masque.png';
-import { heroPhoto, photo } from '../../data/chantiers';
-import type { VarianteHero } from '../../data/hero';
+import { heroPhoto } from '../../data/chantiers';
 import { entreprise } from '../../data/entreprise';
 import { t, type Langue } from '../../i18n';
 
 interface Props {
   langue: Langue;
-  variante: VarianteHero;
 }
 
-const { langue, variante } = Astro.props;
+const { langue } = Astro.props;
 const textes = t(langue);
 const hero = textes.accueil.hero;
 
@@ -37,40 +29,19 @@ const PORTRAIT = '(max-aspect-ratio: 4/5)';
 const bureau = await getImage({ src: heroPhoto.image, widths: [768, 1152, 1536, 1920, 2400], format: 'webp', quality: 78 });
 const mobile = await getImage({ src: heroPhoto.mobile, widths: [480, 720, 1010], format: 'webp', quality: 76 });
 
-// Variante a : une toute petite version de la photo, agrandie, sert d'image floue de départ.
-const flou = variante === 'a' ? await getImage({ src: heroPhoto.image, width: 48, format: 'webp', quality: 60 }) : undefined;
-const flouMobile = variante === 'a' ? await getImage({ src: heroPhoto.mobile, width: 24, format: 'webp', quality: 60 }) : undefined;
+// Les masques des surfaces blanches de la façade, pour le reflet.
+const masques = {
+  bureau: await getImage({ src: masqueBureau, width: 1200, format: 'webp', quality: 55 }),
+  mobile: await getImage({ src: masqueMobile, width: 480, format: 'webp', quality: 55 }),
+};
 
-// Variante b : les images du film (façades terminées), chargées après la photo principale.
-const film =
-  variante === 'b'
-    ? await Promise.all(
-        ['mons-umons-cour/etape-3-aile-terminee', 'namur-immeuble-balcons/apres-cote-gauche'].map((chemin) =>
-          getImage({ src: photo(chemin), widths: [768, 1280, 1920], format: 'webp', quality: 74 }),
-        ),
-      )
-    : [];
-
-// Variante c : masques des surfaces blanches de la façade, pour le reflet.
-const masques =
-  variante === 'c'
-    ? {
-        bureau: await getImage({ src: masqueBureau, width: 1200, format: 'webp', quality: 55 }),
-        mobile: await getImage({ src: masqueMobile, width: 480, format: 'webp', quality: 55 }),
-      }
-    : undefined;
-
-// Le dernier mot du titre reçoit la lumière ; en variante c, son point devient la brique rouge du logo.
+// Le dernier mot du titre reçoit la lumière ; son point est la brique rouge du logo.
 const lignes = hero.titre.slice(0, -1);
 const derniere = hero.titre[hero.titre.length - 1];
 const motFinal = derniere.replace(/\.$/, '');
 ---
 
-<section
-  class:list={['hero', `hero--${variante}`]}
-  data-hero={variante}
-  style={masques ? `--masque: url('${masques.bureau.src}'); --masque-mobile: url('${masques.mobile.src}')` : undefined}
->
+<section class="hero" style={`--masque: url('${masques.bureau.src}'); --masque-mobile: url('${masques.mobile.src}')`}>
   <div class="hero__media">
     <picture>
       <source media={PORTRAIT} srcset={mobile.srcSet.attribute} sizes="100vw" type="image/webp" />
@@ -88,37 +59,7 @@ const motFinal = derniere.replace(/\.$/, '');
       />
     </picture>
 
-    {
-      flou && flouMobile && (
-        <picture class="hero__flou" aria-hidden="true">
-          <source media={PORTRAIT} srcset={flouMobile.src} />
-          <img src={flou.src} alt="" />
-        </picture>
-      )
-    }
-
-    {
-      film.length > 0 && (
-        <div class="hero__film" aria-hidden="true" data-film>
-          {film.map((image, i) => (
-            <img
-              class="hero__plan"
-              style={`--i: ${i}`}
-              src={image.src}
-              srcset={image.srcSet.attribute}
-              sizes="100vw"
-              alt=""
-              loading="eager"
-              fetchpriority="low"
-              decoding="async"
-            />
-          ))}
-          <div class="hero__carton" />
-        </div>
-      )
-    }
-
-    {masques && <div class="hero__reflet" aria-hidden="true"><span /></div>}
+    <div class="hero__reflet" aria-hidden="true"><span /></div>
   </div>
 
   <div class="hero__voile" aria-hidden="true"></div>
@@ -135,16 +76,9 @@ const motFinal = derniere.replace(/\.$/, '');
         }
         <span class="hero__ligne" style={`--n: ${hero.titre.length}`}>
           <span>
-            <span class="hero__lumiere" data-texte={motFinal}>{motFinal}</span>{
-              variante === 'c' ? (
-                <>
-                  <span class="hero__point" aria-hidden="true" />
-                  <span class="sr-only">.</span>
-                </>
-              ) : (
-                '.'
-              )
-            }
+            <span class="hero__lumiere" data-texte={motFinal}>{motFinal}</span>
+            <span class="hero__point" aria-hidden="true" />
+            <span class="sr-only">.</span>
           </span>
         </span>
       </h1>
@@ -177,25 +111,11 @@ const motFinal = derniere.replace(/\.$/, '');
     </div>
   </div>
 
-  {
-    variante === 'b' && (
-      <div class="hero__legende" aria-hidden="true" data-legende>
-        {hero.film.etapes.map((etape, i) => (
-          <span style={`--i: ${i}`}>{etape}</span>
-        ))}
-        <span class="hero__progression" />
-      </div>
-    )
-  }
 </section>
-
-<script>
-  import '~/scripts/hero';
-</script>
 
 <style>
   /* =========================================================================
-     Base commune aux trois variantes
+     Base
      ========================================================================= */
   .hero {
     --hero-marge-bas: clamp(24px, 5vh, 64px);
@@ -212,9 +132,7 @@ const motFinal = derniere.replace(/\.$/, '');
 
   .hero__media,
   .hero__media picture,
-  .hero__photo,
-  .hero__flou img,
-  .hero__plan {
+  .hero__photo {
     position: absolute;
     inset: 0;
     width: 100%;
@@ -228,9 +146,7 @@ const motFinal = derniere.replace(/\.$/, '');
     container-type: size;
   }
 
-  .hero__photo,
-  .hero__flou img,
-  .hero__plan {
+  .hero__photo {
     display: block;
     object-fit: cover;
   }
@@ -245,8 +161,7 @@ const motFinal = derniere.replace(/\.$/, '');
     --cadrage: 50% min(0px, max(calc(var(--faite) - 16.89cqw), calc(100cqh - 73.17cqw)));
   }
 
-  .hero__photo,
-  .hero__flou img {
+  .hero__photo {
     object-position: var(--cadrage);
   }
 
@@ -527,7 +442,7 @@ const motFinal = derniere.replace(/\.$/, '');
   }
 
   /* =========================================================================
-     Entrées (communes) : rien n'est caché sans JavaScript ni avec « moins d'animations ».
+     Entrées : rien n'est caché sans JavaScript ni avec « moins d'animations ».
      ========================================================================= */
   @media (prefers-reduced-motion: no-preference) {
     :global(.js) .hero__ligne > span {
@@ -555,243 +470,7 @@ const motFinal = derniere.replace(/\.$/, '');
   }
 
   /* =========================================================================
-     Variante a : mise au point
-     ========================================================================= */
-  .hero__flou img {
-    image-rendering: auto;
-  }
-
-  .hero__flou {
-    display: none;
-  }
-
-  @media (prefers-reduced-motion: no-preference) {
-    :global(.js) .hero--a .hero__flou {
-      display: block;
-      animation: mise-au-point 1600ms var(--ease) 250ms both;
-    }
-
-    :global(.js) .hero--a .hero__photo,
-    :global(.js) .hero--a .hero__flou img {
-      animation: se-pose 2600ms var(--ease-out) both;
-    }
-
-    @keyframes mise-au-point {
-      to {
-        opacity: 0;
-        visibility: hidden;
-      }
-    }
-
-    @keyframes se-pose {
-      from {
-        transform: scale(1.09);
-      }
-    }
-  }
-
-  /* =========================================================================
-     Variante b : film d'ouverture (lancé par le script quand les images sont prêtes)
-     ========================================================================= */
-  .hero__film {
-    display: none;
-  }
-
-  .hero__legende {
-    display: none;
-  }
-
-  @media (prefers-reduced-motion: no-preference) {
-    :global(.js) .hero--b .hero__film {
-      display: block;
-      position: absolute;
-      inset: 0;
-    }
-
-    /* En attendant les images : un carton ardoise, le titre est déjà lisible dessus. */
-    .hero__carton {
-      position: absolute;
-      inset: 0;
-      background: rgb(var(--voile));
-    }
-
-    .hero__plan {
-      opacity: 0;
-    }
-
-    .hero--b.film-en-cours .hero__carton {
-      animation: disparait 700ms var(--ease) both;
-    }
-
-    .hero--b.film-en-cours .hero__plan {
-      animation:
-        plan 2300ms var(--ease) both,
-        travelling 3200ms linear both;
-      animation-delay: calc(var(--i) * 1700ms);
-    }
-
-    .hero--b.film-en-cours .hero__photo {
-      animation: se-pose 3000ms var(--ease-out) 3200ms both;
-    }
-
-    .hero--b.film-termine .hero__film {
-      display: none;
-    }
-
-    .hero--b.film-fini .hero__carton {
-      animation: disparait 500ms var(--ease) both;
-    }
-
-    @keyframes disparait {
-      to {
-        opacity: 0;
-        visibility: hidden;
-      }
-    }
-
-    /* Chaque plan entre en fondu (le premier est là d'emblée), reste, puis s'efface sur le suivant. */
-    .hero--b.film-en-cours .hero__plan:first-child {
-      animation-name: plan-premier, travelling;
-    }
-
-    @keyframes plan {
-      0% {
-        opacity: 0;
-      }
-      22%,
-      74% {
-        opacity: 1;
-      }
-      100% {
-        opacity: 0;
-      }
-    }
-
-    @keyframes plan-premier {
-      0%,
-      74% {
-        opacity: 1;
-      }
-      100% {
-        opacity: 0;
-      }
-    }
-
-    @keyframes travelling {
-      from {
-        transform: scale(1.12) translateX(1.5%);
-      }
-      to {
-        transform: scale(1.02);
-      }
-    }
-
-    /* La légende : la commune de chaque plan, et une fine barre qui avance. */
-    :global(.js) .hero--b .hero__legende {
-      position: absolute;
-      right: var(--gutter);
-      bottom: calc(var(--hero-marge-bas) + env(safe-area-inset-bottom, 0px));
-      z-index: 2;
-      display: none;
-      min-width: 230px;
-      padding: 10px 14px 12px;
-      border-radius: 14px;
-      background: rgba(255, 255, 255, 0.12);
-      border: 1px solid rgba(255, 255, 255, 0.24);
-      backdrop-filter: blur(12px);
-      -webkit-backdrop-filter: blur(12px);
-      font-size: 13px;
-      font-weight: 600;
-    }
-
-    .hero--b.film-en-cours .hero__legende {
-      display: grid;
-      animation: legende-sort 600ms var(--ease) 5600ms both;
-    }
-
-    .hero__legende > span:not(.hero__progression) {
-      grid-area: 1 / 1;
-      opacity: 0;
-    }
-
-    .hero--b.film-en-cours .hero__legende > span:not(.hero__progression) {
-      animation: legende 1700ms var(--ease) both;
-      animation-delay: calc(var(--i) * 1700ms);
-    }
-
-    .hero--b.film-en-cours .hero__legende > span:last-of-type:not(.hero__progression) {
-      animation-name: legende-reste;
-    }
-
-    .hero__progression {
-      grid-area: 2 / 1;
-      height: 2px;
-      margin-top: 8px;
-      border-radius: 2px;
-      background: rgba(255, 255, 255, 0.85);
-      transform-origin: left;
-      transform: scaleX(0);
-    }
-
-    .hero--b.film-en-cours .hero__progression {
-      animation: progression 4600ms linear both;
-    }
-
-    @keyframes legende {
-      0% {
-        opacity: 0;
-        transform: translateY(6px);
-      }
-      15%,
-      85% {
-        opacity: 1;
-        transform: none;
-      }
-      100% {
-        opacity: 0;
-      }
-    }
-
-    @keyframes legende-reste {
-      0% {
-        opacity: 0;
-        transform: translateY(6px);
-      }
-      20%,
-      100% {
-        opacity: 1;
-        transform: none;
-      }
-    }
-
-    @keyframes progression {
-      to {
-        transform: scaleX(1);
-      }
-    }
-
-    @keyframes legende-sort {
-      to {
-        opacity: 0;
-        visibility: hidden;
-      }
-    }
-
-    @media (min-width: 900px) {
-      .hero--b.film-en-cours .hero__legende {
-        display: grid;
-      }
-    }
-  }
-
-  @media (max-width: 899px) {
-    .hero--b .hero__legende {
-      display: none !important;
-    }
-  }
-
-  /* =========================================================================
-     Variante c : la façade qui brille
+     La façade qui brille
      ========================================================================= */
   .hero__reflet {
     display: none;
@@ -809,13 +488,13 @@ const motFinal = derniere.replace(/\.$/, '');
 
   @media (min-width: 900px) {
     /* Le titre en bas à gauche, sur la route et la pelouse ; les détails dans un panneau de verre à droite. */
-    .hero--c .hero__contenu {
+    .hero__contenu {
       grid-template-columns: 1fr minmax(340px, 410px);
       align-items: end;
       column-gap: 48px;
     }
 
-    .hero--c .hero__details {
+    .hero__details {
       gap: 20px;
       padding: 28px 28px 26px;
       border: 1px solid rgba(255, 255, 255, 0.18);
@@ -827,27 +506,27 @@ const motFinal = derniere.replace(/\.$/, '');
       box-shadow: 0 30px 60px -30px rgba(var(--voile), 0.6);
     }
 
-    .hero--c .hero__actions {
+    .hero__actions {
       flex-direction: column;
       align-items: stretch;
       width: 100%;
       gap: 8px;
     }
 
-    .hero--c .hero__bouton {
+    .hero__bouton {
       justify-content: space-between;
     }
 
-    .hero--c .hero__tel {
+    .hero__tel {
       align-self: flex-start;
     }
 
-    .hero--c .hero__preuves {
+    .hero__preuves {
       flex-direction: column;
       gap: 8px;
     }
 
-    .hero--c .hero__voile {
+    .hero__voile {
       background:
         linear-gradient(to bottom, rgba(var(--voile), 0.5) 0%, rgba(var(--voile), 0.18) 14%, rgba(var(--voile), 0) 26%),
         linear-gradient(to top, rgba(var(--voile), 0.84) 0%, rgba(var(--voile), 0.5) 22%, rgba(var(--voile), 0.08) 46%, rgba(var(--voile), 0) 60%),
@@ -856,7 +535,7 @@ const motFinal = derniere.replace(/\.$/, '');
   }
 
   @media (prefers-reduced-motion: no-preference) {
-    :global(.js) .hero--c .hero__reflet {
+    :global(.js) .hero__reflet {
       display: block;
       position: absolute;
       inset: 0;
@@ -867,7 +546,7 @@ const motFinal = derniere.replace(/\.$/, '');
     }
 
     @media (max-aspect-ratio: 4/5) {
-      :global(.js) .hero--c .hero__reflet {
+      :global(.js) .hero__reflet {
         -webkit-mask: var(--masque-mobile) var(--cadrage) / cover no-repeat;
         mask: var(--masque-mobile) var(--cadrage) / cover no-repeat;
       }
@@ -898,7 +577,7 @@ const motFinal = derniere.replace(/\.$/, '');
     }
 
     /* Le mot « briller » scintille quand la lumière passe. */
-    :global(.js) .hero--c .hero__lumiere::after {
+    :global(.js) .hero__lumiere::after {
       content: attr(data-texte);
       position: absolute;
       inset: 0;
@@ -913,7 +592,7 @@ const motFinal = derniere.replace(/\.$/, '');
       animation: scintille 1400ms var(--ease) 1100ms both;
     }
 
-    :global(.js) .hero--c .hero__lumiere {
+    :global(.js) .hero__lumiere {
       color: #eef2f6;
     }
 
@@ -927,7 +606,7 @@ const motFinal = derniere.replace(/\.$/, '');
     }
 
     /* La brique rouge vient se poser à la fin. */
-    :global(.js) .hero--c .hero__point {
+    :global(.js) .hero__point {
       animation: brique 900ms cubic-bezier(0.3, 1.6, 0.5, 1) 2300ms both;
     }
 

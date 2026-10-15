@@ -1,5 +1,5 @@
 ---
-/** L'accueil complet, partagé par / , /nl/ et les pages de comparaison des variantes du haut de page. */
+/** L'accueil complet, partagé par / et /nl/. */
 import AvantApres from './AvantApres.astro';
 import Chiffres from './Chiffres.astro';
 import Devis from './Devis.astro';
@@ -13,24 +13,20 @@ import Phrase from './Phrase.astro';
 import Realisations from './Realisations.astro';
 import Umons from './Umons.astro';
 import BaseLayout from '~/layouts/BaseLayout.astro';
-import { VARIANTES_HERO, VARIANTE_HERO_ACCUEIL, type VarianteHero } from '~/data/hero';
 import { t, type Langue } from '~/i18n';
 
 interface Props {
   langue: Langue;
-  variante?: VarianteHero;
-  /** Page de comparaison : hors Google et hors sitemap. */
-  comparaison?: boolean;
 }
 
-const { langue, variante = VARIANTE_HERO_ACCUEIL, comparaison = false } = Astro.props;
+const { langue } = Astro.props;
 const textes = t(langue);
 const page = textes.pages.accueil;
 const emotions = textes.accueil.emotions;
 ---
 
-<BaseLayout langue={langue} titre={page.titre} description={page.description} surPhoto noindex={comparaison}>
-  <Hero langue={langue} variante={variante} />
+<BaseLayout langue={langue} titre={page.titre} description={page.description} surPhoto>
+  <Hero langue={langue} />
   <Phrase langue={langue} phrase={emotions.durer.phrase} note={emotions.durer.note} />
   <Chiffres langue={langue} />
   <Phrase langue={langue} phrase={emotions.premiere.phrase} />
@@ -45,58 +41,5 @@ const emotions = textes.accueil.emotions;
   <Methode langue={langue} />
   <Faq langue={langue} />
   <Devis langue={langue} />
-
-  {
-    comparaison ? (
-      <nav class="variantes" aria-label="Variantes du haut de page">
-        {VARIANTES_HERO.map((v) => (
-          <a href={`/variantes/${v}/`} aria-current={v === variante ? 'page' : undefined}>
-            {v.toUpperCase()}
-          </a>
-        ))}
-      </nav>
-    ) : (
-      <script is:inline>
-        // ?hero=a|b|c mène à la page de comparaison de cette variante du haut de page.
-        (function () {
-          var v = new URLSearchParams(location.search).get('hero');
-          if (v && /^[abc]$/.test(v)) location.replace('/variantes/' + v + '/');
-        })();
-      </script>
-    )
-  }
 </BaseLayout>
 
-<style>
-  /* Petit sélecteur flottant, seulement sur les pages de comparaison. */
-  .variantes {
-    position: fixed;
-    left: 50%;
-    top: calc(var(--header-h) + 10px);
-    z-index: 50;
-    display: flex;
-    gap: 4px;
-    padding: 4px;
-    border-radius: var(--radius-pill);
-    background: rgba(255, 255, 255, 0.92);
-    box-shadow: var(--shadow-lift);
-    transform: translateX(-50%);
-  }
-
-  .variantes a {
-    display: inline-flex;
-    align-items: center;
-    justify-content: center;
-    min-width: 44px;
-    min-height: 44px;
-    border-radius: var(--radius-pill);
-    color: var(--color-ink);
-    font-weight: 750;
-    text-decoration: none;
-  }
-
-  .variantes a[aria-current='page'] {
-    background: var(--color-ink);
-    color: #fff;
-  }
-</style>

@@ -436,9 +436,6 @@ export const nl = {
       appeler: 'Bel',
       preuvesAria: 'Onze beloften',
       preuves: ['Minstens 10\u00a0jaar garantie', 'Overal in België'],
-      film: {
-        etapes: ['Bergen · Universiteit van Bergen', 'Namen · Gebouw met balkons', 'Namen · Gebouw met drie verdiepingen'],
-      },
     },
 
 

@@ -6,7 +6,7 @@ import { LANGUES, chemin, memePageDansLaLangue } from './src/i18n/index.ts';
 // Domaine principal (à acheter) ; elyfacade.com redirigera vers lui.
 const SITE = 'https://elyfacade.be';
 
-// Les pages légales sont en noindex : hors sitemap, comme la 404 et les variantes du haut de page.
+// Les pages légales sont en noindex : hors sitemap, comme la 404.
 const PAGES_LEGALES = LANGUES.flatMap((langue) => [chemin('mentionsLegales', langue), chemin('viePrivee', langue)]);
 
 export default defineConfig({
@@ -23,7 +23,7 @@ export default defineConfig({
     sitemap({
       filter: (page) => {
         const adresse = new URL(page).pathname;
-        return !adresse.endsWith('/404/') && !adresse.startsWith('/variantes/') && !PAGES_LEGALES.includes(adresse);
+        return !adresse.endsWith('/404/') && !PAGES_LEGALES.includes(adresse);
       },
 
       // Les adresses sont traduites (/services/ ↔ /nl/diensten/) : on relie

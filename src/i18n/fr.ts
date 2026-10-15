@@ -436,9 +436,6 @@ export const fr = {
       appeler: 'Appeler le',
       preuvesAria: 'Nos engagements',
       preuves: ['Garantie 10\u00a0ans minimum', 'Partout en Belgique'],
-      film: {
-        etapes: ['Mons · Université de Mons', 'Namur · Immeuble à balcons', 'Namur · Immeuble de trois étages'],
-      },
     },
 
 
