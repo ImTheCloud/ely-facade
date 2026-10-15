@@ -1,5 +1,6 @@
 ---
-/** La bande des chiffres, juste sous la phrase d'ouverture. Seulement des chiffres confirmés. */
+/** La bande des chiffres, juste sous la phrase d'ouverture. Seulement des chiffres confirmés ; « {n} » est le vrai nombre de services (src/data/metiers.ts). */
+import { METIERS } from '../../data/metiers';
 import { t, type Langue } from '../../i18n';
 
 interface Props {
@@ -15,7 +16,7 @@ const chiffres = t(langue).accueil.chiffres;
     {
       chiffres.liste.map((chiffre, i) => (
         <li class:list={['chiffre', { 'chiffre--rouge': i === 6 }]} data-reveal style={`--delai: ${i * 90}ms`}>
-          <span class="chiffre__valeur">{chiffre.valeur}</span>
+          <span class="chiffre__valeur">{chiffre.valeur.replace('{n}', String(METIERS.length))}</span>
           <span class="chiffre__libelle">{chiffre.libelle}</span>
         </li>
       ))

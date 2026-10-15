@@ -549,10 +549,10 @@ export const fr = {
       liste: [
         { valeur: '6 ans', libelle: 'de métier pour notre gérant' },
         { valeur: '50+', libelle: 'chantiers réalisés par nos gérants' },
+        { valeur: '{n}', libelle: 'services de façade, de A à Z' },
         { valeur: '2', libelle: 'frères à la tête de l’entreprise' },
-        { valeur: '8', libelle: 'personnes dans l’équipe' },
-        { valeur: 'A à Z', libelle: 'toute la façade, sur tous types de chantiers' },
         { valeur: '12/12', libelle: 'mois de travail par an, même l’hiver' },
+        { valeur: '8', libelle: 'personnes dans l’équipe' },
         { valeur: '10 ans', libelle: 'de garantie minimum' },
         { valeur: '0\u00a0€', libelle: 'pour la visite, sans engagement' },
       ],
