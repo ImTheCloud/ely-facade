@@ -433,7 +433,7 @@ export const nl = {
       /** Eén regel per item: de titel past altijd op drie regels. Het laatste woord krijgt het licht. */
       titre: ['Uw gevel', 'verdient te', 'stralen.'],
       texte:
-        'Gevelpleister, schilderwerk, reiniging, voegwerk, herstel van bakstenen: van het kleine huis tot het appartementsgebouw. Gratis plaatsbezoek, minstens 10\u00a0jaar garantie.',
+        'Gevelpleister, schilderwerk, reiniging, voegwerk, herstel van bakstenen: van het kleine huis tot het appartementsgebouw.',
       bouton: 'Plan mijn gratis plaatsbezoek',
       appeler: 'Bel',
       preuvesAria: 'Onze beloften',

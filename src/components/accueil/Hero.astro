@@ -484,7 +484,13 @@ const motFinal = derniere.replace(/\.$/, '');
     }
 
     .hero__titre {
-      font-size: clamp(40px, 11.8vw, 56px);
+      font-size: clamp(36px, 10.6vw, 50px);
+    }
+
+    /* Téléphone : rien sur la façade. Seuls le titre, le bouton et les engagements, posés sur la pelouse et la route. */
+    .hero__pastille,
+    .hero__texte {
+      display: none;
     }
 
     .hero__texte {

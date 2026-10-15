@@ -433,7 +433,7 @@ export const fr = {
       /** Une ligne par entrée : le titre tient toujours sur trois lignes. Le dernier mot est mis en lumière. */
       titre: ['Votre façade', 'mérite de', 'briller.'],
       texte:
-        'Crépi, peinture, nettoyage, rejointoiement, réparation de briques\u00a0: de la petite maison à l’immeuble. Visite gratuite, garantie de 10\u00a0ans minimum.',
+        'Crépi, peinture, nettoyage, rejointoiement, réparation de briques\u00a0: de la petite maison à l’immeuble.',
       bouton: 'Demander ma visite gratuite',
       appeler: 'Appeler le',
       preuvesAria: 'Nos engagements',
