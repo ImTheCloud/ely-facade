@@ -2,6 +2,7 @@
 export const fr = {
   code: 'fr',
   htmlLang: 'fr-BE',
+  pays: 'Belgique',
 
   nav: {
     services: 'Services',
@@ -129,7 +130,7 @@ export const fr = {
       titre: 'Université de Mons',
       accroche: 'Façades de bâtiments de l’Université de Mons (UMons)',
       texte:
-        'Trois bâtiments de l’Université de Mons\u00a0: une cour intérieure, un immeuble de quatre étages et une longue façade. Les photos suivent le chantier, de l’échafaudage à la façade terminée.',
+        'Trois bâtiments de l’Université de Mons\u00a0: une cour intérieure, un immeuble de quatre étages et une longue façade, de l’échafaudage à la façade terminée.',
       batiments: ['Cour intérieure', 'Immeuble de quatre étages', 'Longue façade'],
     },
     'namur-immeuble': {
@@ -395,12 +396,12 @@ export const fr = {
     accueil: {
       titre: 'Ely Facade | Rénovation de façades partout en Belgique',
       description:
-        'Crépi, peinture, nettoyage, rejointoiement et réparation de briques\u00a0: Ely Facade rénove votre façade partout en Belgique. Visite sur place gratuite et sans engagement.',
+        'Crépi, peinture, nettoyage, rejointoiement et réparation de briques\u00a0: Ely Facade rénove votre façade partout en Belgique. Visite gratuite et sans engagement.',
     },
     services: {
       titre: 'Nos métiers de façade | Ely Facade',
       description:
-        'Crépi et enduit, peinture, nettoyage, rejointoiement et réparation de briques\u00a0: uniquement la façade, partout en Belgique. Visite gratuite, garantie de 10\u00a0ans minimum.',
+        'Crépi, peinture, nettoyage, rejointoiement et réparation de briques\u00a0: uniquement la façade, partout en Belgique. Visite gratuite, garantie de 10\u00a0ans minimum.',
     },
     realisations: {
       titre: 'Nos réalisations | Ely Facade',

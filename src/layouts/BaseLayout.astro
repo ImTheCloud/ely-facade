@@ -10,6 +10,7 @@ import '../styles/global.css';
 // Préchargées : sinon le navigateur ne les découvre qu'après avoir lu le CSS.
 import policeTexte from '@fontsource-variable/dm-sans/files/dm-sans-latin-wght-normal.woff2?url';
 import policeTitres from '@fontsource-variable/bricolage-grotesque/files/bricolage-grotesque-latin-opsz-normal.woff2?url';
+import { getImage } from 'astro:assets';
 import imagePartage from '../assets/partage.png';
 import BarreMobile from '../components/BarreMobile.astro';
 import DonneesStructurees from '../components/DonneesStructurees.astro';
@@ -25,9 +26,11 @@ interface Props {
   noindex?: boolean;
   /** La page commence par une grande photo : l'en-tête se pose dedans, en blanc. */
   surPhoto?: boolean;
+  /** L'image montrée quand on partage la page (WhatsApp, réseaux) ; par défaut, le logo. */
+  partage?: ImageMetadata;
 }
 
-const { langue, titre, description, noindex = false, surPhoto = false } = Astro.props;
+const { langue, titre, description, noindex = false, surPhoto = false, partage } = Astro.props;
 const textes = t(langue);
 
 const cheminActuel = Astro.url.pathname;
@@ -45,7 +48,11 @@ const versFr = memePageDansLaLangue(cheminActuel, 'fr');
 const versNl = memePageDansLaLangue(cheminActuel, 'nl');
 const langueAuto = !noindex;
 
-const urlPartage = new URL(imagePartage.src, Astro.site).href;
+// Une photo de chantier est recadrée au format des aperçus de lien (1200 × 630).
+const apercu = partage
+  ? await getImage({ src: partage, width: 1200, height: 630, fit: 'cover', format: 'jpeg', quality: 80 })
+  : { src: imagePartage.src, attributes: { width: imagePartage.width, height: imagePartage.height } };
+const urlPartage = new URL(apercu.src, Astro.site).href;
 ---
 
 <!doctype html>
@@ -118,8 +125,8 @@ const urlPartage = new URL(imagePartage.src, Astro.site).href;
     <meta property="og:url" content={canonique.href} />
     <meta property="og:locale" content={textes.htmlLang.replace('-', '_')} />
     <meta property="og:image" content={urlPartage} />
-    <meta property="og:image:width" content={String(imagePartage.width)} />
-    <meta property="og:image:height" content={String(imagePartage.height)} />
+    <meta property="og:image:width" content={String(apercu.attributes.width)} />
+    <meta property="og:image:height" content={String(apercu.attributes.height)} />
     <meta property="og:image:alt" content="Ely Facade" />
     <meta name="twitter:card" content="summary_large_image" />
     <meta name="twitter:image" content={urlPartage} />

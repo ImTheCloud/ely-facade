@@ -14,7 +14,7 @@ import Methode from '../accueil/Methode.astro';
 import Atouts from './Atouts.astro';
 import BaseLayout from '~/layouts/BaseLayout.astro';
 import { ETAPES_FACADE, chantier, lienChantier, photo, type CleChantier } from '~/data/chantiers';
-import { entreprise } from '~/data/entreprise';
+import { entreprise, idEntreprise } from '~/data/entreprise';
 import { METIERS, lienMetier, type CleMetier } from '~/data/metiers';
 import { chemin, t, type Langue } from '~/i18n';
 
@@ -46,9 +46,10 @@ const donnees = {
   serviceType: m.titre,
   description: m.description,
   url: new URL(lien, Astro.site).href,
-  areaServed: { '@type': 'Country', name: langue === 'nl' ? 'België' : 'Belgique' },
+  areaServed: { '@type': 'Country', name: textes.pays },
   provider: {
     '@type': 'GeneralContractor',
+    '@id': idEntreprise(Astro.site!),
     name: entreprise.nomCourt,
     telephone: entreprise.telephoneLien,
     url: new URL(chemin('accueil', langue), Astro.site).href,

@@ -2,6 +2,7 @@
 export const nl = {
   code: 'nl',
   htmlLang: 'nl-BE',
+  pays: 'België',
 
   nav: {
     services: 'Diensten',
@@ -129,7 +130,7 @@ export const nl = {
       titre: 'Universiteit van Bergen',
       accroche: 'Gevels van gebouwen van de Universiteit van Bergen (UMONS)',
       texte:
-        'Drie gebouwen van de Universiteit van Bergen: een binnenplaats, een gebouw met vier verdiepingen en een lange gevel. De foto’s volgen de werf, van de steiger tot de afgewerkte gevel.',
+        'Drie gebouwen van de Universiteit van Bergen: een binnenplaats, een gebouw met vier verdiepingen en een lange gevel, van de steiger tot de afgewerkte gevel.',
       batiments: ['Binnenplaats', 'Gebouw met vier verdiepingen', 'Lange gevel'],
     },
     'namur-immeuble': {
@@ -395,12 +396,12 @@ export const nl = {
     accueil: {
       titre: 'Ely Facade | Gevelrenovatie in heel België',
       description:
-        'Gevelpleister, schilderwerk, gevelreiniging, voegwerk en herstel van bakstenen: Ely Facade renoveert uw gevel overal in België. Gratis plaatsbezoek zonder verplichting.',
+        'Gevelpleister, schilderwerk, gevelreiniging, voegwerk en herstel van bakstenen: Ely Facade renoveert uw gevel overal in België. Gratis en vrijblijvend plaatsbezoek.',
     },
     services: {
       titre: 'Onze gevelvakken | Ely Facade',
       description:
-        'Gevelpleister, schilderwerk, gevelreiniging, voegwerk en herstel van bakstenen: uitsluitend de gevel, overal in België. Gratis plaatsbezoek, minstens 10\u00a0jaar garantie.',
+        'Gevelpleister, schilderwerk, reiniging, voegwerk en herstel van bakstenen: uitsluitend de gevel, overal in België. Gratis plaatsbezoek, minstens 10\u00a0jaar garantie.',
     },
     realisations: {
       titre: 'Onze realisaties | Ely Facade',

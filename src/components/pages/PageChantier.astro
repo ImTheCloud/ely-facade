@@ -44,7 +44,7 @@ const autres = CHANTIERS.filter((autre) => autre.cle !== cle && autre.slug).slic
 let index = 0;
 ---
 
-<BaseLayout langue={langue} titre={`${fiche.titre}, ${commune} | Ely Facade`} description={fiche.texte} surPhoto>
+<BaseLayout langue={langue} titre={`${fiche.titre}, ${commune} | Ely Facade`} description={fiche.texte} surPhoto partage={photo(c.couverture)}>
   <IntroPage
     langue={langue}
     fil={[

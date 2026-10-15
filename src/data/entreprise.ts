@@ -28,6 +28,11 @@ export const entreprise = {
   email: 'ungureanuelisei17@gmail.com',
 } as const;
 
+/** L'identifiant de l'entreprise dans les données structurées : les pages métier y renvoient. */
+export function idEntreprise(site: URL): string {
+  return new URL('/#entreprise', site).href;
+}
+
 /** Construit le lien WhatsApp avec le message déjà écrit. */
 export function lienWhatsApp(message: string): string {
   return `https://wa.me/${entreprise.whatsappNumero}?text=${encodeURIComponent(message)}`;
