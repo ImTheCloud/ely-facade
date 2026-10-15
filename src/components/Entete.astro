@@ -174,12 +174,18 @@ const estActif = (href: string) => cheminActuel.startsWith(href);
       border-color 300ms var(--ease);
   }
 
-  /* Dès qu'on défile : un voile blanc flouté, comme du verre. */
+  /* Dès qu'on défile : un fond blanc. Le verre flouté seulement sur ordinateur (trop coûteux sur téléphone). */
   .entete--defile {
-    background: rgba(251, 251, 250, 0.82);
+    background: rgba(251, 251, 250, 0.97);
     border-bottom-color: var(--color-border);
-    backdrop-filter: blur(18px) saturate(1.5);
-    -webkit-backdrop-filter: blur(18px) saturate(1.5);
+  }
+
+  @media (min-width: 1024px) {
+    .entete--defile {
+      background: rgba(251, 251, 250, 0.84);
+      backdrop-filter: blur(14px);
+      -webkit-backdrop-filter: blur(14px);
+    }
   }
 
   .entete--cache {
@@ -220,24 +226,6 @@ const estActif = (href: string) => cheminActuel.startsWith(href);
 
   :global(body.menu-ouvert) .entete--photo :global(.entete__logo-couleur) {
     opacity: 1;
-  }
-
-  .entete--photo:not(.entete--defile) .entete__burger {
-    background: #fff;
-    color: var(--color-ink);
-  }
-
-  .entete--photo:not(.entete--defile) .entete__burger-traits span {
-    background: var(--color-ink);
-  }
-
-  :global(body.menu-ouvert) .entete--photo .entete__burger {
-    background: var(--color-ink);
-    color: #fff;
-  }
-
-  :global(body.menu-ouvert) .entete--photo .entete__burger-traits span {
-    background: #fff;
   }
 
   /* Le sélecteur FR / NL en verre sur la photo. */
@@ -328,8 +316,13 @@ const estActif = (href: string) => cheminActuel.startsWith(href);
     background: var(--color-ink);
     border: 0;
     border-radius: var(--radius-pill);
+    /* Un liseré clair : le bouton se détache aussi bien sur la photo que sur le fond blanc. */
+    box-shadow:
+      0 0 0 1.5px rgba(255, 255, 255, 0.55),
+      0 8px 20px -8px rgba(31, 36, 41, 0.55);
     color: #fff;
     font: 650 14px/1 var(--font-text);
+    white-space: nowrap;
     cursor: pointer;
   }
 

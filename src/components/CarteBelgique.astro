@@ -91,13 +91,9 @@ const identifiant = 'carte';
           <stop offset="0" stop-color="#ffffff" />
           <stop offset="1" stop-color="#f1f1ee" />
         </linearGradient>
-        <pattern id={`${identifiant}-points`} width="11" height="11" patternUnits="userSpaceOnUse">
-          <circle cx="1.6" cy="1.6" r="1.1" fill="#1f2429" fill-opacity="0.09" />
-        </pattern>
       </defs>
       <path class="carte__ombre" d={trace}></path>
       <path d={trace} fill={`url(#${identifiant}-fond)`}></path>
-      <path d={trace} fill={`url(#${identifiant}-points)`}></path>
       <path class="carte__pays" d={trace}></path>
     </svg>
 
@@ -287,7 +283,6 @@ const identifiant = 'carte';
     /* Le pied de la maison est posé sur Halle, la maison part vers le haut et la gauche. */
     transform: translate(-100%, calc(-100% + 3px));
     pointer-events: none;
-    filter: drop-shadow(0 6px 5px rgba(31, 36, 41, 0.2));
   }
 
   .bureau__nom {
