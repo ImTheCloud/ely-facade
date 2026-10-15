@@ -1,0 +1,184 @@
+---
+/** La page « Réalisations » : la carte des communes et tous les chantiers (commune seulement, jamais l'adresse). */
+import { Image } from 'astro:assets';
+import AppelDevis from '../AppelDevis.astro';
+import CarteBelgique from '../CarteBelgique.astro';
+import Icon from '../Icon.astro';
+import IntroPage from '../IntroPage.astro';
+import BaseLayout from '~/layouts/BaseLayout.astro';
+import { CHANTIERS, lienChantier, photo } from '~/data/chantiers';
+import { chemin, t, type Langue } from '~/i18n';
+
+interface Props {
+  langue: Langue;
+}
+
+const { langue } = Astro.props;
+const textes = t(langue);
+const page = textes.pages.realisations;
+const r = textes.realisationsPage;
+const base = chemin('realisations', langue);
+---
+
+<BaseLayout langue={langue} titre={page.titre} description={page.description}>
+  <IntroPage langue={langue} fil={[{ libelle: textes.nav.realisations, href: base }]} surtitre={r.surtitre} titre={r.titre} texte={r.texte}>
+    <Fragment slot="visuel">
+      <CarteBelgique langue={langue} />
+    </Fragment>
+  </IntroPage>
+
+  <section class="section chantiers">
+    <div class="wrap">
+      <ul class="chantiers__liste">
+        {
+          CHANTIERS.map((c, i) => {
+            const fiche = textes.chantiers[c.cle];
+            const nombre = c.photos.length;
+            const contenu = (
+              <>
+                <div class="chantier__photo">
+                  <Image
+                    src={photo(c.couverture)}
+                    alt={textes.photos[c.couverture]}
+                    widths={[480, 768, 1080, 1440]}
+                    sizes={i === 0 ? '(min-width: 1360px) 1280px, 100vw' : '(min-width: 900px) 640px, 100vw'}
+                    format="webp"
+                    quality={76}
+                    loading={i < 2 ? 'eager' : 'lazy'}
+                  />
+                  <span class="chantier__nombre">
+                    {nombre} {nombre > 1 ? textes.accueil.realisations.photos : textes.accueil.realisations.photo}
+                  </span>
+                </div>
+                <div class="chantier__texte">
+                  <span class="chantier__commune">{textes.communes[c.commune]}</span>
+                  <h2>{fiche.titre}</h2>
+                  <p>{fiche.accroche}</p>
+                  {c.slug && (
+                    <span class="chantier__voir">
+                      {textes.accueil.realisations.voir}
+                      <Icon nom="fleche" taille={18} />
+                    </span>
+                  )}
+                </div>
+              </>
+            );
+            return (
+              <li class:list={['chantier', { 'chantier--vedette': i === 0 }]} data-reveal>
+                {c.slug ? <a href={lienChantier(c.cle, langue)}>{contenu}</a> : <div>{contenu}</div>}
+              </li>
+            );
+          })
+        }
+      </ul>
+    </div>
+  </section>
+
+  <AppelDevis langue={langue} titre={r.devis.titre} texte={r.devis.texte} />
+</BaseLayout>
+
+<style>
+  .chantiers {
+    padding-top: 0;
+  }
+
+  .chantiers__liste {
+    display: grid;
+    gap: clamp(28px, 3vw, 40px) var(--tile-gap);
+    margin: 0;
+    padding: 0;
+    list-style: none;
+  }
+
+  .chantier > a,
+  .chantier > div {
+    display: flex;
+    flex-direction: column;
+    gap: 18px;
+    color: var(--color-text);
+    text-decoration: none;
+  }
+
+  .chantier__photo {
+    position: relative;
+    overflow: hidden;
+    border-radius: var(--radius-tile);
+    aspect-ratio: 4 / 3;
+    background: var(--color-surface);
+  }
+
+  .chantier--vedette .chantier__photo {
+    aspect-ratio: 16 / 9;
+  }
+
+  .chantier__photo :global(img) {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    transition: transform 900ms var(--ease-out);
+  }
+
+  .chantier > a:hover .chantier__photo :global(img) {
+    transform: scale(1.04);
+  }
+
+  .chantier > a:focus-visible {
+    outline: 3px solid var(--color-accent);
+    outline-offset: 4px;
+    border-radius: var(--radius-tile);
+  }
+
+  .chantier__nombre {
+    position: absolute;
+    top: 16px;
+    left: 16px;
+    padding: 6px 12px;
+    border-radius: var(--radius-pill);
+    background: rgba(255, 255, 255, 0.9);
+    font-size: 13px;
+    font-weight: 650;
+    color: var(--color-ink);
+  }
+
+  .chantier__texte {
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+    padding-inline: 4px;
+  }
+
+  .chantier__commune {
+    font-size: var(--size-tiny);
+    font-weight: 700;
+    letter-spacing: 0.06em;
+    text-transform: uppercase;
+    color: var(--color-accent);
+  }
+
+  .chantier h2 {
+    font-size: clamp(28px, 3vw, 44px);
+  }
+
+  .chantier__voir {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    margin-top: 6px;
+    font-weight: 700;
+    color: var(--color-ink);
+  }
+
+  .chantier > a:hover .chantier__voir {
+    color: var(--color-accent);
+  }
+
+  @media (min-width: 900px) {
+    .chantiers__liste {
+      grid-template-columns: repeat(2, 1fr);
+    }
+
+    .chantier--vedette {
+      grid-column: 1 / -1;
+    }
+  }
+</style>

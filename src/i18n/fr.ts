@@ -16,7 +16,7 @@ export const fr = {
     appeler: 'Appeler',
   },
 
-  deuxPoints: ' : ',
+  deuxPoints: '\u00a0: ',
 
   whatsappMessage: 'Bonjour, je souhaiterais un devis pour ma façade.',
 
@@ -55,22 +55,71 @@ export const fr = {
     crepi: {
       titre: 'Crépi et enduit',
       court: 'Façade neuve ou à refaire, tous types de finitions et de systèmes, isolation par l’extérieur comprise.',
+      intro:
+        'Un crépi neuf ou refait, avec ou sans isolation par l’extérieur. Nous posons tous types de finitions et de systèmes, de la petite maison à l’immeuble.',
+      points: [
+        'Façade neuve ou façade à refaire',
+        'Tous types de finitions et de systèmes',
+        'Isolation par l’extérieur comprise',
+        'STO et gammes haut de gamme, ou des alternatives moins chères selon votre budget',
+        'Avec nos matériaux ou les vôtres',
+      ],
+      description:
+        'Crépi et enduit de façade, isolation par l’extérieur comprise, partout en Belgique. Tous types de finitions. Visite gratuite, garantie de 10\u00a0ans minimum.',
     },
     peinture: {
       titre: 'Peinture de façade',
       court: 'Une façade rafraîchie, dans la teinte de votre choix.',
+      intro:
+        'Une façade rafraîchie, dans la teinte de votre choix. Elisei vient voir votre façade, puis vous envoie le devis au mètre carré.',
+      points: [
+        'Peinture de façade, dans la teinte de votre choix',
+        'Maisons, immeubles, commerces et copropriétés',
+        'Le prix au mètre carré de façade, donné dans le devis',
+      ],
+      description:
+        'Peinture de façade dans la teinte de votre choix, pour maisons, immeubles et commerces, partout en Belgique. Visite gratuite et sans engagement.',
     },
     nettoyage: {
       titre: 'Nettoyage de façade',
       court: 'Toutes méthodes, tous supports.',
+      intro:
+        'Un nettoyage adapté à votre façade et à son support. Toutes les méthodes, sur tous les supports.',
+      points: [
+        'Toutes méthodes de nettoyage',
+        'Tous supports',
+        'Maisons, immeubles, commerces et copropriétés',
+      ],
+      description:
+        'Nettoyage de façade, toutes méthodes et tous supports, partout en Belgique. Visite gratuite et sans engagement, devis au mètre carré.',
     },
     rejointoiement: {
       titre: 'Rejointoiement',
       court: 'Des joints refaits proprement, toutes méthodes et tous supports.',
+      intro:
+        'Des joints refaits proprement, sur tous les supports et avec toutes les méthodes.',
+      points: [
+        'Joints refaits proprement',
+        'Toutes méthodes',
+        'Tous supports',
+      ],
+      description:
+        'Rejointoiement de façade, toutes méthodes et tous supports, partout en Belgique. Visite gratuite, garantie de 10\u00a0ans minimum.',
     },
     briques: {
       titre: 'Réparation de briques',
       court: 'Briques abîmées remplacées, joints refaits, fissures traitées, plaquettes de parement.',
+      intro:
+        'Des briques abîmées remplacées, des joints refaits, des fissures traitées. Nous réparons la façade existante, sur tous types de briques\u00a0: nous ne montons pas de murs.',
+      points: [
+        'Remplacement des briques abîmées',
+        'Joints refaits',
+        'Fissures traitées',
+        'Plaquettes de parement',
+        'Tous types de briques',
+      ],
+      description:
+        'Réparation de briques de façade\u00a0: briques remplacées, joints refaits, fissures traitées, plaquettes de parement. Partout en Belgique, visite gratuite.',
     },
   },
 
@@ -80,7 +129,7 @@ export const fr = {
       titre: 'Université de Mons',
       accroche: 'Façades de bâtiments de l’Université de Mons (UMons)',
       texte:
-        'Trois bâtiments de l’Université de Mons : une cour intérieure, un immeuble de quatre étages et une longue façade. Les photos suivent le chantier, de l’échafaudage à la façade terminée.',
+        'Trois bâtiments de l’Université de Mons\u00a0: une cour intérieure, un immeuble de quatre étages et une longue façade. Les photos suivent le chantier, de l’échafaudage à la façade terminée.',
       batiments: ['Cour intérieure', 'Immeuble de quatre étages', 'Longue façade'],
     },
     'namur-immeuble': {
@@ -98,7 +147,7 @@ export const fr = {
     halle: {
       titre: 'Maison',
       accroche: 'Une maison à Halle, la commune de notre bureau',
-      texte: 'Une maison à Halle : le pignon sous échafaudage, puis la maison terminée.',
+      texte: 'Une maison à Halle\u00a0: le pignon sous échafaudage, puis la maison terminée.',
       batiments: [],
     },
     charleroi: {
@@ -154,16 +203,231 @@ export const fr = {
     'evere-immeuble/nuit': 'Immeuble d’appartements au coin d’une rue, de nuit, à Evere',
   } as Record<string, string>,
 
+  /** Fil d'Ariane des pages intérieures. */
+  fil: { aria: 'Fil d’Ariane', accueil: 'Accueil' },
+
+  /** Les pages « Services » et métier. */
+  services: {
+    surtitre: 'Nos métiers',
+    titre: 'Uniquement la façade.',
+    texte:
+      'Crépi, peinture, nettoyage, rejointoiement, réparation de briques\u00a0: cinq métiers, une seule spécialité. Du petit garage à l’immeuble de plusieurs étages.',
+    pourQui: {
+      titre: 'Pour tous les bâtiments',
+      texte: 'Maisons, immeubles, commerces, copropriétés et sociétés\u00a0: du petit garage à l’immeuble de plusieurs étages.',
+    },
+    ceQueNousFaisons: 'Ce que nous faisons',
+    atoutsTitre: 'Avec chaque chantier',
+    atouts: [
+      { titre: 'Visite gratuite', texte: 'Elisei se déplace chez vous, gratuitement et sans engagement.' },
+      { titre: 'Garantie de 10\u00a0ans minimum', texte: 'Sur les travaux de façade.' },
+      { titre: 'Partout en Belgique', texte: 'Notre bureau est à Halle.' },
+      { titre: 'Toute l’année', texte: 'Nous travaillons aussi l’hiver et le samedi.' },
+    ],
+    materiaux: {
+      titre: 'Les matériaux',
+      texte:
+        'Nous travaillons avec STO et des gammes haut de gamme. Selon votre budget, des alternatives moins chères sont possibles, avec nos matériaux ou les vôtres.',
+    },
+    etapesTitre: 'Les étapes d’une façade isolée et crépie',
+    etapesTexte: 'L’ordre de nos chantiers, ici à l’Université de Mons.',
+    realisationsTitre: 'Nos façades en crépi',
+    autres: 'Nos autres métiers',
+    voir: 'Voir le métier',
+    devis: {
+      titre: 'Un projet pour votre façade\u00a0?',
+      texte: 'Visite sur place gratuite, sans engagement. Le devis est établi au mètre carré de façade.',
+      bouton: 'Demander ma visite gratuite',
+    },
+  },
+
+  /** La page « Réalisations » et les pages de chaque chantier. */
+  realisationsPage: {
+    surtitre: 'Nos réalisations',
+    titre: 'Nos chantiers, en photos.',
+    texte:
+      'Des façades à Mons, Namur, Charleroi, Halle et Evere, de l’échafaudage à la façade terminée. Seule la commune est indiquée\u00a0: jamais l’adresse de nos clients.',
+    avantApres: 'Avant, après',
+    photos: 'Le chantier en photos',
+    retour: 'Toutes nos réalisations',
+    autres: 'D’autres chantiers',
+    agrandir: 'Agrandir la photo',
+    fermer: 'Fermer',
+    precedente: 'Photo précédente',
+    suivante: 'Photo suivante',
+    visionneuse: 'Photo du chantier',
+    devis: {
+      titre: 'Et votre façade\u00a0?',
+      texte: 'Visite sur place gratuite, sans engagement, partout en Belgique.',
+    },
+  },
+
+  /** La page « À propos ». */
+  apropos: {
+    surtitre: 'À propos',
+    titre: 'Deux frères, une équipe.',
+    texte:
+      'Ely Facade est dirigée par deux frères, Elisei et Simi Ungureanu. Elisei vient chez vous pour la visite et le devis\u00a0; Simi dirige les travaux sur le chantier. Notre bureau est à Halle et nous intervenons partout en Belgique.',
+    nom: {
+      titre: 'Ely, comme Elisei',
+      texte: 'Le nom de l’entreprise vient du prénom d’Elisei, son gérant.',
+    },
+    personnes: [
+      {
+        prenom: 'Elisei',
+        role: 'Gérant · Visite et devis',
+        texte: 'Il vient voir votre façade, la mesure et vous envoie le devis. Six ans de métier dans la façade.',
+      },
+      {
+        prenom: 'Simi',
+        role: 'Direction des chantiers',
+        texte: 'Il dirige l’équipe sur le chantier, de l’échafaudage à la finition.',
+      },
+    ],
+    equipe: {
+      titre: 'Une équipe de 8 personnes',
+      texte: 'Une équipe de 8 personnes, des indépendants, sur nos chantiers partout en Belgique.',
+    },
+    engagementsTitre: 'Nos engagements',
+    engagements: [
+      { titre: 'Uniquement la façade', texte: 'C’est notre métier, et nous ne faisons que ça.' },
+      { titre: 'Visite gratuite', texte: 'Sans engagement, partout en Belgique.' },
+      { titre: 'Garantie de 10\u00a0ans minimum', texte: 'Sur les travaux de façade.' },
+      { titre: 'Toute l’année', texte: 'Aussi l’hiver et le samedi.' },
+    ],
+    bureau: {
+      titre: 'Notre bureau',
+      texte: 'Les visites se font chez vous\u00a0: Elisei fixe le rendez-vous avec vous au premier appel.',
+    },
+  },
+
+  /** Mentions légales. */
+  legal: {
+    titre: 'Mentions légales',
+    intro: 'Les informations légales sur l’éditeur et l’hébergeur de ce site.',
+    editeurTitre: 'Éditeur du site',
+    forme: 'Société à responsabilité limitée (BV / SRL)',
+    siege: 'Siège',
+    bce: 'Numéro d’entreprise (BCE)',
+    tva: 'TVA',
+    gerant: 'Gérant',
+    contact: 'Contact',
+    hebergeurTitre: 'Hébergement',
+    hebergeur: 'Netlify, Inc., 512 2nd Street, Suite 200, San Francisco, CA 94107, États-Unis',
+    proprieteTitre: 'Photos et textes',
+    propriete:
+      'Les textes, les photos et le logo de ce site appartiennent à ELY FAÇADE BV. Les photos montrent nos chantiers\u00a0: seule la commune est indiquée, jamais l’adresse. Toute reproduction demande notre accord.',
+    creditsTitre: 'Crédits',
+    credits:
+      'Polices DM Sans et Bricolage Grotesque (licence SIL Open Font License), hébergées sur ce site. Icônes, carte et illustrations dessinées pour Ely Facade.',
+    responsabiliteTitre: 'Responsabilité',
+    responsabilite:
+      'Nous veillons à l’exactitude des informations de ce site. Seul le devis, établi après la visite, engage Ely Facade sur les travaux et le prix.',
+  },
+
+  /** Vie privée. {email} et {telephone} sont remplacés par les coordonnées. */
+  viePrivee: {
+    titre: 'Vie privée',
+    intro:
+      'Ce site ne vous suit pas\u00a0: aucun cookie, aucune mesure d’audience. Voici ce que nous faisons des informations que vous nous envoyez.',
+    sections: [
+      {
+        titre: 'Qui est responsable',
+        textes: [
+          'ELY FAÇADE BV, Bergensesteenweg 745, 1502 Halle, Belgique (numéro d’entreprise 1030.283.223).',
+          'Pour toute question\u00a0: {email} ou {telephone}.',
+        ],
+      },
+      {
+        titre: 'Les données que nous recevons',
+        textes: [
+          'Par le formulaire de devis\u00a0: les travaux souhaités, le type de bâtiment, la surface de façade si vous la donnez, votre nom, votre téléphone, votre email et votre message s’ils sont remplis, et la langue du site.',
+          'Si vous nous contactez directement (téléphone, WhatsApp, email)\u00a0: ce que vous choisissez de nous envoyer, par exemple des photos de votre façade.',
+        ],
+      },
+      {
+        titre: 'Pourquoi',
+        textes: [
+          'Uniquement pour répondre à votre demande\u00a0: vous contacter, organiser la visite et vous envoyer le devis. Nous ne vendons ni ne cédons vos données, et nous ne vous envoyons pas de publicité.',
+          'Base légale\u00a0: votre demande de devis (mesures précontractuelles) et votre accord, donné en cochant la case du formulaire.',
+        ],
+      },
+      {
+        titre: 'Qui les reçoit',
+        textes: [
+          'Le formulaire passe par Netlify, Inc. (États-Unis), qui héberge ce site et nous le transmet par email. Les transferts hors de l’Union européenne sont encadrés par les garanties prévues par le RGPD.',
+          'Si vous utilisez WhatsApp, les règles de WhatsApp (Meta) s’appliquent à ces échanges.',
+        ],
+      },
+      {
+        titre: 'Combien de temps',
+        textes: [
+          'Le temps de traiter votre demande. Si vous devenez client, aussi longtemps que la loi nous oblige à garder les documents (comptabilité, garantie).',
+        ],
+      },
+      {
+        titre: 'Cookies',
+        textes: [
+          'Aucun cookie. Le site retient seulement, dans votre navigateur, la langue que vous avez choisie (français ou néerlandais). Cette information ne nous est jamais envoyée.',
+        ],
+      },
+      {
+        titre: 'Vos droits',
+        textes: [
+          'Vous pouvez à tout moment demander à voir, corriger ou effacer vos données, ou vous opposer à leur utilisation\u00a0: écrivez-nous à {email}.',
+          'Vous pouvez aussi introduire une plainte auprès de l’Autorité de protection des données (rue de la Presse 35, 1000 Bruxelles, autoriteprotectiondonnees.be).',
+        ],
+      },
+    ],
+    miseAJour: 'Mise à jour\u00a0: octobre 2026.',
+  },
+
+  /** La page introuvable. */
+  erreur: {
+    code: 'Erreur 404',
+    titre: 'Il manque une brique.',
+    texte: 'Cette page n’existe pas, ou plus. Tout le reste du site est bien en place\u00a0:',
+    accueil: 'Retour à l’accueil',
+    realisations: 'Voir nos réalisations',
+  },
+
   pages: {
     accueil: {
       titre: 'Ely Facade | Rénovation de façades partout en Belgique',
       description:
-        'Crépi, peinture, nettoyage, rejointoiement et réparation de briques : Ely Facade rénove votre façade partout en Belgique. Visite sur place gratuite et sans engagement.',
+        'Crépi, peinture, nettoyage, rejointoiement et réparation de briques\u00a0: Ely Facade rénove votre façade partout en Belgique. Visite sur place gratuite et sans engagement.',
+    },
+    services: {
+      titre: 'Nos métiers de façade | Ely Facade',
+      description:
+        'Crépi et enduit, peinture, nettoyage, rejointoiement et réparation de briques\u00a0: uniquement la façade, partout en Belgique. Visite gratuite, garantie de 10\u00a0ans minimum.',
+    },
+    realisations: {
+      titre: 'Nos réalisations | Ely Facade',
+      description:
+        'Nos chantiers de façade en photos\u00a0: Université de Mons, Namur, Charleroi, Halle et Evere, de l’échafaudage à la façade terminée.',
+    },
+    apropos: {
+      titre: 'À propos | Ely Facade',
+      description:
+        'Ely Facade, ce sont deux frères, Elisei et Simi Ungureanu, et une équipe de 8 personnes. Bureau à Halle, chantiers de façade partout en Belgique.',
+    },
+    mentionsLegales: {
+      titre: 'Mentions légales | Ely Facade',
+      description: 'Éditeur, hébergeur et informations légales du site Ely Facade (ELY FAÇADE BV, numéro d’entreprise 1030.283.223).',
+    },
+    viePrivee: {
+      titre: 'Vie privée | Ely Facade',
+      description: 'Aucun cookie, aucune mesure d’audience\u00a0: ce que nous faisons des informations envoyées par le formulaire de devis.',
+    },
+    erreur: {
+      titre: 'Page introuvable | Ely Facade',
+      description: 'Cette page n’existe pas ou plus.',
     },
     contact: {
       titre: 'Contact et devis | Ely Facade',
       description:
-        'Demandez votre devis de rénovation de façade : formulaire en trois étapes, téléphone ou WhatsApp. Visite sur place gratuite et sans engagement, partout en Belgique.',
+        'Demandez votre devis de rénovation de façade\u00a0: formulaire en trois étapes, téléphone ou WhatsApp. Visite sur place gratuite et sans engagement, partout en Belgique.',
     },
   },
 
@@ -186,16 +450,16 @@ export const fr = {
 
     /** Les phrases d'émotion entre les sections. Le mot entre crochets se souligne en rouge. */
     emotions: {
-      durer: { phrase: 'Une façade refaite pour [durer].', note: 'Garantie de 10 ans minimum' },
+      durer: { phrase: 'Une façade refaite pour [durer].', note: 'Garantie de 10\u00a0ans minimum' },
       premiere: { phrase: 'La première chose qu’on voit de [chez vous].', note: '' },
       jeunesse: { phrase: 'Chaque façade a sa [seconde jeunesse].', note: '' },
-      exigence: { phrase: 'Une maison ou une université : la [même exigence].', note: '' },
+      exigence: { phrase: 'Une maison ou une université\u00a0: la [même exigence].', note: '' },
     },
 
     avantApres: {
       pastille: 'Avant, après',
       titre: 'La différence se voit.',
-      texte: 'Faites glisser le curseur : la même façade pendant les travaux, puis une fois terminée.',
+      texte: 'Faites glisser le curseur\u00a0: la même façade pendant les travaux, puis une fois terminée.',
       aide: 'Glissez pour comparer',
       avant: 'Pendant les travaux',
       apres: 'Terminé',
@@ -233,7 +497,7 @@ export const fr = {
         },
         termine: {
           titre: 'Façade terminée',
-          texte: 'L’échafaudage est retiré. Votre façade est garantie 10 ans minimum.',
+          texte: 'L’échafaudage est retiré. Votre façade est garantie 10\u00a0ans minimum.',
           legendes: ['Façade terminée, cour intérieure'],
         },
       },
@@ -242,7 +506,7 @@ export const fr = {
     umons: {
       pastille: 'Chantier de référence',
       texte:
-        'Façades de bâtiments de l’Université de Mons (UMons) : une cour intérieure, un immeuble de quatre étages et une longue façade. Du grand bâtiment public à la maison, nous travaillons avec le même soin.',
+        'Façades de bâtiments de l’Université de Mons (UMons)\u00a0: une cour intérieure, un immeuble de quatre étages et une longue façade. Du grand bâtiment public à la maison, nous travaillons avec le même soin.',
       voir: 'Le chantier en photos',
     },
 
@@ -257,7 +521,7 @@ export const fr = {
       suivant: 'Chantiers suivants',
       toutes: 'Toutes nos réalisations',
       carte: {
-        aria: 'Carte de la Belgique : notre bureau à Halle et les communes de nos chantiers',
+        aria: 'Carte de la Belgique\u00a0: notre bureau à Halle et les communes de nos chantiers',
         bureau: 'Notre bureau',
         legende: 'Partout en Belgique',
       },
@@ -276,7 +540,7 @@ export const fr = {
     metiers: {
       surtitre: 'Nos métiers',
       titre: 'Tout pour votre façade.',
-      texte: 'Uniquement la façade : c’est notre métier, et nous ne faisons que ça.',
+      texte: 'Uniquement la façade\u00a0: c’est notre métier, et nous ne faisons que ça.',
       voir: 'En savoir plus',
     },
 
@@ -319,7 +583,7 @@ export const fr = {
       titre: 'Vous vous demandez…',
       liste: [
         {
-          question: 'La visite est-elle payante ?',
+          question: 'La visite est-elle payante\u00a0?',
           reponse: 'Non. Elisei se déplace gratuitement et sans engagement, puis vous envoie le devis.',
         },
         {
@@ -328,24 +592,24 @@ export const fr = {
             'Au mètre carré de façade\u00a0: le prix dépend de la surface et des matériaux choisis. Elisei vous le donne dans le devis, après la visite gratuite.',
         },
         {
-          question: 'Où intervenez-vous ?',
+          question: 'Où intervenez-vous\u00a0?',
           reponse: 'Partout en Belgique. Notre bureau est à Halle.',
         },
         {
-          question: 'Quels bâtiments rénovez-vous ?',
-          reponse: 'Tous, du petit garage à l’immeuble de plusieurs étages : maisons, immeubles, commerces, copropriétés et sociétés.',
+          question: 'Quels bâtiments rénovez-vous\u00a0?',
+          reponse: 'Tous, du petit garage à l’immeuble de plusieurs étages\u00a0: maisons, immeubles, commerces, copropriétés et sociétés.',
         },
         {
-          question: 'Travaillez-vous l’hiver ?',
+          question: 'Travaillez-vous l’hiver\u00a0?',
           reponse: 'Oui, nous travaillons toute l’année, y compris le samedi.',
         },
         {
-          question: 'Quels matériaux utilisez-vous ?',
+          question: 'Quels matériaux utilisez-vous\u00a0?',
           reponse: 'Nous travaillons avec STO et des gammes haut de gamme. Des alternatives moins chères sont possibles selon votre budget.',
         },
         {
-          question: 'Faites-vous de la maçonnerie ou de la toiture ?',
-          reponse: 'Non. Nous ne faisons que la façade : crépi, peinture, nettoyage, rejointoiement et réparation de briques. Nous ne montons pas de murs.',
+          question: 'Faites-vous de la maçonnerie ou de la toiture\u00a0?',
+          reponse: 'Non. Nous ne faisons que la façade\u00a0: crépi, peinture, nettoyage, rejointoiement et réparation de briques. Nous ne montons pas de murs.',
         },
       ],
     },
@@ -356,14 +620,14 @@ export const fr = {
         'Décrivez vos travaux en trois étapes. Elisei se déplace gratuitement chez vous, sans engagement, puis vous envoie le devis.',
       direct: 'Ou directement',
       calculateur: {
-        titre: 'Quelle surface fait votre façade ?',
-        texte: 'Une estimation suffit : la largeur de la façade et le nombre de niveaux.',
+        titre: 'Quelle surface fait votre façade\u00a0?',
+        texte: 'Une estimation suffit\u00a0: la largeur de la façade et le nombre de niveaux.',
         largeur: 'Largeur (m)',
         niveaux: 'Niveaux',
         niveauxAide: 'rez-de-chaussée compris',
         moins: 'Un niveau de moins',
         plus: 'Un niveau de plus',
-        hypothese: 'Calcul avec 3 m par niveau.',
+        hypothese: 'Calcul avec 3\u00a0m par niveau.',
         resultat: 'Surface estimée',
         unite: 'm²',
         utiliser: 'Ajouter à ma demande',
@@ -374,7 +638,7 @@ export const fr = {
         titre: 'Montrez-nous votre façade',
         texte: 'Envoyez deux ou trois photos de votre façade sur WhatsApp, avec votre commune.',
         bouton: 'Envoyer mes photos',
-        message: 'Bonjour, voici quelques photos de ma façade pour une demande de devis. Ma commune : ',
+        message: 'Bonjour, voici quelques photos de ma façade pour une demande de devis. Ma commune\u00a0: ',
       },
     },
 
@@ -395,7 +659,7 @@ export const fr = {
     sur: 'sur',
     etapes: ['Vos travaux', 'Votre bâtiment', 'Vos coordonnées'],
 
-    q1: 'Quels travaux avez-vous en tête ?',
+    q1: 'Quels travaux avez-vous en tête\u00a0?',
     q1Aide: 'Plusieurs choix possibles',
     autre: 'Autre chose',
 
@@ -403,15 +667,15 @@ export const fr = {
     batiment: 'Type de bâtiment',
     batiments: ['Maison', 'Immeuble', 'Commerce', 'Autre'],
     surface: 'Surface de façade (m²)',
-    surfaceExemple: 'Ex. : 120',
-    surfaceAide: 'Une estimation suffit. Vous ne savez pas ? Laissez vide, Elisei mesurera sur place.',
+    surfaceExemple: 'Ex.\u00a0: 120',
+    surfaceAide: 'Une estimation suffit. Vous ne savez pas\u00a0? Laissez vide, Elisei mesurera sur place.',
 
-    q3: 'Où pouvons-nous vous répondre ?',
+    q3: 'Où pouvons-nous vous répondre\u00a0?',
     nom: 'Votre nom',
     telephone: 'Téléphone',
     email: 'Email',
     message: 'Un mot sur votre projet',
-    messageExemple: 'Ex. : façade avant d’une maison mitoyenne, crépi abîmé par endroits…',
+    messageExemple: 'Ex.\u00a0: façade avant d’une maison mitoyenne, crépi abîmé par endroits…',
     consentement: 'J’accepte que mes données soient utilisées pour répondre à ma demande.',
     consentementLien: 'Vie privée',
 
@@ -426,13 +690,13 @@ export const fr = {
     erreurEmail: 'Cette adresse email ne semble pas complète.',
     erreurConsentement: 'Cochez la case pour que nous puissions vous répondre.',
 
-    merciTitre: 'C’est envoyé !',
+    merciTitre: 'C’est envoyé\u00a0!',
     merciTexte:
-      'Votre demande nous est bien parvenue. Pour aller plus vite, vous pouvez nous envoyer la même demande sur WhatsApp, avec quelques photos de votre façade : elle est déjà écrite.',
+      'Votre demande nous est bien parvenue. Pour aller plus vite, vous pouvez nous envoyer la même demande sur WhatsApp, avec quelques photos de votre façade\u00a0: elle est déjà écrite.',
     merciWhatsApp: 'Envoyer sur WhatsApp',
     merciEmail: 'Par email',
     recommencer: 'Nouvelle demande',
-    suiteIntro: 'Bonjour, voici ma demande de devis envoyée sur le site :',
+    suiteIntro: 'Bonjour, voici ma demande de devis envoyée sur le site\u00a0:',
     suiteSujet: 'Ma demande de devis',
 
     erreurTitre: 'L’envoi n’a pas fonctionné.',

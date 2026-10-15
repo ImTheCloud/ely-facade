@@ -8,7 +8,7 @@
 - [x] 3. Références : sites Framer bloqués par le réseau de la session ; capture Ironwood étudiée et fiches publiques résumées dans `docs/references/README.md`.
 - [x] 4. En-tête et haut de page en 3 variantes (voir `docs/variantes.md`) : A « Mise au point », B « Film d'ouverture », C « La façade qui brille » (sur l'accueil). En-tête posé dans la photo (logo blanc avec la brique rouge, liens blancs, bouton clair), blanc flouté au défilement. Titres en Bricolage Grotesque (capitales, 800, -0,03 em). Cadrage du toit calculé au pixel près pour toutes les tailles d'écran. **À faire dès que Claudiu a choisi** : supprimer les variantes non retenues (liste dans `docs/variantes.md`).
 - [x] 5. Reste de l'accueil, dans l'ordre : phrase « Une façade refaite pour durer » → 4 chiffres → phrase « La première chose qu'on voit de chez vous » → avant/après (UMons cour en premier, puis Namur ×2, Halle, Charleroi) → phrase sur photo « Chaque façade a sa seconde jeunesse » → les étapes d'une façade (UMons, 7 photos, récit au défilement) → phrase « Une maison ou une université » → UMons, chantier de référence → réalisations (carte de Belgique + bande de 6 chantiers) → métiers (bande ardoise) → équipe → méthode → FAQ (+ « Comment est calculé le prix ? ») → devis (formulaire sur la page, calculateur de surface, photos par WhatsApp). Toutes les photos sont utilisées (accueil + pages Réalisations à l'étape 6).
-- [ ] 6. Pages
+- [x] 6. Pages (FR + NL) : Services (+ 5 pages métier : ce que nous faisons, étapes et façades crépies pour le crépi, illustration SVG pour les autres métiers, devis avec le métier pré-coché), Réalisations (liste + carte, une page par chantier avec photos par bâtiment, visionneuse plein écran, avant/après), À propos (les deux frères, l'équipe, le bureau de Halle), mentions légales (« ELY FAÇADE BV », n° 1030.283.223, hébergeur), vie privée, 404 (« Il manque une brique »). Le sélecteur de langue et les liens hreflang mènent à la même page dans l'autre langue, même quand l'adresse est traduite (`src/i18n/slugs.ts`). Pages légales, 404 et variantes : hors Google et hors sitemap.
 - [ ] 7. SEO
 - [ ] 8. Vérifications finales
 - [ ] 9. README
@@ -35,6 +35,9 @@
 - Ciel prolongé sur la photo d'accueil (retouche, comme le ciel déjà retouché par Claudiu) : c'était le seul moyen que le toit « respire » sous l'en-tête.
 - WebKit (iPhone) n'a pas pu être installé dans la session cloud (téléchargement bloqué par le réseau) : tests faits avec Chromium en émulation iPhone et Android. À revérifier sur un vrai iPhone.
 - « Charleroi : 2 chantiers, 23 maisons » (nom du dossier photo) n'est pas affiché : chiffre non confirmé (noté dans `docs/suivi-client.md`).
+- Page Crépi : « Nos façades en crépi » montre l'UMons, l'immeuble de Namur (trois étages) et Charleroi, qui ont l'air crépis sur les photos. À faire confirmer (noté dans `docs/suivi-client.md`).
+- Les métiers sans photo (peinture, nettoyage, rejointoiement, briques) sont illustrés par un mur de briques dessiné en SVG, animé selon le métier ; jamais présenté comme un chantier.
+- Langue automatique : un appareil réglé en néerlandais arrive sur la page NL, tous les autres sur la page FR (même en arrivant par une adresse /nl/), sauf si la langue a été choisie avec le sélecteur. Comportement repris de l'existant, gardé tel quel.
 
 ---
 

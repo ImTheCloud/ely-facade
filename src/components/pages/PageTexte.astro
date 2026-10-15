@@ -1,0 +1,81 @@
+---
+/** Gabarit des pages de texte (mentions légales, vie privée) : hors Google, une colonne de lecture confortable. */
+import IntroPage from '../IntroPage.astro';
+import BaseLayout from '~/layouts/BaseLayout.astro';
+import type { Langue } from '~/i18n';
+
+interface Props {
+  langue: Langue;
+  titre: string;
+  description: string;
+  h1: string;
+  intro: string;
+  fil: { libelle: string; href: string }[];
+}
+
+const { langue, titre, description, h1, intro, fil } = Astro.props;
+---
+
+<BaseLayout langue={langue} titre={titre} description={description} noindex>
+  <IntroPage langue={langue} fil={fil} titre={h1} texte={intro} />
+  <div class="wrap">
+    <div class="texte">
+      <slot />
+    </div>
+  </div>
+</BaseLayout>
+
+<style>
+  .texte {
+    display: grid;
+    gap: 40px;
+    max-width: 760px;
+    padding-bottom: var(--section-gap);
+  }
+
+  .texte :global(section) {
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+    padding-top: 32px;
+    border-top: 1px solid var(--color-border);
+  }
+
+  .texte :global(h2) {
+    font-size: clamp(24px, 2.4vw, 32px);
+    text-transform: none;
+    letter-spacing: -0.02em;
+  }
+
+  .texte :global(dl) {
+    display: grid;
+    grid-template-columns: max-content 1fr;
+    gap: 8px 24px;
+    margin: 0;
+  }
+
+  .texte :global(dt) {
+    font-weight: 650;
+    color: var(--color-ink);
+  }
+
+  .texte :global(dd) {
+    margin: 0;
+  }
+
+  .texte :global(a) {
+    color: var(--color-ink);
+    font-weight: 650;
+  }
+
+  @media (max-width: 599px) {
+    .texte :global(dl) {
+      grid-template-columns: 1fr;
+      gap: 2px;
+    }
+
+    .texte :global(dd) {
+      margin-bottom: 10px;
+    }
+  }
+</style>

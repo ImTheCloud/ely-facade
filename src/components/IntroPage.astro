@@ -1,0 +1,185 @@
+---
+/**
+ * Le haut des pages intérieures : fil d'Ariane, pastille, grand titre, texte.
+ * Avec une photo (image) : la photo prend toute la largeur, l'en-tête se pose dedans, le titre en bas à gauche.
+ * Sinon : fond clair, et un emplacement à droite pour une illustration (slot « visuel »).
+ */
+import { Image } from 'astro:assets';
+import FilAriane from './FilAriane.astro';
+import { photo } from '../data/chantiers';
+import { t, type Langue } from '../i18n';
+
+interface Props {
+  langue: Langue;
+  fil: { libelle: string; href: string }[];
+  surtitre?: string;
+  titre: string;
+  texte?: string;
+  /** Chemin d'une photo de chantier (src/assets/photos/…). */
+  image?: string;
+}
+
+const { langue, fil, surtitre, titre, texte, image } = Astro.props;
+const textes = t(langue);
+const avecVisuel = Astro.slots.has('visuel');
+---
+
+{
+  image ? (
+    <section class="intro intro--photo">
+      <div class="intro__photo">
+        <Image
+          src={photo(image)}
+          alt={textes.photos[image]}
+          widths={[768, 1280, 1920, 2400]}
+          sizes="100vw"
+          format="webp"
+          quality={76}
+          loading="eager"
+          fetchpriority="high"
+        />
+      </div>
+      <div class="wrap intro__contenu">
+        <FilAriane langue={langue} etapes={fil} clair />
+        {surtitre && <p class="intro__pastille">{surtitre}</p>}
+        <h1>{titre}</h1>
+        {texte && <p class="intro__texte">{texte}</p>}
+        <slot />
+      </div>
+    </section>
+  ) : (
+    <section class:list={['intro', { 'intro--visuel': avecVisuel }]}>
+      <div class="wrap intro__grille">
+        <div class="intro__contenu">
+          <FilAriane langue={langue} etapes={fil} />
+          {surtitre && <p class="surtitre">{surtitre}</p>}
+          <h1>{titre}</h1>
+          {texte && <p class="intro__texte">{texte}</p>}
+          <slot />
+        </div>
+        {avecVisuel && (
+          <div class="intro__visuel">
+            <slot name="visuel" />
+          </div>
+        )}
+      </div>
+    </section>
+  )
+}
+
+<style>
+  .intro {
+    padding-top: calc(var(--header-h) + clamp(28px, 5vw, 64px));
+    padding-bottom: clamp(40px, 6vw, 80px);
+  }
+
+  .intro__grille {
+    display: grid;
+    gap: 40px;
+    align-items: center;
+  }
+
+  .intro__contenu {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 22px;
+  }
+
+  .intro h1 {
+    max-width: 14ch;
+    font-size: clamp(42px, 6.4vw, 96px);
+  }
+
+  .intro__texte {
+    max-width: 52ch;
+    font-size: var(--size-lead);
+    line-height: 1.55;
+  }
+
+  @media (min-width: 960px) {
+    .intro--visuel .intro__grille {
+      grid-template-columns: minmax(0, 1.05fr) minmax(0, 0.95fr);
+      gap: 64px;
+    }
+  }
+
+  /* --- Avec une photo plein cadre --- */
+  .intro--photo {
+    position: relative;
+    display: flex;
+    align-items: flex-end;
+    min-height: min(78svh, 760px);
+    padding-top: calc(var(--header-h) + 80px);
+    padding-bottom: clamp(32px, 6vh, 64px);
+    overflow: hidden;
+    color: #fff;
+    background: rgb(var(--voile));
+    isolation: isolate;
+  }
+
+  .intro__photo {
+    position: absolute;
+    inset: 0;
+    z-index: -1;
+  }
+
+  .intro__photo :global(img) {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+  }
+
+  .intro__photo::after {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background:
+      linear-gradient(to bottom, rgba(var(--voile), 0.55) 0%, rgba(var(--voile), 0) 26%),
+      linear-gradient(to top, rgba(var(--voile), 0.84) 0%, rgba(var(--voile), 0.52) 36%, rgba(var(--voile), 0.2) 58%, rgba(var(--voile), 0) 76%);
+  }
+
+  /* Sur téléphone, le texte monte jusqu'au milieu de la photo : le voile monte avec lui. */
+  @media (max-width: 959px) {
+    .intro__photo::after {
+      background:
+        linear-gradient(to bottom, rgba(var(--voile), 0.6) 0%, rgba(var(--voile), 0) 24%),
+        linear-gradient(to top, rgba(var(--voile), 0.9) 0%, rgba(var(--voile), 0.66) 45%, rgba(var(--voile), 0.3) 72%, rgba(var(--voile), 0) 92%);
+    }
+  }
+
+  .intro--photo .intro__contenu {
+    max-width: calc(var(--content-max-large) + var(--gutter) * 2);
+  }
+
+  .intro--photo h1 {
+    color: #fff;
+    max-width: 16ch;
+  }
+
+  .intro--photo .intro__texte {
+    color: rgba(255, 255, 255, 0.92);
+  }
+
+  .intro__pastille {
+    display: inline-flex;
+    align-items: center;
+    gap: 10px;
+    padding: 8px 16px 8px 13px;
+    border: 1px solid rgba(255, 255, 255, 0.34);
+    border-radius: var(--radius-pill);
+    background: rgba(255, 255, 255, 0.12);
+    backdrop-filter: blur(12px);
+    -webkit-backdrop-filter: blur(12px);
+    font-size: var(--size-tiny);
+    font-weight: 600;
+  }
+
+  .intro__pastille::before {
+    content: '';
+    width: 13px;
+    height: 7px;
+    border-radius: 2px;
+    background: var(--color-accent);
+  }
+</style>

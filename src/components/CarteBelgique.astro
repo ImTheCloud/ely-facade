@@ -30,7 +30,22 @@ const frontiere: [number, number][] = [
   [3.87, 50.33], [3.71, 50.31], [3.66, 50.45], [3.29, 50.53], [3.23, 50.71], [3.04, 50.78], [2.86, 50.7],
   [2.66, 50.81], [2.55, 50.94],
 ];
-const trace = `M${frontiere.map(([lon, lat]) => `${X(lon)} ${Y(lat)}`).join('L')}Z`;
+// Contour adouci (courbe de Catmull-Rom passant par chaque point) : un dessin épuré plutôt qu'une ligne brisée.
+const pts = frontiere.map(([lon, lat]) => [X(lon), Y(lat)]);
+const r1 = (v: number) => Math.round(v * 10) / 10;
+const trace =
+  `M${pts[0][0]} ${pts[0][1]}` +
+  pts
+    .map((p1, i) => {
+      const p0 = pts[(i - 1 + pts.length) % pts.length];
+      const p2 = pts[(i + 1) % pts.length];
+      const p3 = pts[(i + 2) % pts.length];
+      const c1 = [p1[0] + (p2[0] - p0[0]) / 6, p1[1] + (p2[1] - p0[1]) / 6];
+      const c2 = [p2[0] - (p3[0] - p1[0]) / 6, p2[1] - (p3[1] - p1[1]) / 6];
+      return `C${r1(c1[0])} ${r1(c1[1])} ${r1(c2[0])} ${r1(c2[1])} ${p2[0]} ${p2[1]}`;
+    })
+    .join('') +
+  'Z';
 
 // Les points : le bureau d'abord, puis les communes des chantiers. dx/dy : place de l'étiquette.
 const points: { commune: Commune; lon: number; lat: number; bureau?: boolean; ancre: 'start' | 'end'; dx: number; dy: number }[] = [

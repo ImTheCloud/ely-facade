@@ -1,5 +1,6 @@
 import { fr } from './fr';
 import { nl } from './nl';
+import { SLUGS_CHANTIERS, SLUGS_METIERS } from './slugs';
 
 export type Langue = 'fr' | 'nl';
 
@@ -33,9 +34,15 @@ export function chemin(cle: PageCle, langue: Langue): string {
   return ROUTES[cle][langue];
 }
 
+/** Les sous-pages traduites : /services/crepi-enduit/ ↔ /nl/diensten/gevelpleister/. */
+const SOUS_PAGES: Partial<Record<PageCle, Record<string, Record<Langue, string>>>> = {
+  services: SLUGS_METIERS,
+  realisations: SLUGS_CHANTIERS,
+};
+
 /**
- * La même page dans l'autre langue (garde ce qui suit : /services/crepi/ → /nl/diensten/crepi/).
- * Si la page n'est pas connue, renvoie l'accueil de l'autre langue.
+ * La même page dans l'autre langue (/services/crepi-enduit/ → /nl/diensten/gevelpleister/).
+ * Si la page n'existe pas dans l'autre langue, renvoie l'accueil de cette langue.
  */
 export function memePageDansLaLangue(cheminActuel: string, cible: Langue): string {
   const source: Langue = cheminActuel === '/nl' || cheminActuel.startsWith('/nl/') ? 'nl' : 'fr';
@@ -43,13 +50,14 @@ export function memePageDansLaLangue(cheminActuel: string, cible: Langue): strin
 
   const normalise = cheminActuel.endsWith('/') ? cheminActuel : `${cheminActuel}/`;
 
-  // La route la plus longue qui correspond gagne (« /services/x/ » ne doit pas être capté par « / »).
-  const trouvee = Object.values(ROUTES)
-    .filter((route) => normalise.startsWith(route[source]))
-    .sort((a, b) => b[source].length - a[source].length)[0];
-  if (!trouvee) return ROUTES.accueil[cible];
-
-  return `${trouvee[cible]}${normalise.slice(trouvee[source].length)}`;
+  for (const [cle, route] of Object.entries(ROUTES) as [PageCle, (typeof ROUTES)[PageCle]][]) {
+    if (normalise === route[source]) return route[cible];
+    if (cle === 'accueil' || !normalise.startsWith(route[source])) continue;
+    const slug = normalise.slice(route[source].length, -1);
+    const sousPage = Object.values(SOUS_PAGES[cle] ?? {}).find((traduction) => traduction[source] === slug);
+    if (sousPage) return `${route[cible]}${sousPage[cible]}/`;
+  }
+  return ROUTES.accueil[cible];
 }
 
 /** Les liens de la navigation principale, dans l'ordre. */

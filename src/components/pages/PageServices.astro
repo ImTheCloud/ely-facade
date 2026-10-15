@@ -1,0 +1,170 @@
+---
+/** La page « Services » : les cinq métiers, pour tous les bâtiments, avec chaque chantier les mêmes engagements. */
+import AppelDevis from '../AppelDevis.astro';
+import Icon from '../Icon.astro';
+import IntroPage from '../IntroPage.astro';
+import Methode from '../accueil/Methode.astro';
+import Atouts from './Atouts.astro';
+import BaseLayout from '~/layouts/BaseLayout.astro';
+import { METIERS, lienMetier } from '~/data/metiers';
+import { chemin, t, type Langue } from '~/i18n';
+
+interface Props {
+  langue: Langue;
+}
+
+const { langue } = Astro.props;
+const textes = t(langue);
+const page = textes.pages.services;
+const s = textes.services;
+---
+
+<BaseLayout langue={langue} titre={page.titre} description={page.description} surPhoto>
+  <IntroPage
+    langue={langue}
+    fil={[{ libelle: textes.nav.services, href: chemin('services', langue) }]}
+    surtitre={s.surtitre}
+    titre={s.titre}
+    texte={s.texte}
+    image="namur-immeuble-balcons/apres-coin"
+  />
+
+  <section class="section">
+    <div class="wrap">
+      <ol class="liste-metiers">
+        {
+          METIERS.map((metier, i) => {
+            const m = textes.metiers[metier.cle];
+            return (
+              <li data-reveal>
+                <a class="ligne-metier" href={lienMetier(metier.cle, langue)}>
+                  <span class="ligne-metier__num" aria-hidden="true">0{i + 1}</span>
+                  <span class="ligne-metier__icone">
+                    <Icon nom={metier.icone} taille={28} />
+                  </span>
+                  <span class="ligne-metier__texte">
+                    <h2>{m.titre}</h2>
+                    <span>{m.court}</span>
+                  </span>
+                  <span class="ligne-metier__voir">
+                    <span class="sr-only">{s.voir}</span>
+                    <Icon nom="fleche" taille={22} />
+                  </span>
+                </a>
+              </li>
+            );
+          })
+        }
+      </ol>
+    </div>
+  </section>
+
+  <Atouts langue={langue} />
+  <Methode langue={langue} />
+  <AppelDevis langue={langue} titre={s.devis.titre} texte={s.devis.texte} />
+</BaseLayout>
+
+<style>
+  .liste-metiers {
+    margin: 0;
+    padding: 0;
+    list-style: none;
+    border-top: 1px solid var(--color-border);
+  }
+
+  .ligne-metier {
+    display: grid;
+    grid-template-columns: auto 1fr auto;
+    align-items: center;
+    gap: 16px 20px;
+    padding-block: 26px;
+    border-bottom: 1px solid var(--color-border);
+    color: var(--color-text);
+    text-decoration: none;
+  }
+
+  .ligne-metier__num {
+    display: none;
+    font-family: var(--font-display);
+    font-weight: 700;
+    color: var(--color-muted);
+  }
+
+  .ligne-metier__icone {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 56px;
+    height: 56px;
+    border-radius: 18px;
+    background: var(--color-accent-soft);
+    color: var(--color-accent);
+    transition:
+      background-color var(--speed) var(--ease),
+      color var(--speed) var(--ease);
+  }
+
+  .ligne-metier__texte {
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+  }
+
+  .ligne-metier h2 {
+    font-size: clamp(26px, 3.4vw, 48px);
+  }
+
+  .ligne-metier__voir {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 52px;
+    height: 52px;
+    border: 1px solid var(--color-border);
+    border-radius: 50%;
+    color: var(--color-ink);
+    transition:
+      background-color var(--speed) var(--ease),
+      color var(--speed) var(--ease),
+      transform var(--speed) var(--ease);
+  }
+
+  .ligne-metier:hover .ligne-metier__icone {
+    background: var(--color-accent);
+    color: #fff;
+  }
+
+  .ligne-metier:hover .ligne-metier__voir {
+    background: var(--color-ink);
+    color: #fff;
+    transform: translateX(4px);
+  }
+
+  .ligne-metier:hover h2 {
+    color: var(--color-accent);
+  }
+
+  @media (min-width: 900px) {
+    .ligne-metier {
+      grid-template-columns: 48px auto 1fr auto;
+      gap: 28px;
+      padding-block: 34px;
+    }
+
+    .ligne-metier__num {
+      display: block;
+    }
+
+    .ligne-metier__texte {
+      flex-direction: row;
+      align-items: baseline;
+      justify-content: space-between;
+      gap: 32px;
+    }
+
+    .ligne-metier__texte > span {
+      max-width: 40ch;
+      text-align: right;
+    }
+  }
+</style>

@@ -7,7 +7,7 @@ import { Image } from 'astro:assets';
 import CarteBelgique from '../CarteBelgique.astro';
 import Icon from '../Icon.astro';
 import Souligne from '../Souligne.astro';
-import { CHANTIERS, photo } from '../../data/chantiers';
+import { CHANTIERS, lienChantier, photo } from '../../data/chantiers';
 import { chemin, t, type Langue } from '../../i18n';
 
 interface Props {
@@ -17,7 +17,6 @@ interface Props {
 const { langue } = Astro.props;
 const textes = t(langue);
 const section = textes.accueil.realisations;
-const base = chemin('realisations', langue);
 ---
 
 <section class="section realisations" id="realisations" data-bande>
@@ -31,7 +30,7 @@ const base = chemin('realisations', langue);
   </div>
 
   <div class="wrap realisations__commandes">
-    <a class="realisations__toutes" href={base}>
+    <a class="realisations__toutes" href={chemin('realisations', langue)}>
       {section.toutes}
       <Icon nom="fleche" taille={18} />
     </a>
@@ -70,8 +69,8 @@ const base = chemin('realisations', langue);
         );
         return (
           <li class="carte-chantier">
-            {c.page ? (
-              <a href={`${base}${c.slug[langue]}/`} class="carte-chantier__lien">
+            {c.slug ? (
+              <a href={lienChantier(c.cle, langue)} class="carte-chantier__lien">
                 {contenu}
                 <span class="carte-chantier__voir">
                   {section.voir}

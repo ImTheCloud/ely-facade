@@ -5,8 +5,8 @@
  */
 import Bouton from '../Bouton.astro';
 import Comparateur from '../Comparateur.astro';
-import { chantier } from '../../data/chantiers';
-import { chemin, t, type Langue } from '../../i18n';
+import { chantier, lienChantier } from '../../data/chantiers';
+import { t, type Langue } from '../../i18n';
 
 interface Props {
   langue: Langue;
@@ -42,7 +42,7 @@ const fiche = textes.chantiers.umons;
           ))
         }
       </ul>
-      <Bouton href={`${chemin('realisations', langue)}${umons.slug[langue]}/`} variante="principal" iconeApres="fleche" large>
+      <Bouton href={lienChantier('umons', langue)} variante="principal" iconeApres="fleche" large>
         {section.voir}
       </Bouton>
     </div>

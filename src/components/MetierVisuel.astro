@@ -1,0 +1,157 @@
+---
+/**
+ * Illustration d'un métier quand nous n'avons pas de photo qui le montre : un pan de mur en briques,
+ * dessiné en SVG (jamais présenté comme un chantier). La brique rouge du logo y a toujours sa place.
+ * - peinture : une moitié du mur passe au blanc ;
+ * - nettoyage : une bande propre traverse le mur ;
+ * - rejointoiement : les joints se tracent en blanc ;
+ * - briques : une brique rouge vient prendre la place d'une brique abîmée.
+ */
+import type { CleMetier } from '../data/metiers';
+
+interface Props {
+  metier: Exclude<CleMetier, 'crepi'>;
+}
+
+const { metier } = Astro.props;
+
+const L = 480;
+const H = 360;
+const hauteur = 34;
+const largeur = 88;
+const joint = 6;
+const tons = ['#e6e1d8', '#ece8e1', '#dfd9cf', '#e9e4dc', '#e2ddd3'];
+
+// Les briques, rangée par rangée (une sur deux décalée d'une demi-brique).
+const briques: { x: number; y: number; w: number; ton: string; i: number }[] = [];
+let i = 0;
+for (let rangee = 0; rangee * (hauteur + joint) < H; rangee++) {
+  const decalage = rangee % 2 ? -(largeur + joint) / 2 : 0;
+  for (let x = decalage; x < L; x += largeur + joint) {
+    briques.push({ x, y: rangee * (hauteur + joint), w: largeur, ton: tons[(rangee * 7 + i * 3) % tons.length], i: i++ });
+  }
+}
+const rouge = briques.find((b) => b.y === 3 * (hauteur + joint) && b.x > 150 && b.x < 260) ?? briques[20];
+---
+
+<figure class:list={['visuel', `visuel--${metier}`]} aria-hidden="true" data-reveal>
+  <svg viewBox={`0 0 ${L} ${H}`} preserveAspectRatio="xMidYMid slice">
+    <defs>
+      <clipPath id={`cadre-${metier}`}>
+        <rect width={L} height={H} rx="28"></rect>
+      </clipPath>
+      <linearGradient id={`peinture-${metier}`} x1="0" x2="1" y1="0" y2="0">
+        <stop offset="0" stop-color="#ffffff" stop-opacity="0"></stop>
+        <stop offset="0.08" stop-color="#ffffff" stop-opacity="0.96"></stop>
+        <stop offset="1" stop-color="#ffffff" stop-opacity="1"></stop>
+      </linearGradient>
+    </defs>
+    <g clip-path={`url(#cadre-${metier})`}>
+      <rect width={L} height={H} fill="#f7f6f2"></rect>
+      {
+        briques.map((b) =>
+          metier === 'briques' && b === rouge ? null : (
+            <rect class="visuel__brique" x={b.x} y={b.y} width={b.w} height={hauteur} rx="4" fill={b.ton} />
+          ),
+        )
+      }
+
+      {
+        metier === 'peinture' && (
+          <rect class="visuel__peinture" x={L * 0.46} y="0" width={L * 0.6} height={H} fill={`url(#peinture-${metier})`} />
+        )
+      }
+
+      {
+        metier === 'nettoyage' && (
+          <g class="visuel__nettoyage">
+            <rect x="-40" y={H * 0.36} width={L + 80} height={H * 0.3} fill="#ffffff" opacity="0.72" transform={`rotate(-8 ${L / 2} ${H / 2})`} />
+          </g>
+        )
+      }
+
+      {
+        metier === 'rejointoiement' && (
+          <g class="visuel__joints" fill="none" stroke="#ffffff" stroke-width="5" stroke-linecap="round">
+            {[1, 2, 3, 4, 5, 6, 7, 8].map((r) => (
+              <path d={`M0 ${r * (hauteur + joint) - joint / 2}H${L}`} pathLength="1" style={`--r: ${r}`} />
+            ))}
+          </g>
+        )
+      }
+
+      {
+        metier === 'briques' && (
+          <g>
+            <rect x={rouge.x} y={rouge.y} width={rouge.w} height={hauteur} rx="4" fill="#d8d2c7" opacity="0.5" />
+            <rect class="visuel__rouge" x={rouge.x} y={rouge.y} width={rouge.w} height={hauteur} rx="4" fill="#c8202b" />
+          </g>
+        )
+      }
+
+      {metier !== 'briques' && <rect x={rouge.x} y={rouge.y} width={rouge.w} height={hauteur} rx="4" fill="#c8202b" />}
+    </g>
+  </svg>
+</figure>
+
+<style>
+  .visuel {
+    margin: 0;
+    border-radius: var(--radius-tile);
+    box-shadow: var(--shadow-lift);
+    overflow: hidden;
+  }
+
+  .visuel svg {
+    display: block;
+    width: 100%;
+    height: auto;
+    aspect-ratio: 4 / 3;
+  }
+
+  @media (prefers-reduced-motion: no-preference) {
+    :global(.js) .visuel__peinture {
+      transform: translateX(60%);
+      transition: transform 1600ms var(--ease-out) 300ms;
+    }
+
+    :global(.js) .visuel.est-visible .visuel__peinture {
+      transform: none;
+    }
+
+    :global(.js) .visuel__nettoyage {
+      transform: translateX(-110%);
+      transition: transform 1600ms var(--ease-out) 300ms;
+    }
+
+    :global(.js) .visuel.est-visible .visuel__nettoyage {
+      transform: none;
+    }
+
+    :global(.js) .visuel__joints path {
+      stroke-dasharray: 1;
+      stroke-dashoffset: 1;
+      transition: stroke-dashoffset 1200ms var(--ease-out);
+      transition-delay: calc(200ms + var(--r) * 120ms);
+    }
+
+    :global(.js) .visuel.est-visible .visuel__joints path {
+      stroke-dashoffset: 0;
+    }
+
+    :global(.js) .visuel__rouge {
+      transform: translate(140px, -120px) rotate(-14deg);
+      opacity: 0;
+      transition:
+        transform 1100ms cubic-bezier(0.3, 1.4, 0.5, 1) 500ms,
+        opacity 400ms var(--ease) 500ms;
+      transform-box: fill-box;
+      transform-origin: center;
+    }
+
+    :global(.js) .visuel.est-visible .visuel__rouge {
+      transform: none;
+      opacity: 1;
+    }
+  }
+</style>

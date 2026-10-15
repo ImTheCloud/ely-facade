@@ -7,8 +7,8 @@
 import Comparateur from '../Comparateur.astro';
 import Duo from '../Duo.astro';
 import Icon from '../Icon.astro';
-import { chantier, type CleChantier } from '../../data/chantiers';
-import { chemin, t, type Langue } from '../../i18n';
+import { chantier, lienChantier } from '../../data/chantiers';
+import { t, type Langue } from '../../i18n';
 
 interface Props {
   langue: Langue;
@@ -18,7 +18,6 @@ const { langue } = Astro.props;
 const textes = t(langue);
 const section = textes.accueil.avantApres;
 
-const lien = (cle: CleChantier) => `${chemin('realisations', langue)}${chantier(cle).slug[langue]}/`;
 const vedette = { cle: 'umons' as const, paire: chantier('umons').paires[0] };
 const autres = (['namur-immeuble', 'namur-balcons', 'halle', 'charleroi'] as const).map((cle) => ({
   cle,
@@ -42,7 +41,7 @@ const autres = (['namur-immeuble', 'namur-balcons', 'halle', 'charleroi'] as con
             textes.chantiers.umons.batiments[0].toLowerCase()
           }
         </span>
-        <a href={lien(vedette.cle)}>{section.voir}<Icon nom="fleche" taille={16} /></a>
+        <a href={lienChantier(vedette.cle, langue)}>{section.voir}<Icon nom="fleche" taille={16} /></a>
       </figcaption>
     </figure>
 
@@ -59,7 +58,7 @@ const autres = (['namur-immeuble', 'namur-balcons', 'halle', 'charleroi'] as con
               <span>
                 <strong>{textes.communes[chantier(cas.cle).commune]}</strong> · {textes.chantiers[cas.cle].titre}
               </span>
-              <a href={lien(cas.cle)}>
+              <a href={lienChantier(cas.cle, langue)}>
                 {section.voir}
                 <Icon nom="fleche" taille={16} />
               </a>

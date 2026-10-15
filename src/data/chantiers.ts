@@ -3,7 +3,8 @@
  * Les photos sont rangées par chantier dans src/assets/photos/<chantier>/<photo>.jpg (voir scripts/importer-photos.mjs).
  * Les textes (titres, textes alternatifs) sont dans src/i18n : chantiers.<clé> et photos['<chemin>'].
  */
-import type { Langue } from '../i18n';
+import { chemin, type Langue } from '../i18n';
+import { SLUGS_CHANTIERS } from '../i18n/slugs';
 
 const fichiers = import.meta.glob<{ default: ImageMetadata }>('../assets/photos/*/*.jpg', { eager: true });
 
@@ -55,22 +56,21 @@ export interface Paire {
 export interface Chantier {
   cle: CleChantier;
   commune: Commune;
-  slug: Record<Langue, string>;
+  /** L'adresse de sa page (src/i18n/slugs.ts). Un chantier avec une seule photo n'a pas de page : il figure dans la liste des réalisations. */
+  slug?: Record<Langue, string>;
   /** La photo de couverture (carte, haut de la page du chantier). */
   couverture: string;
   /** Toutes les photos du chantier, dans l'ordre du chantier (pendant → après). */
   photos: string[];
   /** Les avant/après du chantier (même endroit, angle proche). */
   paires: Paire[];
-  /** Un chantier avec une seule photo n'a pas de page à lui : il figure dans la liste des réalisations. */
-  page: boolean;
 }
 
 export const CHANTIERS: Chantier[] = [
   {
     cle: 'umons',
     commune: 'mons',
-    slug: { fr: 'universite-de-mons', nl: 'universiteit-van-bergen' },
+    slug: SLUGS_CHANTIERS.umons,
     couverture: 'mons-umons-cour/etape-3-aile-terminee',
     photos: [
       'mons-umons-immeuble-angle/etape-1-membrane-1',
@@ -101,12 +101,11 @@ export const CHANTIERS: Chantier[] = [
         cadreAvant: { zoom: 1.12, tx: -11.8, ty: -5.6 },
       },
     ],
-    page: true,
   },
   {
     cle: 'namur-immeuble',
     commune: 'namur',
-    slug: { fr: 'namur-immeuble-trois-etages', nl: 'namen-gebouw-drie-verdiepingen' },
+    slug: SLUGS_CHANTIERS['namur-immeuble'],
     couverture: 'accueil/hero-namur',
     photos: [
       'namur-immeuble-3-etages/pendant-face',
@@ -123,12 +122,11 @@ export const CHANTIERS: Chantier[] = [
         cadreApres: { zoom: 1.08, tx: -1, ty: -8 },
       },
     ],
-    page: true,
   },
   {
     cle: 'namur-balcons',
     commune: 'namur',
-    slug: { fr: 'namur-immeuble-a-balcons', nl: 'namen-gebouw-met-balkons' },
+    slug: SLUGS_CHANTIERS['namur-balcons'],
     couverture: 'namur-immeuble-balcons/apres-cote-gauche',
     photos: [
       'namur-immeuble-balcons/pendant-debut-1',
@@ -151,12 +149,11 @@ export const CHANTIERS: Chantier[] = [
         cadreApres: { px: 33 },
       },
     ],
-    page: true,
   },
   {
     cle: 'halle',
     commune: 'halle',
-    slug: { fr: 'halle-maison', nl: 'halle-woning' },
+    slug: SLUGS_CHANTIERS.halle,
     couverture: 'halle-maison/final-entree',
     photos: [
       'halle-maison/pendant-pignon',
@@ -175,12 +172,11 @@ export const CHANTIERS: Chantier[] = [
         cadreApres: { px: 62 },
       },
     ],
-    page: true,
   },
   {
     cle: 'charleroi',
     commune: 'charleroi',
-    slug: { fr: 'charleroi-maisons', nl: 'charleroi-woningen' },
+    slug: SLUGS_CHANTIERS.charleroi,
     couverture: 'charleroi-vue-ensemble/apres',
     photos: [
       'charleroi-rangee-1/pendant',
@@ -207,21 +203,25 @@ export const CHANTIERS: Chantier[] = [
         cadreApres: { px: 30 },
       },
     ],
-    page: true,
   },
   {
     cle: 'evere',
     commune: 'evere',
-    slug: { fr: 'evere-immeuble', nl: 'evere-gebouw' },
     couverture: 'evere-immeuble/nuit',
     photos: ['evere-immeuble/nuit'],
     paires: [],
-    page: false,
   },
 ];
 
 export function chantier(cle: CleChantier): Chantier {
   return CHANTIERS.find((c) => c.cle === cle)!;
+}
+
+/** L'adresse de la page d'un chantier. */
+export function lienChantier(cle: CleChantier, langue: Langue): string {
+  const slug = chantier(cle).slug;
+  if (!slug) throw new Error(`Pas de page pour le chantier ${cle}`);
+  return `${chemin('realisations', langue)}${slug[langue]}/`;
 }
 
 /**

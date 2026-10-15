@@ -1,0 +1,12 @@
+---
+import PageChantier from '~/components/pages/PageChantier.astro';
+import { CHANTIERS, type CleChantier } from '~/data/chantiers';
+
+export function getStaticPaths() {
+  return CHANTIERS.flatMap((c) => (c.slug ? [{ params: { slug: c.slug.nl }, props: { cle: c.cle } }] : []));
+}
+
+const { cle } = Astro.props as { cle: CleChantier };
+---
+
+<PageChantier langue="nl" cle={cle} />

@@ -1,0 +1,337 @@
+---
+/** « À propos » : les deux frères, l'équipe, nos engagements, le bureau de Halle. Seulement des faits confirmés. */
+import { Image } from 'astro:assets';
+import AppelDevis from '../AppelDevis.astro';
+import CarteBelgique from '../CarteBelgique.astro';
+import IntroPage from '../IntroPage.astro';
+import Chiffres from '../accueil/Chiffres.astro';
+import BaseLayout from '~/layouts/BaseLayout.astro';
+import { photo } from '~/data/chantiers';
+import { entreprise } from '~/data/entreprise';
+import { chemin, t, type Langue } from '~/i18n';
+
+interface Props {
+  langue: Langue;
+}
+
+const { langue } = Astro.props;
+const textes = t(langue);
+const page = textes.pages.apropos;
+const a = textes.apropos;
+const imageIntro = 'halle-maison/final-entree';
+---
+
+<BaseLayout langue={langue} titre={page.titre} description={page.description}>
+  <IntroPage langue={langue} fil={[{ libelle: textes.nav.apropos, href: chemin('apropos', langue) }]} surtitre={a.surtitre} titre={a.titre} texte={a.texte}>
+    <Fragment slot="visuel">
+      <figure class="photo" data-reveal>
+        <Image src={photo(imageIntro)} alt={textes.photos[imageIntro]} widths={[480, 768, 1080]} sizes="(min-width: 960px) 45vw, 100vw" format="webp" quality={76} loading="eager" />
+        <figcaption><strong>{textes.communes.halle}</strong> · {textes.chantiers.halle.accroche}</figcaption>
+      </figure>
+    </Fragment>
+  </IntroPage>
+
+  <section class="section freres">
+    <div class="wrap freres__grille">
+      <div class="nom" data-reveal>
+        <p class="nom__lettres" aria-hidden="true">ELY<span class="brique"></span></p>
+        <h2>{a.nom.titre}</h2>
+        <p>{a.nom.texte}</p>
+      </div>
+      <ul class="personnes">
+        {
+          a.personnes.map((personne, i) => (
+            <li data-reveal style={`--delai: ${i * 120}ms`}>
+              <span class="personnes__initiale" aria-hidden="true">
+                {personne.prenom.charAt(0)}
+              </span>
+              <h3>{personne.prenom}</h3>
+              <p class="personnes__role">{personne.role}</p>
+              <p>{personne.texte}</p>
+            </li>
+          ))
+        }
+      </ul>
+    </div>
+  </section>
+
+  <section class="section equipe">
+    <div class="wrap">
+      <div class="tete" data-reveal>
+        <h2>{a.equipe.titre}</h2>
+        <p>{a.equipe.texte}</p>
+      </div>
+    </div>
+    <Chiffres langue={langue} />
+  </section>
+
+  <section class="section engagements">
+    <div class="wrap">
+      <div class="tete" data-reveal>
+        <p class="surtitre">{a.engagementsTitre}</p>
+      </div>
+      <ul class="engagements__liste">
+        {
+          a.engagements.map((engagement, i) => (
+            <li data-reveal style={`--delai: ${i * 80}ms`}>
+              <span class="engagements__num" aria-hidden="true">0{i + 1}</span>
+              <h3>{engagement.titre}</h3>
+              <p>{engagement.texte}</p>
+            </li>
+          ))
+        }
+      </ul>
+      <div class="materiaux" data-reveal>
+        <h3>{textes.services.materiaux.titre}</h3>
+        <p>{textes.services.materiaux.texte}</p>
+      </div>
+    </div>
+  </section>
+
+  <section class="section bureau">
+    <div class="wrap bureau__grille">
+      <div class="bureau__texte" data-reveal>
+        <p class="surtitre">{a.bureau.titre}</p>
+        <h2>{entreprise.ville}</h2>
+        <address>{entreprise.rue}<br />{entreprise.codePostal} {entreprise.ville}</address>
+        <p>{a.bureau.texte}</p>
+      </div>
+      <CarteBelgique langue={langue} />
+    </div>
+  </section>
+
+  <AppelDevis langue={langue} titre={textes.services.devis.titre} texte={textes.services.devis.texte} />
+</BaseLayout>
+
+<style>
+  .photo {
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+    margin: 0;
+  }
+
+  .photo :global(img) {
+    width: 100%;
+    height: auto;
+    aspect-ratio: 4 / 5;
+    max-height: 70vh;
+    object-fit: cover;
+    border-radius: var(--radius-tile);
+    box-shadow: var(--shadow-lift);
+  }
+
+  .photo figcaption {
+    font-size: var(--size-small);
+  }
+
+  .photo strong {
+    color: var(--color-ink);
+  }
+
+  /* --- Les frères --- */
+  .freres {
+    border-top: 1px solid var(--color-border);
+  }
+
+  .freres__grille {
+    display: grid;
+    gap: 40px;
+    align-items: center;
+  }
+
+  .nom {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 18px;
+  }
+
+  .nom__lettres {
+    display: inline-flex;
+    align-items: flex-end;
+    gap: 0.06em;
+    font-family: var(--font-display);
+    font-size: clamp(90px, 14vw, 200px);
+    font-weight: 800;
+    line-height: 0.8;
+    letter-spacing: -0.04em;
+    color: var(--color-ink);
+  }
+
+  .nom__lettres .brique {
+    width: 0.34em;
+    height: 0.17em;
+    border-radius: 0.035em;
+    margin-bottom: 0.02em;
+  }
+
+  .nom p:last-child {
+    max-width: 44ch;
+    font-size: var(--size-lead);
+  }
+
+  .personnes {
+    display: grid;
+    gap: var(--tile-gap);
+    margin: 0;
+    padding: 0;
+    list-style: none;
+  }
+
+  .personnes li {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+    padding: 28px;
+    border: 1px solid var(--color-border);
+    border-radius: var(--radius-tile);
+    background: var(--color-card);
+    box-shadow: var(--shadow-tile);
+  }
+
+  .personnes__initiale {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 64px;
+    height: 64px;
+    margin-bottom: 8px;
+    border-radius: 20px;
+    background: var(--color-ink);
+    color: #fff;
+    font-family: var(--font-display);
+    font-size: 30px;
+    font-weight: 800;
+  }
+
+  .personnes li:last-child .personnes__initiale {
+    background: var(--color-accent);
+  }
+
+  .personnes h3 {
+    font-size: 30px;
+    font-weight: 800;
+    text-transform: uppercase;
+    letter-spacing: -0.02em;
+  }
+
+  .personnes__role {
+    font-size: var(--size-small);
+    font-weight: 700;
+    color: var(--color-accent);
+  }
+
+  @media (min-width: 700px) {
+    .personnes {
+      grid-template-columns: repeat(2, 1fr);
+    }
+  }
+
+  @media (min-width: 1000px) {
+    .freres__grille {
+      grid-template-columns: minmax(0, 0.9fr) minmax(0, 1.1fr);
+      gap: 64px;
+    }
+  }
+
+  /* --- Équipe --- */
+  .equipe {
+    padding-bottom: 0;
+    background: var(--color-surface);
+  }
+
+  .equipe .tete {
+    margin-bottom: 0;
+  }
+
+  .equipe :global(.chiffres-section) {
+    border-bottom: 0;
+  }
+
+  /* --- Engagements --- */
+  .engagements__liste {
+    display: grid;
+    gap: var(--tile-gap);
+    margin: 0 0 var(--tile-gap);
+    padding: 0;
+    list-style: none;
+  }
+
+  .engagements__liste li {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+    padding: 26px;
+    border-radius: var(--radius-tile);
+    background: var(--color-ink);
+    color: rgba(255, 255, 255, 0.8);
+  }
+
+  .engagements__liste h3 {
+    color: #fff;
+    font-size: 24px;
+    font-weight: 800;
+  }
+
+  .engagements__num {
+    font-family: var(--font-display);
+    font-weight: 700;
+    color: var(--color-accent);
+  }
+
+  .materiaux {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+    padding: 26px;
+    border: 1px solid var(--color-border);
+    border-radius: var(--radius-tile);
+    background: var(--color-card);
+  }
+
+  .materiaux p {
+    max-width: 70ch;
+  }
+
+  @media (min-width: 700px) {
+    .engagements__liste {
+      grid-template-columns: repeat(2, 1fr);
+    }
+  }
+
+  @media (min-width: 1100px) {
+    .engagements__liste {
+      grid-template-columns: repeat(4, 1fr);
+    }
+  }
+
+  /* --- Bureau --- */
+  .bureau__grille {
+    display: grid;
+    gap: 40px;
+    align-items: center;
+  }
+
+  .bureau__texte {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 18px;
+  }
+
+  .bureau address {
+    font-style: normal;
+    font-size: var(--size-lead);
+    font-weight: 600;
+    line-height: 1.5;
+    color: var(--color-ink);
+  }
+
+  @media (min-width: 960px) {
+    .bureau__grille {
+      grid-template-columns: minmax(0, 0.8fr) minmax(0, 1.2fr);
+      gap: 64px;
+    }
+  }
+</style>

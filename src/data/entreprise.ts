@@ -7,7 +7,15 @@ import { chemin, type Langue } from '../i18n';
 
 export const entreprise = {
   nomCourt: 'Ely Facade',
+  /** Raison sociale exacte (BCE) : seulement dans les mentions légales. */
+  raisonSociale: 'ELY FAÇADE BV',
+  /** Le bureau (siège), Bergensesteenweg 745, 1502 Halle. */
+  rue: 'Bergensesteenweg 745',
+  codePostal: '1502',
   ville: 'Halle',
+  /** Numéro d'entreprise (BCE) ; la TVA est le même numéro précédé de BE. */
+  numeroEntreprise: '1030.283.223',
+  gerant: 'Elisei Ungureanu',
 
   /** Affiché à l'écran, format belge. */
   telephoneAffiche: '0492 43 96 17',

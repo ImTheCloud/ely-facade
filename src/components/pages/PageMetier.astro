@@ -1,0 +1,411 @@
+---
+/**
+ * Une page métier (/services/<slug>/, /nl/diensten/<slug>/) : ce que nous faisons, pour quels bâtiments,
+ * comment ça se passe, et le devis avec le métier déjà coché. Données structurées « Service ».
+ * Le crépi a ses photos (les façades isolées et crépies de nos chantiers) ; les autres métiers sont illustrés en SVG.
+ */
+import { Image } from 'astro:assets';
+import AppelDevis from '../AppelDevis.astro';
+import Bouton from '../Bouton.astro';
+import Icon from '../Icon.astro';
+import IntroPage from '../IntroPage.astro';
+import MetierVisuel from '../MetierVisuel.astro';
+import Methode from '../accueil/Methode.astro';
+import Atouts from './Atouts.astro';
+import BaseLayout from '~/layouts/BaseLayout.astro';
+import { ETAPES_FACADE, chantier, lienChantier, photo, type CleChantier } from '~/data/chantiers';
+import { entreprise } from '~/data/entreprise';
+import { METIERS, lienMetier, type CleMetier } from '~/data/metiers';
+import { chemin, t, type Langue } from '~/i18n';
+
+interface Props {
+  langue: Langue;
+  metier: CleMetier;
+}
+
+const { langue, metier } = Astro.props;
+const textes = t(langue);
+const s = textes.services;
+const m = textes.metiers[metier];
+const lien = lienMetier(metier, langue);
+const devis = `${chemin('contact', langue)}?travaux=${metier}#devis`;
+const autres = METIERS.filter((autre) => autre.cle !== metier);
+
+// Crépi : les étapes (une photo par étape) et nos façades crépies terminées.
+const etapes = ETAPES_FACADE.map((etape) => ({ texte: textes.accueil.etapes.liste[etape.cle], photo: etape.photos[etape.photos.length - 1] }));
+const facades: { cle: CleChantier; photo: string }[] = [
+  { cle: 'umons', photo: 'mons-umons-longue-facade/apres' },
+  { cle: 'namur-immeuble', photo: 'namur-immeuble-3-etages/apres-rue' },
+  { cle: 'charleroi', photo: 'charleroi-vue-ensemble/apres' },
+];
+
+const donnees = {
+  '@context': 'https://schema.org',
+  '@type': 'Service',
+  name: m.titre,
+  serviceType: m.titre,
+  description: m.description,
+  url: new URL(lien, Astro.site).href,
+  areaServed: { '@type': 'Country', name: langue === 'nl' ? 'België' : 'Belgique' },
+  provider: {
+    '@type': 'GeneralContractor',
+    name: entreprise.nomCourt,
+    telephone: entreprise.telephoneLien,
+    url: new URL(chemin('accueil', langue), Astro.site).href,
+  },
+};
+---
+
+<BaseLayout langue={langue} titre={`${m.titre} | Ely Facade`} description={m.description}>
+  <script type="application/ld+json" set:html={JSON.stringify(donnees)} />
+
+  <IntroPage
+    langue={langue}
+    fil={[
+      { libelle: textes.nav.services, href: chemin('services', langue) },
+      { libelle: m.titre, href: lien },
+    ]}
+    surtitre={s.surtitre}
+    titre={m.titre}
+    texte={m.intro}
+  >
+    <div class="actions">
+      <Bouton href={devis} variante="accent" iconeApres="fleche-diag" large>{textes.accueil.hero.bouton}</Bouton>
+      <Bouton href={`tel:${entreprise.telephoneLien}`} variante="secondaire" icone="telephone" large>{entreprise.telephoneAffiche}</Bouton>
+    </div>
+    <Fragment slot="visuel">
+      {
+        metier === 'crepi' ? (
+          <figure class="photo-intro" data-reveal>
+            <Image
+              src={photo('mons-umons-immeuble-angle/etape-3-termine')}
+              alt={textes.photos['mons-umons-immeuble-angle/etape-3-termine']}
+              widths={[480, 768, 1080]}
+              sizes="(min-width: 960px) 45vw, 100vw"
+              format="webp"
+              quality={76}
+              loading="eager"
+            />
+          </figure>
+        ) : (
+          <MetierVisuel metier={metier} />
+        )
+      }
+    </Fragment>
+  </IntroPage>
+
+  <section class="section points">
+    <div class="wrap points__grille">
+      <h2 data-reveal>{s.ceQueNousFaisons}</h2>
+      <ul class="points__liste">
+        {
+          m.points.map((point, i) => (
+            <li data-reveal style={`--delai: ${i * 70}ms`}>
+              <span class="points__coche" aria-hidden="true">
+                <Icon nom="check" taille={18} epaisseur={2.6} />
+              </span>
+              {point}
+            </li>
+          ))
+        }
+      </ul>
+    </div>
+  </section>
+
+  {
+    metier === 'crepi' && (
+      <section class="section etapes-crepi">
+        <div class="wrap">
+          <div class="tete" data-reveal>
+            <p class="surtitre">{textes.communes.mons} · UMons</p>
+            <h2>{s.etapesTitre}</h2>
+            <p>{s.etapesTexte}</p>
+          </div>
+          <ol class="etapes-crepi__liste">
+            {etapes.map((etape, i) => (
+              <li data-reveal style={`--delai: ${i * 80}ms`}>
+                <Image src={photo(etape.photo)} alt={textes.photos[etape.photo]} widths={[360, 540, 720]} sizes="(min-width: 1100px) 240px, (min-width: 640px) 45vw, 100vw" format="webp" quality={74} />
+                <span class="etapes-crepi__num">{textes.accueil.etapes.etape} {i + 1}</span>
+                <h3>{etape.texte.titre}</h3>
+                <p>{etape.texte.texte}</p>
+              </li>
+            ))}
+          </ol>
+        </div>
+      </section>
+    )
+  }
+
+  {
+    metier === 'crepi' && (
+      <section class="section facades">
+        <div class="wrap">
+          <div class="tete" data-reveal>
+            <h2>{s.realisationsTitre}</h2>
+          </div>
+          <ul class="facades__liste">
+            {facades.map((f) => {
+              const c = chantier(f.cle);
+              return (
+                <li data-reveal>
+                  <a href={lienChantier(f.cle, langue)}>
+                    <Image src={photo(f.photo)} alt={textes.photos[f.photo]} widths={[400, 640, 900]} sizes="(min-width: 900px) 33vw, 100vw" format="webp" quality={74} />
+                    <span>
+                      <strong>{textes.communes[c.commune]}</strong> · {textes.chantiers[f.cle].titre}
+                    </span>
+                  </a>
+                </li>
+              );
+            })}
+          </ul>
+        </div>
+      </section>
+    )
+  }
+
+  <Atouts langue={langue} materiaux={metier === 'crepi' || metier === 'peinture'} />
+  <Methode langue={langue} />
+
+  <section class="section autres">
+    <div class="wrap">
+      <h2 class="autres__titre" data-reveal>{s.autres}</h2>
+      <ul class="autres__liste">
+        {
+          autres.map((autre) => (
+            <li data-reveal>
+              <a href={lienMetier(autre.cle, langue)}>
+                <Icon nom={autre.icone} taille={24} />
+                <span>{textes.metiers[autre.cle].titre}</span>
+                <Icon nom="fleche" taille={18} />
+              </a>
+            </li>
+          ))
+        }
+      </ul>
+    </div>
+  </section>
+
+  <AppelDevis langue={langue} titre={s.devis.titre} texte={s.devis.texte} travaux={metier} />
+</BaseLayout>
+
+<style>
+  .actions {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 12px;
+    margin-top: 6px;
+  }
+
+  .photo-intro {
+    margin: 0;
+    overflow: hidden;
+    border-radius: var(--radius-tile);
+    box-shadow: var(--shadow-lift);
+  }
+
+  .photo-intro :global(img) {
+    display: block;
+    width: 100%;
+    height: auto;
+    aspect-ratio: 4 / 3;
+    object-fit: cover;
+  }
+
+  /* --- Ce que nous faisons --- */
+  .points {
+    border-top: 1px solid var(--color-border);
+  }
+
+  .points__grille {
+    display: grid;
+    gap: 32px;
+  }
+
+  .points__liste {
+    display: grid;
+    gap: 12px;
+    margin: 0;
+    padding: 0;
+    list-style: none;
+  }
+
+  .points__liste li {
+    display: flex;
+    align-items: center;
+    gap: 16px;
+    padding: 18px 22px;
+    border: 1px solid var(--color-border);
+    border-radius: var(--radius-md);
+    background: var(--color-card);
+    font-size: var(--size-lead);
+    font-weight: 600;
+    color: var(--color-ink);
+  }
+
+  .points__coche {
+    display: inline-flex;
+    flex-shrink: 0;
+    align-items: center;
+    justify-content: center;
+    width: 34px;
+    height: 34px;
+    border-radius: 50%;
+    background: var(--color-accent);
+    color: #fff;
+  }
+
+  @media (min-width: 960px) {
+    .points__grille {
+      grid-template-columns: minmax(0, 0.8fr) minmax(0, 1.2fr);
+      gap: 64px;
+    }
+  }
+
+  /* --- Étapes (crépi) --- */
+  .etapes-crepi__liste {
+    display: grid;
+    gap: var(--tile-gap);
+    margin: 0;
+    padding: 0;
+    list-style: none;
+  }
+
+  .etapes-crepi__liste li {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+  }
+
+  .etapes-crepi__liste :global(img) {
+    width: 100%;
+    height: auto;
+    aspect-ratio: 4 / 3;
+    object-fit: cover;
+    border-radius: var(--radius-md);
+    margin-bottom: 8px;
+  }
+
+  .etapes-crepi__num {
+    font-size: var(--size-tiny);
+    font-weight: 700;
+    letter-spacing: 0.06em;
+    text-transform: uppercase;
+    color: var(--color-accent);
+  }
+
+  .etapes-crepi__liste p {
+    font-size: var(--size-small);
+  }
+
+  @media (min-width: 640px) {
+    .etapes-crepi__liste {
+      grid-template-columns: repeat(2, 1fr);
+    }
+  }
+
+  @media (min-width: 1100px) {
+    .etapes-crepi__liste {
+      grid-template-columns: repeat(5, 1fr);
+    }
+  }
+
+  /* --- Nos façades en crépi --- */
+  .facades {
+    padding-top: 0;
+  }
+
+  .facades__liste {
+    display: grid;
+    gap: var(--tile-gap);
+    margin: 0;
+    padding: 0;
+    list-style: none;
+  }
+
+  .facades__liste a {
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+    color: var(--color-text);
+    text-decoration: none;
+  }
+
+  .facades__liste :global(img) {
+    width: 100%;
+    height: auto;
+    aspect-ratio: 4 / 3;
+    object-fit: cover;
+    border-radius: var(--radius-tile);
+    transition: transform var(--speed) var(--ease);
+  }
+
+  .facades__liste a:hover :global(img) {
+    transform: translateY(-4px);
+  }
+
+  .facades__liste strong {
+    color: var(--color-ink);
+  }
+
+  @media (min-width: 900px) {
+    .facades__liste {
+      grid-template-columns: repeat(3, 1fr);
+    }
+  }
+
+  /* --- Autres métiers --- */
+  .autres__titre {
+    font-size: clamp(30px, 3.6vw, 52px);
+    margin-bottom: 28px;
+  }
+
+  .autres__liste {
+    display: grid;
+    gap: 12px;
+    margin: 0;
+    padding: 0;
+    list-style: none;
+  }
+
+  .autres__liste a {
+    display: flex;
+    align-items: center;
+    gap: 14px;
+    min-height: 64px;
+    padding: 14px 20px;
+    border: 1px solid var(--color-border);
+    border-radius: var(--radius-md);
+    background: var(--color-card);
+    color: var(--color-ink);
+    font-weight: 650;
+    text-decoration: none;
+    transition:
+      border-color var(--speed) var(--ease),
+      transform var(--speed) var(--ease);
+  }
+
+  .autres__liste a :global(svg:first-child) {
+    color: var(--color-accent);
+  }
+
+  .autres__liste a span {
+    flex: 1;
+  }
+
+  .autres__liste a:hover {
+    border-color: var(--color-ink);
+    transform: translateY(-2px);
+  }
+
+  @media (min-width: 700px) {
+    .autres__liste {
+      grid-template-columns: repeat(2, 1fr);
+    }
+  }
+
+  @media (min-width: 1100px) {
+    .autres__liste {
+      grid-template-columns: repeat(4, 1fr);
+    }
+  }
+</style>

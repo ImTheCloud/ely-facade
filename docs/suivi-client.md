@@ -63,3 +63,4 @@ Domaine elyfacade.be + elyfacade.com, email pro, fiche Google Business (Halle), 
 - Charleroi : « 2 chantiers, 23 maisons au total » (nom du dossier photo). À confirmer avec Elisei avant de l'écrire sur le site.
 - Evere : quels travaux ont été faits sur l'immeuble (une seule photo, de nuit) ? Le site montre la photo avec la commune seulement.
 - Délai du devis : « quelques jours maximum après la visite » n'est plus affiché sur le site (décision 11). À confirmer avec Elisei si on veut l'afficher.
+- Page Crépi : l'immeuble de Namur (trois étages) et les maisons de Charleroi sont montrés comme « façades en crépi », avec l'UMons. Confirmer que ce sont bien des façades crépies (sinon les retirer de cette liste).

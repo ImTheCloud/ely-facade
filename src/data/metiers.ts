@@ -1,18 +1,19 @@
 /**
  * Les cinq métiers : uniquement la façade. Les textes sont dans src/i18n (metiers.<clé>).
- * Les pages métier sont à /services/<slug>/ (FR) et /nl/diensten/<slug>/ (NL).
+ * Les pages métier sont à /services/<slug>/ (FR) et /nl/diensten/<slug>/ (NL), voir src/i18n/slugs.ts.
  */
 import type { NomIcone } from '../components/Icon.astro';
 import { chemin, type Langue } from '../i18n';
+import { SLUGS_METIERS } from '../i18n/slugs';
 
 export type CleMetier = 'crepi' | 'peinture' | 'nettoyage' | 'rejointoiement' | 'briques';
 
 export const METIERS: { cle: CleMetier; icone: NomIcone; slug: Record<Langue, string> }[] = [
-  { cle: 'crepi', icone: 'truelle', slug: { fr: 'crepi-enduit', nl: 'gevelpleister' } },
-  { cle: 'peinture', icone: 'rouleau', slug: { fr: 'peinture-facade', nl: 'gevelschilderwerk' } },
-  { cle: 'nettoyage', icone: 'goutte', slug: { fr: 'nettoyage-facade', nl: 'gevelreiniging' } },
-  { cle: 'rejointoiement', icone: 'joint', slug: { fr: 'rejointoiement', nl: 'voegwerk' } },
-  { cle: 'briques', icone: 'brique', slug: { fr: 'reparation-briques', nl: 'herstel-bakstenen' } },
+  { cle: 'crepi', icone: 'truelle', slug: SLUGS_METIERS.crepi },
+  { cle: 'peinture', icone: 'rouleau', slug: SLUGS_METIERS.peinture },
+  { cle: 'nettoyage', icone: 'goutte', slug: SLUGS_METIERS.nettoyage },
+  { cle: 'rejointoiement', icone: 'joint', slug: SLUGS_METIERS.rejointoiement },
+  { cle: 'briques', icone: 'brique', slug: SLUGS_METIERS.briques },
 ];
 
 /** L'adresse de la page d'un métier. */

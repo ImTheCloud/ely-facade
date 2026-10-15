@@ -55,22 +55,71 @@ export const nl = {
     crepi: {
       titre: 'Gevelpleister',
       court: 'Nieuwe of te vernieuwen gevel, alle afwerkingen en systemen, inclusief isolatie langs buiten.',
+      intro:
+        'Nieuwe of vernieuwde gevelpleister, met of zonder buitenisolatie. We plaatsen alle afwerkingen en systemen, van de kleine woning tot het appartementsgebouw.',
+      points: [
+        'Nieuwe gevel of te vernieuwen gevel',
+        'Alle afwerkingen en systemen',
+        'Inclusief isolatie langs buiten',
+        'STO en hoogwaardige gamma’s, of goedkopere alternatieven volgens uw budget',
+        'Met onze materialen of de uwe',
+      ],
+      description:
+        'Gevelpleister en crepi, inclusief buitenisolatie, overal in België. Alle afwerkingen. Gratis plaatsbezoek, minstens 10\u00a0jaar garantie.',
     },
     peinture: {
       titre: 'Gevelschilderwerk',
       court: 'Een opgefriste gevel, in de kleur van uw keuze.',
+      intro:
+        'Een opgefriste gevel, in de kleur van uw keuze. Elisei komt uw gevel bekijken en stuurt u daarna de offerte per vierkante meter.',
+      points: [
+        'Gevelschilderwerk, in de kleur van uw keuze',
+        'Woningen, appartementsgebouwen, handelspanden en mede-eigendommen',
+        'De prijs per vierkante meter gevel, in de offerte',
+      ],
+      description:
+        'Gevelschilderwerk in de kleur van uw keuze, voor woningen, gebouwen en handelspanden, overal in België. Gratis en vrijblijvend plaatsbezoek.',
     },
     nettoyage: {
       titre: 'Gevelreiniging',
       court: 'Alle methodes, alle ondergronden.',
+      intro:
+        'Een reiniging aangepast aan uw gevel en zijn ondergrond. Alle methodes, op alle ondergronden.',
+      points: [
+        'Alle reinigingsmethodes',
+        'Alle ondergronden',
+        'Woningen, appartementsgebouwen, handelspanden en mede-eigendommen',
+      ],
+      description:
+        'Gevelreiniging, alle methodes en alle ondergronden, overal in België. Gratis en vrijblijvend plaatsbezoek, offerte per vierkante meter.',
     },
     rejointoiement: {
       titre: 'Voegwerk',
       court: 'Netjes vernieuwde voegen, alle methodes en alle ondergronden.',
+      intro:
+        'Netjes vernieuwde voegen, op alle ondergronden en met alle methodes.',
+      points: [
+        'Netjes vernieuwde voegen',
+        'Alle methodes',
+        'Alle ondergronden',
+      ],
+      description:
+        'Voegwerk voor uw gevel, alle methodes en alle ondergronden, overal in België. Gratis plaatsbezoek, minstens 10\u00a0jaar garantie.',
     },
     briques: {
       titre: 'Herstel van bakstenen',
       court: 'Beschadigde bakstenen vervangen, voegen vernieuwd, scheuren behandeld, gevelstenen.',
+      intro:
+        'Beschadigde bakstenen vervangen, voegen vernieuwd, scheuren behandeld. We herstellen de bestaande gevel, voor alle soorten bakstenen: we metselen geen muren.',
+      points: [
+        'Vervanging van beschadigde bakstenen',
+        'Vernieuwde voegen',
+        'Behandelde scheuren',
+        'Gevelstenen (steenstrips)',
+        'Alle soorten bakstenen',
+      ],
+      description:
+        'Herstel van gevelbakstenen: stenen vervangen, voegen vernieuwd, scheuren behandeld, steenstrips. Overal in België, gratis plaatsbezoek.',
     },
   },
 
@@ -154,11 +203,226 @@ export const nl = {
     'evere-immeuble/nuit': 'Appartementsgebouw op een straathoek, ’s avonds, in Evere',
   } as Record<string, string>,
 
+  /** Kruimelpad van de binnenpagina's. */
+  fil: { aria: 'Kruimelpad', accueil: 'Home' },
+
+  /** De pagina « Diensten » en de pagina's per vak. */
+  services: {
+    surtitre: 'Ons vak',
+    titre: 'Uitsluitend de gevel.',
+    texte:
+      'Gevelpleister, schilderwerk, reiniging, voegwerk, herstel van bakstenen: vijf vakken, één specialiteit. Van de kleine garage tot het gebouw met meerdere verdiepingen.',
+    pourQui: {
+      titre: 'Voor alle gebouwen',
+      texte: 'Woningen, appartementsgebouwen, handelspanden, mede-eigendommen en bedrijven: van de kleine garage tot het gebouw met meerdere verdiepingen.',
+    },
+    ceQueNousFaisons: 'Wat we doen',
+    atoutsTitre: 'Bij elke werf',
+    atouts: [
+      { titre: 'Gratis plaatsbezoek', texte: 'Elisei komt gratis en vrijblijvend bij u langs.' },
+      { titre: 'Minstens 10\u00a0jaar garantie', texte: 'Op de gevelwerken.' },
+      { titre: 'Overal in België', texte: 'Ons kantoor is in Halle.' },
+      { titre: 'Het hele jaar', texte: 'We werken ook in de winter en op zaterdag.' },
+    ],
+    materiaux: {
+      titre: 'De materialen',
+      texte:
+        'We werken met STO en hoogwaardige gamma’s. Afhankelijk van uw budget zijn goedkopere alternatieven mogelijk, met onze materialen of de uwe.',
+    },
+    etapesTitre: 'De stappen van een geïsoleerde en bepleisterde gevel',
+    etapesTexte: 'De volgorde van onze werven, hier aan de Universiteit van Bergen.',
+    realisationsTitre: 'Onze bepleisterde gevels',
+    autres: 'Onze andere vakken',
+    voir: 'Bekijk het vak',
+    devis: {
+      titre: 'Een project voor uw gevel?',
+      texte: 'Gratis en vrijblijvend plaatsbezoek. De offerte wordt opgemaakt per vierkante meter gevel.',
+      bouton: 'Plan mijn gratis plaatsbezoek',
+    },
+  },
+
+  /** De pagina « Realisaties » en de pagina’s per werf. */
+  realisationsPage: {
+    surtitre: 'Onze realisaties',
+    titre: 'Onze werven, in beeld.',
+    texte:
+      'Gevels in Bergen, Namen, Charleroi, Halle en Evere, van de steiger tot de afgewerkte gevel. Alleen de gemeente wordt vermeld: nooit het adres van onze klanten.',
+    avantApres: 'Voor en na',
+    photos: 'De werf in beeld',
+    retour: 'Al onze realisaties',
+    autres: 'Andere werven',
+    agrandir: 'Foto vergroten',
+    fermer: 'Sluiten',
+    precedente: 'Vorige foto',
+    suivante: 'Volgende foto',
+    visionneuse: 'Foto van de werf',
+    devis: {
+      titre: 'En uw gevel?',
+      texte: 'Gratis en vrijblijvend plaatsbezoek, overal in België.',
+    },
+  },
+
+  /** De pagina « Over ons ». */
+  apropos: {
+    surtitre: 'Over ons',
+    titre: 'Twee broers, één team.',
+    texte:
+      'Ely Facade wordt geleid door twee broers, Elisei en Simi Ungureanu. Elisei komt bij u langs voor het bezoek en de offerte; Simi leidt de werken op de werf. Ons kantoor is in Halle en we werken overal in België.',
+    nom: {
+      titre: 'Ely, zoals Elisei',
+      texte: 'De naam van het bedrijf komt van de voornaam van Elisei, de zaakvoerder.',
+    },
+    personnes: [
+      {
+        prenom: 'Elisei',
+        role: 'Zaakvoerder · Bezoek en offerte',
+        texte: 'Hij komt uw gevel bekijken, meet hem op en stuurt u de offerte. Zes jaar ervaring in gevelwerk.',
+      },
+      {
+        prenom: 'Simi',
+        role: 'Leiding van de werven',
+        texte: 'Hij leidt de ploeg op de werf, van de steiger tot de afwerking.',
+      },
+    ],
+    equipe: {
+      titre: 'Een team van 8 personen',
+      texte: 'Een team van 8 personen, zelfstandigen, op onze werven overal in België.',
+    },
+    engagementsTitre: 'Onze beloften',
+    engagements: [
+      { titre: 'Uitsluitend de gevel', texte: 'Dat is ons vak, en we doen niets anders.' },
+      { titre: 'Gratis plaatsbezoek', texte: 'Vrijblijvend, overal in België.' },
+      { titre: 'Minstens 10\u00a0jaar garantie', texte: 'Op de gevelwerken.' },
+      { titre: 'Het hele jaar', texte: 'Ook in de winter en op zaterdag.' },
+    ],
+    bureau: {
+      titre: 'Ons kantoor',
+      texte: 'De bezoeken gebeuren bij u thuis: Elisei spreekt het tijdstip met u af bij het eerste telefoontje.',
+    },
+  },
+
+  /** Juridische informatie. */
+  legal: {
+    titre: 'Juridische informatie',
+    intro: 'De wettelijke informatie over de uitgever en de host van deze website.',
+    editeurTitre: 'Uitgever van de website',
+    forme: 'Besloten vennootschap (BV / SRL)',
+    siege: 'Zetel',
+    bce: 'Ondernemingsnummer (KBO)',
+    tva: 'Btw',
+    gerant: 'Zaakvoerder',
+    contact: 'Contact',
+    hebergeurTitre: 'Hosting',
+    hebergeur: 'Netlify, Inc., 512 2nd Street, Suite 200, San Francisco, CA 94107, Verenigde Staten',
+    proprieteTitre: 'Foto’s en teksten',
+    propriete:
+      'De teksten, foto’s en het logo van deze website zijn eigendom van ELY FAÇADE BV. De foto’s tonen onze werven: alleen de gemeente wordt vermeld, nooit het adres. Elke overname vraagt onze toestemming.',
+    creditsTitre: 'Credits',
+    credits:
+      'Lettertypes DM Sans en Bricolage Grotesque (SIL Open Font License), gehost op deze website. Iconen, kaart en illustraties getekend voor Ely Facade.',
+    responsabiliteTitre: 'Aansprakelijkheid',
+    responsabilite:
+      'We zorgen ervoor dat de informatie op deze website juist is. Alleen de offerte, opgemaakt na het bezoek, verbindt Ely Facade voor de werken en de prijs.',
+  },
+
+  /** Privacy. {email} en {telephone} worden vervangen door de contactgegevens. */
+  viePrivee: {
+    titre: 'Privacy',
+    intro:
+      'Deze website volgt u niet: geen cookies, geen bezoekersstatistieken. Dit doen we met de gegevens die u ons stuurt.',
+    sections: [
+      {
+        titre: 'Wie is verantwoordelijk',
+        textes: [
+          'ELY FAÇADE BV, Bergensesteenweg 745, 1502 Halle, België (ondernemingsnummer 1030.283.223).',
+          'Voor elke vraag: {email} of {telephone}.',
+        ],
+      },
+      {
+        titre: 'Welke gegevens we ontvangen',
+        textes: [
+          'Via het offerteformulier: de gewenste werken, het type gebouw, de geveloppervlakte als u die opgeeft, uw naam, uw telefoonnummer, uw e-mail en uw bericht als u ze invult, en de taal van de website.',
+          'Als u ons rechtstreeks contacteert (telefoon, WhatsApp, e-mail): wat u ons wilt sturen, bijvoorbeeld foto’s van uw gevel.',
+        ],
+      },
+      {
+        titre: 'Waarom',
+        textes: [
+          'Alleen om uw aanvraag te beantwoorden: u contacteren, het bezoek regelen en u de offerte sturen. We verkopen of geven uw gegevens niet door en sturen u geen reclame.',
+          'Rechtsgrond: uw offerteaanvraag (precontractuele maatregelen) en uw toestemming, gegeven door het vakje in het formulier aan te vinken.',
+        ],
+      },
+      {
+        titre: 'Wie ze ontvangt',
+        textes: [
+          'Het formulier loopt via Netlify, Inc. (Verenigde Staten), dat deze website host en het ons per e-mail bezorgt. Doorgiften buiten de Europese Unie gebeuren met de waarborgen die de AVG voorziet.',
+          'Als u WhatsApp gebruikt, gelden voor die berichten de regels van WhatsApp (Meta).',
+        ],
+      },
+      {
+        titre: 'Hoe lang',
+        textes: [
+          'De tijd die nodig is om uw aanvraag te behandelen. Wordt u klant, dan zo lang als de wet ons verplicht de documenten te bewaren (boekhouding, garantie).',
+        ],
+      },
+      {
+        titre: 'Cookies',
+        textes: [
+          'Geen cookies. De website onthoudt alleen in uw browser de taal die u gekozen hebt (Frans of Nederlands). Die informatie wordt nooit naar ons gestuurd.',
+        ],
+      },
+      {
+        titre: 'Uw rechten',
+        textes: [
+          'U kunt op elk moment vragen om uw gegevens in te kijken, te verbeteren of te wissen, of u verzetten tegen het gebruik ervan: schrijf ons op {email}.',
+          'U kunt ook een klacht indienen bij de Gegevensbeschermingsautoriteit (Drukpersstraat 35, 1000 Brussel, gegevensbeschermingsautoriteit.be).',
+        ],
+      },
+    ],
+    miseAJour: 'Bijgewerkt: oktober 2026.',
+  },
+
+  /** De pagina die niet bestaat. */
+  erreur: {
+    code: 'Fout 404',
+    titre: 'Er ontbreekt een baksteen.',
+    texte: 'Deze pagina bestaat niet (meer). De rest van de website staat er wel:',
+    accueil: 'Terug naar de homepage',
+    realisations: 'Bekijk onze realisaties',
+  },
+
   pages: {
     accueil: {
       titre: 'Ely Facade | Gevelrenovatie in heel België',
       description:
         'Gevelpleister, schilderwerk, gevelreiniging, voegwerk en herstel van bakstenen: Ely Facade renoveert uw gevel overal in België. Gratis plaatsbezoek zonder verplichting.',
+    },
+    services: {
+      titre: 'Onze gevelvakken | Ely Facade',
+      description:
+        'Gevelpleister, schilderwerk, gevelreiniging, voegwerk en herstel van bakstenen: uitsluitend de gevel, overal in België. Gratis plaatsbezoek, minstens 10\u00a0jaar garantie.',
+    },
+    realisations: {
+      titre: 'Onze realisaties | Ely Facade',
+      description:
+        'Onze gevelwerven in beeld: Universiteit van Bergen, Namen, Charleroi, Halle en Evere, van de steiger tot de afgewerkte gevel.',
+    },
+    apropos: {
+      titre: 'Over ons | Ely Facade',
+      description:
+        'Ely Facade, dat zijn twee broers, Elisei en Simi Ungureanu, en een team van 8 personen. Kantoor in Halle, gevelwerven overal in België.',
+    },
+    mentionsLegales: {
+      titre: 'Juridische informatie | Ely Facade',
+      description: 'Uitgever, host en wettelijke informatie van de website van Ely Facade (ELY FAÇADE BV, ondernemingsnummer 1030.283.223).',
+    },
+    viePrivee: {
+      titre: 'Privacy | Ely Facade',
+      description: 'Geen cookies, geen bezoekersstatistieken: wat we doen met de gegevens uit het offerteformulier.',
+    },
+    erreur: {
+      titre: 'Pagina niet gevonden | Ely Facade',
+      description: 'Deze pagina bestaat niet (meer).',
     },
     contact: {
       titre: 'Contact en offerte | Ely Facade',
@@ -186,7 +450,7 @@ export const nl = {
 
     /** De emotionele zinnen tussen de secties. Het woord tussen haakjes wordt rood onderstreept. */
     emotions: {
-      durer: { phrase: 'Een gevel die [blijft].', note: 'Minstens 10 jaar garantie' },
+      durer: { phrase: 'Een gevel die [blijft].', note: 'Minstens 10\u00a0jaar garantie' },
       premiere: { phrase: 'Het eerste wat men van [uw huis] ziet.', note: '' },
       jeunesse: { phrase: 'Elke gevel krijgt een [tweede jeugd].', note: '' },
       exigence: { phrase: 'Een huis of een universiteit: [dezelfde zorg].', note: '' },
@@ -233,7 +497,7 @@ export const nl = {
         },
         termine: {
           titre: 'Afgewerkte gevel',
-          texte: 'De steiger wordt weggenomen. Uw gevel heeft minstens 10 jaar garantie.',
+          texte: 'De steiger wordt weggenomen. Uw gevel heeft minstens 10\u00a0jaar garantie.',
           legendes: ['Afgewerkte gevel, binnenplaats'],
         },
       },
@@ -363,7 +627,7 @@ export const nl = {
         niveauxAide: 'gelijkvloers inbegrepen',
         moins: 'Eén bouwlaag minder',
         plus: 'Eén bouwlaag meer',
-        hypothese: 'Berekend met 3 m per bouwlaag.',
+        hypothese: 'Berekend met 3\u00a0m per bouwlaag.',
         resultat: 'Geschatte oppervlakte',
         unite: 'm²',
         utiliser: 'Toevoegen aan mijn aanvraag',

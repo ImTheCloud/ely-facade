@@ -1,0 +1,128 @@
+---
+/** Page introuvable : « Il manque une brique. » Un pan de mur où une brique manque ; la brique rouge est tombée. */
+import Bouton from '../Bouton.astro';
+import BaseLayout from '~/layouts/BaseLayout.astro';
+import { lienDevis } from '~/data/entreprise';
+import { chemin, t, type Langue } from '~/i18n';
+
+interface Props {
+  langue: Langue;
+}
+
+const { langue } = Astro.props;
+const textes = t(langue);
+const e = textes.erreur;
+const page = textes.pages.erreur;
+
+const hauteur = 30;
+const largeur = 76;
+const joint = 6;
+const tons = ['#e6e1d8', '#ece8e1', '#dfd9cf', '#e9e4dc', '#e2ddd3'];
+const briques: { x: number; y: number; ton: string; trou: boolean }[] = [];
+let n = 0;
+for (let rangee = 0; rangee < 7; rangee++) {
+  const decalage = rangee % 2 ? -(largeur + joint) / 2 : 0;
+  for (let x = decalage; x < 420; x += largeur + joint) {
+    briques.push({ x, y: rangee * (hauteur + joint), ton: tons[(rangee * 3 + n++) % tons.length], trou: rangee === 3 && x > 160 && x < 220 });
+  }
+}
+const trou = briques.find((b) => b.trou)!;
+---
+
+<BaseLayout langue={langue} titre={page.titre} description={page.description} noindex>
+  <section class="erreur">
+    <div class="wrap erreur__grille">
+      <div class="erreur__texte">
+        <p class="surtitre">{e.code}</p>
+        <h1>{e.titre}</h1>
+        <p>{e.texte}</p>
+        <div class="erreur__actions">
+          <Bouton href={chemin('accueil', langue)} variante="principal" iconeApres="fleche" large>{e.accueil}</Bouton>
+          <Bouton href={chemin('realisations', langue)} variante="secondaire" large>{e.realisations}</Bouton>
+          <Bouton href={lienDevis(langue)} variante="accent" iconeApres="fleche-diag" large>{textes.accueil.hero.bouton}</Bouton>
+        </div>
+      </div>
+
+      <svg class="mur" viewBox="0 0 420 330" aria-hidden="true">
+        <defs>
+          <clipPath id="mur-404"><rect width="420" height="248" rx="24"></rect></clipPath>
+        </defs>
+        <g clip-path="url(#mur-404)">
+          <rect width="420" height="248" fill="#f7f6f2"></rect>
+          {briques.map((b) => (b.trou ? null : <rect x={b.x} y={b.y} width={largeur} height={hauteur} rx="4" fill={b.ton} />))}
+          <rect x={trou.x} y={trou.y} width={largeur} height={hauteur} rx="4" fill="#1f2429" opacity="0.88"></rect>
+        </g>
+        <g class="mur__brique">
+          <rect x="250" y="282" width={largeur} height={hauteur} rx="4" fill="#c8202b" transform="rotate(-9 288 297)"></rect>
+        </g>
+        <ellipse cx="290" cy="322" rx="46" ry="5" fill="#1f2429" opacity="0.08"></ellipse>
+      </svg>
+    </div>
+  </section>
+</BaseLayout>
+
+<style>
+  .erreur {
+    padding-top: calc(var(--header-h) + clamp(40px, 8vw, 96px));
+    padding-bottom: var(--section-gap);
+  }
+
+  .erreur__grille {
+    display: grid;
+    gap: 48px;
+    align-items: center;
+  }
+
+  .erreur__texte {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 22px;
+  }
+
+  .erreur h1 {
+    max-width: 12ch;
+  }
+
+  .erreur__texte > p:not(.surtitre) {
+    max-width: 44ch;
+    font-size: var(--size-lead);
+  }
+
+  .erreur__actions {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 12px;
+  }
+
+  .mur {
+    width: 100%;
+    max-width: 520px;
+    height: auto;
+    justify-self: center;
+    filter: drop-shadow(0 24px 40px rgba(31, 36, 41, 0.12));
+  }
+
+  @media (prefers-reduced-motion: no-preference) {
+    .mur__brique {
+      animation: tombe 1100ms cubic-bezier(0.3, 1.5, 0.5, 1) 300ms both;
+    }
+
+    @keyframes tombe {
+      from {
+        transform: translate(-90px, -190px) rotate(9deg);
+        opacity: 0;
+      }
+      40% {
+        opacity: 1;
+      }
+    }
+  }
+
+  @media (min-width: 960px) {
+    .erreur__grille {
+      grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
+      gap: 64px;
+    }
+  }
+</style>

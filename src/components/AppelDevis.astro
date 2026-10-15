@@ -1,0 +1,92 @@
+---
+/**
+ * Bandeau d'appel au devis, en bas des pages intérieures : visite gratuite, téléphone, WhatsApp.
+ * travaux : la clé d'un métier, pour pré-cocher le formulaire (?travaux=crepi).
+ */
+import Bouton from './Bouton.astro';
+import { entreprise, lienDevis, lienWhatsApp } from '../data/entreprise';
+import { chemin, t, type Langue } from '../i18n';
+
+interface Props {
+  langue: Langue;
+  titre: string;
+  texte: string;
+  travaux?: string;
+}
+
+const { langue, titre, texte, travaux } = Astro.props;
+const textes = t(langue);
+const lien = travaux ? `${chemin('contact', langue)}?travaux=${travaux}#devis` : lienDevis(langue);
+---
+
+<section class="appel-devis">
+  <div class="wrap">
+    <div class="appel-devis__carte" data-reveal>
+      <div class="appel-devis__texte">
+        <h2>{titre}</h2>
+        <p>{texte}</p>
+      </div>
+      <div class="appel-devis__actions">
+        <Bouton href={lien} variante="accent" iconeApres="fleche-diag" large>{textes.accueil.hero.bouton}</Bouton>
+        <Bouton href={`tel:${entreprise.telephoneLien}`} variante="secondaire" icone="telephone" large>
+          {entreprise.telephoneAffiche}
+        </Bouton>
+        <Bouton href={lienWhatsApp(textes.whatsappMessage)} variante="whatsapp" icone="whatsapp" large target="_blank" rel="noopener">
+          WhatsApp
+        </Bouton>
+      </div>
+    </div>
+  </div>
+</section>
+
+<style>
+  .appel-devis {
+    padding-block: var(--section-gap);
+  }
+
+  .appel-devis__carte {
+    display: grid;
+    gap: 28px;
+    padding: clamp(28px, 5vw, 64px);
+    border-radius: 36px;
+    background:
+      radial-gradient(120% 140% at 100% 0%, rgba(200, 32, 43, 0.22) 0%, rgba(200, 32, 43, 0) 50%),
+      var(--color-ink);
+    color: rgba(255, 255, 255, 0.82);
+  }
+
+  .appel-devis__texte {
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+  }
+
+  .appel-devis h2 {
+    max-width: 16ch;
+    color: #fff;
+  }
+
+  .appel-devis p {
+    max-width: 46ch;
+    font-size: var(--size-lead);
+  }
+
+  .appel-devis__actions {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 12px;
+  }
+
+  @media (min-width: 1000px) {
+    .appel-devis__carte {
+      grid-template-columns: minmax(0, 1fr) auto;
+      align-items: end;
+      gap: 48px;
+    }
+
+    .appel-devis__actions {
+      flex-direction: column;
+      align-items: stretch;
+    }
+  }
+</style>

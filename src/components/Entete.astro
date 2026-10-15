@@ -508,8 +508,9 @@ const estActif = (href: string) => cheminActuel.startsWith(href);
       text-shadow: 0 1px 12px rgba(var(--voile), 0.35);
     }
 
-    .entete--photo:not(.entete--defile) .entete__nav a:hover {
-      background: rgba(255, 255, 255, 0.14);
+    .entete--photo:not(.entete--defile) .entete__nav a:hover,
+    .entete--photo:not(.entete--defile) .entete__nav a[aria-current='page'] {
+      background: rgba(255, 255, 255, 0.16);
       color: #fff;
     }
 
