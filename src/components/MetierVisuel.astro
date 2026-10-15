@@ -5,12 +5,14 @@
  * - peinture : une moitié du mur passe au blanc ;
  * - nettoyage : une bande propre traverse le mur ;
  * - rejointoiement : les joints se tracent en blanc ;
- * - briques : une brique rouge vient prendre la place d'une brique abîmée.
+ * - briques : une brique rouge vient prendre la place d'une brique abîmée ;
+ * - fissures : une fissure se dessine, puis se comble.
+ * (Le crépi, l'isolation et l'échafaudage ont leurs vraies photos.)
  */
 import type { CleMetier } from '../data/metiers';
 
 interface Props {
-  metier: Exclude<CleMetier, 'crepi'>;
+  metier: Exclude<CleMetier, 'crepi' | 'isolation' | 'echafaudage'>;
 }
 
 const { metier } = Astro.props;
@@ -89,6 +91,15 @@ const rouge = briques.find((b) => b.y === 3 * (hauteur + joint) && b.x > 150 && 
         )
       }
 
+      {
+        metier === 'fissures' && (
+          <g class="visuel__fissure" fill="none" stroke-linecap="round" stroke-linejoin="round">
+            <path class="visuel__fissure-trait" d="M262 -10 L246 62 L282 104 L248 154 L288 200 L258 246 L294 296 L274 370" stroke="#6f685d" stroke-width="5" pathLength="1" />
+            <path class="visuel__fissure-comble" d="M262 -10 L246 62 L282 104 L248 154 L288 200 L258 246 L294 296 L274 370" stroke="#f7f6f2" stroke-width="11" pathLength="1" />
+          </g>
+        )
+      }
+
       {metier !== 'briques' && <rect x={rouge.x} y={rouge.y} width={rouge.w} height={hauteur} rx="4" fill="#c8202b" />}
     </g>
   </svg>
@@ -136,6 +147,23 @@ const rouge = briques.find((b) => b.y === 3 * (hauteur + joint) && b.x > 150 && 
     }
 
     :global(.js) .visuel.est-visible .visuel__joints path {
+      stroke-dashoffset: 0;
+    }
+
+    :global(.js) .visuel__fissure path {
+      stroke-dasharray: 1;
+      stroke-dashoffset: 1;
+    }
+
+    :global(.js) .visuel__fissure-trait {
+      transition: stroke-dashoffset 1100ms var(--ease-out) 200ms;
+    }
+
+    :global(.js) .visuel__fissure-comble {
+      transition: stroke-dashoffset 1300ms var(--ease-out) 1500ms;
+    }
+
+    :global(.js) .visuel.est-visible .visuel__fissure path {
       stroke-dashoffset: 0;
     }
 

@@ -56,7 +56,7 @@ export const nl = {
 
   communes: { mons: 'Bergen', namur: 'Namen', halle: 'Halle', charleroi: 'Charleroi', evere: 'Evere' },
 
-  /** De vijf vakgebieden (uitsluitend de gevel). */
+  /** De vakgebieden van de gevel, van A tot Z. */
   metiers: {
     crepi: {
       titre: 'Gevelpleister',
@@ -72,6 +72,20 @@ export const nl = {
       ],
       description:
         'Gevelpleister en crepi, inclusief buitenisolatie, overal in België. Alle afwerkingen. Gratis plaatsbezoek, minstens 10\u00a0jaar garantie.',
+    },
+    isolation: {
+      titre: 'Buitenisolatie',
+      court: 'Isolatieplaten over de hele gevel, daarna afgewerkt met pleisterwerk.',
+      intro:
+        'De isolatieplaten worden over de hele gevel geplaatst, gelijmd en geplugd, en daarna bedekt met een gewapende onderlaag en een afwerkingspleister. Een werf van A tot Z, van de steiger tot de afgewerkte gevel.',
+      points: [
+        'Gelijmde en geplugde isolatieplaten',
+        'Gewapende onderlaag met een glasvezelnet',
+        'Versterkingen rond de ramen en bovenaan de gevel',
+        'Afwerkingspleister in het uitzicht en de kleur van uw keuze',
+      ],
+      description:
+        'Gevelisolatie langs buiten, gewapende onderlaag en afwerkingspleister, overal in België. Gratis plaatsbezoek, minstens 10\u00a0jaar garantie.',
     },
     peinture: {
       titre: 'Gevelschilderwerk',
@@ -126,6 +140,22 @@ export const nl = {
       ],
       description:
         'Herstel van gevelbakstenen: stenen vervangen, voegen vernieuwd, scheuren behandeld, steenstrips. Overal in België, gratis plaatsbezoek.',
+    },
+    fissures: {
+      titre: 'Scheurherstel',
+      court: 'De scheuren in uw gevel behandeld.',
+      intro: 'Scheuren in uw gevel? We behandelen ze op de bestaande gevel.',
+      points: ['Behandelde scheuren', 'Op de bestaande gevel'],
+      description: 'Scheuren in de gevel behandeld, overal in België. Gratis en vrijblijvend plaatsbezoek.',
+    },
+    echafaudage: {
+      titre: 'Steigerwerk',
+      court: 'Steiger opbouwen en ramen beschermen, tot de steiger weer weg is.',
+      intro:
+        'Elke gevelwerf begint met de steiger: ze wordt opgebouwd, de ondergrond voorbereid, de ramen en openingen worden afgeschermd. Na de werf wordt ze weggenomen.',
+      points: ['Steiger opbouwen', 'Ramen en openingen beschermen', 'Steiger wegnemen na de werf'],
+      description:
+        'Steiger voor uw gevelwerken: opbouwen, ramen beschermen en weghalen, overal in België. Gratis en vrijblijvend plaatsbezoek.',
     },
   },
 

@@ -7,10 +7,13 @@ import type { Langue } from '.';
 
 export const SLUGS_METIERS = {
   crepi: { fr: 'crepi-enduit', nl: 'gevelpleister' },
+  isolation: { fr: 'isolation-exterieure', nl: 'buitenisolatie' },
   peinture: { fr: 'peinture-facade', nl: 'gevelschilderwerk' },
   nettoyage: { fr: 'nettoyage-facade', nl: 'gevelreiniging' },
   rejointoiement: { fr: 'rejointoiement', nl: 'voegwerk' },
   briques: { fr: 'reparation-briques', nl: 'herstel-bakstenen' },
+  fissures: { fr: 'traitement-fissures', nl: 'scheurherstel' },
+  echafaudage: { fr: 'echafaudage', nl: 'steigerwerk' },
 } as const satisfies Record<string, Record<Langue, string>>;
 
 /** Seuls les chantiers qui ont plusieurs photos ont une page. */

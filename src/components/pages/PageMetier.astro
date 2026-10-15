@@ -2,7 +2,7 @@
 /**
  * Une page métier (/services/<slug>/, /nl/diensten/<slug>/) : ce que nous faisons, pour quels bâtiments,
  * comment ça se passe, et le devis avec le métier déjà coché. Données structurées « Service ».
- * Le crépi a ses photos (les façades isolées et crépies de nos chantiers) ; les autres métiers sont illustrés en SVG.
+ * Le crépi, l'isolation et l'échafaudage ont leurs photos (chantiers de l'UMons) ; les autres métiers sont illustrés en SVG.
  */
 import { Image } from 'astro:assets';
 import AppelDevis from '../AppelDevis.astro';
@@ -29,6 +29,13 @@ const s = textes.services;
 const m = textes.metiers[metier];
 const lien = lienMetier(metier, langue);
 const devis = `${chemin('contact', langue)}?travaux=${metier}#devis`;
+/** Les métiers qui ont leurs vraies photos (les autres sont illustrés en SVG). */
+const photosMetier: Partial<Record<CleMetier, string>> = {
+  crepi: 'mons-umons-immeuble-angle/etape-3-termine',
+  isolation: 'mons-umons-immeuble-angle/etape-1-membrane-3',
+  echafaudage: 'mons-umons-immeuble-angle/etape-1-membrane-1',
+};
+const photoIntro = photosMetier[metier];
 const autres = METIERS.filter((autre) => autre.cle !== metier);
 
 // Crépi : les étapes (une photo par étape) et nos façades crépies terminées.
@@ -76,11 +83,11 @@ const donnees = {
     </div>
     <Fragment slot="visuel">
       {
-        metier === 'crepi' ? (
+        photoIntro ? (
           <figure class="photo-intro" data-reveal>
             <Image
-              src={photo('mons-umons-immeuble-angle/etape-3-termine')}
-              alt={textes.photos['mons-umons-immeuble-angle/etape-3-termine']}
+              src={photo(photoIntro)}
+              alt={textes.photos[photoIntro]}
               widths={[480, 768, 1080]}
               sizes="(min-width: 960px) 45vw, 100vw"
               format="webp"
@@ -89,7 +96,7 @@ const donnees = {
             />
           </figure>
         ) : (
-          <MetierVisuel metier={metier} />
+          <MetierVisuel metier={metier as Exclude<CleMetier, 'crepi' | 'isolation' | 'echafaudage'>} />
         )
       }
     </Fragment>
@@ -114,7 +121,7 @@ const donnees = {
   </section>
 
   {
-    metier === 'crepi' && (
+    (metier === 'crepi' || metier === 'isolation') && (
       <section class="section etapes-crepi">
         <div class="wrap">
           <div class="tete" data-reveal>

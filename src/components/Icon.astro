@@ -16,7 +16,10 @@ export type NomIcone =
   | 'goutte'
   | 'joint'
   | 'brique'
-  | 'facade';
+  | 'facade'
+  | 'isolation'
+  | 'fissure'
+  | 'echafaudage';
 
 interface Props {
   nom: NomIcone;
@@ -32,6 +35,11 @@ const chemins: Record<NomIcone, string> = {
   'fleche-diag': '<path d="M7 17L17 7"/><path d="M8 7h9v9"/>',
   'fleche-gauche': '<path d="M19 12H5"/><path d="M11 6l-6 6 6 6"/>',
   check: '<path d="M5 12.5l4.5 4.5L19 7.5"/>',
+  isolation:
+    '<rect x="3" y="4" width="5" height="16" rx="1"/><path d="M8 8h3M8 12h3M8 16h3"/><path d="M14 4h7v16h-7z"/><path d="M14 9h7M14 15h7"/>',
+  fissure: '<path d="M12 3l-2.5 5 4 3-3.5 4.5 2.5 2.5-1 3"/><path d="M4 21h16"/>',
+  echafaudage:
+    '<path d="M5 3v18M19 3v18"/><path d="M5 8h14M5 14h14"/><path d="M5 8l14 6M5 14L19 8"/>',
   facade:
     '<path d="M4 21V7l8-4 8 4v14"/><path d="M2.5 21h19"/><path d="M8 10h2M14 10h2M8 14h2M14 14h2"/><path d="M10.5 21v-3.5h3V21"/>',
   autre: '<circle cx="6" cy="12" r="1.2"/><circle cx="12" cy="12" r="1.2"/><circle cx="18" cy="12" r="1.2"/>',

@@ -56,7 +56,7 @@ export const fr = {
 
   communes: { mons: 'Mons', namur: 'Namur', halle: 'Halle', charleroi: 'Charleroi', evere: 'Evere' },
 
-  /** Les cinq métiers (uniquement la façade). */
+  /** Les métiers de la façade, de A à Z. */
   metiers: {
     crepi: {
       titre: 'Crépi et enduit',
@@ -72,6 +72,20 @@ export const fr = {
       ],
       description:
         'Crépi et enduit de façade, isolation par l’extérieur comprise, partout en Belgique. Tous types de finitions. Visite gratuite, garantie de 10\u00a0ans minimum.',
+    },
+    isolation: {
+      titre: 'Isolation par l’extérieur',
+      court: 'Des panneaux isolants posés sur toute la façade, puis recouverts d’un enduit.',
+      intro:
+        'Les panneaux isolants sont posés sur toute la façade, collés et chevillés, puis recouverts d’un sous-enduit armé et d’un enduit de finition. Un chantier mené de A à Z, de l’échafaudage à la façade terminée.',
+      points: [
+        'Panneaux isolants collés et chevillés',
+        'Sous-enduit armé d’un treillis en fibre de verre',
+        'Renforts autour des fenêtres et en haut de façade',
+        'Enduit de finition, dans l’aspect et la teinte de votre choix',
+      ],
+      description:
+        'Isolation de façade par l’extérieur, sous-enduit armé et enduit de finition, partout en Belgique. Visite gratuite, garantie de 10\u00a0ans minimum.',
     },
     peinture: {
       titre: 'Peinture de façade',
@@ -126,6 +140,22 @@ export const fr = {
       ],
       description:
         'Réparation de briques de façade\u00a0: briques remplacées, joints refaits, fissures traitées, plaquettes de parement. Partout en Belgique, visite gratuite.',
+    },
+    fissures: {
+      titre: 'Traitement des fissures',
+      court: 'Les fissures de votre façade traitées.',
+      intro: 'Des fissures dans votre façade\u00a0? Nous les traitons sur la façade existante.',
+      points: ['Fissures traitées', 'Sur la façade existante'],
+      description: 'Traitement des fissures de façade, partout en Belgique. Visite gratuite et sans engagement.',
+    },
+    echafaudage: {
+      titre: 'Échafaudage',
+      court: 'Montage de l’échafaudage et protection des fenêtres, jusqu’au retrait.',
+      intro:
+        'Chaque chantier de façade commence par l’échafaudage\u00a0: il est monté, le support est préparé, les fenêtres et les ouvertures sont protégées. À la fin du chantier, il est retiré.',
+      points: ['Montage de l’échafaudage', 'Protection des fenêtres et des ouvertures', 'Retrait de l’échafaudage en fin de chantier'],
+      description:
+        'Échafaudage pour vos travaux de façade\u00a0: montage, protection des fenêtres et retrait, partout en Belgique. Visite gratuite et sans engagement.',
     },
   },
 

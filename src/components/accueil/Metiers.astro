@@ -1,5 +1,5 @@
 ---
-/** Les cinq métiers, chacun mène à sa page. Uniquement la façade. */
+/** Les métiers de la façade, chacun mène à sa page. */
 import Icon from '../Icon.astro';
 import { METIERS, lienMetier } from '../../data/metiers';
 import { t, type Langue } from '../../i18n';
@@ -144,16 +144,7 @@ const section = textes.accueil.metiers;
 
   @media (min-width: 1100px) {
     .metiers__liste {
-      grid-template-columns: repeat(6, 1fr);
-    }
-
-    .metiers__liste li {
-      grid-column: span 2;
-    }
-
-    /* Cinq tuiles : trois en haut, deux plus larges en bas. */
-    .metiers__liste li:nth-child(n + 4) {
-      grid-column: span 3;
+      grid-template-columns: repeat(4, 1fr);
     }
   }
 </style>
