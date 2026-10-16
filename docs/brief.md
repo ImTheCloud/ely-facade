@@ -130,7 +130,7 @@ Formulaires : envoyés pour l'instant à l'email d'Elisei, à changer pour l'adr
 
 ## 7. À faire à la fin
 
-- **Nom de domaine** : recommandation **elyfacade.be** (domaine principal, clientèle belge), et **elyfacade.com** réservé en plus pour rediriger vers le .be. Les deux ont été vus disponibles par le client. Les accès (Netlify, GitHub, domaine) restent à Claudiu.
+- **Nom de domaine** : recommandation **elyfacade.be** (domaine principal, clientèle belge), seul (choix de Claudiu le 16 octobre 2026 : pas de .com). Les deux ont été vus disponibles par le client. Les accès (Netlify, GitHub, domaine) restent à Claudiu.
 - **Adresse email professionnelle** : chercher l'offre la moins chère avec un seul paiement annuel (domaine + email, éventuellement hébergement). En attendant, l'email d'Elisei est utilisé.
 - **Fiche Google Business Profile** (Google Maps) pour le bureau de Halle, une fois le site en ligne ; c'est elle qui apportera les premiers avis.
 - **QR code** du site, à intégrer aux cartes de visite.

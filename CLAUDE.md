@@ -43,7 +43,7 @@ Figma, Netlify, Vercel (domaines), Notion, Supabase, Resend (email), Expo. Si un
 
 ## Stack
 
-- **Astro** (sortie statique, TypeScript), GitHub + **Netlify** (`netlify.toml`). Domaine : `elyfacade.be` (principal) + `elyfacade.com` redirigé, à acheter.
+- **Astro** (sortie statique, TypeScript), GitHub + **Netlify** (`netlify.toml`). Domaine : `elyfacade.be` seulement (choix de Claudiu, 16 octobre 2026), chez OVHcloud avec l'email pro Zimbra inclus, à acheter.
 - **CSS** : variables dans `src/styles/tokens.css` + styles scoped. Pas de framework CSS.
 - **Textes** : `src/i18n/fr.ts` et `nl.ts`, même structure.
 - **Formulaires en étapes** : devis uniquement, moteur repris de BS Renove. Envoi par **Netlify Forms**, emails vers Elisei (adresse pro à créer plus tard, à changer dans Netlify → Forms, pas dans le code).
