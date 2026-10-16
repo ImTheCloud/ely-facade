@@ -44,7 +44,6 @@ export const fr = {
     mentionsLegales: 'Mentions légales',
     viePrivee: 'Vie privée',
     droits: 'Tous droits réservés',
-    zone: 'Bureau à Halle · Partout en Belgique',
     entreprise: 'L’entreprise',
     menuAria: 'Plan du site',
     languesAria: 'Langue du site',
@@ -642,7 +641,7 @@ export const fr = {
       direct: 'Ou directement',
       telephone: 'Téléphone',
       email: 'Email',
-      zone: 'Bureau à Halle · Partout en Belgique',
+      bureau: 'Bureau\u00a0:',
     },
   },
 

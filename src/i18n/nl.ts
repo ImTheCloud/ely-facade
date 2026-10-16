@@ -44,7 +44,6 @@ export const nl = {
     mentionsLegales: 'Juridische informatie',
     viePrivee: 'Privacy',
     droits: 'Alle rechten voorbehouden',
-    zone: 'Kantoor in Halle · Overal in België',
     entreprise: 'Het bedrijf',
     menuAria: 'Sitemap',
     languesAria: 'Taal van de website',
@@ -642,7 +641,7 @@ export const nl = {
       direct: 'Of rechtstreeks',
       telephone: 'Telefoon',
       email: 'E-mail',
-      zone: 'Kantoor in Halle · Overal in België',
+      bureau: 'Kantoor:',
     },
   },
 
