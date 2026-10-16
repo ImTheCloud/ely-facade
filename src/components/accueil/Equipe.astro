@@ -126,8 +126,16 @@ const equipe = t(langue).accueil.equipe;
     grid-template-columns: repeat(2, minmax(0, 1fr));
     align-items: end;
     /* Les têtes passent devant le bas du nom. */
-    margin-top: -3.5cqi;
-    padding-inline: 4cqi;
+    margin-top: -1cqi;
+    /* La paire est légèrement poussée vers la droite pour tomber au centre de la ligne. */
+    padding-inline: 1cqi 0;
+  }
+
+  /* Ordinateur : un peu moins grands, toujours au centre. */
+  @media (min-width: 700px) {
+    .scene__freres {
+      padding-inline: 9cqi 7cqi;
+    }
   }
 
   .portrait {
@@ -142,13 +150,15 @@ const equipe = t(langue).accueil.equipe;
 
   /* La photo de Simi a plus d'épaule à droite : il se rapproche de son frère pour que la paire soit centrée. */
   .portrait:last-child {
-    transform: translateX(-7%);
+    transform: translateX(-4%);
   }
 
   .scene__sol {
     position: relative;
     z-index: 2;
     display: block;
+    /* La ligne passe juste sous eux, un peu plus bas que le bas des photos. */
+    margin-top: 2cqi;
     height: 2px;
     background: var(--color-ink);
   }
@@ -166,9 +176,11 @@ const equipe = t(langue).accueil.equipe;
   }
 
   /* --- Sous chaque frère : le prénom, le rôle, la phrase, deux lignes. --- */
+  /* Chacun son texte sous lui, côte à côte, sur téléphone comme sur ordinateur. */
   .equipe__freres {
     display: grid;
-    gap: 36px;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 18px;
     max-width: 1000px;
     margin: clamp(28px, 4vw, 48px) auto 0;
   }
@@ -181,7 +193,7 @@ const equipe = t(langue).accueil.equipe;
 
   .frere__nom {
     font-family: var(--font-display);
-    font-size: clamp(40px, 6vw, 72px);
+    font-size: clamp(30px, 6vw, 72px);
     font-weight: 800;
     line-height: 0.9;
     letter-spacing: var(--tracking-display);
@@ -190,10 +202,11 @@ const equipe = t(langue).accueil.equipe;
   }
 
   .frere__role {
-    display: inline-flex;
-    align-items: center;
-    gap: 10px;
-    font-size: var(--size-tiny);
+    display: flex;
+    align-items: baseline;
+    gap: 8px;
+    font-size: clamp(11px, 1.2vw, 13px);
+    line-height: 1.35;
     font-weight: 700;
     letter-spacing: 0.06em;
     text-transform: uppercase;
@@ -202,6 +215,7 @@ const equipe = t(langue).accueil.equipe;
 
   .frere__role::before {
     content: '';
+    flex-shrink: 0;
     width: 13px;
     height: 7px;
     border-radius: 2px;
@@ -212,7 +226,7 @@ const equipe = t(langue).accueil.equipe;
     max-width: 22ch;
     margin-top: 6px;
     font-family: var(--font-display);
-    font-size: clamp(22px, 2.4vw, 32px);
+    font-size: clamp(17px, 2.4vw, 32px);
     font-weight: 750;
     line-height: 1.15;
     letter-spacing: var(--tracking-phrase);
@@ -222,8 +236,8 @@ const equipe = t(langue).accueil.equipe;
 
   .frere__detail {
     max-width: 40ch;
-    font-size: var(--size-body);
-    line-height: 1.6;
+    font-size: clamp(14px, 1.3vw, 17px);
+    line-height: 1.55;
   }
 
   /* Ordinateur : chaque texte sous son frère. */
@@ -235,7 +249,6 @@ const equipe = t(langue).accueil.equipe;
     }
 
     .equipe__freres {
-      grid-template-columns: repeat(2, minmax(0, 1fr));
       gap: clamp(32px, 6vw, 96px);
     }
   }
