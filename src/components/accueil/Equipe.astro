@@ -126,7 +126,7 @@ const equipe = t(langue).accueil.equipe;
     grid-template-columns: repeat(2, minmax(0, 1fr));
     align-items: end;
     /* Les têtes passent devant le bas du nom. */
-    margin-top: -8cqi;
+    margin-top: -3.5cqi;
   }
 
   @media (min-width: 700px) {
@@ -146,11 +146,7 @@ const equipe = t(langue).accueil.equipe;
     height: auto;
   }
 
-  /* Elisei, plus étroit sur sa photo, est un peu réduit en largeur pour que les deux têtes soient à la même hauteur. */
-  .portrait:first-child {
-    justify-self: end;
-    width: 88%;
-  }
+  /* Les deux détourages sont recadrés visage au centre, à la même taille : la paire est centrée sur la brique. */
 
   .scene__sol {
     position: relative;
