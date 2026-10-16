@@ -546,7 +546,7 @@ export const nl = {
     },
 
     chiffres: {
-      titre: 'Ely Facade in enkele [cijfers].',
+      titre: 'Ely Facade in enkele [cijfers]:',
       liste: [
         { valeur: '6 jaar', mot: 'ervaring', detail: 'van onze zaakvoerder' },
         { valeur: '50+', mot: 'werven', detail: 'uitgevoerd door onze zaakvoerders' },
