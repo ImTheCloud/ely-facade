@@ -23,7 +23,7 @@ const equipe = t(langue).accueil.equipe;
 
     <div class="scene">
       <!-- Le nom de l'entreprise, en très grand derrière les deux frères. -->
-      <p class="scene__nom" aria-hidden="true">Ely Facade</p>
+      <p class="scene__nom" aria-hidden="true">Ely <span>Facade</span></p>
       <div class="scene__freres">
         {
           equipe.personnes.map((personne) => (
@@ -67,9 +67,12 @@ const equipe = t(langue).accueil.equipe;
     background: #fff;
   }
 
+  /* Le titre tient sur une seule ligne, du téléphone à l'ordinateur. */
   .equipe__titre {
-    max-width: 12ch;
     margin-bottom: clamp(20px, 3vw, 40px);
+    text-align: center;
+    font-size: min(var(--size-h2), 5.6vw);
+    white-space: nowrap;
   }
 
   /* --- La scène : le nom en très grand, les deux frères posés devant. --- */
@@ -91,6 +94,10 @@ const equipe = t(langue).accueil.equipe;
     white-space: nowrap;
     color: var(--color-ink);
     user-select: none;
+  }
+
+  .scene__nom span {
+    color: var(--color-accent);
   }
 
   .scene__freres {
@@ -149,9 +156,47 @@ const equipe = t(langue).accueil.equipe;
   }
 
   .repere {
+    position: relative;
     display: flex;
     flex-direction: column;
     gap: 8px;
+  }
+
+  /*
+   * Téléphone : chaque repère centré sous son frère, relié à la ligne du sol par un trait vertical
+   * qui part d'un point rouge, comme les repères de l'ordinateur.
+   */
+  @media (max-width: 999px) {
+    .reperes {
+      margin-top: 40px;
+    }
+
+    .repere {
+      align-items: center;
+      text-align: center;
+    }
+
+    .repere::before {
+      content: '';
+      position: absolute;
+      bottom: calc(100% + 6px);
+      left: 50%;
+      width: 1.5px;
+      height: 30px;
+      background: var(--color-ink);
+    }
+
+    .repere::after {
+      content: '';
+      position: absolute;
+      bottom: calc(100% + 32px);
+      left: 50%;
+      width: 9px;
+      height: 9px;
+      margin-left: -3.75px;
+      border-radius: 50%;
+      background: var(--color-accent);
+    }
   }
 
   .repere__nom {
