@@ -9,13 +9,13 @@ Objectif : qu'un propriétaire, un syndic ou une société qui arrive sur le sit
 Le client ne veut pas toucher à l'informatique : Claudiu s'occupe de tout (logo, site, domaine, email, Google, cartes de visite).
 
 - Contenu, pages, textes, décisions : `docs/brief.md`
-- Suivi avec le client (hors site) : `docs/suivi-client.md` (à créer)
+- Suivi avec le client (hors site) : `docs/suivi-client.md`
 - Modèle de départ : le site BS Renove (`/Users/claudiupopadiuc/Documents/GitHub/bs-renove`). On reprend sa structure, ses scripts et son moteur de formulaire, avec un design plus abouti.
 
 ## Règles non négociables
 
 - **Ne jamais inventer d'information sur l'entreprise** (années d'expérience de l'entreprise, garanties détaillées, assurances, avis, chiffres, certifications). Si une info manque, ne rien afficher et la noter dans `docs/suivi-client.md`. Le site est en production : **aucune mention « à confirmer » ou provisoire** ne doit apparaître.
-- **Société récente (fin 2025)** : jamais « depuis… » ni « fondée en… ». Les 6 ans de métier et les 50+ chantiers sont ceux d'Elisei et Simi à titre personnel (« nos gérants »), pas ceux de l'entreprise.
+- **Société récente (fin 2025)** : jamais « depuis… » ni « fondée en… ». Les 6 ans de métier et les 50+ chantiers sont ceux d'Elisei et Simi à titre personnel, pas ceux de l'entreprise. Dans la bande des chiffres, ils s'affichent sans sous-texte ni prénom (« 6 ans d'expérience », « 50+ chantiers »).
 - **Équipe de 8 personnes, indépendants** : ne jamais écrire « salariés ».
 - **Garantie** : « Garantie de 10 ans minimum » seulement. Aucun détail sur les retenues de garantie des grandes sociétés.
 - **Ne rien afficher** : assurance (RC, décennale), primes et aides, prix au mètre, horaires de visite, réseaux sociaux, avis clients (il n'y en a pas encore).

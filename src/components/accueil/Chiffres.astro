@@ -1,5 +1,5 @@
 ---
-/** La bande des chiffres : la valeur et son mot clé en grand, le détail dessous. Seulement des chiffres confirmés ; « {n} » est le vrai nombre de services (src/data/metiers.ts). */
+/** La bande des chiffres : la valeur et son mot clé en grand, sans sous-texte. Seulement des chiffres confirmés ; « {n} » est le vrai nombre de services (src/data/metiers.ts). */
 import Souligne from '../Souligne.astro';
 import { METIERS } from '../../data/metiers';
 import { t, type Langue } from '../../i18n';
@@ -22,7 +22,6 @@ const chiffres = t(langue).accueil.chiffres;
         <li class:list={['chiffre', { 'chiffre--rouge': i === 6 }]} data-reveal style={`--delai: ${i * 90}ms`}>
           <span class="chiffre__valeur">{chiffre.valeur.replace('{n}', String(METIERS.length))}</span>
           <span class="chiffre__mot">{chiffre.mot}</span>
-          <span class="chiffre__libelle">{chiffre.detail}</span>
         </li>
       ))
     }
@@ -74,14 +73,6 @@ const chiffres = t(langue).accueil.chiffres;
     line-height: 1.1;
     letter-spacing: var(--tracking-phrase);
     color: var(--color-ink);
-  }
-
-  .chiffre__libelle {
-    max-width: 20ch;
-    font-size: var(--size-small);
-    font-weight: 500;
-    line-height: 1.35;
-    color: var(--color-text);
   }
 
   .chiffre--rouge {

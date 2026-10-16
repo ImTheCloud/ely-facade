@@ -548,14 +548,14 @@ export const fr = {
     chiffres: {
       titre: 'Ely Facade en quelques [chiffres]\u00a0:',
       liste: [
-        { valeur: '6 ans', mot: 'd’expérience', detail: 'pour Elisei' },
-        { valeur: '50+', mot: 'chantiers', detail: 'par Elisei' },
-        { valeur: '2', mot: 'frères', detail: 'associés' },
-        { valeur: '8', mot: 'personnes', detail: 'dans l’équipe' },
-        { valeur: '{n}', mot: 'services', detail: 'de A à Z' },
-        { valeur: '12/12', mot: 'mois par an', detail: 'même l’hiver' },
-        { valeur: '10 ans', mot: 'de garantie', detail: 'minimum' },
-        { valeur: '0\u00a0€', mot: 'la visite', detail: 'sans engagement' },
+        { valeur: '6 ans', mot: 'd’expérience' },
+        { valeur: '50+', mot: 'chantiers' },
+        { valeur: '2', mot: 'frères' },
+        { valeur: '8', mot: 'personnes' },
+        { valeur: '{n}', mot: 'services' },
+        { valeur: '12/12', mot: 'mois' },
+        { valeur: '10 ans', mot: 'de garantie minimum' },
+        { valeur: '0\u00a0€', mot: 'la visite' },
       ],
     },
 

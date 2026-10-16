@@ -548,14 +548,14 @@ export const nl = {
     chiffres: {
       titre: 'Ely Facade in enkele [cijfers]:',
       liste: [
-        { valeur: '6 jaar', mot: 'ervaring', detail: 'van Elisei' },
-        { valeur: '50+', mot: 'werven', detail: 'door Elisei' },
-        { valeur: '2', mot: 'broers', detail: 'vennoten' },
-        { valeur: '8', mot: 'personen', detail: 'in het team' },
-        { valeur: '{n}', mot: 'gevelwerken', detail: 'van A tot Z' },
-        { valeur: '12/12', mot: 'maanden', detail: 'ook in de winter' },
-        { valeur: '10 jaar', mot: 'garantie', detail: 'minimum' },
-        { valeur: '0\u00a0€', mot: 'plaatsbezoek', detail: 'vrijblijvend' },
+        { valeur: '6 jaar', mot: 'ervaring' },
+        { valeur: '50+', mot: 'werven' },
+        { valeur: '2', mot: 'broers' },
+        { valeur: '8', mot: 'personen' },
+        { valeur: '{n}', mot: 'gevelwerken' },
+        { valeur: '12/12', mot: 'maanden' },
+        { valeur: '10 jaar', mot: 'garantie minimum' },
+        { valeur: '0\u00a0€', mot: 'plaatsbezoek' },
       ],
     },
 
