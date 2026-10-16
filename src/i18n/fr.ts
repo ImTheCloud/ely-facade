@@ -569,7 +569,6 @@ export const fr = {
       surtitre: 'Qui vient chez vous',
       portrait: 'Portrait de',
       titre: 'Deux frères, une équipe de 8.',
-      texte: 'Elisei et Simi Ungureanu dirigent Ely Facade, avec une équipe d’indépendants. Ils sont tous les deux sur le terrain.',
       personnes: [
         {
           prenom: 'Elisei',
