@@ -56,7 +56,10 @@ const equipe = t(langue).accueil.equipe;
         equipe.personnes.map((personne, i) => (
           <article class="frere" style={`--i: ${i}`} data-reveal>
             <h3 class="frere__nom">{personne.prenom}</h3>
-            <p class="frere__role">{personne.role}</p>
+            <p class="frere__role">
+              <span class="frere__role-long">{personne.role}</span>
+              <span class="frere__role-court">{personne.roleCourt}</span>
+            </p>
             <p class="frere__phrase">
               <Souligne texte={personne.phrase} />
             </p>
@@ -241,7 +244,7 @@ const equipe = t(langue).accueil.equipe;
   }
 
   /*
-   * Téléphone (deux colonnes étroites) : le rôle tient sur une ligne, écrit simplement ;
+   * Téléphone (deux colonnes étroites) : le rôle en version courte, sur une ligne ;
    * le texte gris n'est pas affiché, le rôle et la phrase disent déjà l'essentiel.
    */
   @media (max-width: 699px) {
@@ -250,7 +253,7 @@ const equipe = t(langue).accueil.equipe;
     }
 
     .frere__role {
-      font-size: clamp(10.5px, 3.45vw, 12.5px);
+      font-size: clamp(14px, 4.2vw, 16px);
       font-weight: 650;
       letter-spacing: 0;
       text-transform: none;
@@ -265,7 +268,14 @@ const equipe = t(langue).accueil.equipe;
       margin-top: 2px;
     }
 
-    .frere__detail {
+    .frere__detail,
+    .frere__role-long {
+      display: none;
+    }
+  }
+
+  @media (min-width: 700px) {
+    .frere__role-court {
       display: none;
     }
   }

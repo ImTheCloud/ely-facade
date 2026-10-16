@@ -577,12 +577,14 @@ export const fr = {
         {
           prenom: 'Elisei',
           role: 'Visite, devis et chantier',
+          roleCourt: 'Devis et chantier',
           phrase: 'Sur votre façade, du premier regard à la [dernière touche].',
           texte: 'Il vient voir votre façade, la mesure et vous envoie le devis. Puis il rejoint l’équipe sur le chantier.',
         },
         {
           prenom: 'Simi',
           role: 'Direction des chantiers',
+          roleCourt: 'Chef de chantier',
           phrase: 'Le chantier, [c’est lui]. De l’échafaudage à la finition.',
           texte: 'Il dirige l’équipe sur le chantier, de la préparation à la finition, jusqu’au retrait de l’échafaudage.',
         },

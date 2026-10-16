@@ -577,12 +577,14 @@ export const nl = {
         {
           prenom: 'Elisei',
           role: 'Bezoek, offerte en werf',
+          roleCourt: 'Offerte en werf',
           phrase: 'Op uw gevel, van de eerste blik tot de [laatste afwerking].',
           texte: 'Hij komt uw gevel bekijken, meet ze op en stuurt u de offerte. Daarna sluit hij zich op de werf aan bij het team.',
         },
         {
           prenom: 'Simi',
           role: 'Leiding van de werven',
+          roleCourt: 'Werfleider',
           phrase: 'De werf, [dat is hij]. Van de steiger tot de afwerking.',
           texte: 'Hij leidt het team op de werf, van de voorbereiding tot de afwerking, tot de steiger weer weg is.',
         },
