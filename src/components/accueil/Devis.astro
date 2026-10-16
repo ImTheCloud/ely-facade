@@ -136,10 +136,12 @@ const calcul = devis.calculateur;
   }
 
   /* --- Calculateur --- */
+  /* Côte à côte s'il y a la place, sinon l'un sous l'autre (téléphone) ; les champs restent alignés en bas. */
   .calcul__champs {
     display: grid;
-    grid-template-columns: 1fr 1fr;
-    gap: 12px;
+    grid-template-columns: repeat(auto-fit, minmax(170px, 1fr));
+    align-items: end;
+    gap: 14px;
     width: 100%;
   }
 
@@ -160,7 +162,7 @@ const calcul = devis.calculateur;
   .calcul__champ input {
     width: 100%;
     min-height: 48px;
-    padding: 0 12px;
+    padding: 0 6px;
     border: 1.5px solid var(--color-border-field);
     border-radius: 12px;
     background: #fff;
@@ -178,7 +180,7 @@ const calcul = devis.calculateur;
 
   .calcul__pas {
     display: grid;
-    grid-template-columns: 44px 1fr 44px;
+    grid-template-columns: 48px minmax(0, 1fr) 48px;
     gap: 6px;
   }
 

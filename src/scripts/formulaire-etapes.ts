@@ -82,13 +82,18 @@ function initialiser(bloc: HTMLElement) {
       return false;
     }
 
-    for (const champ of Array.from(etape.querySelectorAll<HTMLInputElement>('input[required], textarea[required]'))) {
-      if (champ.type === 'checkbox' && !champ.checked) return signaler(d.erreurConsentement ?? '', champ);
+    // Dans l'ordre de l'écran : les champs à remplir, l'email, puis la case à cocher.
+    const requis = Array.from(etape.querySelectorAll<HTMLInputElement>('input[required], textarea[required]'));
+    for (const champ of requis) {
       if (champ.type !== 'checkbox' && !champ.value.trim()) return signaler(champ.dataset.erreur ?? d.erreurChamp ?? '', champ);
     }
 
     const email = etape.querySelector<HTMLInputElement>('input[type="email"]');
     if (email && email.value.trim() && !email.checkValidity()) return signaler(d.erreurEmail ?? '', email);
+
+    for (const champ of requis) {
+      if (champ.type === 'checkbox' && !champ.checked) return signaler(d.erreurConsentement ?? '', champ);
+    }
     return true;
   };
 

@@ -613,8 +613,7 @@ export const nl = {
     },
 
     faq: {
-      surtitre: 'Veelgestelde vragen',
-      titre: 'U vraagt zich af…',
+      titre: 'Veelgestelde vragen',
       liste: [
         {
           question: 'Kost het bezoek iets?',

@@ -33,7 +33,7 @@ const section = textes.accueil.metiers;
               <h3>{textes.metiers[metier.cle].titre}</h3>
               <p>{textes.metiers[metier.cle].court}</p>
               <span class="metier__voir">
-                {section.voir}
+                <span class="metier__voir-texte">{section.voir}</span>
                 <Icon nom="fleche" taille={16} />
               </span>
             </a>
@@ -134,6 +134,59 @@ const section = textes.accueil.metiers;
 
   .metier:hover .metier__voir :global(svg) {
     transform: translateX(4px);
+  }
+
+  /* Téléphone : une ligne par métier (icône, nom, flèche), la description est sur la page du métier. */
+  @media (max-width: 699px) {
+    .metiers__liste {
+      gap: 0;
+      border-top: 1px solid rgba(255, 255, 255, 0.12);
+    }
+
+    .metier {
+      flex-direction: row;
+      align-items: center;
+      gap: 14px;
+      min-height: 64px;
+      padding: 10px 2px;
+      border: 0;
+      border-bottom: 1px solid rgba(255, 255, 255, 0.12);
+      border-radius: 0;
+      background: none;
+    }
+
+    .metier:hover {
+      background: none;
+      transform: none;
+    }
+
+    .metier__icone {
+      flex-shrink: 0;
+      width: 40px;
+      height: 40px;
+      margin: 0;
+      border-radius: 12px;
+    }
+
+    .metier__icone :global(svg) {
+      width: 20px;
+      height: 20px;
+    }
+
+    .metier h3 {
+      flex: 1;
+      font-size: 18px;
+    }
+
+    .metier__num,
+    .metier p,
+    .metier__voir-texte {
+      display: none;
+    }
+
+    .metier__voir {
+      margin: 0;
+    }
   }
 
   @media (min-width: 700px) {

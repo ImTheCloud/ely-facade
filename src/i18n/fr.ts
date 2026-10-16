@@ -613,8 +613,7 @@ export const fr = {
     },
 
     faq: {
-      surtitre: 'Questions fréquentes',
-      titre: 'Vous vous demandez…',
+      titre: 'Questions fréquentes',
       liste: [
         {
           question: 'La visite est-elle payante\u00a0?',
