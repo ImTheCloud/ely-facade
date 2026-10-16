@@ -7,7 +7,7 @@
 import Bouton from '../Bouton.astro';
 import Souligne from '../Souligne.astro';
 import { lienDevis } from '../../data/entreprise';
-import { t, type Langue } from '../../i18n';
+import { chemin, t, type Langue } from '../../i18n';
 
 interface Props {
   langue: Langue;
@@ -41,6 +41,11 @@ const methode = textes.accueil.methode;
                   {textes.actions.devis}
                 </Bouton>
               )}
+              {i === methode.etapes.length - 1 && (
+                <Bouton href={chemin('realisations', langue)} variante="secondaire" iconeApres="fleche" class="pas__devis">
+                  {methode.realisations}
+                </Bouton>
+              )}
             </div>
           </li>
         ))
@@ -64,12 +69,14 @@ const methode = textes.accueil.methode;
   }
 
   /* Téléphone : le numéro dans un rond, le texte à côté, un trait vertical relie les étapes. */
+  /* Tout part du haut : un bouton dans une étape ne décale jamais le texte des autres. */
   .pas {
     position: relative;
     display: grid;
     grid-template-columns: 48px minmax(0, 1fr);
     gap: 16px;
     align-items: start;
+    align-content: start;
   }
 
   .pas__num {
@@ -123,7 +130,7 @@ const methode = textes.accueil.methode;
     line-height: 1.5;
   }
 
-  /* La demande de devis, dès la première étape. */
+  /* La demande de devis à la première étape, nos réalisations à la dernière. */
   .pas__texte :global(.pas__devis) {
     align-self: flex-start;
     margin-top: 8px;

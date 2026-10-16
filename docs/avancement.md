@@ -10,6 +10,7 @@
 
 ### Branche `ameliorations-accueil` (16 octobre 2026, à tester par Claudiu avant fusion)
 - **Accueil réorganisé** : haut de page → équipe (même fond à grain que le reste du site) → **méthode « Votre façade, en quatre étapes »** (remontée, nouvelles phrases, tient sur un écran, bouton de devis) → chiffres « Ely Facade en quelques chiffres : » → avant/après → « Une façade refaite pour durer » → carte → étapes → métiers → FAQ → devis. Section UMons et phrase « Une maison ou une université » supprimées (doublon) ; dans les étapes, « À l'Université de Mons » en grand avec le lien vers le chantier.
+- **Lisibilité sur téléphone** : détails des chiffres raccourcis (une ligne chacun, FR et NL, même à 320 px) ; partout, plus de mot seul en fin de paragraphe. **Méthode** : bouton « Voir nos réalisations » à l'étape 4, étapes alignées en haut. **Espaces entre sections** réduits (34 px téléphone, 56 px ordinateur).
 - **Chiffres** : 8 chiffres, valeur + mot clé en grand (6 ans d'expérience, 50+ chantiers, 2 gérants, 8 personnes, 9 services, 12/12 mois par an, 10 ans de garantie, 0 € la visite), détail en petit.
 - **Nouveau service : traitement hydrofuge** (pages FR/NL, case du formulaire, illustration de gouttes) : 9 services. À confirmer par Elisei (noté dans le suivi client). **Plaquettes de parement** ajoutées aussi (page à part, NL « Steenstrips ») : 10 services, sur 5 colonnes sur grand écran. À confirmer par Elisei.
 - **Équipe** : icône du logo devant « ELY FACADE », les têtes ne touchent plus le titre.

@@ -548,14 +548,14 @@ export const nl = {
     chiffres: {
       titre: 'Ely Facade in enkele [cijfers]:',
       liste: [
-        { valeur: '6 jaar', mot: 'ervaring', detail: 'van onze zaakvoerder' },
-        { valeur: '50+', mot: 'werven', detail: 'uitgevoerd door onze zaakvoerders' },
-        { valeur: '2', mot: 'zaakvoerders', detail: 'twee broers, Elisei en Simi' },
+        { valeur: '6 jaar', mot: 'ervaring', detail: 'als zaakvoerder' },
+        { valeur: '50+', mot: 'werven', detail: 'door de broers' },
+        { valeur: '2', mot: 'zaakvoerders', detail: 'twee broers' },
         { valeur: '8', mot: 'personen', detail: 'in het team' },
         { valeur: '{n}', mot: 'gevelwerken', detail: 'van A tot Z' },
-        { valeur: '12/12', mot: 'maanden per jaar', detail: 'ook in de winter' },
+        { valeur: '12/12', mot: 'maanden', detail: 'ook in de winter' },
         { valeur: '10 jaar', mot: 'garantie', detail: 'minimum' },
-        { valeur: '0\u00a0€', mot: 'plaatsbezoek', detail: 'zonder verplichting' },
+        { valeur: '0\u00a0€', mot: 'plaatsbezoek', detail: 'vrijblijvend' },
       ],
     },
 
@@ -587,6 +587,7 @@ export const nl = {
     methode: {
       titre: 'Uw gevel, in [vier stappen].',
       texte: 'Van uw eerste telefoontje tot de afgewerkte gevel: zo verloopt een werf met Ely Facade.',
+      realisations: 'Bekijk onze realisaties',
       etapes: [
         {
           titre: 'U neemt contact op',

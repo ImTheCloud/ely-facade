@@ -58,7 +58,7 @@
   /* En-tête et haut de page : plus larges, le texte va chercher les bords calmes de la photo. */
   --content-max-large: 1560px;
   --gutter: 20px;
-  --section-gap: 44px;
+  --section-gap: 34px;
   --tile-gap: 16px;
   --tap-min: 48px;
   --header-h: 72px;
@@ -83,7 +83,7 @@
     --size-small: 16px;
     --size-tiny: 14px;
     --gutter: 40px;
-    --section-gap: 72px;
+    --section-gap: 56px;
     --tile-gap: 20px;
     --header-h: 84px;
   }

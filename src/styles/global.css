@@ -40,6 +40,8 @@ body {
   font-family: var(--font-text);
   font-size: var(--size-body);
   line-height: 1.6;
+  /* Partout : pas de mot tout seul sur la dernière ligne d'un texte. */
+  text-wrap: pretty;
   -webkit-font-smoothing: antialiased;
   text-rendering: optimizeLegibility;
   overflow-x: clip;
