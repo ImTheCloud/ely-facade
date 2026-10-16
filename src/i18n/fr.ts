@@ -589,8 +589,8 @@ export const fr = {
       texte: 'De votre premier appel à la façade terminée\u00a0: voici comment se passe un chantier avec Ely Facade.',
       etapes: [
         {
-          titre: 'Vous nous appelez',
-          texte: 'Un appel ou un message WhatsApp\u00a0: la surface de votre façade et les travaux souhaités suffisent.',
+          titre: 'Vous nous contactez',
+          texte: 'Par téléphone, sur WhatsApp ou avec la demande de devis du site\u00a0: la surface de votre façade et les travaux souhaités suffisent.',
         },
         {
           titre: 'Elisei vient voir',

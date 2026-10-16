@@ -589,8 +589,8 @@ export const nl = {
       texte: 'Van uw eerste telefoontje tot de afgewerkte gevel: zo verloopt een werf met Ely Facade.',
       etapes: [
         {
-          titre: 'U belt ons',
-          texte: 'Een telefoontje of een WhatsApp-bericht: de oppervlakte van uw gevel en de gewenste werken volstaan.',
+          titre: 'U neemt contact op',
+          texte: 'Telefonisch, via WhatsApp of met de offerteaanvraag op de site: de oppervlakte van uw gevel en de gewenste werken volstaan.',
         },
         {
           titre: 'Elisei komt kijken',

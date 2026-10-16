@@ -2,7 +2,7 @@
 /**
  * La méthode Ely Facade, juste après l'équipe : quatre étapes, de l'appel à la façade terminée.
  * Ordinateur : quatre colonnes reliées par un trait qui finit sur la brique rouge.
- * Téléphone : une frise verticale compacte. Tout tient sur un écran, avec le bouton de devis.
+ * Téléphone : une frise verticale compacte. Tout tient sur un écran ; la première étape a son bouton de devis.
  */
 import Bouton from '../Bouton.astro';
 import Souligne from '../Souligne.astro';
@@ -36,15 +36,16 @@ const methode = textes.accueil.methode;
             <div class="pas__texte">
               <h3>{etape.titre}</h3>
               <p>{etape.texte}</p>
+              {i === 0 && (
+                <Bouton href={lienDevis(langue)} variante="accent" iconeApres="fleche-diag" class="pas__devis">
+                  {textes.actions.devis}
+                </Bouton>
+              )}
             </div>
           </li>
         ))
       }
     </ol>
-
-    <div class="methode__action" data-reveal>
-      <Bouton href={lienDevis(langue)} variante="accent" iconeApres="fleche-diag" large>{textes.actions.devis}</Bouton>
-    </div>
   </div>
 </section>
 
@@ -122,8 +123,10 @@ const methode = textes.accueil.methode;
     line-height: 1.5;
   }
 
-  .methode__action {
-    margin-top: 22px;
+  /* La demande de devis, dès la première étape. */
+  .pas__texte :global(.pas__devis) {
+    align-self: flex-start;
+    margin-top: 8px;
   }
 
   /* Ordinateur : quatre colonnes, le grand numéro au-dessus, un trait horizontal qui relie tout. */
@@ -159,10 +162,6 @@ const methode = textes.accueil.methode;
 
     .pas h3 {
       font-size: clamp(20px, 1.7vw, 24px);
-    }
-
-    .methode__action {
-      margin-top: 40px;
     }
   }
 </style>
