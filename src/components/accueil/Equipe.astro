@@ -1,11 +1,11 @@
 ---
 /**
- * Qui vient chez vous : les deux frères, détourés sur fond blanc, devant leur nom de famille écrit en très grand.
- * Sous chacun, son prénom et son rôle ; puis une phrase et deux lignes. La scène ne bouge pas : les frères sont là,
- * tout simplement.
+ * Qui vient chez vous : les deux frères, détourés sur fond blanc, devant « ELY FACADE » écrit en très grand.
+ * Ordinateur : chaque frère a son repère sur le côté, comme une annotation sur un plan de façade (prénom, rôle,
+ * une phrase), relié à lui par un trait. Téléphone : les repères passent sous la photo, côte à côte.
+ * La scène ne bouge pas.
  */
 import { Image } from 'astro:assets';
-import Souligne from '../Souligne.astro';
 import { portraits } from '../../data/equipe';
 import { t, type Langue } from '../../i18n';
 
@@ -19,22 +19,20 @@ const equipe = t(langue).accueil.equipe;
 
 <section class="section equipe" id="equipe">
   <div class="wrap">
-    <header class="equipe__tete" data-reveal>
-      <h2>{equipe.titre}</h2>
-    </header>
+    <h2 class="equipe__titre" data-reveal>{equipe.titre}</h2>
 
     <div class="scene">
-      <!-- Le nom de famille, en très grand derrière les deux frères. -->
-      <p class="scene__nom" aria-hidden="true">Ungureanu</p>
+      <!-- Le nom de l'entreprise, en très grand derrière les deux frères. -->
+      <p class="scene__nom" aria-hidden="true">Ely Facade</p>
       <div class="scene__freres">
         {
-          equipe.personnes.map((personne, i) => (
-            <figure class="portrait" style={`--i: ${i}`}>
+          equipe.personnes.map((personne) => (
+            <figure class="portrait">
               <Image
                 src={portraits.accueil[personne.prenom as 'Elisei' | 'Simi']}
                 alt={`${equipe.portrait} ${personne.prenom} Ungureanu`}
                 widths={[300, 500, 750]}
-                sizes="(min-width: 1100px) 420px, 45vw"
+                sizes="(min-width: 1000px) 400px, 50vw"
                 format="webp"
                 quality={84}
                 loading="lazy"
@@ -45,24 +43,21 @@ const equipe = t(langue).accueil.equipe;
       </div>
       <!-- Le sol : une ligne, la brique rouge du logo en son milieu. -->
       <span class="scene__sol" aria-hidden="true"><i></i></span>
-    </div>
 
-    <div class="equipe__freres">
-      {
-        equipe.personnes.map((personne, i) => (
-          <article class="frere" style={`--i: ${i}`} data-reveal>
-            <h3 class="frere__nom">{personne.prenom}</h3>
-            <p class="frere__role">
-              <span class="frere__role-long">{personne.role}</span>
-              <span class="frere__role-court">{personne.roleCourt}</span>
-            </p>
-            <p class="frere__phrase">
-              <Souligne texte={personne.phrase} />
-            </p>
-            <p class="frere__detail">{personne.texte}</p>
-          </article>
-        ))
-      }
+      <div class="reperes">
+        {
+          equipe.personnes.map((personne, i) => (
+            <article class:list={['repere', i === 0 ? 'repere--gauche' : 'repere--droite']}>
+              <h3 class="repere__nom">{personne.prenom}</h3>
+              <p class="repere__role">
+                <span class="repere__role-long">{personne.role}</span>
+                <span class="repere__role-court">{personne.roleCourt}</span>
+              </p>
+              <p class="repere__texte">{personne.texte}</p>
+            </article>
+          ))
+        }
+      </div>
     </div>
   </div>
 </section>
@@ -72,31 +67,22 @@ const equipe = t(langue).accueil.equipe;
     background: #fff;
   }
 
-  .equipe__tete {
-    display: flex;
-    flex-direction: column;
-    align-items: flex-start;
-    gap: 22px;
+  .equipe__titre {
+    max-width: 12ch;
     margin-bottom: clamp(20px, 3vw, 40px);
   }
 
-  .equipe__tete h2 {
-    max-width: 12ch;
-  }
-
-  /* --- La scène : le nom en très grand, les deux frères posés devant, côte à côte. --- */
+  /* --- La scène : le nom en très grand, les deux frères posés devant. --- */
   .scene {
     position: relative;
-    max-width: 1000px;
-    margin-inline: auto;
     container-type: inline-size;
   }
 
   .scene__nom {
     margin: 0;
     font-family: var(--font-display);
-    /* Le mot remplit toute la largeur, du téléphone à l'ordinateur. */
-    font-size: 17.4cqi;
+    /* « ELY FACADE » remplit toute la largeur, du téléphone à l'ordinateur. */
+    font-size: 15.2cqi;
     font-weight: 800;
     line-height: 0.8;
     letter-spacing: -0.045em;
@@ -114,16 +100,8 @@ const equipe = t(langue).accueil.equipe;
     grid-template-columns: repeat(2, minmax(0, 1fr));
     align-items: end;
     /* Les têtes passent devant le bas du nom. */
-    margin-top: -1cqi;
-    /* La paire est légèrement poussée vers la droite pour tomber au centre de la ligne. */
+    margin-top: -2cqi;
     padding-inline: 1cqi 0;
-  }
-
-  /* Ordinateur : un peu moins grands, toujours au centre. */
-  @media (min-width: 700px) {
-    .scene__freres {
-      padding-inline: 9cqi 7cqi;
-    }
   }
 
   .portrait {
@@ -145,9 +123,8 @@ const equipe = t(langue).accueil.equipe;
     position: relative;
     z-index: 2;
     display: block;
-    /* La ligne passe juste sous eux, un peu plus bas que le bas des photos. */
-    margin-top: 2cqi;
     height: 2px;
+    margin-top: 2cqi;
     background: var(--color-ink);
   }
 
@@ -163,25 +140,23 @@ const equipe = t(langue).accueil.equipe;
     transform: translate(-50%, -50%);
   }
 
-  /* --- Sous chaque frère : le prénom, le rôle, la phrase, deux lignes. --- */
-  /* Chacun son texte sous lui, côte à côte, sur téléphone comme sur ordinateur. */
-  .equipe__freres {
+  /* --- Les repères : prénom, rôle, une phrase. Téléphone : sous la photo, côte à côte. --- */
+  .reperes {
     display: grid;
     grid-template-columns: repeat(2, minmax(0, 1fr));
     gap: 18px;
-    max-width: 1000px;
-    margin: clamp(28px, 4vw, 48px) auto 0;
+    margin-top: 28px;
   }
 
-  .frere {
+  .repere {
     display: flex;
     flex-direction: column;
-    gap: 10px;
+    gap: 8px;
   }
 
-  .frere__nom {
+  .repere__nom {
     font-family: var(--font-display);
-    font-size: clamp(30px, 6vw, 72px);
+    font-size: clamp(30px, 4.6vw, 60px);
     font-weight: 800;
     line-height: 0.9;
     letter-spacing: var(--tracking-display);
@@ -189,86 +164,112 @@ const equipe = t(langue).accueil.equipe;
     color: var(--color-ink);
   }
 
-  .frere__role {
-    display: flex;
-    align-items: baseline;
-    gap: 8px;
-    font-size: clamp(11px, 1.2vw, 13px);
-    line-height: 1.35;
+  .repere__role {
+    font-size: clamp(14px, 4.2vw, 16px);
     font-weight: 700;
-    letter-spacing: 0.06em;
-    text-transform: uppercase;
+    line-height: 1.3;
+    white-space: nowrap;
     color: var(--color-accent);
   }
 
-  .frere__role::before {
-    content: '';
-    flex-shrink: 0;
-    width: 13px;
-    height: 7px;
-    border-radius: 2px;
-    background: var(--color-accent);
+  .repere__role-long {
+    display: none;
   }
 
-  .frere__phrase {
-    max-width: 22ch;
-    margin-top: 6px;
-    font-family: var(--font-display);
-    font-size: clamp(17px, 2.4vw, 32px);
-    font-weight: 750;
-    line-height: 1.15;
-    letter-spacing: var(--tracking-phrase);
-    text-wrap: balance;
+  .repere__texte {
+    max-width: 30ch;
+    font-size: clamp(14.5px, 1.25vw, 17px);
+    line-height: 1.5;
     color: var(--color-ink);
   }
 
-  .frere__detail {
-    max-width: 40ch;
-    font-size: clamp(14px, 1.3vw, 17px);
-    line-height: 1.55;
-  }
-
   /*
-   * Téléphone (deux colonnes étroites) : le rôle en version courte, sur une ligne ;
-   * le texte gris n'est pas affiché, le rôle et la phrase disent déjà l'essentiel.
+   * Ordinateur : les frères au centre, un repère de chaque côté à hauteur d'épaule,
+   * relié à eux par un trait fin qui finit par un point, comme une cote sur un plan.
    */
-  @media (max-width: 699px) {
-    .frere {
-      gap: 8px;
+  @media (min-width: 1000px) {
+    .scene__freres {
+      padding-inline: 22cqi 20cqi;
     }
 
-    .frere__role {
-      font-size: clamp(14px, 4.2vw, 16px);
-      font-weight: 650;
-      letter-spacing: 0;
-      text-transform: none;
-      white-space: nowrap;
+    .reperes {
+      position: absolute;
+      inset: 0;
+      z-index: 3;
+      display: block;
+      margin: 0;
+      pointer-events: none;
     }
 
-    .frere__role::before {
+    .repere {
+      position: absolute;
+      top: 48%;
+      width: 19.5cqi;
+      pointer-events: auto;
+    }
+
+    .repere--gauche {
+      left: 0;
+      align-items: flex-end;
+      text-align: right;
+    }
+
+    .repere--droite {
+      right: 0;
+    }
+
+    .repere__role {
+      font-size: 13px;
+      letter-spacing: 0.06em;
+      text-transform: uppercase;
+      white-space: normal;
+    }
+
+    .repere__role-long {
+      display: inline;
+    }
+
+    .repere__role-court {
       display: none;
     }
 
-    .frere__phrase {
-      margin-top: 2px;
+    /* Le trait, à hauteur du prénom, vers le frère. */
+    .repere::before,
+    .repere::after {
+      content: '';
+      position: absolute;
+      top: 0.42em;
+      font-size: clamp(30px, 4.6vw, 60px);
     }
 
-    .frere__detail,
-    .frere__role-long {
-      display: none;
+    .repere::before {
+      width: 3cqi;
+      height: 1.5px;
+      background: var(--color-ink);
     }
-  }
 
-  @media (min-width: 700px) {
-    .frere__role-court {
-      display: none;
+    .repere::after {
+      width: 9px;
+      height: 9px;
+      margin-top: -4px;
+      border-radius: 50%;
+      background: var(--color-accent);
     }
-  }
 
-  /* Ordinateur : chaque texte sous son frère. */
-  @media (min-width: 700px) {
-    .equipe__freres {
-      gap: clamp(32px, 6vw, 96px);
+    .repere--gauche::before {
+      left: calc(100% + 1.5cqi);
+    }
+
+    .repere--gauche::after {
+      left: calc(100% + 4.5cqi);
+    }
+
+    .repere--droite::before {
+      right: calc(100% + 1.5cqi);
+    }
+
+    .repere--droite::after {
+      right: calc(100% + 4.5cqi);
     }
   }
 </style>
