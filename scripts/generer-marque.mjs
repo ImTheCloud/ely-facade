@@ -1,6 +1,6 @@
 /**
  * Fabrique, à partir des SVG du logo (design/logo), les fichiers du site :
- * logo (normal et blanc) dans src/assets/marque, favicon, icône iPhone et image de partage (WhatsApp, Facebook).
+ * logo (normal et blanc) dans src/assets/marque, favicon, icône iPhone.
  * À relancer si le logo change : node scripts/generer-marque.mjs
  */
 import sharp from 'sharp';
@@ -19,7 +19,6 @@ const logoBlanc = logoSource
 fs.writeFileSync(`${marque}/logo-blanc.svg`, logoBlanc);
 
 const icone = fs.readFileSync(`${source}/icone.svg`);
-const logo = fs.readFileSync(`${source}/logo.svg`);
 
 fs.copyFileSync(`${source}/icone.svg`, 'public/favicon.svg');
 await sharp(icone, { density: 400 }).resize(48, 48, { fit: 'contain', background: '#ffffff00' }).png().toFile('public/favicon.png');
@@ -30,10 +29,3 @@ await sharp({ create: { width: 180, height: 180, channels: 3, background: '#ffff
   .composite([{ input: maison, gravity: 'center' }])
   .png()
   .toFile('public/apple-touch-icon.png');
-
-// Image de partage 1200 × 630 : le logo centré sur blanc.
-const logoPng = await sharp(logo, { density: 300 }).resize({ width: 960 }).png().toBuffer();
-await sharp({ create: { width: 1200, height: 630, channels: 3, background: '#ffffff' } })
-  .composite([{ input: logoPng, gravity: 'center' }])
-  .png()
-  .toFile('src/assets/partage.png');
