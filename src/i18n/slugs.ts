@@ -10,6 +10,7 @@ export const SLUGS_METIERS = {
   isolation: { fr: 'isolation-exterieure', nl: 'buitenisolatie' },
   peinture: { fr: 'peinture-facade', nl: 'gevelschilderwerk' },
   nettoyage: { fr: 'nettoyage-facade', nl: 'gevelreiniging' },
+  hydrofuge: { fr: 'traitement-hydrofuge', nl: 'gevelimpregnatie' },
   rejointoiement: { fr: 'rejointoiement', nl: 'voegwerk' },
   briques: { fr: 'reparation-briques', nl: 'herstel-bakstenen' },
   fissures: { fr: 'traitement-fissures', nl: 'scheurherstel' },

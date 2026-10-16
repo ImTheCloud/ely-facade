@@ -6,7 +6,8 @@
  * - nettoyage : une bande propre traverse le mur ;
  * - rejointoiement : les joints se tracent en blanc ;
  * - briques : une brique rouge vient prendre la place d'une brique abîmée ;
- * - fissures : une fissure se dessine, puis se comble.
+ * - fissures : une fissure se dessine, puis se comble ;
+ * - hydrofuge : des gouttes perlent sur le mur et glissent, sans entrer.
  * (Le crépi, l'isolation et l'échafaudage ont leurs vraies photos.)
  */
 import type { CleMetier } from '../data/metiers';
@@ -100,6 +101,18 @@ const rouge = briques.find((b) => b.y === 3 * (hauteur + joint) && b.x > 150 && 
         )
       }
 
+      {
+        metier === 'hydrofuge' && (
+          <g class="visuel__gouttes" fill="#8fb3c9" stroke="#ffffff" stroke-width="2">
+            {[
+              [70, 60], [180, 40], [300, 70], [410, 50], [120, 170], [240, 150], [360, 190], [90, 280], [210, 300], [330, 270], [440, 300],
+            ].map(([x, y], k) => (
+              <path d={`M${x} ${y - 16}c7 9 12 15 12 21a12 12 0 0 1-24 0c0-6 5-12 12-21z`} style={`--k: ${k}`} />
+            ))}
+          </g>
+        )
+      }
+
       {metier !== 'briques' && <rect x={rouge.x} y={rouge.y} width={rouge.w} height={hauteur} rx="4" fill="#c8202b" />}
     </g>
   </svg>
@@ -165,6 +178,19 @@ const rouge = briques.find((b) => b.y === 3 * (hauteur + joint) && b.x > 150 && 
 
     :global(.js) .visuel.est-visible .visuel__fissure path {
       stroke-dashoffset: 0;
+    }
+
+    :global(.js) .visuel__gouttes path {
+      opacity: 0;
+      transform: translateY(-24px);
+      transition:
+        opacity 500ms var(--ease) calc(200ms + var(--k) * 90ms),
+        transform 1200ms var(--ease-out) calc(200ms + var(--k) * 90ms);
+    }
+
+    :global(.js) .visuel.est-visible .visuel__gouttes path {
+      opacity: 0.9;
+      transform: none;
     }
 
     :global(.js) .visuel__rouge {

@@ -21,7 +21,8 @@ export type NomIcone =
   | 'fissure'
   | 'echafaudage'
   | 'croix'
-  | 'regle';
+  | 'regle'
+  | 'hydrofuge';
 
 interface Props {
   nom: NomIcone;
@@ -43,6 +44,7 @@ const chemins: Record<NomIcone, string> = {
   echafaudage:
     '<path d="M5 3v18M19 3v18"/><path d="M5 8h14M5 14h14"/><path d="M5 8l14 6M5 14L19 8"/>',
   croix: '<path d="M6 6l12 12M18 6L6 18"/>',
+  hydrofuge: '<path d="M4 3v18"/><path d="M14 3.5s4.5 4.9 4.5 8a4.5 4.5 0 0 1-9 0c0-3.1 4.5-8 4.5-8z"/><path d="M8 19.5l2.5-2M15 20.5l2.5-2"/>',
   regle: '<rect x="2.5" y="8" width="19" height="8" rx="1.5"/><path d="M6.5 8v3M10.5 8v4M14.5 8v3M18.5 8v4"/>',
   facade:
     '<path d="M4 21V7l8-4 8 4v14"/><path d="M2.5 21h19"/><path d="M8 10h2M14 10h2M8 14h2M14 14h2"/><path d="M10.5 21v-3.5h3V21"/>',

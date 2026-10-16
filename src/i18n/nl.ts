@@ -112,6 +112,13 @@ export const nl = {
       description:
         'Gevelreiniging, alle methodes en alle ondergronden, overal in België. Gratis en vrijblijvend plaatsbezoek, offerte per vierkante meter.',
     },
+    hydrofuge: {
+      titre: 'Gevelimpregnatie',
+      court: 'Uw gevel beschermd tegen water en vocht.',
+      intro: 'Een waterafstotend product op de gevel beschermt ze tegen water en vocht.',
+      points: ['Gevel beschermd tegen water', 'Op de bestaande gevel'],
+      description: 'Waterafstotende behandeling van uw gevel, overal in België. Gratis en vrijblijvend plaatsbezoek.',
+    },
     rejointoiement: {
       titre: 'Voegwerk',
       court: 'Netjes vernieuwde voegen, alle methodes en alle ondergronden.',
@@ -539,12 +546,14 @@ export const nl = {
     chiffres: {
       aria: 'Ely Facade in cijfers',
       liste: [
-        { valeur: '6 jaar', libelle: 'ervaring van onze zaakvoerder' },
-        { valeur: '50+', libelle: 'werven uitgevoerd door onze zaakvoerders' },
-        { valeur: '{n}', libelle: 'gevelwerken, van A tot Z' },
-        { valeur: '12/12', libelle: 'maanden werk per jaar, ook in de winter' },
-        { valeur: '10 jaar', libelle: 'garantie minimum' },
-        { valeur: '0\u00a0€', libelle: 'voor het plaatsbezoek, zonder verplichting' },
+        { valeur: '6 jaar', mot: 'ervaring', detail: 'van onze zaakvoerder' },
+        { valeur: '50+', mot: 'werven', detail: 'uitgevoerd door onze zaakvoerders' },
+        { valeur: '2', mot: 'zaakvoerders', detail: 'twee broers, Elisei en Simi' },
+        { valeur: '8', mot: 'personen', detail: 'in het team' },
+        { valeur: '{n}', mot: 'gevelwerken', detail: 'van A tot Z' },
+        { valeur: '12/12', mot: 'maanden per jaar', detail: 'ook in de winter' },
+        { valeur: '10 jaar', mot: 'garantie', detail: 'minimum' },
+        { valeur: '0\u00a0€', mot: 'plaatsbezoek', detail: 'zonder verplichting' },
       ],
     },
 

@@ -112,6 +112,13 @@ export const fr = {
       description:
         'Nettoyage de façade, toutes méthodes et tous supports, partout en Belgique. Visite gratuite et sans engagement, devis au mètre carré.',
     },
+    hydrofuge: {
+      titre: 'Traitement hydrofuge',
+      court: 'Votre façade protégée de l’eau et de l’humidité.',
+      intro: 'Un produit hydrofuge appliqué sur la façade la protège de l’eau et de l’humidité.',
+      points: ['Façade protégée de l’eau', 'Sur la façade existante'],
+      description: 'Traitement hydrofuge de façade, partout en Belgique. Visite gratuite et sans engagement.',
+    },
     rejointoiement: {
       titre: 'Rejointoiement',
       court: 'Des joints refaits proprement, toutes méthodes et tous supports.',
@@ -539,12 +546,14 @@ export const fr = {
     chiffres: {
       aria: 'Ely Facade en chiffres',
       liste: [
-        { valeur: '6 ans', libelle: 'de métier pour notre gérant' },
-        { valeur: '50+', libelle: 'chantiers réalisés par nos gérants' },
-        { valeur: '{n}', libelle: 'services de façade, de A à Z' },
-        { valeur: '12/12', libelle: 'mois de travail par an, même l’hiver' },
-        { valeur: '10 ans', libelle: 'de garantie minimum' },
-        { valeur: '0\u00a0€', libelle: 'pour la visite, sans engagement' },
+        { valeur: '6 ans', mot: 'd’expérience', detail: 'pour notre gérant' },
+        { valeur: '50+', mot: 'chantiers', detail: 'réalisés par nos gérants' },
+        { valeur: '2', mot: 'gérants', detail: 'deux frères, Elisei et Simi' },
+        { valeur: '8', mot: 'personnes', detail: 'dans l’équipe' },
+        { valeur: '{n}', mot: 'services', detail: 'de façade, de A à Z' },
+        { valeur: '12/12', mot: 'mois par an', detail: 'même l’hiver' },
+        { valeur: '10 ans', mot: 'de garantie', detail: 'minimum' },
+        { valeur: '0\u00a0€', mot: 'la visite', detail: 'sans engagement' },
       ],
     },
 

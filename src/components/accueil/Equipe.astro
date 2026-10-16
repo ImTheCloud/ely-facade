@@ -1,11 +1,12 @@
 ---
 /**
- * Qui vient chez vous : les deux frères, détourés sur fond blanc, devant « ELY FACADE » écrit en très grand.
+ * Qui vient chez vous : les deux frères, détourés sur fond blanc, sous « ELY FACADE » écrit en très grand (avec l'icône du logo).
  * Ordinateur : chaque frère a son repère sur le côté, comme une annotation sur un plan de façade (prénom, rôle,
  * une phrase), relié à lui par un trait. Téléphone : les repères passent sous la photo, côte à côte.
  * La scène ne bouge pas.
  */
 import { Image } from 'astro:assets';
+import icone from '../../assets/marque/icone.svg';
 import { portraits } from '../../data/equipe';
 import { t, type Langue } from '../../i18n';
 
@@ -22,8 +23,10 @@ const equipe = t(langue).accueil.equipe;
     <h2 class="equipe__titre" data-reveal>{equipe.titre}</h2>
 
     <div class="scene">
-      <!-- Le nom de l'entreprise, en très grand derrière les deux frères. -->
-      <p class="scene__nom" aria-hidden="true">Ely <span>Facade</span></p>
+      <!-- Le nom de l'entreprise, en très grand au-dessus des deux frères, avec la maison en briques du logo. -->
+      <p class="scene__nom" aria-hidden="true">
+        <img class="scene__icone" src={icone.src} alt="" width={icone.width} height={icone.height} />Ely <span>Facade</span>
+      </p>
       <div class="scene__freres">
         {
           equipe.personnes.map((personne) => (
@@ -94,7 +97,7 @@ const equipe = t(langue).accueil.equipe;
     margin: 0;
     font-family: var(--font-display);
     /* « ELY FACADE » remplit toute la largeur, du téléphone à l'ordinateur. */
-    font-size: 15.2cqi;
+    font-size: 13.4cqi;
     font-weight: 800;
     line-height: 0.8;
     letter-spacing: -0.045em;
@@ -109,14 +112,22 @@ const equipe = t(langue).accueil.equipe;
     color: var(--color-accent);
   }
 
+  .scene__icone {
+    display: inline-block;
+    width: auto;
+    height: 0.8em;
+    margin-right: 0.12em;
+    vertical-align: -0.02em;
+  }
+
   .scene__freres {
     position: relative;
     z-index: 1;
     display: grid;
     grid-template-columns: repeat(2, minmax(0, 1fr));
     align-items: end;
-    /* Les têtes passent devant le bas du nom. */
-    margin-top: -2cqi;
+    /* Un peu d'air entre le nom et les têtes : rien ne se touche. */
+    margin-top: 2.5cqi;
     padding-inline: 1cqi 0;
   }
 
