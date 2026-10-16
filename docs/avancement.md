@@ -17,7 +17,7 @@
 - **Plus fluide au défilement** : plus de flou derrière l'en-tête et la barre du bas sur téléphone (fond blanc presque opaque), ni derrière les étiquettes avant/après ; motif à points et ombre de la maison retirés de la carte.
 - **Bouton Menu** : reste sombre même sur la photo du haut (blanc sur ciel clair, il se voyait mal), liseré clair, texte qui ne se coupe jamais.
 - **Haut de page** : accroche raccourcie ; sur téléphone le titre est plus grand et tout le texte reste sur la pelouse et la route.
-- **Chiffres** : 8 chiffres confirmés (6 ans, 50+, 2 frères, 8 personnes, 5 métiers, 12/12 mois, 10 ans de garantie, 0 € la visite). Retirés de la page À propos (doublon avec l'équipe).
+- **Chiffres** : 6 chiffres confirmés (6 ans, 50+, le nombre de services, 12/12 mois, 10 ans de garantie, 0 € la visite). « 2 frères » et « 8 personnes » retirés : déjà dans le titre de l'équipe (choix de Claudiu). Retirés de la page À propos (doublon avec l'équipe).
 - **Moins de répétitions** : phrases « La première chose qu'on voit de chez vous » et « Chaque façade a sa seconde jeunesse » (photo) supprimées ; garantie et « gratuit » retirés des endroits proches de leur première mention ; Umons sans la phrase déjà dite par le titre.
 - **Espaces** entre les sections réduits (44 px téléphone, 72 px ordinateur au lieu de 72 et 120).
 - **Avant/après** : un curseur partout (Namur ×2, Halle, Charleroi) ; les paires aux angles différents sont cadrées au mieux, à revoir à l'œil.

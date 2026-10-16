@@ -1,5 +1,5 @@
 ---
-/** La bande des chiffres, juste sous la phrase d'ouverture. Seulement des chiffres confirmés ; « {n} » est le vrai nombre de services (src/data/metiers.ts). */
+/** La bande des chiffres. Seulement des chiffres confirmés, sans répéter l'équipe (2 frères, 8 personnes : déjà dans son titre) ; « {n} » est le vrai nombre de services (src/data/metiers.ts). */
 import { METIERS } from '../../data/metiers';
 import { t, type Langue } from '../../i18n';
 
@@ -15,7 +15,7 @@ const chiffres = t(langue).accueil.chiffres;
   <ul class="wrap chiffres">
     {
       chiffres.liste.map((chiffre, i) => (
-        <li class:list={['chiffre', { 'chiffre--rouge': i === 6 }]} data-reveal style={`--delai: ${i * 90}ms`}>
+        <li class:list={['chiffre', { 'chiffre--rouge': i === 4 }]} data-reveal style={`--delai: ${i * 90}ms`}>
           <span class="chiffre__valeur">{chiffre.valeur.replace('{n}', String(METIERS.length))}</span>
           <span class="chiffre__libelle">{chiffre.libelle}</span>
         </li>
@@ -75,7 +75,7 @@ const chiffres = t(langue).accueil.chiffres;
 
   @media (min-width: 900px) {
     .chiffres {
-      grid-template-columns: repeat(4, 1fr);
+      grid-template-columns: repeat(3, 1fr);
       gap: 44px 32px;
     }
 
