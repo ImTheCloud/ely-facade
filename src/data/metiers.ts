@@ -6,7 +6,7 @@ import type { NomIcone } from '../components/Icon.astro';
 import { chemin, type Langue } from '../i18n';
 import { SLUGS_METIERS } from '../i18n/slugs';
 
-export type CleMetier = 'crepi' | 'isolation' | 'peinture' | 'nettoyage' | 'hydrofuge' | 'rejointoiement' | 'briques' | 'fissures' | 'echafaudage';
+export type CleMetier = 'crepi' | 'isolation' | 'peinture' | 'nettoyage' | 'hydrofuge' | 'rejointoiement' | 'briques' | 'plaquettes' | 'fissures' | 'echafaudage';
 
 export const METIERS: { cle: CleMetier; icone: NomIcone; slug: Record<Langue, string> }[] = [
   { cle: 'crepi', icone: 'truelle', slug: SLUGS_METIERS.crepi },
@@ -16,6 +16,7 @@ export const METIERS: { cle: CleMetier; icone: NomIcone; slug: Record<Langue, st
   { cle: 'hydrofuge', icone: 'hydrofuge', slug: SLUGS_METIERS.hydrofuge },
   { cle: 'rejointoiement', icone: 'joint', slug: SLUGS_METIERS.rejointoiement },
   { cle: 'briques', icone: 'brique', slug: SLUGS_METIERS.briques },
+  { cle: 'plaquettes', icone: 'plaquettes', slug: SLUGS_METIERS.plaquettes },
   { cle: 'fissures', icone: 'fissure', slug: SLUGS_METIERS.fissures },
   { cle: 'echafaudage', icone: 'echafaudage', slug: SLUGS_METIERS.echafaudage },
 ];

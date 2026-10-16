@@ -7,7 +7,8 @@
  * - rejointoiement : les joints se tracent en blanc ;
  * - briques : une brique rouge vient prendre la place d'une brique abîmée ;
  * - fissures : une fissure se dessine, puis se comble ;
- * - hydrofuge : des gouttes perlent sur le mur et glissent, sans entrer.
+ * - hydrofuge : des gouttes perlent sur le mur et glissent, sans entrer ;
+ * - plaquettes : des plaquettes couleur brique se posent, rangée par rangée, sur une partie du mur.
  * (Le crépi, l'isolation et l'échafaudage ont leurs vraies photos.)
  */
 import type { CleMetier } from '../data/metiers';
@@ -102,6 +103,18 @@ const rouge = briques.find((b) => b.y === 3 * (hauteur + joint) && b.x > 150 && 
       }
 
       {
+        metier === 'plaquettes' && (
+          <g class="visuel__plaquettes">
+            {briques
+              .filter((b) => b.x + b.w > L * 0.42)
+              .map((b) => (
+                <rect x={b.x} y={b.y} width={b.w} height={hauteur} rx="4" fill={['#a5523c', '#b35f45', '#9a4a35', '#ad5840'][b.i % 4]} style={`--r: ${Math.round(b.y / (hauteur + joint))}`} />
+              ))}
+          </g>
+        )
+      }
+
+      {
         metier === 'hydrofuge' && (
           <g class="visuel__gouttes" fill="#8fb3c9" stroke="#ffffff" stroke-width="2">
             {[
@@ -178,6 +191,19 @@ const rouge = briques.find((b) => b.y === 3 * (hauteur + joint) && b.x > 150 && 
 
     :global(.js) .visuel.est-visible .visuel__fissure path {
       stroke-dashoffset: 0;
+    }
+
+    :global(.js) .visuel__plaquettes rect {
+      opacity: 0;
+      transform: translateX(30px);
+      transition:
+        opacity 500ms var(--ease) calc(200ms + var(--r) * 110ms),
+        transform 800ms var(--ease-out) calc(200ms + var(--r) * 110ms);
+    }
+
+    :global(.js) .visuel.est-visible .visuel__plaquettes rect {
+      opacity: 1;
+      transform: none;
     }
 
     :global(.js) .visuel__gouttes path {

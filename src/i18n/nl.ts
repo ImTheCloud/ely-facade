@@ -147,6 +147,13 @@ export const nl = {
       description:
         'Herstel van gevelbakstenen: stenen vervangen, voegen vernieuwd, scheuren behandeld, steenstrips. Overal in België, gratis plaatsbezoek.',
     },
+    plaquettes: {
+      titre: 'Steenstrips',
+      court: 'De uitstraling van baksteen, op uw gevel.',
+      intro: 'Steenstrips op de gevel geven ze de uitstraling van baksteen.',
+      points: ['Steenstrips geplaatst', 'Op de bestaande gevel'],
+      description: 'Steenstrips op uw gevel, overal in België. Gratis en vrijblijvend plaatsbezoek.',
+    },
     fissures: {
       titre: 'Scheurherstel',
       court: 'De scheuren in uw gevel behandeld.',

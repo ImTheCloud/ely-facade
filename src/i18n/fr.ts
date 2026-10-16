@@ -147,6 +147,13 @@ export const fr = {
       description:
         'Réparation de briques de façade\u00a0: briques remplacées, joints refaits, fissures traitées, plaquettes de parement. Partout en Belgique, visite gratuite.',
     },
+    plaquettes: {
+      titre: 'Plaquettes de parement',
+      court: 'L’aspect de la brique, posé sur votre façade.',
+      intro: 'Des plaquettes de parement posées sur la façade lui donnent l’aspect de la brique.',
+      points: ['Plaquettes de parement posées', 'Sur la façade existante'],
+      description: 'Pose de plaquettes de parement sur votre façade, partout en Belgique. Visite gratuite et sans engagement.',
+    },
     fissures: {
       titre: 'Traitement des fissures',
       court: 'Les fissures de votre façade traitées.',

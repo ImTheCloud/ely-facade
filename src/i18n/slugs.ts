@@ -13,6 +13,7 @@ export const SLUGS_METIERS = {
   hydrofuge: { fr: 'traitement-hydrofuge', nl: 'gevelimpregnatie' },
   rejointoiement: { fr: 'rejointoiement', nl: 'voegwerk' },
   briques: { fr: 'reparation-briques', nl: 'herstel-bakstenen' },
+  plaquettes: { fr: 'plaquettes-parement', nl: 'steenstrips' },
   fissures: { fr: 'traitement-fissures', nl: 'scheurherstel' },
   echafaudage: { fr: 'echafaudage', nl: 'steigerwerk' },
 } as const satisfies Record<string, Record<Langue, string>>;

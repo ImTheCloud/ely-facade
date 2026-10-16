@@ -248,9 +248,22 @@ const section = textes.accueil.metiers;
     }
   }
 
+  /* Grand écran : cinq colonnes, les dix métiers sur deux rangées. */
   @media (min-width: 1100px) {
     .metiers__liste {
-      grid-template-columns: repeat(4, 1fr);
+      grid-template-columns: repeat(5, minmax(0, 1fr));
+      gap: 14px;
+    }
+
+    .metier {
+      padding: 20px 18px;
+    }
+
+    .metier__voir {
+      top: 18px;
+      right: 16px;
+      width: 34px;
+      height: 34px;
     }
   }
 </style>
