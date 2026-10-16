@@ -21,7 +21,7 @@ const base = chemin('realisations', langue);
 ---
 
 <BaseLayout langue={langue} titre={page.titre} description={page.description}>
-  <IntroPage langue={langue} fil={[{ libelle: textes.nav.realisations, href: base }]} surtitre={r.surtitre} titre={r.titre} texte={r.texte}>
+  <IntroPage langue={langue} fil={[{ libelle: textes.nav.realisations, href: base }]} titre={r.titre} texte={r.texte}>
     <Fragment slot="visuel">
       <CarteBelgique langue={langue} />
     </Fragment>

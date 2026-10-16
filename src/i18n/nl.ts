@@ -238,7 +238,6 @@ export const nl = {
 
   /** De pagina « Diensten » en de pagina's per vak. */
   services: {
-    surtitre: 'Ons vak',
     titre: 'Uitsluitend de gevel.',
     texte:
       'De hele gevel, van A tot Z, op elke werf: gevelpleister, schilderwerk, reiniging, voegwerk, herstel van bakstenen… Van de kleine garage tot het gebouw met meerdere verdiepingen.',
@@ -247,7 +246,6 @@ export const nl = {
       texte: 'Woningen, appartementsgebouwen, handelspanden, mede-eigendommen en bedrijven: van de kleine garage tot het gebouw met meerdere verdiepingen.',
     },
     ceQueNousFaisons: 'Wat we doen',
-    atoutsTitre: 'Bij elke werf',
     atouts: [
       { titre: 'Gratis plaatsbezoek', texte: 'Elisei komt gratis en vrijblijvend bij u langs.' },
       { titre: 'Minstens 10\u00a0jaar garantie', texte: 'Op de gevelwerken.' },
@@ -272,11 +270,9 @@ export const nl = {
 
   /** De pagina « Realisaties » en de pagina’s per werf. */
   realisationsPage: {
-    surtitre: 'Onze realisaties',
     titre: 'Enkele van onze werven.',
     texte:
       'Een selectie van gevels in Bergen, Namen, Charleroi, Halle en Evere, van de steiger tot de afgewerkte gevel. Alleen de gemeente wordt vermeld: nooit het adres van onze klanten.',
-    avantApres: 'Voor en na',
     photos: 'De werf in beeld',
     retour: 'Terug naar de realisaties',
     autres: 'Andere werven',
@@ -293,7 +289,6 @@ export const nl = {
 
   /** De pagina « Over ons ». */
   apropos: {
-    surtitre: 'Over ons',
     titre: 'Twee broers, één team.',
     texte:
       'Ely Facade wordt geleid door twee broers, Elisei en Simi Ungureanu. Elisei komt bij u langs voor het bezoek en de offerte en werkt daarna mee op de werf; Simi leidt de werken. Ons kantoor is in Halle en we werken overal in België.',
@@ -415,7 +410,6 @@ export const nl = {
 
   /** De pagina die niet bestaat. */
   erreur: {
-    code: 'Fout 404',
     titre: 'Er ontbreekt een baksteen.',
     texte: 'Deze pagina bestaat niet (meer). De rest van de website staat er wel:',
     accueil: 'Terug naar de homepage',
@@ -481,7 +475,6 @@ export const nl = {
     },
 
     avantApres: {
-      pastille: 'Voor en na',
       titre: 'Het verschil is zichtbaar.',
       texte: 'Schuif met de cursor: dezelfde gevel tijdens de werken en daarna afgewerkt.',
       avant: 'Tijdens de werken',
@@ -491,7 +484,6 @@ export const nl = {
     },
 
     etapes: {
-      pastille: 'De stappen van een gevel',
       titre: 'Van steiger tot afgewerkte [gevel].',
       texte:
         'Een werf van de Universiteit van Bergen, stap voor stap. Dit is de volgorde van elke gevel met buitenisolatie en pleisterwerk.',
@@ -522,7 +514,6 @@ export const nl = {
     },
 
     umons: {
-      pastille: 'Referentiewerf',
       texte: 'Gevels van gebouwen van de Universiteit van Bergen (UMONS), van de steiger tot de afgewerkte gevel.',
       voir: 'De werf in beeld',
     },
@@ -559,14 +550,12 @@ export const nl = {
     },
 
     metiers: {
-      surtitre: 'Ons vak',
       titre: 'Alles voor uw gevel.',
       texte: 'De hele gevel, van A tot Z: van de kleine garage tot het gebouw.',
       voir: 'Meer weten',
     },
 
     equipe: {
-      surtitre: 'Wie bij u langskomt',
       portrait: 'Portret van',
       titre: 'Twee broers, een team van 8.',
       personnes: [
@@ -588,7 +577,6 @@ export const nl = {
     },
 
     methode: {
-      surtitre: 'Hoe het verloopt',
       titre: 'Van uw telefoontje tot de laatste afwerking.',
       etapes: [
         {
@@ -651,7 +639,6 @@ export const nl = {
     },
 
     contact: {
-      surtitre: 'Contact en offerte',
       titre: 'Uw offerte, zonder verplichting.',
       texte: 'Beschrijf uw werken in drie stappen. Elisei komt gratis bij u langs en stuurt u daarna de offerte.',
       direct: 'Of rechtstreeks',

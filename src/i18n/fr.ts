@@ -238,7 +238,6 @@ export const fr = {
 
   /** Les pages « Services » et métier. */
   services: {
-    surtitre: 'Nos métiers',
     titre: 'Uniquement la façade.',
     texte:
       'Toute la façade, de A à Z, sur tous les chantiers\u00a0: crépi, peinture, nettoyage, rejointoiement, réparation de briques… Du petit garage à l’immeuble de plusieurs étages.',
@@ -247,7 +246,6 @@ export const fr = {
       texte: 'Maisons, immeubles, commerces, copropriétés et sociétés\u00a0: du petit garage à l’immeuble de plusieurs étages.',
     },
     ceQueNousFaisons: 'Ce que nous faisons',
-    atoutsTitre: 'Avec chaque chantier',
     atouts: [
       { titre: 'Visite gratuite', texte: 'Elisei se déplace chez vous, gratuitement et sans engagement.' },
       { titre: 'Garantie de 10\u00a0ans minimum', texte: 'Sur les travaux de façade.' },
@@ -272,11 +270,9 @@ export const fr = {
 
   /** La page « Réalisations » et les pages de chaque chantier. */
   realisationsPage: {
-    surtitre: 'Nos réalisations',
     titre: 'Quelques-uns de nos chantiers.',
     texte:
       'Une sélection de façades à Mons, Namur, Charleroi, Halle et Evere, de l’échafaudage à la façade terminée. Seule la commune est indiquée\u00a0: jamais l’adresse de nos clients.',
-    avantApres: 'Avant, après',
     photos: 'Le chantier en photos',
     retour: 'Retour aux réalisations',
     autres: 'D’autres chantiers',
@@ -293,7 +289,6 @@ export const fr = {
 
   /** La page « À propos ». */
   apropos: {
-    surtitre: 'À propos',
     titre: 'Deux frères, une équipe.',
     texte:
       'Ely Facade est dirigée par deux frères, Elisei et Simi Ungureanu. Elisei vient chez vous pour la visite et le devis, puis travaille sur le chantier\u00a0; Simi dirige les travaux. Notre bureau est à Halle et nous intervenons partout en Belgique.',
@@ -415,7 +410,6 @@ export const fr = {
 
   /** La page introuvable. */
   erreur: {
-    code: 'Erreur 404',
     titre: 'Il manque une brique.',
     texte: 'Cette page n’existe pas, ou plus. Tout le reste du site est bien en place\u00a0:',
     accueil: 'Retour à l’accueil',
@@ -481,7 +475,6 @@ export const fr = {
     },
 
     avantApres: {
-      pastille: 'Avant, après',
       titre: 'La différence se voit.',
       texte: 'Faites glisser le curseur\u00a0: la même façade pendant les travaux, puis une fois terminée.',
       avant: 'Pendant les travaux',
@@ -491,7 +484,6 @@ export const fr = {
     },
 
     etapes: {
-      pastille: 'Les étapes d’une façade',
       titre: 'De l’échafaudage à la façade [terminée].',
       texte:
         'Un chantier de l’Université de Mons, étape par étape. C’est l’ordre de toute façade isolée par l’extérieur et crépie.',
@@ -522,7 +514,6 @@ export const fr = {
     },
 
     umons: {
-      pastille: 'Chantier de référence',
       texte: 'Des façades de bâtiments de l’Université de Mons (UMons), de l’échafaudage à la façade terminée.',
       voir: 'Le chantier en photos',
     },
@@ -559,14 +550,12 @@ export const fr = {
     },
 
     metiers: {
-      surtitre: 'Nos métiers',
       titre: 'Tout pour votre façade.',
       texte: 'Toute la façade, de A à Z\u00a0: du petit garage à l’immeuble.',
       voir: 'En savoir plus',
     },
 
     equipe: {
-      surtitre: 'Qui vient chez vous',
       portrait: 'Portrait de',
       titre: 'Deux frères, une équipe de 8.',
       personnes: [
@@ -588,7 +577,6 @@ export const fr = {
     },
 
     methode: {
-      surtitre: 'Comment ça se passe',
       titre: 'De votre appel à la dernière finition.',
       etapes: [
         {
@@ -651,7 +639,6 @@ export const fr = {
     },
 
     contact: {
-      surtitre: 'Contact et devis',
       titre: 'Votre devis, sans engagement.',
       texte: 'Décrivez-nous vos travaux en trois étapes. Elisei se déplace gratuitement chez vous, puis vous envoie le devis.',
       direct: 'Ou directement',

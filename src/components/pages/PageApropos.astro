@@ -23,7 +23,7 @@ const imageIntro = 'halle-maison/final-entree';
 ---
 
 <BaseLayout langue={langue} titre={page.titre} description={page.description}>
-  <IntroPage langue={langue} fil={[{ libelle: textes.nav.apropos, href: chemin('apropos', langue) }]} surtitre={a.surtitre} titre={a.titre} texte={a.texte}>
+  <IntroPage langue={langue} fil={[{ libelle: textes.nav.apropos, href: chemin('apropos', langue) }]} titre={a.titre} texte={a.texte}>
     <Fragment slot="visuel">
       <figure class="photo" data-reveal>
         <Image src={photo(imageIntro)} alt={textes.photos[imageIntro]} widths={[480, 768, 1080]} sizes="(min-width: 960px) 45vw, 100vw" format="webp" quality={76} loading="eager" />
@@ -78,7 +78,7 @@ const imageIntro = 'halle-maison/final-entree';
   <section class="section engagements">
     <div class="wrap">
       <div class="tete" data-reveal>
-        <p class="surtitre">{a.engagementsTitre}</p>
+        <h2>{a.engagementsTitre}</h2>
       </div>
       <ul class="engagements__liste">
         {
@@ -101,8 +101,7 @@ const imageIntro = 'halle-maison/final-entree';
   <section class="section bureau">
     <div class="wrap bureau__grille">
       <div class="bureau__texte" data-reveal>
-        <p class="surtitre">{a.bureau.titre}</p>
-        <h2>{entreprise.ville}</h2>
+        <h2>{a.bureau.titre}</h2>
         <address>{entreprise.rue}<br />{entreprise.codePostal} {entreprise.ville}</address>
         <p>{a.bureau.texte}</p>
       </div>

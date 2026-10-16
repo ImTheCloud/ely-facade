@@ -33,7 +33,6 @@ const trou = briques.find((b) => b.trou)!;
   <section class="erreur">
     <div class="wrap erreur__grille">
       <div class="erreur__texte">
-        <p class="surtitre">{e.code}</p>
         <h1>{e.titre}</h1>
         <p>{e.texte}</p>
         <div class="erreur__actions">
@@ -84,7 +83,7 @@ const trou = briques.find((b) => b.trou)!;
     max-width: 12ch;
   }
 
-  .erreur__texte > p:not(.surtitre) {
+  .erreur__texte > p {
     max-width: 44ch;
     font-size: var(--size-lead);
   }
