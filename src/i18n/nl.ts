@@ -562,7 +562,7 @@ export const nl = {
           prenom: 'Elisei',
           role: 'Bezoek, offerte en werf',
           roleCourt: 'Offerte en werf',
-          texte: 'Hij komt bij u langs, meet uw gevel op en stuurt u de offerte. Daarna werkt hij mee met het team op de werf.',
+          texte: 'Hij meet uw gevel op, stuurt u de offerte en werkt daarna mee op de werf.',
         },
         {
           prenom: 'Simi',
