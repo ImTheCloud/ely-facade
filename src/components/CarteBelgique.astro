@@ -114,9 +114,12 @@ const identifiant = 'carte';
       <span class="bureau__nom">{carte.bureau}</span>
     </div>
 
-    <span class="carte__astuce" aria-hidden="true">
-      <Icon nom="toucher" taille={16} epaisseur={2} />
-      {carte.astuce}
+    <!-- Une petite flèche qui montre Namur : on peut toucher les points. Elle disparaît dès le premier toucher. -->
+    <span class="carte__fleche" style={place(communes[0].lon, communes[0].lat)} aria-hidden="true">
+      <svg viewBox="0 0 40 46" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round">
+        <path d="M30 42C30 26 22 14 9 8" />
+        <path d="M8 18L8 7L19 6" />
+      </svg>
     </span>
 
     <div class="carte__points">
@@ -300,27 +303,24 @@ const identifiant = 'carte';
     -webkit-text-stroke: 3px #fff;
   }
 
-  /* L'astuce : on peut toucher les points. Elle disparaît dès le premier toucher. */
-  .carte__astuce {
+  /* La flèche : sous Namur, pointée vers le point, en rouge. */
+  .carte__fleche {
     position: absolute;
-    left: 0;
-    bottom: 3%;
     z-index: 2;
-    display: inline-flex;
-    align-items: center;
-    gap: 8px;
-    padding: 8px 14px 8px 12px;
-    border-radius: var(--radius-pill);
-    background: var(--color-ink);
-    box-shadow: 0 8px 18px -8px rgba(31, 36, 41, 0.6);
-    color: #fff;
-    font-size: 13px;
-    font-weight: 650;
+    width: 34px;
+    color: var(--color-accent);
+    transform: translate(2px, 8px);
     pointer-events: none;
     transition: opacity 300ms var(--ease);
   }
 
-  .carte--touchee .carte__astuce {
+  .carte__fleche svg {
+    display: block;
+    width: 100%;
+    height: auto;
+  }
+
+  .carte--touchee .carte__fleche {
     opacity: 0;
   }
 
@@ -709,7 +709,7 @@ const identifiant = 'carte';
     :global(.js) .point,
     :global(.js) .bureau,
     :global(.js) .ville,
-    :global(.js) .carte__astuce {
+    :global(.js) .carte__fleche {
       opacity: 0;
       transition: opacity 450ms var(--ease-out);
       transition-delay: calc(120ms + var(--i, 0) * 90ms);
@@ -718,12 +718,26 @@ const identifiant = 'carte';
     :global(.js) .carte.est-visible .point,
     :global(.js) .carte.est-visible .bureau,
     :global(.js) .carte.est-visible .ville,
-    :global(.js) .carte.est-visible .carte__astuce {
+    :global(.js) .carte.est-visible .carte__fleche {
       opacity: 1;
     }
 
-    :global(.js) .carte--touchee .carte__astuce {
+    :global(.js) .carte--touchee .carte__fleche {
       opacity: 0;
+    }
+
+    /* La flèche fait de petits allers-retours vers le point, jusqu'au premier toucher. */
+    :global(.js) .carte.est-visible:not(.carte--touchee) .carte__fleche svg {
+      animation: fleche 1100ms var(--ease-out) infinite alternate;
+    }
+
+    @keyframes fleche {
+      from {
+        transform: translate(0, 0);
+      }
+      to {
+        transform: translate(-5px, -7px);
+      }
     }
 
     /* Un anneau qui bat trois fois sur chaque point, pour dire « touchez-moi », puis le calme. */
@@ -750,15 +764,14 @@ const identifiant = 'carte';
     }
   }
 
-  /* Téléphone : pas de noms sur la carte (trop serrés), les communes se choisissent aussi sous la carte. */
+  /* Téléphone : des points plus petits (la zone à toucher reste de 40 px) et les noms en petit à côté. */
   @media (max-width: 699px) {
-    .point__nom,
     .bureau__nom {
       display: none;
     }
 
     .bureau {
-      width: 42px;
+      width: 38px;
     }
 
     .point,
@@ -768,13 +781,36 @@ const identifiant = 'carte';
       transform: translate(calc(-20px + var(--dx)), calc(-50% + var(--dy)));
     }
 
+    .point--gauche {
+      transform: translate(calc(-100% + 20px + var(--dx)), calc(-50% + var(--dy)));
+    }
+
+    .point--bas {
+      transform: translate(calc(-50% + var(--dx)), calc(-20px + var(--dy)));
+    }
+
     .point__rond {
       width: 40px;
       height: 40px;
     }
 
     .point__rond::before {
-      inset: 10px;
+      inset: 13px;
+      border-width: 2.5px;
+    }
+
+    .point__nom {
+      padding: 2px 6px;
+      font-size: 12px;
+    }
+
+    .point--bas .point__nom {
+      margin-top: -10px;
+    }
+
+    .carte__fleche {
+      width: 28px;
+      transform: translate(0, 6px);
     }
   }
 </style>

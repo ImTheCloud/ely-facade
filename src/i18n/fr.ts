@@ -539,7 +539,6 @@ export const fr = {
       toutes: 'Voir plus de chantiers',
       carte: {
         aria: 'Carte de la Belgique\u00a0: notre bureau à Halle et les communes de quelques-uns de nos chantiers',
-        astuce: 'Touchez un point',
         bureau: 'Notre bureau',
         bureauHalle: 'Notre bureau, à Halle',
         chantier: 'Un de nos chantiers',

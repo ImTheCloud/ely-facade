@@ -539,7 +539,6 @@ export const nl = {
       toutes: 'Bekijk meer werven',
       carte: {
         aria: 'Kaart van België: ons kantoor in Halle en de gemeenten van enkele van onze werven',
-        astuce: 'Tik op een punt',
         bureau: 'Ons kantoor',
         bureauHalle: 'Ons kantoor, in Halle',
         chantier: 'Een van onze werven',
