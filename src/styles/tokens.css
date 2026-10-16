@@ -35,10 +35,10 @@
   --voile: 14, 26, 40;
 
   /* --- Tailles de texte : elles grandissent avec l'écran --------------- */
-  --size-h1: clamp(44px, 7.2vw, 112px);
-  --size-h2: clamp(36px, 5.2vw, 80px);
+  --size-h1: clamp(44px, 6.4vw, 96px);
+  --size-h2: clamp(34px, 4.2vw, 62px);
   --size-h3: clamp(20px, 1.7vw, 26px);
-  --size-lead: clamp(19px, 1.5vw, 22px);
+  --size-lead: clamp(19px, 1.4vw, 20px);
   --size-body: 18px;
   --size-small: 16px;
   --size-tiny: 14px;
@@ -79,9 +79,9 @@
 
 @media (min-width: 900px) {
   :root {
-    --size-body: 19px;
-    --size-small: 17px;
-    --size-tiny: 15px;
+    --size-body: 18px;
+    --size-small: 16px;
+    --size-tiny: 14px;
     --gutter: 40px;
     --section-gap: 72px;
     --tile-gap: 20px;

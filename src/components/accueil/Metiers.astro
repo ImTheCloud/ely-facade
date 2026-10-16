@@ -194,6 +194,60 @@ const section = textes.accueil.metiers;
     }
   }
 
+  /* Ordinateur : des cartes compactes, les huit métiers tiennent sur un écran. */
+  @media (min-width: 700px) {
+    .metier {
+      gap: 8px;
+      padding: 22px;
+    }
+
+    .metier__icone {
+      width: 44px;
+      height: 44px;
+      margin-bottom: 6px;
+      border-radius: 14px;
+    }
+
+    .metier__icone :global(svg) {
+      width: 22px;
+      height: 22px;
+    }
+
+    /* Le numéro laisse la place à une flèche, en haut à droite : toute la carte est un lien. */
+    .metier__num,
+    .metier__voir-texte {
+      display: none;
+    }
+
+    .metier__voir {
+      position: absolute;
+      top: 22px;
+      right: 22px;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      width: 40px;
+      height: 40px;
+      margin: 0;
+      border-radius: 50%;
+      background: rgba(255, 255, 255, 0.08);
+    }
+
+    .metier h3 {
+      font-size: clamp(19px, 1.5vw, 22px);
+    }
+
+    /* Trois lignes au plus : toutes les cartes ont la même hauteur, le détail est sur la page du métier. */
+    .metier p {
+      display: -webkit-box;
+      overflow: hidden;
+      -webkit-box-orient: vertical;
+      -webkit-line-clamp: 3;
+      font-size: var(--size-small);
+      line-height: 1.5;
+    }
+  }
+
   @media (min-width: 1100px) {
     .metiers__liste {
       grid-template-columns: repeat(4, 1fr);
