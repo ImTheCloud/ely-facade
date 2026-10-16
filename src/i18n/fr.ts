@@ -546,7 +546,7 @@ export const fr = {
     },
 
     chiffres: {
-      aria: 'Ely Facade en chiffres',
+      titre: 'Ely Facade en quelques [chiffres].',
       liste: [
         { valeur: '6 ans', mot: 'd’expérience', detail: 'pour notre gérant' },
         { valeur: '50+', mot: 'chantiers', detail: 'réalisés par nos gérants' },

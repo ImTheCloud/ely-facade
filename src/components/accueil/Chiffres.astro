@@ -1,5 +1,6 @@
 ---
 /** La bande des chiffres : la valeur et son mot clé en grand, le détail dessous. Seulement des chiffres confirmés ; « {n} » est le vrai nombre de services (src/data/metiers.ts). */
+import Souligne from '../Souligne.astro';
 import { METIERS } from '../../data/metiers';
 import { t, type Langue } from '../../i18n';
 
@@ -11,7 +12,10 @@ const { langue } = Astro.props;
 const chiffres = t(langue).accueil.chiffres;
 ---
 
-<section class="chiffres-section" aria-label={chiffres.aria}>
+<section class="chiffres-section" aria-labelledby="chiffres-titre">
+  <div class="wrap">
+    <h2 id="chiffres-titre" class="chiffres__titre" data-trait><Souligne texte={chiffres.titre} /></h2>
+  </div>
   <ul class="wrap chiffres">
     {
       chiffres.liste.map((chiffre, i) => (
@@ -27,8 +31,12 @@ const chiffres = t(langue).accueil.chiffres;
 
 <style>
   .chiffres-section {
-    padding-block: clamp(20px, 3vw, 36px) clamp(36px, 5vw, 64px);
+    padding-block: var(--section-gap);
     border-bottom: 1px solid var(--color-border);
+  }
+
+  .chiffres__titre {
+    margin-bottom: clamp(24px, 3vw, 40px);
   }
 
   .chiffres {
