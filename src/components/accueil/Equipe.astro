@@ -240,6 +240,36 @@ const equipe = t(langue).accueil.equipe;
     line-height: 1.55;
   }
 
+  /*
+   * Téléphone (deux colonnes étroites) : le rôle tient sur une ligne, écrit simplement ;
+   * le texte gris n'est pas affiché, le rôle et la phrase disent déjà l'essentiel.
+   */
+  @media (max-width: 699px) {
+    .frere {
+      gap: 8px;
+    }
+
+    .frere__role {
+      font-size: clamp(10.5px, 3.45vw, 12.5px);
+      font-weight: 650;
+      letter-spacing: 0;
+      text-transform: none;
+      white-space: nowrap;
+    }
+
+    .frere__role::before {
+      display: none;
+    }
+
+    .frere__phrase {
+      margin-top: 2px;
+    }
+
+    .frere__detail {
+      display: none;
+    }
+  }
+
   /* Ordinateur : chaque texte sous son frère. */
   @media (min-width: 700px) {
     .equipe__tete {
