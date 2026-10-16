@@ -108,6 +108,13 @@ const section = textes.accueil.realisations;
     justify-self: center;
   }
 
+  /* Téléphone : la carte d'abord, juste sous les chiffres, puis le titre et le texte. */
+  @media (max-width: 699px) {
+    .realisations__haut :global(.realisations__carte) {
+      order: -1;
+    }
+  }
+
   .realisations__commandes {
     display: flex;
     align-items: center;
