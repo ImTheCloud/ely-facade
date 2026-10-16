@@ -8,7 +8,8 @@
 - **En ligne : pas encore.** Les déploiements Netlify sont en pause (`ignore = "exit 0"` dans `netlify.toml`).
 - **Façon de travailler** : chaque nouveau changement se fait dans **une nouvelle branche** partie de `main`, puis est fusionné dans `main` une fois validé.
 
-### Branche `ameliorations-accueil` (16 octobre 2026, à tester par Claudiu avant fusion)
+### Branche `ameliorations-accueil` (16 octobre 2026, validée par Claudiu, à fusionner dans `main`)
+- **Site vitrine terminé.** Prochaine étape : vérification finale avec `docs/prompt-verification.md`, puis mise en ligne.
 - **Accueil réorganisé** : haut de page → équipe (même fond à grain que le reste du site) → **méthode « Votre façade, en quatre étapes »** (remontée, nouvelles phrases, tient sur un écran, bouton de devis) → chiffres « Ely Facade en quelques chiffres : » → avant/après → « Une façade refaite pour durer » → carte → étapes → métiers → FAQ → devis. Section UMons et phrase « Une maison ou une université » supprimées (doublon) ; dans les étapes, « À l'Université de Mons » en grand avec le lien vers le chantier.
 - **Lisibilité sur téléphone** : détails des chiffres raccourcis (une ligne chacun, FR et NL, même à 320 px) ; partout, plus de mot seul en fin de paragraphe. **Méthode** : bouton « Voir nos réalisations » à l'étape 4, étapes alignées en haut. **Espaces entre sections** réduits (34 px téléphone, 56 px ordinateur).
 - **Chiffres** : 8 chiffres, valeur + mot clé en grand (6 ans d'expérience, 50+ chantiers, 2 gérants, 8 personnes, 9 services, 12/12 mois par an, 10 ans de garantie, 0 € la visite), détail en petit.
