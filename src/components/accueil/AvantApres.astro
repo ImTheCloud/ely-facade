@@ -17,10 +17,11 @@ const textes = t(langue);
 const section = textes.accueil.avantApres;
 
 const vedette = { cle: 'namur-immeuble' as const, paire: { ...chantier('namur-immeuble').paires[0], ratio: 16 / 9 } };
-const autres = (['umons', 'namur-balcons', 'halle', 'charleroi'] as const).map((cle) => ({
-  cle,
-  paire: { ...chantier(cle).paires[0], ratio: 4 / 3 },
-}));
+// Deux par ligne, de même forme : les deux carrés (une photo verticale dans la paire), puis les deux horizontaux.
+const autres = (['namur-balcons', 'halle', 'umons', 'charleroi'] as const).map((cle) => {
+  const paire = chantier(cle).paires[0];
+  return { cle, paire: { ...paire, ratio: paire.ratio === 1 ? 1 : 4 / 3 } };
+});
 ---
 
 <section class="section avant-apres" id="avant-apres">

@@ -1,6 +1,6 @@
 ---
 /**
- * La page d'un chantier : la photo en grand, l'avant/après, toutes les photos (agrandissables),
+ * La page d'un chantier : la photo entière à côté du titre, l'avant/après, toutes les photos (à leur forme, agrandissables),
  * d'autres chantiers et le devis. Seule la commune est indiquée, jamais l'adresse.
  */
 import { Image, getImage } from 'astro:assets';
@@ -44,7 +44,7 @@ const autres = CHANTIERS.filter((autre) => autre.cle !== cle && autre.slug).slic
 let index = 0;
 ---
 
-<BaseLayout langue={langue} titre={`${fiche.titre}, ${commune} | Ely Facade`} description={fiche.texte} surPhoto partage={photo(c.couverture)}>
+<BaseLayout langue={langue} titre={`${fiche.titre}, ${commune} | Ely Facade`} description={fiche.texte} partage={photo(c.couverture)}>
   <IntroPage
     langue={langue}
     fil={[
@@ -54,8 +54,21 @@ let index = 0;
     surtitre={commune}
     titre={fiche.titre}
     texte={fiche.texte}
-    image={c.couverture}
-  />
+  >
+    <!-- La photo du chantier en entier, à sa forme (jamais rognée en bandeau). -->
+    <Image
+      slot="visuel"
+      class="couverture"
+      src={photo(c.couverture)}
+      alt={textes.photos[c.couverture]}
+      widths={[480, 800, 1200]}
+      sizes="(min-width: 960px) 45vw, 100vw"
+      format="webp"
+      quality={78}
+      loading="eager"
+      fetchpriority="high"
+    />
+  </IntroPage>
 
   {
     c.paires.length > 0 && (
@@ -202,12 +215,18 @@ let index = 0;
     background: var(--color-accent);
   }
 
+  /* Les photos gardent leur forme (verticales comme horizontales) : des colonnes plutôt qu'une grille de cases. */
   .galerie__grille {
-    display: grid;
-    gap: var(--tile-gap);
+    columns: 1;
+    column-gap: var(--tile-gap);
     margin: 0;
     padding: 0;
     list-style: none;
+  }
+
+  .galerie__grille li {
+    break-inside: avoid;
+    margin-bottom: var(--tile-gap);
   }
 
   .galerie__grille a {
@@ -215,14 +234,13 @@ let index = 0;
     display: block;
     overflow: hidden;
     border-radius: var(--radius-md);
-    aspect-ratio: 4 / 3;
     background: var(--color-surface);
   }
 
   .galerie__grille :global(img) {
+    display: block;
     width: 100%;
-    height: 100%;
-    object-fit: cover;
+    height: auto;
     transition: transform 900ms var(--ease-out);
   }
 
@@ -262,14 +280,25 @@ let index = 0;
 
   @media (min-width: 640px) {
     .galerie__grille {
-      grid-template-columns: repeat(2, 1fr);
+      columns: 2;
     }
   }
 
   @media (min-width: 1100px) {
     .galerie__grille {
-      grid-template-columns: repeat(3, 1fr);
+      columns: 3;
     }
+  }
+
+  /* La photo du haut : entière, coins arrondis. */
+  .couverture {
+    display: block;
+    width: 100%;
+    height: auto;
+    max-height: 72svh;
+    object-fit: contain;
+    border-radius: var(--radius-tile);
+    box-shadow: var(--shadow-lift);
   }
 
   /* --- Visionneuse --- */

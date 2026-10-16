@@ -66,6 +66,10 @@ const image = {
     --pos: 50%;
     position: relative;
     aspect-ratio: var(--ratio);
+    /* Jamais plus haut que l'écran (cadres carrés sur ordinateur) : il se centre et garde sa forme. */
+    width: 100%;
+    max-width: calc(78svh * var(--ratio));
+    margin-inline: auto;
     overflow: hidden;
     border-radius: var(--radius-tile);
     background: var(--color-surface);

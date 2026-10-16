@@ -57,7 +57,10 @@ export interface Chantier {
   couverture: string;
   /** Toutes les photos du chantier, dans l'ordre du chantier (pendant → après). */
   photos: string[];
-  /** Les avant/après du chantier (même endroit, angle proche). */
+  /**
+   * Les avant/après du chantier (même endroit, angle proche). Le cadre (ratio) suit la forme des photos :
+   * deux photos horizontales → 4/3 ou 16/9 ; une horizontale et une verticale → carré, pour n'en abîmer aucune.
+   */
   paires: Paire[];
 }
 
@@ -104,9 +107,9 @@ export const CHANTIERS: Chantier[] = [
       {
         avant: 'namur-immeuble-balcons/pendant-cote-gauche',
         apres: 'namur-immeuble-balcons/apres-cote-gauche',
-        ratio: 4 / 3,
-        cadreAvant: { py: 40 },
-        cadreApres: { px: 33 },
+        ratio: 1,
+        cadreAvant: { py: 45 },
+        cadreApres: { px: 38 },
       },
     ],
   },
@@ -147,7 +150,7 @@ export const CHANTIERS: Chantier[] = [
     cle: 'halle',
     commune: 'halle',
     slug: SLUGS_CHANTIERS.halle,
-    couverture: 'halle-maison/final-entree',
+    couverture: 'halle-maison/final-baie-vitree',
     photos: [
       'halle-maison/pendant-pignon',
       'halle-maison/apres-pignon',
@@ -159,9 +162,9 @@ export const CHANTIERS: Chantier[] = [
       {
         avant: 'halle-maison/pendant-pignon',
         apres: 'halle-maison/apres-pignon',
-        ratio: 4 / 3,
-        cadreAvant: { px: 40 },
-        cadreApres: { px: 62 },
+        ratio: 1,
+        cadreAvant: { px: 48 },
+        cadreApres: { py: 38 },
       },
     ],
   },

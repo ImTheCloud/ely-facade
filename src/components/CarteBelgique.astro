@@ -188,7 +188,7 @@ const identifiant = 'carte';
               <div class:list={['cas', { 'est-actif': k === 0 }]} data-cas={k}>
                 <p class="cas__titre">{infos.titre}</p>
                 {paire ? (
-                  <Comparateur langue={langue} paire={{ ...paire, ratio: 4 / 3 }} sizes="340px" />
+                  <Comparateur langue={langue} paire={paire} sizes="340px" />
                 ) : (
                   <Image class="cas__photo" src={photo(c.couverture)} alt={textes.photos[c.couverture]} widths={[340, 680]} sizes="340px" format="webp" quality={74} loading="lazy" />
                 )}
