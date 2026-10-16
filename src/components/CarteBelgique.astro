@@ -114,7 +114,7 @@ const identifiant = 'carte';
       <span class="bureau__nom">{carte.bureau}</span>
     </div>
 
-    <!-- Une petite flèche qui montre Namur : on peut toucher les points. Elle disparaît dès le premier toucher. -->
+    <!-- Une petite flèche qui montre un point, puis le suivant : on peut les toucher. Elle disparaît au premier toucher. -->
     <span class="carte__fleche" style={place(communes[0].lon, communes[0].lat)} aria-hidden="true">
       <svg viewBox="0 0 40 46" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round">
         <path d="M30 42C30 26 22 14 9 8" />
@@ -303,13 +303,13 @@ const identifiant = 'carte';
     -webkit-text-stroke: 3px #fff;
   }
 
-  /* La flèche : sous Namur, pointée vers le point, en rouge. */
+  /* La flèche : sous un point, pointée vers lui, en rouge. Elle passe d'une commune à l'autre (script). */
   .carte__fleche {
     position: absolute;
     z-index: 2;
     width: 34px;
     color: var(--color-accent);
-    transform: translate(2px, 8px);
+    transform: translate(calc(2px + var(--dx, 0px)), calc(8px + var(--dy, 0px)));
     pointer-events: none;
     transition: opacity 300ms var(--ease);
   }
@@ -318,6 +318,11 @@ const identifiant = 'carte';
     display: block;
     width: 100%;
     height: auto;
+    transition: opacity 280ms var(--ease);
+  }
+
+  .carte__fleche.est-cachee svg {
+    opacity: 0;
   }
 
   .carte--touchee .carte__fleche {
@@ -810,7 +815,7 @@ const identifiant = 'carte';
 
     .carte__fleche {
       width: 28px;
-      transform: translate(0, 6px);
+      transform: translate(var(--dx, 0px), calc(6px + var(--dy, 0px)));
     }
   }
 </style>

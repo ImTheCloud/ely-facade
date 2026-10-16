@@ -141,6 +141,32 @@ document.querySelectorAll<HTMLElement>('[data-carte]').forEach((carte) => {
     if (evenement.key === 'Escape' && ouverte) fermer();
   });
 
+  // La flèche rouge passe d'une commune à l'autre toutes les quelques secondes, tant que la carte est à l'écran
+  // et que personne n'a encore touché un point (rien ne bouge avec « moins d'animations »).
+  const fleche = carte.querySelector<HTMLElement>('.carte__fleche');
+  const points = declencheurs.filter((bouton) => bouton.classList.contains('point'));
+  if (fleche && points.length > 1 && !calme.matches) {
+    let rang = 0;
+    let boucle = 0;
+    const suivant = () => {
+      if (carte.classList.contains('carte--touchee')) return window.clearInterval(boucle);
+      fleche.classList.add('est-cachee');
+      window.setTimeout(() => {
+        rang = (rang + 1) % points.length;
+        const point = points[rang];
+        fleche.style.left = point.style.left;
+        fleche.style.top = point.style.top;
+        fleche.style.setProperty('--dx', point.style.getPropertyValue('--dx'));
+        fleche.style.setProperty('--dy', point.style.getPropertyValue('--dy'));
+        fleche.classList.remove('est-cachee');
+      }, 300);
+    };
+    new IntersectionObserver(([entree]) => {
+      window.clearInterval(boucle);
+      if (entree.isIntersecting) boucle = window.setInterval(suivant, 3200);
+    }).observe(carte);
+  }
+
   // Seul un changement de largeur ferme (la barre d'adresse du téléphone qui se replie ne doit rien fermer).
   let largeur = window.innerWidth;
   window.addEventListener('resize', () => {

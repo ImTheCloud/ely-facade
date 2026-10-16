@@ -48,6 +48,15 @@ const equipe = t(langue).accueil.equipe;
         {
           equipe.personnes.map((personne, i) => (
             <article class:list={['repere', i === 0 ? 'repere--gauche' : 'repere--droite']}>
+              <!-- Une flèche dessinée à la main vers le frère : sur le côté (ordinateur), au-dessus (téléphone). -->
+              <svg class="fleche fleche--cote" viewBox="0 0 130 70" aria-hidden="true">
+                <path d="M4 58C34 66 78 60 110 20" />
+                <path d="M96 18L112 17L110 33" />
+              </svg>
+              <svg class="fleche fleche--haut" viewBox="0 0 44 72" aria-hidden="true">
+                <path d="M24 68C10 54 32 34 22 8" />
+                <path d="M13 17L22 6L31 16" />
+              </svg>
               <h3 class="repere__nom">{personne.prenom}</h3>
               <p class="repere__role">
                 <span class="repere__role-long">{personne.role}</span>
@@ -162,13 +171,26 @@ const equipe = t(langue).accueil.equipe;
     gap: 8px;
   }
 
-  /*
-   * Téléphone : chaque repère centré sous son frère, relié à la ligne du sol par un trait vertical
-   * qui part d'un point rouge, comme les repères de l'ordinateur.
-   */
+  /* Les flèches : un trait rouge à main levée, terminé par une pointe. */
+  .fleche {
+    position: absolute;
+    overflow: visible;
+    fill: none;
+    stroke: var(--color-accent);
+    stroke-width: 3.2;
+    stroke-linecap: round;
+    stroke-linejoin: round;
+    pointer-events: none;
+  }
+
+  .fleche--cote {
+    display: none;
+  }
+
+  /* Téléphone : chaque repère centré sous son frère, la flèche monte vers lui. */
   @media (max-width: 999px) {
     .reperes {
-      margin-top: 40px;
+      margin-top: 66px;
     }
 
     .repere {
@@ -176,26 +198,16 @@ const equipe = t(langue).accueil.equipe;
       text-align: center;
     }
 
-    .repere::before {
-      content: '';
-      position: absolute;
-      bottom: calc(100% + 6px);
+    .fleche--haut {
+      bottom: calc(100% + 2px);
       left: 50%;
-      width: 1.5px;
-      height: 30px;
-      background: var(--color-ink);
+      width: 34px;
+      height: 56px;
+      transform: translateX(-50%);
     }
 
-    .repere::after {
-      content: '';
-      position: absolute;
-      bottom: calc(100% + 32px);
-      left: 50%;
-      width: 9px;
-      height: 9px;
-      margin-left: -3.75px;
-      border-radius: 50%;
-      background: var(--color-accent);
+    .repere--droite .fleche--haut {
+      transform: translateX(-50%) scaleX(-1);
     }
   }
 
@@ -223,7 +235,7 @@ const equipe = t(langue).accueil.equipe;
 
   .repere__texte {
     max-width: 30ch;
-    font-size: clamp(14.5px, 1.25vw, 17px);
+    font-size: clamp(15.5px, 1.3vw, 18px);
     line-height: 1.5;
     color: var(--color-ink);
   }
@@ -278,43 +290,25 @@ const equipe = t(langue).accueil.equipe;
       display: none;
     }
 
-    /* Le trait, à hauteur du prénom, vers le frère. */
-    .repere::before,
-    .repere::after {
-      content: '';
-      position: absolute;
-      top: 0.42em;
-      font-size: clamp(30px, 4.6vw, 60px);
+    .fleche--haut {
+      display: none;
     }
 
-    .repere::before {
-      width: 3cqi;
-      height: 1.5px;
-      background: var(--color-ink);
+    /* La flèche part du prénom et monte vers le frère. */
+    .fleche--cote {
+      display: block;
+      top: -4.4cqi;
+      width: 12cqi;
+      height: auto;
     }
 
-    .repere::after {
-      width: 9px;
-      height: 9px;
-      margin-top: -4px;
-      border-radius: 50%;
-      background: var(--color-accent);
+    .repere--gauche .fleche--cote {
+      left: calc(100% + 0.6cqi);
     }
 
-    .repere--gauche::before {
-      left: calc(100% + 1.5cqi);
-    }
-
-    .repere--gauche::after {
-      left: calc(100% + 4.5cqi);
-    }
-
-    .repere--droite::before {
-      right: calc(100% + 1.5cqi);
-    }
-
-    .repere--droite::after {
-      right: calc(100% + 4.5cqi);
+    .repere--droite .fleche--cote {
+      right: calc(100% + 0.6cqi);
+      transform: scaleX(-1);
     }
   }
 </style>

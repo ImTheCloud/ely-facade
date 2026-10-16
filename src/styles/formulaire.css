@@ -27,7 +27,7 @@
 }
 
 .formulaire .formulaire__etape-texte {
-  font-size: 14px;
+  font-size: 15px;
   font-weight: 600;
   color: var(--color-muted);
 }
@@ -352,7 +352,7 @@
 }
 
 .formulaire .simulateur__libelle small {
-  font-size: 13px;
+  font-size: 14px;
   font-weight: 500;
   color: var(--color-muted);
 }
@@ -411,7 +411,7 @@
 .formulaire .simulateur__note {
   padding-top: 10px;
   border-top: 1px solid var(--color-border);
-  font-size: 13px;
+  font-size: 14px;
   color: var(--color-muted);
 }
 
@@ -430,7 +430,7 @@
 }
 
 .formulaire .champ__aide {
-  font-size: 14px;
+  font-size: 15px;
   color: var(--color-muted);
 }
 

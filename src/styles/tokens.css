@@ -38,10 +38,10 @@
   --size-h1: clamp(44px, 7.2vw, 112px);
   --size-h2: clamp(36px, 5.2vw, 80px);
   --size-h3: clamp(20px, 1.7vw, 26px);
-  --size-lead: clamp(18px, 1.4vw, 21px);
-  --size-body: 17px;
-  --size-small: 15px;
-  --size-tiny: 13px;
+  --size-lead: clamp(19px, 1.5vw, 22px);
+  --size-body: 18px;
+  --size-small: 16px;
+  --size-tiny: 14px;
 
   /* --- Arrondis -------------------------------------------------------- */
   --radius-tile: 28px;
@@ -79,9 +79,9 @@
 
 @media (min-width: 900px) {
   :root {
-    --size-body: 18px;
-    --size-small: 16px;
-    --size-tiny: 14px;
+    --size-body: 19px;
+    --size-small: 17px;
+    --size-tiny: 15px;
     --gutter: 40px;
     --section-gap: 72px;
     --tile-gap: 20px;
