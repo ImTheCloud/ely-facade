@@ -2,11 +2,7 @@
 # Les formulaires (devis) passent par Netlify Forms : détection et
 # emails de notification se règlent dans Netlify → Forms (pas dans ce fichier).
 
-# PAUSE DES DÉPLOIEMENTS (décision de Claudiu, 15 octobre 2026) : `exit 0` fait ignorer chaque build
-# déclenché par un push. Le site en ligne ne change pas. Pour reprendre les déploiements :
-# supprimer la ligne « ignore » ci-dessous (Claudiu seul décide).
 [build]
-  ignore = "exit 0"
   command = "npm run build"
   publish = "dist"
 

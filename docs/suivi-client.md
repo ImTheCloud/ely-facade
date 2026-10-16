@@ -4,7 +4,7 @@ Hors site. Ce qui reste à faire ou à confirmer, et ce qui est confirmé.
 
 ## Avant la mise en ligne (côté Claudiu)
 
-- Netlify (projet ely-facade, équipe ELI4IT, site de test ely-facade.netlify.app) : relier le dépôt GitHub, désactiver le badge « Powered by Netlify », choisir dans Forms → Form notifications l'adresse qui reçoit les devis, reprendre les déploiements (retirer la ligne `ignore` de `netlify.toml`).
+- Netlify (projet ely-facade, équipe ELI4IT, site de test ely-facade.netlify.app) : relier le dépôt GitHub, désactiver le badge « Powered by Netlify », choisir dans Forms → Form notifications l'adresse qui reçoit les devis. Déploiements repris le 16 octobre 2026.
 - Acheter `elyfacade.be` chez OVHcloud (compte au nom d'ELY FAÇADE BV, email Zimbra inclus ; pas de `.com`, choix de Claudiu) **avant d'imprimer** cartes de visite et t-shirts (le QR code et le dos des t-shirts affichent elyfacade.be).
 - Email pro, puis le mettre dans `src/data/entreprise.ts` et sur la carte de visite.
 - Test d'envoi réel du formulaire, test sur un vrai iPhone.
