@@ -477,7 +477,6 @@ export const fr = {
     /** Les phrases d'émotion entre les sections. Le mot entre crochets se souligne en rouge. */
     emotions: {
       durer: { phrase: 'Une façade refaite pour [durer].' },
-      exigence: { phrase: 'Une maison ou une université\u00a0: la [même exigence].' },
     },
 
     avantApres: {
@@ -491,8 +490,9 @@ export const fr = {
 
     etapes: {
       titre: 'De l’échafaudage à la façade [terminée].',
-      texte:
-        'Un chantier de l’Université de Mons, étape par étape. C’est l’ordre de toute façade isolée par l’extérieur et crépie.',
+      chantier: 'À l’Université de Mons',
+      texte: 'Étape par étape, sur un vrai chantier. C’est l’ordre de toute façade isolée par l’extérieur et crépie.',
+      voir: 'Le chantier en photos',
       lieu: 'Mons · Université de Mons',
       etape: 'Étape',
       liste: {
@@ -517,11 +517,6 @@ export const fr = {
           legendes: ['Façade terminée', 'Façade terminée, autre point de vue'],
         },
       },
-    },
-
-    umons: {
-      texte: 'Des façades de bâtiments de l’Université de Mons (UMons), de l’échafaudage à la façade terminée.',
-      voir: 'Le chantier en photos',
     },
 
     realisations: {
@@ -583,23 +578,24 @@ export const fr = {
     },
 
     methode: {
-      titre: 'De votre appel à la dernière finition.',
+      titre: 'Votre façade, en [quatre étapes].',
+      texte: 'De votre premier appel à la façade terminée\u00a0: voici comment se passe un chantier avec Ely Facade.',
       etapes: [
         {
-          titre: 'Vous appelez',
-          texte: 'Donnez-nous la surface de votre façade (en mètres) et le type de travaux.',
+          titre: 'Vous nous appelez',
+          texte: 'Un appel ou un message WhatsApp\u00a0: la surface de votre façade et les travaux souhaités suffisent.',
         },
         {
-          titre: 'Nous venons voir',
-          texte: 'Elisei se déplace chez vous, gratuitement et sans engagement.',
+          titre: 'Elisei vient voir',
+          texte: 'Il se déplace chez vous et mesure votre façade. La visite est gratuite et sans engagement.',
         },
         {
           titre: 'Vous recevez le devis',
-          texte: 'Après la visite, Elisei vous envoie le devis, au prix du mètre carré de façade.',
+          texte: 'Un devis clair, au prix du mètre carré de façade. Vous décidez, sans pression.',
         },
         {
-          titre: 'Les travaux commencent',
-          texte: 'Si le devis vous convient.',
+          titre: 'Nous réalisons votre façade',
+          texte: 'Simi et l’équipe s’en chargent, de l’échafaudage à la finition. Garantie de 10\u00a0ans minimum.',
         },
       ],
     },

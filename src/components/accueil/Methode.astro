@@ -1,5 +1,12 @@
 ---
-/** Comment ça se passe, de l'appel à la dernière finition : quatre étapes reliées par un trait. */
+/**
+ * La méthode Ely Facade, juste après l'équipe : quatre étapes, de l'appel à la façade terminée.
+ * Ordinateur : quatre colonnes reliées par un trait qui finit sur la brique rouge.
+ * Téléphone : une frise verticale compacte. Tout tient sur un écran, avec le bouton de devis.
+ */
+import Bouton from '../Bouton.astro';
+import Souligne from '../Souligne.astro';
+import { lienDevis } from '../../data/entreprise';
 import { t, type Langue } from '../../i18n';
 
 interface Props {
@@ -7,13 +14,15 @@ interface Props {
 }
 
 const { langue } = Astro.props;
-const methode = t(langue).accueil.methode;
+const textes = t(langue);
+const methode = textes.accueil.methode;
 ---
 
 <section class="section methode" id="methode">
   <div class="wrap">
     <div class="tete" data-reveal>
-      <h2>{methode.titre}</h2>
+      <h2 data-trait><Souligne texte={methode.titre} /></h2>
+      <p>{methode.texte}</p>
     </div>
 
     <!-- Une vraie liste ordonnée : les numéros sont aussi lus par les lecteurs d'écran. -->
@@ -22,95 +31,138 @@ const methode = t(langue).accueil.methode;
         methode.etapes.map((etape, i) => (
           <li class="pas" data-reveal style={`--delai: ${i * 110}ms`}>
             <span class="pas__num" aria-hidden="true">
-              {i + 1}
+              0{i + 1}
             </span>
-            <h3>{etape.titre}</h3>
-            <p>{etape.texte}</p>
+            <div class="pas__texte">
+              <h3>{etape.titre}</h3>
+              <p>{etape.texte}</p>
+            </div>
           </li>
         ))
       }
     </ol>
+
+    <div class="methode__action" data-reveal>
+      <Bouton href={lienDevis(langue)} variante="accent" iconeApres="fleche-diag" large>{textes.actions.devis}</Bouton>
+    </div>
   </div>
 </section>
 
 <style>
+  .methode .tete {
+    margin-bottom: 20px;
+  }
+
   .methode__etapes {
     position: relative;
     display: grid;
-    gap: 32px;
+    gap: 18px;
     margin: 0;
     padding: 0;
     list-style: none;
   }
 
+  /* Téléphone : le numéro dans un rond, le texte à côté, un trait vertical relie les étapes. */
   .pas {
     position: relative;
-    display: flex;
-    flex-direction: column;
-    gap: 10px;
-    padding-left: 76px;
+    display: grid;
+    grid-template-columns: 48px minmax(0, 1fr);
+    gap: 16px;
+    align-items: start;
   }
 
   .pas__num {
-    position: absolute;
-    left: 0;
-    top: 0;
+    position: relative;
+    z-index: 1;
     display: inline-flex;
     align-items: center;
     justify-content: center;
-    width: 56px;
-    height: 56px;
-    border-radius: 18px;
+    width: 48px;
+    height: 48px;
+    border-radius: 50%;
     background: var(--color-ink);
     color: #fff;
     font-family: var(--font-display);
-    font-size: 24px;
+    font-size: 18px;
     font-weight: 800;
+    font-variant-numeric: tabular-nums;
   }
 
   .pas:last-child .pas__num {
     background: var(--color-accent);
   }
 
-  /* Le trait qui relie les étapes. */
   .pas:not(:last-child)::before {
     content: '';
     position: absolute;
-    left: 27px;
-    top: 64px;
-    bottom: -28px;
+    left: 23px;
+    top: 48px;
+    bottom: -18px;
     width: 2px;
-    background: repeating-linear-gradient(to bottom, var(--color-border) 0 8px, transparent 8px 14px);
+    background: var(--color-ink);
+    opacity: 0.18;
+  }
+
+  .pas__texte {
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+    padding-top: 2px;
   }
 
   .pas h3 {
-    font-size: clamp(22px, 1.9vw, 27px);
-    font-weight: 800;
+    font-size: clamp(19px, 5.2vw, 22px);
+    font-weight: 750;
+    letter-spacing: var(--tracking-phrase);
   }
 
   .pas p {
-    max-width: 34ch;
+    max-width: 38ch;
+    font-size: var(--size-small);
+    line-height: 1.5;
   }
 
+  .methode__action {
+    margin-top: 22px;
+  }
+
+  /* Ordinateur : quatre colonnes, le grand numéro au-dessus, un trait horizontal qui relie tout. */
   @media (min-width: 1000px) {
+    .methode .tete {
+      margin-bottom: 44px;
+    }
+
     .methode__etapes {
-      grid-template-columns: repeat(4, 1fr);
-      gap: 28px;
+      grid-template-columns: repeat(4, minmax(0, 1fr));
+      gap: 32px;
     }
 
     .pas {
-      padding-left: 0;
-      padding-top: 84px;
+      grid-template-columns: 1fr;
+      gap: 22px;
+    }
+
+    .pas__num {
+      width: 64px;
+      height: 64px;
+      font-size: 22px;
     }
 
     .pas:not(:last-child)::before {
-      left: 68px;
-      right: 0;
-      top: 27px;
+      left: 76px;
+      right: -20px;
+      top: 31px;
       bottom: auto;
       width: auto;
       height: 2px;
-      background: repeating-linear-gradient(to right, var(--color-border) 0 8px, transparent 8px 14px);
+    }
+
+    .pas h3 {
+      font-size: clamp(20px, 1.7vw, 24px);
+    }
+
+    .methode__action {
+      margin-top: 40px;
     }
   }
 </style>

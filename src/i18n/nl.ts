@@ -477,7 +477,6 @@ export const nl = {
     /** De emotionele zinnen tussen de secties. Het woord tussen haakjes wordt rood onderstreept. */
     emotions: {
       durer: { phrase: 'Een gevel die [blijft].' },
-      exigence: { phrase: 'Een huis of een universiteit: [dezelfde zorg].' },
     },
 
     avantApres: {
@@ -491,8 +490,9 @@ export const nl = {
 
     etapes: {
       titre: 'Van steiger tot afgewerkte [gevel].',
-      texte:
-        'Een werf van de Universiteit van Bergen, stap voor stap. Dit is de volgorde van elke gevel met buitenisolatie en pleisterwerk.',
+      chantier: 'Aan de Universiteit van Bergen',
+      texte: 'Stap voor stap, op een echte werf. Dit is de volgorde van elke gevel met buitenisolatie en pleisterwerk.',
+      voir: 'De werf in foto’s',
       lieu: 'Bergen · Universiteit van Bergen',
       etape: 'Stap',
       liste: {
@@ -517,11 +517,6 @@ export const nl = {
           legendes: ['Afgewerkte gevel', 'Afgewerkte gevel, ander standpunt'],
         },
       },
-    },
-
-    umons: {
-      texte: 'Gevels van gebouwen van de Universiteit van Bergen (UMONS), van de steiger tot de afgewerkte gevel.',
-      voir: 'De werf in beeld',
     },
 
     realisations: {
@@ -583,23 +578,24 @@ export const nl = {
     },
 
     methode: {
-      titre: 'Van uw telefoontje tot de laatste afwerking.',
+      titre: 'Uw gevel, in [vier stappen].',
+      texte: 'Van uw eerste telefoontje tot de afgewerkte gevel: zo verloopt een werf met Ely Facade.',
       etapes: [
         {
           titre: 'U belt ons',
-          texte: 'Geef ons de oppervlakte van uw gevel (in meter) en het soort werken.',
+          texte: 'Een telefoontje of een WhatsApp-bericht: de oppervlakte van uw gevel en de gewenste werken volstaan.',
         },
         {
-          titre: 'Wij komen kijken',
-          texte: 'Elisei komt bij u langs, gratis en zonder verplichting.',
+          titre: 'Elisei komt kijken',
+          texte: 'Hij komt bij u langs en meet uw gevel op. Het bezoek is gratis en vrijblijvend.',
         },
         {
           titre: 'U ontvangt de offerte',
-          texte: 'Na het bezoek stuurt Elisei u de offerte, tegen een prijs per vierkante meter gevel.',
+          texte: 'Een duidelijke offerte, tegen een prijs per vierkante meter gevel. U beslist, zonder druk.',
         },
         {
-          titre: 'De werken starten',
-          texte: 'Als de offerte u bevalt.',
+          titre: 'Wij maken uw gevel',
+          texte: 'Simi en het team nemen het over, van de steiger tot de afwerking. Minstens 10\u00a0jaar garantie.',
         },
       ],
     },

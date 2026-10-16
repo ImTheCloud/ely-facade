@@ -6,8 +6,9 @@
  * L'ordre des étapes est celui confirmé par Elisei ; les légendes ne disent que ce qu'on voit.
  */
 import { Image } from 'astro:assets';
+import Icon from '../Icon.astro';
 import Souligne from '../Souligne.astro';
-import { ETAPES_FACADE, photo } from '../../data/chantiers';
+import { ETAPES_FACADE, lienChantier, photo } from '../../data/chantiers';
 import { t, type Langue } from '../../i18n';
 
 interface Props {
@@ -31,6 +32,14 @@ const image = { widths: [480, 768, 1080, 1440], sizes: '(min-width: 900px) 640px
   <div class="wrap">
     <div class="tete" data-reveal>
       <h2 data-trait><Souligne texte={section.titre} /></h2>
+      <!-- Le lieu, en grand : un vrai chantier, à l'Université de Mons. -->
+      <a class="etapes__chantier" href={lienChantier('umons', langue)}>
+        {section.chantier}
+        <span class="etapes__voir">
+          {section.voir}
+          <Icon nom="fleche" taille={18} />
+        </span>
+      </a>
       <p>{section.texte}</p>
     </div>
 
@@ -63,6 +72,41 @@ const image = { widths: [480, 768, 1080, 1440], sizes: '(min-width: 900px) 640px
 </section>
 
 <style>
+  .etapes__chantier {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: baseline;
+    gap: 6px 16px;
+    font-family: var(--font-display);
+    font-size: clamp(26px, 3vw, 40px);
+    font-weight: 800;
+    line-height: 1.05;
+    letter-spacing: var(--tracking-phrase);
+    color: var(--color-accent);
+    text-decoration: none;
+  }
+
+  .etapes__voir {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    font-family: var(--font-text);
+    font-size: var(--size-small);
+    font-weight: 700;
+    letter-spacing: 0;
+    color: var(--color-ink);
+  }
+
+  .etapes__chantier:hover .etapes__voir {
+    text-decoration: underline;
+  }
+
+  .etapes__chantier:focus-visible {
+    outline: 3px solid var(--color-accent);
+    outline-offset: 4px;
+    border-radius: 8px;
+  }
+
   .etapes__liste {
     display: grid;
     gap: 44px;

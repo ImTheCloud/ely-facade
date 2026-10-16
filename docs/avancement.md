@@ -9,6 +9,10 @@
 - **Façon de travailler** : chaque nouveau changement se fait dans **une nouvelle branche** partie de `main`, puis est fusionné dans `main` une fois validé.
 
 ### Branche `ameliorations-accueil` (16 octobre 2026, à tester par Claudiu avant fusion)
+- **Accueil réorganisé** : haut de page → équipe → **méthode « Votre façade, en quatre étapes »** (remontée, nouvelles phrases, tient sur un écran, bouton de devis) → avant/après → chiffres → carte → étapes → métiers → FAQ → devis. Section UMons et phrase « Une maison ou une université » supprimées (doublon) ; dans les étapes, « À l'Université de Mons » en grand avec le lien vers le chantier.
+- **Chiffres** : 8 chiffres, valeur + mot clé en grand (6 ans d'expérience, 50+ chantiers, 2 gérants, 8 personnes, 9 services, 12/12 mois par an, 10 ans de garantie, 0 € la visite), détail en petit.
+- **Nouveau service : traitement hydrofuge** (pages FR/NL, case du formulaire, illustration de gouttes) : 9 services. À confirmer par Elisei (noté dans le suivi client).
+- **Équipe** : icône du logo devant « ELY FACADE », les têtes ne touchent plus le titre.
 - **Formulaire sur ordinateur** : plus compact (tuiles en une ligne : icône, nom, case ; titre et marges réduits) ; les boutons Continuer / Envoyer restent collés en bas de l'écran, comme sur téléphone. Barre des boutons sans flou sur téléphone (plus fluide).
 - **Flèches** : vers Elisei et Simi, des flèches rouges dessinées à main levée (sur le côté sur ordinateur, au-dessus du prénom sur téléphone). Sur la carte, la flèche rouge bouge et passe d'une commune à l'autre toutes les 3 secondes, jusqu'au premier toucher.
 - **Tailles de texte** : sur téléphone, corps 18 px, petits textes 16 px, très petits 14 px, aides du formulaire 15 px. Sur ordinateur, grands titres réduits (titres de section 62 px au plus, haut de page 96 px) et textes 18/16/14 px, pour que les sections tiennent à l'écran. **Métiers (ordinateur)** : cartes compactes (description sur 3 lignes, flèche en haut à droite), les huit tiennent sur un écran de 800 px. Vérifié : rien ne déborde à 320 et 390 px (FR et NL).
