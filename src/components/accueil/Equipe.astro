@@ -127,13 +127,9 @@ const equipe = t(langue).accueil.equipe;
     align-items: end;
     /* Les têtes passent devant le bas du nom. */
     margin-top: -3.5cqi;
-  }
-
-  @media (min-width: 700px) {
-    .scene__freres {
-      gap: 2cqi;
-      padding-inline: 4cqi;
-    }
+    /* Les deux frères occupent le centre de la scène, pas toute sa largeur : ni trop grands, ni collés aux bords. */
+    gap: 3cqi;
+    padding-inline: 12cqi;
   }
 
   .portrait {
