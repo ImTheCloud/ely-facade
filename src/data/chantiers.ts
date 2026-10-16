@@ -66,7 +66,9 @@ export const CHANTIERS: Chantier[] = [
     cle: 'namur-immeuble',
     commune: 'namur',
     slug: SLUGS_CHANTIERS['namur-immeuble'],
-    couverture: 'accueil/hero-namur',
+    // La couverture est l'immeuble de l'avant/après. La photo du haut de l'accueil est prise sur le même site,
+    // mais ce n'est peut-être pas le même bâtiment (à confirmer par Elisei) : elle reste à la fin de la galerie.
+    couverture: 'namur-immeuble-3-etages/apres-rue',
     photos: [
       'namur-immeuble-3-etages/pendant-face',
       'namur-immeuble-3-etages/pendant-rue',
