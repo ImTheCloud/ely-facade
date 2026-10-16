@@ -562,7 +562,7 @@ export const fr = {
           prenom: 'Elisei',
           role: 'Visite, devis et chantier',
           roleCourt: 'Devis et chantier',
-          texte: 'Il mesure votre façade, vous envoie le devis, puis travaille sur le chantier.',
+          texte: 'Il mesure votre façade, vous envoie le devis et travaille sur le chantier.',
         },
         {
           prenom: 'Simi',
