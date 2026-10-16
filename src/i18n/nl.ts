@@ -650,22 +650,6 @@ export const nl = {
     devis: {
       titre: 'Uw gevel verdient te stralen. [Laten we praten].',
       texte: 'Beschrijf uw werken in drie stappen.',
-      calculateur: {
-        titre: 'Simulator voor de oppervlakte',
-        texte:
-          'Kent u de oppervlakte van uw gevel niet? Deze simulator schat ze op basis van de breedte en het aantal bouwlagen en voegt ze toe aan uw aanvraag.',
-        largeur: 'Breedte (m)',
-        niveaux: 'Bouwlagen',
-        niveauxAide: 'gelijkvloers inbegrepen',
-        moins: 'Eén bouwlaag minder',
-        plus: 'Eén bouwlaag meer',
-        hypothese: 'Berekend met 3\u00a0m per bouwlaag.',
-        resultat: 'Geschatte oppervlakte',
-        unite: 'm²',
-        utiliser: 'Toevoegen aan mijn aanvraag',
-        ajoute: 'Toegevoegd aan uw aanvraag',
-        note: 'Elisei meet alles nauwkeurig op tijdens het gratis plaatsbezoek.',
-      },
     },
 
     contact: {
@@ -697,7 +681,19 @@ export const nl = {
     batiments: ['Huis', 'Appartementsgebouw', 'Handelspand', 'Ander'],
     surface: 'Geveloppervlakte (m²)',
     surfaceExemple: 'Bv.: 120',
-    surfaceAide: 'Een schatting volstaat. Weet u het niet? Laat het leeg, Elisei meet ter plaatse.',
+    surfaceAide: 'Een schatting volstaat. Weet u het niet? Bereken ze hieronder, of laat het leeg: Elisei meet ter plaatse.',
+    simulateur: {
+      ouvrir: 'Oppervlakte berekenen',
+      largeur: 'Breedte',
+      largeurAide: 'in meter',
+      niveaux: 'Bouwlagen',
+      niveauxAide: 'gelijkvloers inbegrepen',
+      moinsLargeur: 'Eén meter minder',
+      plusLargeur: 'Eén meter meer',
+      moins: 'Eén bouwlaag minder',
+      plus: 'Eén bouwlaag meer',
+      hypothese: 'Breedte × bouwlagen × 3\u00a0m hoogte per bouwlaag. De oppervlakte wordt hierboven ingevuld.',
+    },
 
     q3: 'Waar kunnen we u antwoorden?',
     nom: 'Uw naam',

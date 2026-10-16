@@ -650,22 +650,6 @@ export const fr = {
     devis: {
       titre: 'Votre façade mérite de briller. [Parlons-en].',
       texte: 'Décrivez vos travaux en trois étapes.',
-      calculateur: {
-        titre: 'Simulateur de surface',
-        texte:
-          'Vous ne connaissez pas la surface de votre façade\u00a0? Ce simulateur l’estime à partir de sa largeur et de son nombre de niveaux, puis l’ajoute à votre demande.',
-        largeur: 'Largeur (m)',
-        niveaux: 'Niveaux',
-        niveauxAide: 'rez-de-chaussée compris',
-        moins: 'Un niveau de moins',
-        plus: 'Un niveau de plus',
-        hypothese: 'Calcul avec 3\u00a0m par niveau.',
-        resultat: 'Surface estimée',
-        unite: 'm²',
-        utiliser: 'Ajouter à ma demande',
-        ajoute: 'Ajouté à votre demande',
-        note: 'Elisei mesurera précisément sur place, lors de la visite gratuite.',
-      },
     },
 
     contact: {
@@ -697,7 +681,19 @@ export const fr = {
     batiments: ['Maison', 'Immeuble', 'Commerce', 'Autre'],
     surface: 'Surface de façade (m²)',
     surfaceExemple: 'Ex.\u00a0: 120',
-    surfaceAide: 'Une estimation suffit. Vous ne savez pas\u00a0? Laissez vide, Elisei mesurera sur place.',
+    surfaceAide: 'Une estimation suffit. Vous ne savez pas\u00a0? Calculez-la ci-dessous, ou laissez vide\u00a0: Elisei mesurera sur place.',
+    simulateur: {
+      ouvrir: 'Calculer la surface',
+      largeur: 'Largeur',
+      largeurAide: 'en mètres',
+      niveaux: 'Niveaux',
+      niveauxAide: 'rez-de-chaussée compris',
+      moinsLargeur: 'Un mètre de moins',
+      plusLargeur: 'Un mètre de plus',
+      moins: 'Un niveau de moins',
+      plus: 'Un niveau de plus',
+      hypothese: 'Largeur × niveaux × 3\u00a0m de hauteur par niveau. La surface est remplie au-dessus.',
+    },
 
     q3: 'Où pouvons-nous vous répondre\u00a0?',
     nom: 'Votre nom',

@@ -1,10 +1,9 @@
 ---
 /**
- * La fin de l'accueil (#devis) : le titre, puis le formulaire de devis à gauche et, à droite, le simulateur de surface
- * qui le pré-remplit. Tous les boutons « visite gratuite » mènent ici.
+ * La fin de l'accueil (#devis) : le titre, puis le formulaire de devis (le simulateur de surface est dans son étape 2).
+ * Tous les boutons « visite gratuite » mènent ici.
  */
 import FormulaireDevis from '../FormulaireDevis.astro';
-import Icon from '../Icon.astro';
 import Souligne from '../Souligne.astro';
 import { t, type Langue } from '../../i18n';
 
@@ -15,7 +14,6 @@ interface Props {
 const { langue } = Astro.props;
 const textes = t(langue);
 const devis = textes.accueil.devis;
-const calcul = devis.calculateur;
 ---
 
 <section class="section devis" id="devis" aria-labelledby="devis-titre">
@@ -28,45 +26,8 @@ const calcul = devis.calculateur;
     <div class="devis__formulaire" data-reveal style="--delai: 120ms">
       <FormulaireDevis langue={langue} />
     </div>
-
-    <div class="devis__aides">
-      <!-- Calculateur de surface : seulement avec JavaScript (sinon, Elisei mesure sur place). -->
-      <div class="aide calcul" data-calcul hidden>
-        <p class="aide__titre">{calcul.titre}</p>
-        <p class="aide__texte">{calcul.texte}</p>
-        <div class="calcul__champs">
-          <label class="calcul__champ">
-            <span>{calcul.largeur}</span>
-            <input type="number" min="1" max="300" step="0.5" value="8" inputmode="decimal" data-largeur />
-          </label>
-          <div class="calcul__champ">
-            <label for="calcul-niveaux">
-              {calcul.niveaux} <small>({calcul.niveauxAide})</small>
-            </label>
-            <div class="calcul__pas">
-              <button type="button" data-moins aria-label={calcul.moins}>−</button>
-              <input id="calcul-niveaux" type="number" min="1" max="30" step="1" value="2" inputmode="numeric" data-niveaux />
-              <button type="button" data-plus aria-label={calcul.plus}>+</button>
-            </div>
-          </div>
-        </div>
-        <p class="calcul__resultat">
-          <span>{calcul.resultat}</span>
-          <output data-resultat aria-live="polite">48 {calcul.unite}</output>
-        </p>
-        <p class="calcul__hypothese">{calcul.hypothese} {calcul.note}</p>
-        <button type="button" class="calcul__utiliser" data-utiliser data-ajoute={calcul.ajoute} data-unite={calcul.unite}>
-          <Icon nom="check" taille={18} epaisseur={2.4} />
-          <span>{calcul.utiliser}</span>
-        </button>
-      </div>
-    </div>
   </div>
 </section>
-
-<script>
-  import '~/scripts/calcul';
-</script>
 
 <style>
   .devis {
@@ -78,8 +39,7 @@ const calcul = devis.calculateur;
     gap: 32px;
     grid-template-areas:
       'tete'
-      'formulaire'
-      'aides';
+      'formulaire';
   }
 
   .devis__tete {
@@ -104,167 +64,18 @@ const calcul = devis.calculateur;
     grid-area: formulaire;
   }
 
-  .devis__aides {
-    grid-area: aides;
-    display: grid;
-    gap: var(--tile-gap);
-    align-content: start;
-  }
-
-  .aide {
-    display: flex;
-    flex-direction: column;
-    align-items: flex-start;
-    gap: 12px;
-    padding: 24px;
-    border: 1px solid var(--color-border);
-    border-radius: var(--radius-tile);
-    background: var(--color-card);
-    box-shadow: var(--shadow-tile);
-  }
-
-  .aide__titre {
-    font-family: var(--font-display);
-    font-size: 21px;
-    font-weight: 800;
-    letter-spacing: -0.01em;
-    color: var(--color-ink);
-  }
-
-  .aide__texte {
-    font-size: var(--size-small);
-  }
-
-  /* --- Calculateur --- */
-  /* Côte à côte s'il y a la place, sinon l'un sous l'autre (téléphone) ; les champs restent alignés en bas. */
-  .calcul__champs {
-    display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(170px, 1fr));
-    align-items: end;
-    gap: 14px;
-    width: 100%;
-  }
-
-  .calcul__champ {
-    display: flex;
-    flex-direction: column;
-    gap: 6px;
-    font-size: var(--size-tiny);
-    font-weight: 650;
-    color: var(--color-ink);
-  }
-
-  .calcul__champ small {
-    font-weight: 500;
-    color: var(--color-muted);
-  }
-
-  .calcul__champ input {
-    width: 100%;
-    min-height: 48px;
-    padding: 0 6px;
-    border: 1.5px solid var(--color-border-field);
-    border-radius: 12px;
-    background: #fff;
-    font: 650 18px/1 var(--font-text);
-    color: var(--color-ink);
-    text-align: center;
-    -moz-appearance: textfield;
-  }
-
-  .calcul__champ input::-webkit-outer-spin-button,
-  .calcul__champ input::-webkit-inner-spin-button {
-    -webkit-appearance: none;
-    margin: 0;
-  }
-
-  .calcul__pas {
-    display: grid;
-    grid-template-columns: 48px minmax(0, 1fr) 48px;
-    gap: 6px;
-  }
-
-  .calcul__pas button {
-    min-height: 48px;
-    border: 0;
-    border-radius: 12px;
-    background: var(--color-surface);
-    font: 600 22px/1 var(--font-text);
-    color: var(--color-ink);
-    cursor: pointer;
-  }
-
-  .calcul__pas button:hover {
-    background: var(--color-border);
-  }
-
-  .calcul__resultat {
-    display: flex;
-    align-items: baseline;
-    justify-content: space-between;
-    gap: 12px;
-    width: 100%;
-    padding-top: 6px;
-    border-top: 1px dashed var(--color-border);
-    font-size: var(--size-small);
-    font-weight: 600;
-  }
-
-  .calcul__resultat output {
-    font-family: var(--font-display);
-    font-size: 40px;
-    font-weight: 800;
-    letter-spacing: -0.03em;
-    color: var(--color-ink);
-  }
-
-  .calcul__hypothese {
-    font-size: var(--size-tiny);
-    color: var(--color-muted);
-  }
-
-  .calcul__utiliser {
-    display: inline-flex;
-    align-items: center;
-    gap: 10px;
-    min-height: 48px;
-    padding: 0 20px;
-    border: 0;
-    border-radius: var(--radius-pill);
-    background: var(--color-ink);
-    color: #fff;
-    font: 650 15px/1 var(--font-text);
-    cursor: pointer;
-    transition: background-color var(--speed) var(--ease);
-  }
-
-  .calcul__utiliser:hover {
-    background: #343b42;
-  }
-
-  .calcul__utiliser.est-ajoute {
-    background: var(--color-whatsapp);
-  }
-
   @media (min-width: 1000px) {
-    /* Le titre en haut sur toute la largeur ; dessous, le formulaire (l'essentiel) et le simulateur qui reste en vue. */
+    /* Le titre à gauche, qui reste en vue ; le formulaire à droite. */
     .devis__grille {
-      grid-template-columns: minmax(0, 1.2fr) minmax(0, 0.8fr);
-      grid-template-areas:
-        'tete tete'
-        'formulaire aides';
-      column-gap: 48px;
-      row-gap: 36px;
+      grid-template-columns: minmax(0, 0.9fr) minmax(0, 1.1fr);
+      grid-template-areas: 'tete formulaire';
+      column-gap: 64px;
       align-items: start;
     }
 
-    .devis__aides {
+    .devis__tete {
       position: sticky;
       top: calc(var(--header-h) + 24px);
-    }
-
-    .aide {
-      padding: 28px;
     }
   }
 </style>

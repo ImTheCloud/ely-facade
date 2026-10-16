@@ -117,6 +117,34 @@ const choix = [
         <input type="text" id={`${id}-surface`} name="surface" inputmode="numeric" placeholder={f.surfaceExemple} />
         <span class="champ__aide">{f.surfaceAide}</span>
       </div>
+
+      <!-- Le simulateur de surface : largeur × niveaux, il remplit le champ au-dessus. Seulement avec JavaScript. -->
+      <details class="simulateur" data-simulateur hidden>
+        <summary>
+          <Icon nom="regle" taille={18} />
+          {f.simulateur.ouvrir}
+        </summary>
+        <div class="simulateur__corps">
+          {
+            [
+              { cle: 'largeur', libelle: f.simulateur.largeur, aide: f.simulateur.largeurAide, moins: f.simulateur.moinsLargeur, plus: f.simulateur.plusLargeur, valeur: 8, max: 300, pas: 0.5, mode: 'decimal' as const },
+              { cle: 'niveaux', libelle: f.simulateur.niveaux, aide: f.simulateur.niveauxAide, moins: f.simulateur.moins, plus: f.simulateur.plus, valeur: 2, max: 30, pas: 1, mode: 'numeric' as const },
+            ].map((ligne) => (
+              <div class="simulateur__ligne">
+                <label class="simulateur__libelle" for={`${id}-${ligne.cle}`}>
+                  {ligne.libelle} <small>{ligne.aide}</small>
+                </label>
+                <div class="simulateur__pas">
+                  <button type="button" data-pas="-1" data-cible={`${id}-${ligne.cle}`} aria-label={ligne.moins}>−</button>
+                  <input id={`${id}-${ligne.cle}`} type="number" min="1" max={ligne.max} step={ligne.pas} value={ligne.valeur} inputmode={ligne.mode} data-facteur />
+                  <button type="button" data-pas="1" data-cible={`${id}-${ligne.cle}`} aria-label={ligne.plus}>+</button>
+                </div>
+              </div>
+            ))
+          }
+          <p class="simulateur__note">{f.simulateur.hypothese}</p>
+        </div>
+      </details>
     </fieldset>
 
     <!-- Étape 3 : les coordonnées -->
@@ -203,4 +231,5 @@ const choix = [
 
 <script>
   import '~/scripts/formulaire-etapes';
+  import '~/scripts/simulateur';
 </script>

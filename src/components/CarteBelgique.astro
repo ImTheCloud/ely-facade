@@ -146,7 +146,7 @@ const identifiant = 'carte';
   <!-- Téléphone : les communes se choisissent aussi ici, plus faciles à toucher que les points serrés de la carte. -->
   <div class="carte__choix" role="group" aria-label={textes.accueil.realisations.pastille}>
     {
-      fiches.map((fiche, i) => (
+      fiches.map((fiche) => (
         <button type="button" class="choix" aria-expanded="false" aria-controls={`${identifiant}-${fiche.commune}`} data-point={fiche.commune}>
           {textes.communes[fiche.commune]}
         </button>

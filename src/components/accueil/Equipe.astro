@@ -1,8 +1,8 @@
 ---
 /**
  * Qui vient chez vous : les deux frères, détourés sur fond blanc, devant leur nom de famille écrit en très grand.
- * Sous chacun, son prénom et son rôle ; puis une phrase et deux lignes. À l'arrivée, le nom monte puis les frères
- * se posent ; tout se coupe avec « moins d'animations ».
+ * Sous chacun, son prénom et son rôle ; puis une phrase et deux lignes. La scène ne bouge pas : les frères sont là,
+ * tout simplement.
  */
 import { Image } from 'astro:assets';
 import Souligne from '../Souligne.astro';
@@ -27,7 +27,7 @@ const equipe = t(langue).accueil.equipe;
       <p class="equipe__texte">{equipe.texte}</p>
     </header>
 
-    <div class="scene" data-reveal>
+    <div class="scene">
       <!-- Le nom de famille, en très grand derrière les deux frères. -->
       <p class="scene__nom" aria-hidden="true">Ungureanu</p>
       <div class="scene__freres">
@@ -127,9 +127,7 @@ const equipe = t(langue).accueil.equipe;
     align-items: end;
     /* Les têtes passent devant le bas du nom. */
     margin-top: -3.5cqi;
-    /* Les deux frères occupent le centre de la scène, pas toute sa largeur : ni trop grands, ni collés aux bords. */
-    gap: 3cqi;
-    padding-inline: 12cqi;
+    padding-inline: 4cqi;
   }
 
   .portrait {
@@ -142,7 +140,10 @@ const equipe = t(langue).accueil.equipe;
     height: auto;
   }
 
-  /* Les deux détourages sont recadrés visage au centre, à la même taille : la paire est centrée sur la brique. */
+  /* La photo de Simi a plus d'épaule à droite : il se rapproche de son frère pour que la paire soit centrée. */
+  .portrait:last-child {
+    transform: translateX(-7%);
+  }
 
   .scene__sol {
     position: relative;
@@ -236,37 +237,6 @@ const equipe = t(langue).accueil.equipe;
     .equipe__freres {
       grid-template-columns: repeat(2, minmax(0, 1fr));
       gap: clamp(32px, 6vw, 96px);
-    }
-  }
-
-  /* L'arrivée : le nom monte, puis les deux frères se posent, puis la brique. */
-  @media (prefers-reduced-motion: no-preference) {
-    :global(.js) .scene__nom {
-      transform: translateY(30%);
-      transition: transform 1000ms var(--ease-out) 100ms;
-    }
-
-    :global(.js) .portrait {
-      opacity: 0;
-      transform: translateY(40px);
-      transition:
-        opacity 900ms var(--ease-out) calc(350ms + var(--i) * 150ms),
-        transform 900ms var(--ease-out) calc(350ms + var(--i) * 150ms);
-    }
-
-    :global(.js) .scene__sol i {
-      transform: translate(-50%, -50%) scale(0) rotate(-20deg);
-      transition: transform 600ms cubic-bezier(0.34, 1.56, 0.64, 1) 1000ms;
-    }
-
-    :global(.js) .scene.est-visible .scene__nom,
-    :global(.js) .scene.est-visible .portrait {
-      opacity: 1;
-      transform: none;
-    }
-
-    :global(.js) .scene.est-visible .scene__sol i {
-      transform: translate(-50%, -50%);
     }
   }
 </style>
