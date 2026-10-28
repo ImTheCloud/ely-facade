@@ -1,6 +1,6 @@
 import { fr } from './fr';
 import { nl } from './nl';
-import { SLUGS_CHANTIERS } from './slugs';
+import { SLUGS_CHANTIERS, SLUGS_METIERS } from './slugs';
 
 export type Langue = 'fr' | 'nl';
 
@@ -34,9 +34,10 @@ export function chemin(cle: PageCle, langue: Langue): string {
   return ROUTES[cle][langue];
 }
 
-/** Les sous-pages traduites : /realisations/halle-maison/ ↔ /nl/realisaties/halle-woning/. */
+/** Les sous-pages traduites : /realisations/halle-maison/ ↔ /nl/realisaties/halle-woning/, /services/rejointoiement/ ↔ /nl/diensten/voegwerk/. */
 const SOUS_PAGES: Partial<Record<PageCle, Record<string, Record<Langue, string>>>> = {
   realisations: SLUGS_CHANTIERS,
+  services: SLUGS_METIERS,
 };
 
 /**

@@ -303,6 +303,12 @@ export const nl = {
       titre: 'Een project voor uw gevel?',
       texte: 'Gratis en vrijblijvend plaatsbezoek. De offerte wordt opgemaakt per vierkante meter gevel.',
     },
+    metierPage: {
+      inclus: 'Wat deze dienst omvat',
+      realisations: 'Bekijk onze realisaties',
+      autres: 'Onze andere diensten',
+      tous: 'Al onze diensten',
+    },
   },
 
   /** De pagina « Realisaties » en de pagina’s per werf. */
@@ -463,6 +469,9 @@ export const nl = {
       titre: 'Onze gevelvakken | Ely Facade',
       description:
         'De hele gevel, van A tot Z: gevelpleister, isolatie, schilderwerk, reiniging, voegwerk… Overal in België. Gratis plaatsbezoek, minstens 10\u00a0jaar garantie.',
+    },
+    metier: {
+      titre: '{service} overal in België | Ely Facade',
     },
     realisations: {
       titre: 'Onze realisaties | Ely Facade',

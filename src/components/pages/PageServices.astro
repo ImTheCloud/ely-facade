@@ -1,5 +1,5 @@
 ---
-/** La page « Services » : les dix métiers de la façade et leurs détails sur une seule page, sans page par métier. Données structurées « Service » pour chacun. */
+/** La page « Services » : les métiers de la façade et leurs détails sur une seule page ; chaque carte mène à la page du métier. Données structurées « Service » pour chacun. */
 import AppelDevis from '../AppelDevis.astro';
 import Icon from '../Icon.astro';
 import IntroPage from '../IntroPage.astro';
@@ -7,7 +7,7 @@ import Methode from '../accueil/Methode.astro';
 import Atouts from './Atouts.astro';
 import BaseLayout from '~/layouts/BaseLayout.astro';
 import { entreprise, idEntreprise } from '~/data/entreprise';
-import { METIERS } from '~/data/metiers';
+import { METIERS, lienMetier } from '~/data/metiers';
 import { chemin, t, type Langue } from '~/i18n';
 
 interface Props {
@@ -28,7 +28,7 @@ const donnees = METIERS.map((metier) => {
     name: m.titre,
     serviceType: m.titre,
     description: m.description,
-    url: new URL(`${lienPage}#${metier.cle}`, Astro.site).href,
+    url: new URL(lienMetier(metier.cle, langue), Astro.site).href,
     areaServed: { '@type': 'Country', name: textes.pays },
     provider: {
       '@type': 'GeneralContractor',
@@ -83,6 +83,10 @@ const donnees = METIERS.map((metier) => {
                       </li>
                     ))}
                   </ul>
+                  <a class="metier__lien" href={lienMetier(metier.cle, langue)}>
+                    {textes.accueil.metiers.voir}
+                    <Icon nom="fleche" taille={16} />
+                  </a>
                 </details>
               </li>
             );
@@ -173,6 +177,28 @@ const donnees = METIERS.map((metier) => {
     border-radius: 50%;
     background: var(--color-accent-soft);
     color: var(--color-accent);
+  }
+
+  .metier__lien {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    min-height: 44px;
+    margin-top: 6px;
+    font-size: 15px;
+    font-weight: 650;
+    color: var(--color-ink);
+    text-decoration: none;
+  }
+
+  .metier__lien:hover {
+    color: var(--color-accent);
+  }
+
+  .metier__lien:focus-visible {
+    outline: 2px solid var(--color-accent);
+    outline-offset: 3px;
+    border-radius: 8px;
   }
 
   .metier__details > summary {

@@ -1,0 +1,13 @@
+---
+import PageMetier from '~/components/pages/PageMetier.astro';
+import { METIERS, type CleMetier } from '~/data/metiers';
+import { SLUGS_METIERS } from '~/i18n/slugs';
+
+export function getStaticPaths() {
+  return METIERS.map(({ cle }) => ({ params: { slug: SLUGS_METIERS[cle].nl }, props: { cle } }));
+}
+
+const { cle } = Astro.props as { cle: CleMetier };
+---
+
+<PageMetier langue="nl" cle={cle} />

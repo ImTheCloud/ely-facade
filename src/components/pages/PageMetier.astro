@@ -1,0 +1,218 @@
+---
+/**
+ * La page d'un métier (/services/crepi-et-enduit-de-facade/) : ce que comprend le service, les autres métiers, le devis.
+ * Les textes viennent de metiers.<clé> (les mêmes que la page Services) ; données structurées « Service ».
+ */
+import AppelDevis from '../AppelDevis.astro';
+import Bouton from '../Bouton.astro';
+import Icon from '../Icon.astro';
+import IntroPage from '../IntroPage.astro';
+import Atouts from './Atouts.astro';
+import BaseLayout from '~/layouts/BaseLayout.astro';
+import { entreprise, idEntreprise } from '~/data/entreprise';
+import { METIERS, lienMetier, type CleMetier } from '~/data/metiers';
+import { chemin, t, type Langue } from '~/i18n';
+
+interface Props {
+  langue: Langue;
+  cle: CleMetier;
+}
+
+const { langue, cle } = Astro.props;
+const textes = t(langue);
+const p = textes.services.metierPage;
+const m = textes.metiers[cle];
+const metier = METIERS.find((autre) => autre.cle === cle)!;
+const autres = METIERS.filter((autre) => autre.cle !== cle);
+const lien = lienMetier(cle, langue);
+
+const donnees = {
+  '@context': 'https://schema.org',
+  '@type': 'Service',
+  name: m.titre,
+  serviceType: m.titre,
+  description: m.description,
+  url: new URL(lien, Astro.site).href,
+  areaServed: { '@type': 'Country', name: textes.pays },
+  provider: {
+    '@type': 'GeneralContractor',
+    '@id': idEntreprise(Astro.site!),
+    name: entreprise.nomCourt,
+    telephone: entreprise.telephoneLien,
+    url: new URL(chemin('accueil', langue), Astro.site).href,
+  },
+};
+---
+
+<BaseLayout langue={langue} titre={textes.pages.metier.titre.replace('{service}', m.titre)} description={m.description}>
+  <script type="application/ld+json" set:html={JSON.stringify(donnees)} />
+
+  <IntroPage
+    langue={langue}
+    fil={[
+      { libelle: textes.nav.services, href: chemin('services', langue) },
+      { libelle: m.titre, href: lien },
+    ]}
+    titre={m.titre}
+    texte={m.court}
+  >
+    <div class="actions">
+      <Bouton href={`${chemin('contact', langue)}#devis`} variante="accent" iconeApres="fleche-diag" large>{textes.accueil.hero.bouton}</Bouton>
+      <Bouton href={chemin('realisations', langue)} variante="secondaire" large>{p.realisations}</Bouton>
+    </div>
+    <span slot="visuel" class="icone-grande" aria-hidden="true">
+      <Icon nom={metier.icone} taille={96} epaisseur={1.4} />
+    </span>
+  </IntroPage>
+
+  <section class="section inclus">
+    <div class="wrap">
+      <h2>{p.inclus}</h2>
+      <ul class="inclus__points">
+        {
+          m.points.map((point) => (
+            <li class="tuile-bento">
+              <span class="inclus__coche" aria-hidden="true">
+                <Icon nom="check" taille={16} epaisseur={2.8} />
+              </span>
+              {point}
+            </li>
+          ))
+        }
+      </ul>
+    </div>
+  </section>
+
+  <Atouts langue={langue} materiaux={cle === 'crepi' || cle === 'peinture'} />
+
+  <section class="section autres">
+    <div class="wrap">
+      <h2>{p.autres}</h2>
+      <ul class="autres__liste">
+        {
+          autres.map((autre) => (
+            <li>
+              <a class="tuile-bento autre" href={lienMetier(autre.cle, langue)}>
+                <span class="autre__icone">
+                  <Icon nom={autre.icone} taille={22} />
+                </span>
+                {textes.metiers[autre.cle].titre}
+              </a>
+            </li>
+          ))
+        }
+      </ul>
+      <Bouton href={chemin('services', langue)} variante="secondaire" iconeApres="fleche">{p.tous}</Bouton>
+    </div>
+  </section>
+
+  <AppelDevis langue={langue} titre={textes.services.devis.titre} texte={textes.services.devis.texte} />
+</BaseLayout>
+
+<style>
+  .actions {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 12px;
+  }
+
+  .icone-grande {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: clamp(140px, 22vw, 220px);
+    aspect-ratio: 1;
+    border-radius: var(--radius-tile);
+    background: var(--color-accent-soft);
+    color: var(--color-accent);
+  }
+
+  .inclus h2,
+  .autres h2 {
+    margin-bottom: clamp(20px, 3vw, 32px);
+  }
+
+  .inclus__points {
+    display: grid;
+    gap: var(--tile-gap);
+    margin: 0;
+    padding: 0;
+    list-style: none;
+  }
+
+  .inclus__points li {
+    display: flex;
+    gap: 14px;
+    padding: 20px 22px;
+    font-size: var(--size-body);
+    line-height: 1.45;
+    color: var(--color-ink);
+  }
+
+  .inclus__coche {
+    display: inline-flex;
+    flex: none;
+    align-items: center;
+    justify-content: center;
+    width: 26px;
+    height: 26px;
+    margin-top: 1px;
+    border-radius: 50%;
+    background: var(--color-accent-soft);
+    color: var(--color-accent);
+  }
+
+  .autres__liste {
+    display: grid;
+    gap: 10px;
+    margin: 0 0 28px;
+    padding: 0;
+    list-style: none;
+  }
+
+  .autre {
+    display: flex;
+    align-items: center;
+    gap: 14px;
+    min-height: var(--tap-min);
+    padding: 12px 16px;
+    font-weight: 650;
+    color: var(--color-ink);
+    text-decoration: none;
+    transition: box-shadow var(--speed) var(--ease);
+  }
+
+  .autre:hover {
+    box-shadow: var(--shadow-lift);
+  }
+
+  .autre:focus-visible {
+    outline: 2px solid var(--color-accent);
+    outline-offset: 3px;
+  }
+
+  .autre__icone {
+    display: inline-flex;
+    flex: none;
+    align-items: center;
+    justify-content: center;
+    width: 40px;
+    height: 40px;
+    border-radius: 12px;
+    background: var(--color-accent-soft);
+    color: var(--color-accent);
+  }
+
+  @media (min-width: 700px) {
+    .inclus__points,
+    .autres__liste {
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+    }
+  }
+
+  @media (min-width: 1100px) {
+    .autres__liste {
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+    }
+  }
+</style>

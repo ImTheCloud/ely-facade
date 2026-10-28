@@ -303,6 +303,13 @@ export const fr = {
       titre: 'Un projet pour votre façade\u00a0?',
       texte: 'Visite sur place gratuite, sans engagement. Le devis est établi au mètre carré de façade.',
     },
+    /** La page d'un métier. */
+    metierPage: {
+      inclus: 'Ce que comprend ce service',
+      realisations: 'Voir nos réalisations',
+      autres: 'Nos autres services',
+      tous: 'Tous nos services',
+    },
   },
 
   /** La page « Réalisations » et les pages de chaque chantier. */
@@ -463,6 +470,10 @@ export const fr = {
       titre: 'Nos métiers de façade | Ely Facade',
       description:
         'Toute la façade, de A à Z\u00a0: crépi, isolation, peinture, nettoyage, rejointoiement… Partout en Belgique. Visite gratuite, garantie de 10\u00a0ans minimum.',
+    },
+    metier: {
+      /** {service} : le nom du métier (metiers.<clé>.titre). */
+      titre: '{service} partout en Belgique | Ely Facade',
     },
     realisations: {
       titre: 'Nos réalisations | Ely Facade',

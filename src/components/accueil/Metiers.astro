@@ -1,8 +1,8 @@
 ---
-/** Les métiers de la façade, chacun mène à son détail sur la page Services. */
+/** Les métiers de la façade, chacun mène à sa page. */
 import Icon from '../Icon.astro';
-import { METIERS } from '../../data/metiers';
-import { chemin, t, type Langue } from '../../i18n';
+import { METIERS, lienMetier } from '../../data/metiers';
+import { t, type Langue } from '../../i18n';
 
 interface Props {
   langue: Langue;
@@ -24,7 +24,7 @@ const section = textes.accueil.metiers;
       {
         METIERS.map((metier, i) => (
           <li>
-            <a class="metier" href={`${chemin('services', langue)}#${metier.cle}`}>
+            <a class="metier" href={lienMetier(metier.cle, langue)}>
               <span class="metier__icone">
                 <Icon nom={metier.icone} taille={28} />
               </span>
