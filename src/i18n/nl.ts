@@ -632,6 +632,19 @@ export const nl = {
       ],
     },
 
+    avis: {
+      titre: 'Zij [vertrouwen] ons.',
+      noteAria: 'Gemiddelde score: {note} op 5',
+      total: '{n} Google-beoordelingen',
+      totalUn: '1 Google-beoordeling',
+      qr: {
+        titre: 'Is uw werf afgerond?',
+        texte: 'Uw beoordeling helpt ons enorm. Scan de code met de camera van uw telefoon: het duurt maar een minuutje.',
+        bouton: 'Laat een beoordeling achter op Google',
+        alt: 'QR-code naar de Google-beoordelingspagina van Ely Facade',
+      },
+    },
+
     faq: {
       titre: 'Veelgestelde vragen',
       liste: [

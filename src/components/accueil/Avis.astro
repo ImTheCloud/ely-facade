@@ -1,0 +1,286 @@
+---
+/**
+ * La section « avis » (#avis) : les avis Google d'abord, puis le QR code pour en laisser un.
+ * Les avis sont lus au chargement sur /api/avis (worker/avis.ts) ; tant qu'il n'y en a aucun, rien ne s'affiche
+ * et la section se réduit au QR code : Elisei la montre à la fin du chantier pour que le client le scanne.
+ */
+import QRCode from 'qrcode';
+import Bouton from '../Bouton.astro';
+import Souligne from '../Souligne.astro';
+import { lienAvisGoogle } from '../../data/google';
+import { t, type Langue } from '../../i18n';
+
+interface Props {
+  langue: Langue;
+}
+
+const { langue } = Astro.props;
+const avis = t(langue).accueil.avis;
+
+// Le QR code est dessiné à la construction du site : aucun service extérieur, il encode directement le lien d'avis.
+const qr = QRCode.create(lienAvisGoogle, { errorCorrectionLevel: 'M' });
+const n = qr.modules.size;
+const marge = 2;
+let cases = '';
+for (let y = 0; y < n; y++) for (let x = 0; x < n; x++) if (qr.modules.get(x, y)) cases += `M${x + marge} ${y + marge}h1v1h-1z`;
+const cote = n + 2 * marge;
+---
+
+<section
+  class="section avis"
+  id="avis"
+  data-avis
+  data-langue={langue}
+  data-note-aria={avis.noteAria}
+  data-total={avis.total}
+  data-total-un={avis.totalUn}
+>
+  <div class="wrap avis__grille">
+    <div class="avis__liste" data-avis-liste hidden>
+      <h2 data-trait><Souligne texte={avis.titre} /></h2>
+      <p class="avis__resume">
+        <span class="avis__etoiles" data-avis-etoiles-resume aria-hidden="true"></span>
+        <strong data-avis-note></strong>
+        <span data-avis-total></span>
+      </p>
+      <ul class="avis__cartes" data-avis-cartes></ul>
+    </div>
+
+    <div class="avis__qr tuile-bento">
+      <svg
+        class="avis__code"
+        viewBox={`0 0 ${cote} ${cote}`}
+        shape-rendering="crispEdges"
+        role="img"
+        aria-label={avis.qr.alt}
+        xmlns="http://www.w3.org/2000/svg"
+      >
+        <rect width={cote} height={cote} fill="#fff"></rect>
+        <path d={cases} fill="#1f2429"></path>
+      </svg>
+      <div class="avis__qr-texte">
+        <h2 class="avis__qr-titre">{avis.qr.titre}</h2>
+        <p>{avis.qr.texte}</p>
+        <Bouton href={lienAvisGoogle} variante="principal" iconeApres="fleche-diag" target="_blank" rel="noopener">{avis.qr.bouton}</Bouton>
+      </div>
+    </div>
+  </div>
+</section>
+
+<style>
+  .avis__grille {
+    display: grid;
+    gap: clamp(28px, 4vw, 48px);
+  }
+
+  .avis__liste[hidden] {
+    display: none;
+  }
+
+  .avis__liste {
+    display: grid;
+    gap: 18px;
+  }
+
+  .avis__resume {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: 4px 10px;
+    margin: 0;
+    color: var(--color-muted);
+  }
+
+  .avis__resume strong {
+    font-size: 20px;
+    color: var(--color-ink);
+  }
+
+  .avis__etoiles {
+    display: inline-flex;
+    gap: 2px;
+  }
+
+  .avis__cartes {
+    display: grid;
+    gap: var(--tile-gap);
+    margin: 6px 0 0;
+    padding: 0;
+    list-style: none;
+  }
+
+  .avis__qr {
+    display: grid;
+    justify-items: center;
+    gap: 22px;
+    padding: clamp(22px, 4vw, 40px);
+    text-align: center;
+  }
+
+  .avis__code {
+    width: min(240px, 70vw);
+    height: auto;
+    border: 1px solid var(--color-border);
+    border-radius: 16px;
+  }
+
+  .avis__qr-texte {
+    display: grid;
+    justify-items: center;
+    gap: 14px;
+    max-width: 44ch;
+  }
+
+  .avis__qr-titre {
+    font-size: clamp(26px, 3.4vw, 40px);
+    line-height: 1.05;
+  }
+
+  .avis__qr-texte p {
+    margin: 0;
+  }
+
+  @media (min-width: 700px) {
+    .avis__cartes {
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+    }
+
+    .avis__qr {
+      grid-template-columns: auto minmax(0, 1fr);
+      justify-items: start;
+      gap: clamp(28px, 4vw, 56px);
+      text-align: left;
+    }
+
+    .avis__qr-texte {
+      justify-items: start;
+    }
+  }
+
+  @media (min-width: 1100px) {
+    .avis__cartes {
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+    }
+  }
+</style>
+
+<style is:global>
+  /* Les cartes sont créées par le script : leurs styles ne peuvent pas être « scoped ». */
+  .avis__carte {
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+    padding: 22px;
+    background: var(--color-card);
+    border: 1px solid var(--color-border);
+    border-radius: var(--radius-tile);
+    box-shadow: var(--shadow-tile);
+  }
+
+  .avis__carte p {
+    display: -webkit-box;
+    margin: 0;
+    overflow: hidden;
+    -webkit-box-orient: vertical;
+    -webkit-line-clamp: 7;
+    line-clamp: 7;
+    font-size: var(--size-small);
+    line-height: 1.5;
+    color: var(--color-text);
+  }
+
+  .avis__carte footer {
+    margin-top: auto;
+    font-size: var(--size-tiny);
+    color: var(--color-muted);
+  }
+
+  .avis__carte footer strong {
+    color: var(--color-ink);
+  }
+
+  .avis__etoile {
+    width: 18px;
+    height: 18px;
+    fill: var(--color-border-field);
+    opacity: 0.45;
+  }
+
+  .avis__etoile--pleine {
+    fill: #e0a100;
+    opacity: 1;
+  }
+</style>
+
+<script>
+  const racine = document.querySelector<HTMLElement>('[data-avis]');
+
+  interface Avis {
+    auteur: string;
+    note: number;
+    texte: string;
+    date: string;
+  }
+
+  const etoiles = (note: number) => {
+    const ensemble = document.createDocumentFragment();
+    for (let i = 1; i <= 5; i++) {
+      const svg = document.createElementNS('http://www.w3.org/2000/svg', 'svg');
+      svg.setAttribute('viewBox', '0 0 24 24');
+      svg.setAttribute('class', i <= Math.round(note) ? 'avis__etoile avis__etoile--pleine' : 'avis__etoile');
+      svg.setAttribute('aria-hidden', 'true');
+      const forme = document.createElementNS('http://www.w3.org/2000/svg', 'path');
+      forme.setAttribute('d', 'M12 2.6l2.9 6 6.6.9-4.8 4.6 1.2 6.5L12 17.4l-5.9 3.2 1.2-6.5L2.5 9.5l6.6-.9z');
+      svg.append(forme);
+      ensemble.append(svg);
+    }
+    return ensemble;
+  };
+
+  const afficher = async (section: HTMLElement) => {
+    const langue = section.dataset.langue === 'nl' ? 'nl' : 'fr';
+    const reponse = await fetch(`/api/avis?lang=${langue}`);
+    if (!reponse.ok) return;
+    const donnees: { note: number; total: number; avis: Avis[] } = await reponse.json();
+    if (!donnees.total || !donnees.avis.length) return;
+
+    const liste = section.querySelector<HTMLElement>('[data-avis-liste]')!;
+    const note = donnees.note.toFixed(1).replace('.', ',');
+
+    const resume = section.querySelector<HTMLElement>('[data-avis-etoiles-resume]')!;
+    resume.replaceChildren(etoiles(donnees.note));
+    section.querySelector('[data-avis-note]')!.textContent = note;
+    section.querySelector('[data-avis-total]')!.textContent = (donnees.total === 1 ? section.dataset.totalUn! : section.dataset.total!).replace('{n}', String(donnees.total));
+
+    const format = new Intl.DateTimeFormat(langue === 'nl' ? 'nl-BE' : 'fr-BE', { month: 'long', year: 'numeric' });
+    const cartes = section.querySelector('[data-avis-cartes]')!;
+    cartes.replaceChildren(
+      ...donnees.avis.map((avis) => {
+        const carte = document.createElement('li');
+        carte.className = 'avis__carte';
+
+        const rangee = document.createElement('div');
+        rangee.setAttribute('role', 'img');
+        rangee.setAttribute('aria-label', section.dataset.noteAria!.replace('{note}', String(avis.note)));
+        rangee.append(etoiles(avis.note));
+
+        const texte = document.createElement('p');
+        texte.textContent = avis.texte;
+
+        const pied = document.createElement('footer');
+        const auteur = document.createElement('strong');
+        auteur.textContent = avis.auteur;
+        pied.append(auteur);
+        const date = new Date(avis.date);
+        if (!Number.isNaN(date.getTime())) pied.append(` · ${format.format(date)}`);
+
+        carte.append(rangee, texte, pied);
+        return carte;
+      }),
+    );
+
+    liste.hidden = false;
+  };
+
+  if (racine) afficher(racine).catch(() => {});
+</script>

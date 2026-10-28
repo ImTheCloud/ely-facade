@@ -8,7 +8,8 @@ Site vitrine d'ELY FAÇADE BV, entreprise de rénovation de façades, bureau à 
 - **Ancienneté** : ne jamais écrire « depuis… » ni « fondée en… ». Dans la bande des chiffres : « 6 ans d'expérience » et « 50+ chantiers », sans sous-texte ni prénom.
 - **Équipe** : ne jamais écrire « salariés » ni afficher le nombre de personnes.
 - **Garantie** : « Garantie de 10 ans minimum » seulement, sans détail.
-- **Ne pas afficher sans l'accord du client** : assurances, primes et aides, prix, horaires de visite, réseaux sociaux, avis clients.
+- **Ne pas afficher sans l'accord du client** : assurances, primes et aides, prix, horaires de visite, réseaux sociaux.
+- **Avis Google** : lus automatiquement depuis la fiche Google (`worker/avis.ts`), jamais écrits ni copiés à la main. Tant qu'il n'y en a aucun, la section de l'accueil (`#avis`) ne montre que le QR code qui mène à la page d'avis ; Elisei la montre au client à la fin du chantier.
 - **Services** : uniquement la façade, de A à Z : crépi et enduit, isolation par l'extérieur, peinture de façade, nettoyage de façade, traitement hydrofuge, rejointoiement, réparation de briques, plaquettes de parement, traitement des fissures, échafaudage. Le nombre de services se calcule depuis `src/data/metiers.ts` (jamais écrit à la main) ; tout nouveau service doit être confirmé par le client. Ni toiture, ni maçonnerie, ni intérieur.
 - **Ne pas écrire « un seul interlocuteur »** (ni équivalents). Pas de « Rejoindre l'équipe ».
 - **Nom écrit partout : « Ely Facade »** (sans cédille), y compris dans les logos. Exception : les mentions légales donnent la raison sociale « ELY FAÇADE BV ». Le mot courant « façade » garde sa cédille.
@@ -24,8 +25,8 @@ Site vitrine d'ELY FAÇADE BV, entreprise de rénovation de façades, bureau à 
 ## Technique
 
 - **Astro** (sortie statique, TypeScript), hébergé sur **Cloudflare Workers** avec fichiers statiques : `wrangler.jsonc`, en-têtes dans `public/_headers`, script serveur dans `worker/`. Chaque push sur `main` met le site à jour. Domaine `elyfacade.be` chez Infomaniak, DNS chez Cloudflare, email pro `info@elyfacade.be`.
-- **Pas de base de données, pas de backend** : seule exception, `worker/devis.ts` (envoi du devis et des photos jointes par Resend, clé `RESEND_API_KEY` dans Cloudflare, destinataire modifiable avec `DEVIS_DESTINATAIRE`).
-- **Pas de cookies de suivi**, pas de Google Fonts (polices Fontsource hébergées). Google Maps : un simple lien, aucune carte intégrée.
+- **Pas de base de données, pas de backend** : deux exceptions : `worker/devis.ts` (envoi du devis et des photos jointes par Resend, clé `RESEND_API_KEY` dans Cloudflare, destinataire modifiable avec `DEVIS_DESTINATAIRE`) et `worker/avis.ts` (lecture des avis Google, clé `GOOGLE_PLACES_API_KEY` dans Cloudflare, six heures de cache).
+- **Pas de cookies de suivi**, pas de Google Fonts (polices Fontsource hébergées). Google Maps : un simple lien, aucune carte intégrée ; le navigateur du visiteur ne parle jamais à Google (les avis passent par notre serveur).
 - **CSS** : variables dans `src/styles/tokens.css` + styles scoped, pas de framework. **JavaScript** vanilla (+ Lenis).
 - **Référencement** : titre et description propres à chaque page, JSON-LD (`GeneralContractor` avec les deux dirigeants, `Service`, fil d'Ariane), sitemap avec hreflang.
 - **Aucun code mort** : à chaque changement, supprimer images, textes FR/NL et code devenus inutiles.

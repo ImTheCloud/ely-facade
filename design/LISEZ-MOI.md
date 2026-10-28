@@ -13,7 +13,7 @@
 | `t-shirt/` | Devant et dos, blanc et noir, et fiches techniques pour l'imprimeur |
 | `depuis-session-cloud/` | Versions plus récentes des t-shirts (dos refait) |
 | `pull/` | Pulls à capuche pour la broderie, devant et dos, noir et blanc |
-| `qr-code/` | QR code du site (SVG, PNG 4000 px, PDF), il encode directement `https://elyfacade.be/` |
+| `qr-code/` | QR code du site (il encode directement `https://elyfacade.be/`) et QR code des avis Google (il ouvre la page « écrire un avis » de la fiche), en SVG, PNG 4000 px et PDF |
 | `google/` | Images pour la fiche Google : paires « Pendant les travaux / Après » et photos de façades terminées |
 
 Les photos de t-shirts vierges (`t-shirt/photo/sources/`) sont générées par IA : elles servent seulement aux maquettes, jamais au site.
