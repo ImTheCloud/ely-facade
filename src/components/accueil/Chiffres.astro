@@ -1,0 +1,105 @@
+---
+/** La bande des chiffres : la valeur et son mot clé en grand, sans sous-texte. Seulement des chiffres confirmés ; « {n} » est le vrai nombre de services (src/data/metiers.ts). */
+import Souligne from '../Souligne.astro';
+import { METIERS } from '../../data/metiers';
+import { t, type Langue } from '../../i18n';
+
+interface Props {
+  langue: Langue;
+}
+
+const { langue } = Astro.props;
+const chiffres = t(langue).accueil.chiffres;
+---
+
+<section class="chiffres-section" aria-labelledby="chiffres-titre">
+  <div class="wrap">
+    <h2 id="chiffres-titre" class="chiffres__titre" data-trait><Souligne texte={chiffres.titre} /></h2>
+  </div>
+  <ul class="wrap chiffres">
+    {
+      chiffres.liste.map((chiffre, i) => (
+        <li class:list={['chiffre', { 'chiffre--rouge': i === 6 }]}>
+          <span class="chiffre__valeur">{chiffre.valeur.replace('{n}', String(METIERS.length))}</span>
+          <span class="chiffre__mot">{chiffre.mot}</span>
+        </li>
+      ))
+    }
+  </ul>
+</section>
+
+<style>
+  .chiffres-section {
+    padding-block: var(--section-gap);
+    border-bottom: 1px solid var(--color-border);
+  }
+
+  .chiffres__titre {
+    margin-bottom: clamp(24px, 3vw, 40px);
+  }
+
+  .chiffres {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 24px 16px;
+    margin-block: 0;
+    list-style: none;
+  }
+
+  .chiffre {
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+    padding-left: 18px;
+    border-left: 2px solid var(--color-border);
+  }
+
+  .chiffre__valeur {
+    font-family: var(--font-display);
+    font-size: clamp(24px, 7.2vw, 32px);
+    font-weight: 800;
+    line-height: 0.9;
+    letter-spacing: var(--tracking-display);
+    text-transform: uppercase;
+    font-variant-numeric: tabular-nums;
+    color: var(--color-ink);
+  }
+
+  /* Le mot clé, en grand juste sous la valeur : « 6 ans d'expérience », « 10 ans de garantie ». */
+  .chiffre__mot {
+    font-family: var(--font-display);
+    font-size: clamp(15px, 4.3vw, 18px);
+    font-weight: 750;
+    line-height: 1.1;
+    letter-spacing: var(--tracking-phrase);
+    color: var(--color-ink);
+  }
+
+  .chiffre--rouge {
+    border-left-color: var(--color-accent);
+  }
+
+  .chiffre--rouge .chiffre__valeur,
+  .chiffre--rouge .chiffre__mot {
+    color: var(--color-accent);
+  }
+
+  @media (min-width: 900px) {
+    .chiffres {
+      grid-template-columns: repeat(4, 1fr);
+      gap: 36px 32px;
+    }
+
+    .chiffre {
+      padding-left: 24px;
+    }
+
+    .chiffre__valeur {
+      font-size: clamp(32px, 3.2vw, 44px);
+    }
+
+    .chiffre__mot {
+      font-size: clamp(16px, 1.4vw, 20px);
+    }
+  }
+</style>

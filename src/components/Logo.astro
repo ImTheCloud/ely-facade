@@ -1,0 +1,33 @@
+---
+/**
+ * Le logo (SVG du dossier assets/marque), maison en briques et nom.
+ * « blanc » : version pour fond photo (tout blanc, sauf la brique rouge).
+ * Le texte alternatif est vide : le lien qui l'entoure porte déjà son aria-label.
+ */
+import logo from '~/assets/marque/logo.svg';
+import logoBlanc from '~/assets/marque/logo-blanc.svg';
+
+interface Props {
+  blanc?: boolean;
+  class?: string;
+}
+
+const { blanc = false, class: classe } = Astro.props;
+const source = blanc ? logoBlanc : logo;
+---
+
+<img src={source.src} width={source.width} height={source.height} alt="" class:list={['logo', classe]} />
+
+<style>
+  .logo {
+    display: block;
+    width: auto;
+    height: 34px;
+  }
+
+  @media (min-width: 1024px) {
+    .logo {
+      height: 40px;
+    }
+  }
+</style>

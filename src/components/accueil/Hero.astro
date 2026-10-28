@@ -1,0 +1,660 @@
+---
+/**
+ * Haut de l'accueil : la photo de Namur en plein écran, l'en-tête posé dedans, le titre en bas à gauche.
+ * « La façade qui brille » : un reflet de lumière passe une fois sur les surfaces blanches de la façade, puis sur le mot
+ * « briller » ; le point du titre est la brique rouge du logo. Sur ordinateur, le bouton, le téléphone et les engagements
+ * sont dans un panneau de verre à droite.
+ * Le bouton et le téléphone sont là tout de suite, rien ne bloque le chargement,
+ * tout se coupe avec prefers-reduced-motion et la photo seule reste belle sans JavaScript.
+ */
+import { getImage } from 'astro:assets';
+import Icon from '../Icon.astro';
+import masqueBureau from '../../assets/photos/accueil/hero-namur-masque.png';
+import masqueMobile from '../../assets/photos/accueil/hero-namur-mobile-masque.png';
+import { heroPhoto } from '../../data/chantiers';
+import { entreprise } from '../../data/entreprise';
+import { t, type Langue } from '../../i18n';
+
+interface Props {
+  langue: Langue;
+}
+
+const { langue } = Astro.props;
+const textes = t(langue);
+const hero = textes.accueil.hero;
+
+/** Écran en portrait (téléphone, tablette debout) : cadrage vertical dédié, le toit juste sous l'en-tête. */
+const PORTRAIT = '(max-aspect-ratio: 4/5)';
+
+const bureau = await getImage({ src: heroPhoto.image, widths: [768, 1152, 1536, 1920, 2400], format: 'webp', quality: 78 });
+const mobile = await getImage({ src: heroPhoto.mobile, widths: [480, 720, 1010], format: 'webp', quality: 76 });
+
+// Les masques des surfaces blanches de la façade, pour le reflet.
+const masques = {
+  bureau: await getImage({ src: masqueBureau, width: 1200, format: 'webp', quality: 55 }),
+  mobile: await getImage({ src: masqueMobile, width: 480, format: 'webp', quality: 55 }),
+};
+
+// Le dernier mot du titre reçoit la lumière ; son point est la brique rouge du logo.
+const lignes = hero.titre.slice(0, -1);
+const derniere = hero.titre[hero.titre.length - 1];
+const motFinal = derniere.replace(/\.$/, '');
+---
+
+<section class="hero" style={`--masque: url('${masques.bureau.src}'); --masque-mobile: url('${masques.mobile.src}')`}>
+  <div class="hero__media">
+    <picture>
+      <source media={PORTRAIT} srcset={mobile.srcSet.attribute} sizes="100vw" type="image/webp" />
+      <img
+        class="hero__photo"
+        src={bureau.src}
+        srcset={bureau.srcSet.attribute}
+        sizes="100vw"
+        alt={textes.photos['accueil/hero-namur']}
+        width={heroPhoto.image.width}
+        height={heroPhoto.image.height}
+        fetchpriority="high"
+        loading="eager"
+        decoding="async"
+      />
+    </picture>
+
+    <div class="hero__reflet" aria-hidden="true"><span /></div>
+  </div>
+
+  <div class="hero__voile" aria-hidden="true"></div>
+
+  <div class="hero__contenu">
+    <div class="hero__principal">
+      <h1 class="hero__titre">
+        {
+          lignes.map((ligne, i) => (
+            <span class="hero__ligne" style={`--n: ${i + 1}`}>
+              <span>{ligne}</span>{' '}
+            </span>
+          ))
+        }
+        <span class="hero__ligne" style={`--n: ${hero.titre.length}`}>
+          <span>
+            <span class="hero__lumiere" data-texte={motFinal}>{motFinal}</span>
+            <span class="hero__point" aria-hidden="true" />
+            <span class="sr-only">.</span>
+          </span>
+        </span>
+      </h1>
+
+      <p class="hero__texte" data-entree style="--n: 4">{hero.texte}</p>
+    </div>
+
+    <div class="hero__details">
+      <div class="hero__actions" data-entree style="--n: 5">
+        <a class="hero__bouton" href="#devis">
+          <span>{hero.bouton}</span>
+          <span class="hero__fleche" aria-hidden="true"><Icon nom="fleche-diag" taille={18} epaisseur={2.2} /></span>
+        </a>
+        <a class="hero__tel" href={`tel:${entreprise.telephoneLien}`} aria-label={`${hero.appeler} ${entreprise.telephoneAffiche}`}>
+          <Icon nom="telephone" taille={18} />
+          <span>{entreprise.telephoneAffiche}</span>
+        </a>
+      </div>
+
+      <ul class="hero__preuves" aria-label={hero.preuvesAria} data-entree style="--n: 6">
+        {
+          hero.preuves.map((preuve) => (
+            <li>
+              <Icon nom="check" taille={16} epaisseur={2.4} />
+              {preuve}
+            </li>
+          ))
+        }
+      </ul>
+    </div>
+  </div>
+
+</section>
+
+<style>
+  /* =========================================================================
+     Base
+     ========================================================================= */
+  .hero {
+    --hero-marge-bas: clamp(24px, 5vh, 64px);
+    position: relative;
+    display: flex;
+    align-items: flex-end;
+    min-height: 100vh;
+    min-height: 100svh;
+    overflow: hidden;
+    color: #fff;
+    background: rgb(var(--voile));
+    isolation: isolate;
+  }
+
+  .hero__media,
+  .hero__media picture,
+  .hero__photo {
+    position: absolute;
+    inset: 0;
+    width: 100%;
+    height: 100%;
+  }
+
+  .hero__media {
+    z-index: -2;
+    overflow: hidden;
+    /* Les unités cqw / cqh ci-dessous se rapportent à cette boîte. */
+    container-type: size;
+  }
+
+  .hero__photo {
+    display: block;
+    object-fit: cover;
+  }
+
+  /*
+   * Cadrage au pixel près : le faîte du toit se place toujours à « hauteur de l'en-tête + 52 px »,
+   * quelle que soit la taille de l'écran (jamais collé, jamais coupé), sans laisser de vide en bas.
+   * Photo bureau : hauteur = 73,17 % de la largeur, faîte à 23,08 % de la hauteur (= 16,89 % de la largeur).
+   */
+  .hero__media {
+    --faite: calc(var(--header-h) + 52px);
+    --cadrage: 50% min(0px, max(calc(var(--faite) - 16.89cqw), calc(100cqh - 73.17cqw)));
+  }
+
+  .hero__photo {
+    object-position: var(--cadrage);
+  }
+
+  /* Photo téléphone : le ciel en haut, la route et la pelouse en bas ; on garde toujours le bas (le sol, sous le texte). */
+  @media (max-aspect-ratio: 4/5) {
+    .hero__media {
+      --cadrage: 50% 100%;
+    }
+  }
+
+  /* Le voile : ardoise bleutée, en haut (lisibilité de l'en-tête sur le ciel), à gauche et en bas (le texte). */
+  .hero__voile {
+    position: absolute;
+    inset: 0;
+    z-index: -1;
+    pointer-events: none;
+    background:
+      linear-gradient(to bottom, rgba(var(--voile), 0.5) 0%, rgba(var(--voile), 0.18) 14%, rgba(var(--voile), 0) 26%),
+      linear-gradient(to top, rgba(var(--voile), 0.74) 0%, rgba(var(--voile), 0.5) 24%, rgba(var(--voile), 0.1) 52%, rgba(var(--voile), 0) 66%),
+      linear-gradient(to right, rgba(var(--voile), 0.56) 0%, rgba(var(--voile), 0.3) 34%, rgba(var(--voile), 0) 56%);
+  }
+
+  /* Écran en portrait : le texte occupe le bas, le voile monte plus haut et reste doux en haut. */
+  @media (max-aspect-ratio: 4/5) {
+    .hero__voile {
+      background:
+        linear-gradient(to bottom, rgba(var(--voile), 0.45) 0%, rgba(var(--voile), 0.12) 12%, rgba(var(--voile), 0) 20%),
+        linear-gradient(to top, rgba(var(--voile), 0.86) 0%, rgba(var(--voile), 0.72) 30%, rgba(var(--voile), 0.38) 46%, rgba(var(--voile), 0) 62%);
+    }
+  }
+
+  .hero__contenu {
+    position: relative;
+    display: grid;
+    gap: 22px;
+    width: 100%;
+    max-width: calc(var(--content-max-large) + var(--gutter) * 2);
+    margin-inline: auto;
+    padding: calc(var(--header-h) + 32px) var(--gutter) calc(var(--hero-marge-bas) + env(safe-area-inset-bottom, 0px));
+  }
+
+  .hero__principal,
+  .hero__details {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+  }
+
+  .hero__principal {
+    gap: 20px;
+  }
+
+  .hero__details {
+    gap: 22px;
+  }
+
+  /* --- Titre --- */
+  .hero__titre {
+    color: #fff;
+    font-size: clamp(44px, min(7.2vw, 11.6vh), 112px);
+    line-height: 0.9;
+    letter-spacing: var(--tracking-display);
+    text-wrap: nowrap;
+    filter: drop-shadow(0 4px 28px rgba(var(--voile), 0.28));
+  }
+
+  .hero__ligne {
+    display: block;
+    /* Chaque ligne est une fenêtre : le texte y glisse de bas en haut à l'arrivée. */
+    overflow: clip;
+    padding-block: 0.04em 0.06em;
+    margin-block: -0.04em -0.06em;
+  }
+
+  .hero__ligne > span {
+    display: inline-block;
+  }
+
+  .hero__lumiere {
+    position: relative;
+  }
+
+  /* --- Texte, actions, preuves --- */
+  .hero__texte {
+    max-width: 46ch;
+    font-size: clamp(16px, 1.25vw, 19px);
+    line-height: 1.55;
+    color: rgba(255, 255, 255, 0.92);
+    text-shadow: 0 1px 16px rgba(var(--voile), 0.5);
+  }
+
+  .hero__actions {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: 10px 22px;
+  }
+
+  /* Le bouton principal : rouge, une petite flèche dans un carré arrondi (comme Ironwood, en plus doux). */
+  .hero__bouton {
+    display: inline-flex;
+    align-items: center;
+    gap: 14px;
+    min-height: 58px;
+    padding: 7px 7px 7px 24px;
+    border-radius: 16px;
+    background: var(--color-accent);
+    box-shadow: 0 16px 34px -14px rgba(200, 32, 43, 0.75);
+    color: #fff;
+    font-size: 16px;
+    font-weight: 650;
+    text-decoration: none;
+    transition:
+      background-color var(--speed) var(--ease),
+      transform var(--speed) var(--ease);
+  }
+
+  .hero__bouton:hover {
+    background: var(--color-accent-dark);
+    transform: translateY(-2px);
+  }
+
+  .hero__fleche {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 44px;
+    height: 44px;
+    border-radius: 11px;
+    background: rgba(255, 255, 255, 0.16);
+    transition: transform var(--speed) var(--ease);
+  }
+
+  .hero__bouton:hover .hero__fleche {
+    transform: translate(2px, -2px);
+  }
+
+  .hero__tel {
+    display: inline-flex;
+    align-items: center;
+    gap: 10px;
+    min-height: 48px;
+    color: #fff;
+    font-size: 17px;
+    font-weight: 650;
+    text-decoration: none;
+    text-shadow: 0 1px 14px rgba(var(--voile), 0.6);
+  }
+
+  .hero__tel span {
+    border-bottom: 1px solid rgba(255, 255, 255, 0.4);
+    transition: border-color var(--speed) var(--ease);
+  }
+
+  .hero__tel:hover span {
+    border-color: #fff;
+  }
+
+  .hero__bouton:focus-visible,
+  .hero__tel:focus-visible {
+    outline: 3px solid #fff;
+    outline-offset: 4px;
+  }
+
+  .hero__preuves {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 6px 20px;
+    margin: 0;
+    padding: 0;
+    list-style: none;
+    font-size: 14px;
+    font-weight: 600;
+    color: rgba(255, 255, 255, 0.9);
+  }
+
+  .hero__preuves li {
+    display: inline-flex;
+    align-items: center;
+    gap: 7px;
+  }
+
+  .hero__preuves :global(svg) {
+    color: #fff;
+    padding: 2px;
+    border-radius: 50%;
+    background: rgba(255, 255, 255, 0.18);
+    width: 18px;
+    height: 18px;
+  }
+
+  @media (max-width: 599px) {
+    .hero {
+      --hero-marge-bas: 22px;
+    }
+
+    .hero__contenu,
+    .hero__details {
+      gap: 14px;
+    }
+
+    .hero__principal {
+      gap: 14px;
+    }
+
+    /* Le titre est l'essentiel : le plus grand possible, sur la pelouse et la route. */
+    .hero__titre {
+      font-size: clamp(38px, 13.2vw, 72px);
+    }
+
+    .hero__texte {
+      font-size: 14.5px;
+      line-height: 1.5;
+    }
+
+    /* Une seule rangée : le bouton prend la place, le téléphone devient un carré à côté. */
+    .hero__actions {
+      flex-wrap: nowrap;
+      width: 100%;
+      gap: 10px;
+    }
+
+    .hero__bouton {
+      flex: 1;
+      justify-content: space-between;
+      min-width: 0;
+      font-size: 15px;
+      padding-left: 20px;
+    }
+
+    .hero__tel {
+      flex-shrink: 0;
+      justify-content: center;
+      width: 58px;
+      height: 58px;
+      border: 1px solid rgba(255, 255, 255, 0.34);
+      border-radius: 16px;
+      background: rgba(255, 255, 255, 0.14);
+      backdrop-filter: blur(12px);
+      -webkit-backdrop-filter: blur(12px);
+    }
+
+    .hero__tel span {
+      position: absolute;
+      width: 1px;
+      height: 1px;
+      overflow: hidden;
+      clip-path: inset(50%);
+      white-space: nowrap;
+    }
+
+    .hero__preuves {
+      font-size: 12px;
+      gap: 4px 12px;
+    }
+
+    .hero__preuves :global(svg) {
+      width: 16px;
+      height: 16px;
+    }
+  }
+
+  /* Petits téléphones : le texte du bouton passe avant la flèche. */
+  @media (max-width: 419px) {
+    .hero__bouton {
+      justify-content: center;
+      padding: 0 16px;
+    }
+
+    .hero__fleche {
+      display: none;
+    }
+  }
+
+  @media (min-width: 900px) {
+    .hero__contenu {
+      gap: 26px;
+    }
+
+    .hero__details {
+      gap: 26px;
+    }
+  }
+
+  /* =========================================================================
+     Entrées : rien n'est caché sans JavaScript ni avec « moins d'animations ».
+     ========================================================================= */
+  @media (prefers-reduced-motion: no-preference) {
+    :global(.js) .hero__ligne > span {
+      animation: ligne-monte 1000ms var(--ease-out) both;
+      animation-delay: calc(var(--depart, 450ms) + var(--n) * 110ms);
+    }
+
+    :global(.js) .hero [data-entree] {
+      animation: entree 900ms var(--ease-out) both;
+      animation-delay: calc(var(--depart, 450ms) + var(--n) * 110ms);
+    }
+
+    @keyframes ligne-monte {
+      from {
+        transform: translateY(108%);
+      }
+    }
+
+    @keyframes entree {
+      from {
+        opacity: 0;
+        transform: translateY(18px);
+      }
+    }
+  }
+
+  /* =========================================================================
+     La façade qui brille
+     ========================================================================= */
+  .hero__reflet {
+    display: none;
+  }
+
+  .hero__point {
+    display: inline-block;
+    width: 0.34em;
+    height: 0.17em;
+    margin-left: 0.07em;
+    border-radius: 0.035em;
+    background: var(--color-accent);
+    box-shadow: 0 0.04em 0.18em rgba(200, 32, 43, 0.45);
+  }
+
+  @media (min-width: 900px) {
+    /* Le titre en bas à gauche, sur la route et la pelouse ; les détails dans un panneau de verre à droite. */
+    .hero__contenu {
+      grid-template-columns: 1fr minmax(340px, 410px);
+      align-items: end;
+      column-gap: 48px;
+    }
+
+    .hero__details {
+      gap: 20px;
+      padding: 28px 28px 26px;
+      border: 1px solid rgba(255, 255, 255, 0.18);
+      border-radius: 28px;
+      /* Assez dense pour un contraste AA même devant la façade blanche. */
+      background: rgba(var(--voile), 0.56);
+      backdrop-filter: blur(18px) saturate(1.25);
+      -webkit-backdrop-filter: blur(18px) saturate(1.25);
+      box-shadow: 0 30px 60px -30px rgba(var(--voile), 0.6);
+    }
+
+    .hero__actions {
+      flex-direction: column;
+      align-items: stretch;
+      width: 100%;
+      gap: 8px;
+    }
+
+    .hero__bouton {
+      justify-content: space-between;
+    }
+
+    .hero__tel {
+      align-self: flex-start;
+    }
+
+    .hero__preuves {
+      flex-direction: column;
+      gap: 8px;
+    }
+
+    .hero__voile {
+      background:
+        linear-gradient(to bottom, rgba(var(--voile), 0.5) 0%, rgba(var(--voile), 0.18) 14%, rgba(var(--voile), 0) 26%),
+        linear-gradient(to top, rgba(var(--voile), 0.84) 0%, rgba(var(--voile), 0.5) 22%, rgba(var(--voile), 0.08) 46%, rgba(var(--voile), 0) 60%),
+        linear-gradient(to right, rgba(var(--voile), 0.42) 0%, rgba(var(--voile), 0.12) 32%, rgba(var(--voile), 0) 50%);
+    }
+  }
+
+  @media (prefers-reduced-motion: no-preference) {
+    :global(.js) .hero__reflet {
+      display: block;
+      position: absolute;
+      inset: 0;
+      overflow: hidden;
+      pointer-events: none;
+      -webkit-mask: var(--masque) var(--cadrage) / cover no-repeat;
+      mask: var(--masque) var(--cadrage) / cover no-repeat;
+    }
+
+    @media (max-aspect-ratio: 4/5) {
+      :global(.js) .hero__reflet {
+        -webkit-mask: var(--masque-mobile) var(--cadrage) / cover no-repeat;
+        mask: var(--masque-mobile) var(--cadrage) / cover no-repeat;
+      }
+    }
+
+    /* Une bande de lumière inclinée, plus large que l'écran, qui traverse une seule fois. */
+    .hero__reflet span {
+      position: absolute;
+      inset: -20% auto -20% 0;
+      width: 46%;
+      /* Une lumière chaude, très légèrement dorée : la façade blanche s'illumine sur son passage. */
+      background: linear-gradient(
+        100deg,
+        rgba(255, 249, 238, 0) 0%,
+        rgba(255, 249, 238, 0.3) 32%,
+        rgba(255, 252, 245, 0.85) 50%,
+        rgba(255, 249, 238, 0.3) 68%,
+        rgba(255, 249, 238, 0) 100%
+      );
+      transform: translateX(-110%) skewX(-12deg);
+      animation: reflet 3400ms cubic-bezier(0.45, 0.05, 0.35, 1) 800ms both;
+    }
+
+    @keyframes reflet {
+      to {
+        transform: translateX(340%) skewX(-12deg);
+      }
+    }
+
+    /* Le mot « briller » scintille quand la lumière passe. */
+    :global(.js) .hero__lumiere::after {
+      content: attr(data-texte);
+      position: absolute;
+      inset: 0;
+      color: transparent;
+      background: linear-gradient(100deg, transparent 35%, #fff 50%, transparent 65%) no-repeat;
+      background-size: 300% 100%;
+      background-position: 100% 0;
+      -webkit-background-clip: text;
+      background-clip: text;
+      text-shadow: none;
+      filter: drop-shadow(0 0 18px rgba(255, 236, 200, 0.9));
+      animation: scintille 1400ms var(--ease) 1100ms both;
+    }
+
+    :global(.js) .hero__lumiere {
+      color: #eef2f6;
+    }
+
+    @keyframes scintille {
+      from {
+        background-position: 100% 0;
+      }
+      to {
+        background-position: 0% 0;
+      }
+    }
+
+    /* La brique rouge vient se poser à la fin. */
+    :global(.js) .hero__point {
+      animation: brique 900ms cubic-bezier(0.3, 1.6, 0.5, 1) 2300ms both;
+    }
+
+    @keyframes brique {
+      from {
+        opacity: 0;
+        transform: translateY(-1.6em) rotate(-8deg);
+      }
+      60% {
+        opacity: 1;
+      }
+    }
+  }
+
+  /* =========================================================================
+     Au défilement (navigateurs récents) : la photo glisse plus lentement que le texte.
+     ========================================================================= */
+  @supports (animation-timeline: scroll()) {
+    @media (prefers-reduced-motion: no-preference) {
+      .hero__media {
+        animation: media-defile linear both;
+        animation-timeline: scroll(root);
+        animation-range: 0 100vh;
+      }
+
+      .hero__contenu {
+        animation: contenu-defile linear both;
+        animation-timeline: scroll(root);
+        animation-range: 0 80vh;
+      }
+
+      @keyframes media-defile {
+        to {
+          transform: translateY(22%);
+        }
+      }
+
+      @keyframes contenu-defile {
+        to {
+          transform: translateY(-12%);
+          opacity: 0.2;
+        }
+      }
+    }
+  }
+</style>

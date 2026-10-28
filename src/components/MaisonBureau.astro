@@ -1,0 +1,75 @@
+---
+/**
+ * La petite maison du bureau, dessinée au trait comme un plan d'architecte : murs hachurés, toit, cheminée,
+ * et la brique rouge du logo. Elle marque le bureau de Halle sur la carte (jamais une photo, tout est dessiné ici).
+ */
+interface Props {
+  class?: string;
+}
+
+const { class: classe } = Astro.props;
+---
+
+<svg class:list={['maison-bureau', classe]} viewBox="0 0 64 56" aria-hidden="true" focusable="false">
+  <!-- Sol -->
+  <path class="sol" d="M2 51H62" />
+  <!-- Murs -->
+  <rect class="mur" x="12" y="27" width="40" height="24" />
+  <path class="hachure" d="M16 51l7-7M24 51l11-11M32 51l11-11M40 51l11-11M48 51l4-4M14 41l8-8M14 33l4-4" />
+  <!-- Cheminée -->
+  <rect class="mur" x="42" y="9" width="8" height="15" />
+  <!-- Toit -->
+  <path class="toit" d="M6 28L32 6l26 22z" />
+  <path class="trait" d="M10 28H54" />
+  <!-- Porte, fenêtre -->
+  <rect class="porte" x="26" y="36" width="11" height="15" rx="1" />
+  <rect class="fenetre" x="41" y="34" width="8" height="8" />
+  <!-- La brique rouge du logo -->
+  <rect class="brique" x="15" y="35" width="9" height="5" rx="1" />
+</svg>
+
+<style>
+  .maison-bureau {
+    display: block;
+    width: 100%;
+    height: auto;
+    overflow: visible;
+  }
+
+  .maison-bureau :global(*) {
+    stroke: var(--color-ink);
+    stroke-width: 2.2;
+    stroke-linecap: round;
+    stroke-linejoin: round;
+    fill: none;
+  }
+
+  .mur,
+  .toit {
+    fill: #fff;
+  }
+
+  .toit {
+    fill: var(--color-surface);
+  }
+
+  .hachure {
+    stroke-width: 1.2;
+    opacity: 0.28;
+  }
+
+  .porte {
+    fill: var(--color-ink);
+  }
+
+  .fenetre {
+    fill: #fff;
+    stroke-width: 1.8;
+  }
+
+  .brique {
+    fill: var(--color-accent);
+    stroke: var(--color-accent);
+    stroke-width: 1;
+  }
+</style>

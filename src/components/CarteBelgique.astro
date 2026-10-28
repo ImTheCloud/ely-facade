@@ -1,0 +1,823 @@
+---
+/**
+ * Carte de la Belgique (dessin simplifié, pas une carte exacte) : le bureau de Halle (brique rouge) et les communes
+ * de quelques-uns de nos chantiers (points sombres). On touche une commune : sur ordinateur, une petite fenêtre s'ouvre
+ * près du point ; sur téléphone, une feuille monte du bas. Elle montre l'avant/après du chantier et mène à sa page.
+ * Les points sont de vrais boutons posés sur le dessin ; sans JavaScript, la carte reste lisible et les chantiers
+ * sont dans la bande de photos juste dessous.
+ */
+import { Image } from 'astro:assets';
+import Comparateur from './Comparateur.astro';
+import Icon from './Icon.astro';
+import MaisonBureau from './MaisonBureau.astro';
+import { CHANTIERS, lienChantier, photo, type Commune } from '../data/chantiers';
+import { t, type Langue } from '../i18n';
+
+interface Props {
+  langue: Langue;
+  class?: string;
+}
+
+const { langue, class: classe } = Astro.props;
+const textes = t(langue);
+const carte = textes.accueil.realisations.carte;
+
+const LARGEUR = 560;
+const HAUTEUR = 460;
+/** Longitude, latitude → coordonnées du dessin (projection simple, latitude moyenne 50,6°). */
+const X = (lon: number) => Math.round((lon - 2.45) * 137 * 10) / 10;
+const Y = (lat: number) => Math.round((51.56 - lat) * 216 * 10) / 10;
+const pct = (v: number, total: number) => `${Math.round((v / total) * 1000) / 10}%`;
+const place = (lon: number, lat: number) => `left: ${pct(X(lon), LARGEUR)}; top: ${pct(Y(lat), HAUTEUR)}`;
+
+// Frontière simplifiée : côte, Pays-Bas, Allemagne, Luxembourg, France.
+const frontiere: [number, number][] = [
+  [2.545, 51.089], [2.75, 51.17], [3.03, 51.25], [3.37, 51.37], [3.52, 51.29], [3.79, 51.26], [3.98, 51.24],
+  [4.24, 51.37], [4.39, 51.36], [4.53, 51.48], [4.67, 51.43], [4.86, 51.48], [5.06, 51.47], [5.1, 51.36],
+  [5.24, 51.31], [5.48, 51.3], [5.67, 51.18], [5.84, 51.16], [5.75, 51.04], [5.77, 50.95], [5.69, 50.8],
+  [5.68, 50.76], [5.98, 50.76], [6.02, 50.75], [6.09, 50.72], [6.26, 50.64], [6.18, 50.55], [6.36, 50.48],
+  [6.4, 50.33], [6.25, 50.3], [6.14, 50.14], [6.03, 50.17], [5.97, 50.07], [5.87, 50.02], [5.77, 49.88],
+  [5.74, 49.8], [5.9, 49.66], [5.82, 49.55], [5.47, 49.5], [5.31, 49.63], [5.1, 49.77], [4.86, 49.8],
+  [4.86, 49.95], [4.88, 50.15], [4.7, 50.1], [4.68, 49.99], [4.43, 49.94], [4.15, 49.98], [4.21, 50.27],
+  [3.87, 50.33], [3.71, 50.31], [3.66, 50.45], [3.29, 50.53], [3.23, 50.71], [3.04, 50.78], [2.86, 50.7],
+  [2.66, 50.81], [2.55, 50.94],
+];
+// Contour adouci (courbe de Catmull-Rom passant par chaque point) : un dessin épuré plutôt qu'une ligne brisée.
+const pts = frontiere.map(([lon, lat]) => [X(lon), Y(lat)]);
+const r1 = (v: number) => Math.round(v * 10) / 10;
+const trace =
+  `M${pts[0][0]} ${pts[0][1]}` +
+  pts
+    .map((p1, i) => {
+      const p0 = pts[(i - 1 + pts.length) % pts.length];
+      const p2 = pts[(i + 1) % pts.length];
+      const p3 = pts[(i + 2) % pts.length];
+      const c1 = [p1[0] + (p2[0] - p0[0]) / 6, p1[1] + (p2[1] - p0[1]) / 6];
+      const c2 = [p2[0] - (p3[0] - p1[0]) / 6, p2[1] - (p3[1] - p1[1]) / 6];
+      return `C${r1(c1[0])} ${r1(c1[1])} ${r1(c2[0])} ${r1(c2[1])} ${p2[0]} ${p2[1]}`;
+    })
+    .join('') +
+  'Z';
+
+/** Les communes de nos chantiers. cote : de quel côté du point s'écrit son nom. */
+const communes: { commune: Commune; lon: number; lat: number; cote: 'gauche' | 'droite' | 'bas'; dx?: number; dy?: number }[] = [
+  { commune: 'namur', lon: 4.867, lat: 50.466, cote: 'droite' },
+  { commune: 'mons', lon: 3.952, lat: 50.455, cote: 'gauche' },
+  { commune: 'charleroi', lon: 4.444, lat: 50.411, cote: 'bas' },
+  // Halle : le point du chantier est posé un peu à côté du bureau, pour ne pas le recouvrir.
+  { commune: 'halle', lon: 4.235, lat: 50.735, cote: 'droite', dx: 18, dy: 16 },
+  // Evere et Auderghem sont voisines : le point d'Evere monte un peu pour que les deux noms se lisent.
+  { commune: 'evere', lon: 4.402, lat: 50.87, cote: 'droite', dy: -16 },
+  { commune: 'auderghem', lon: 4.43, lat: 50.816, cote: 'droite' },
+];
+const bureau = { lon: 4.235, lat: 50.735 };
+/** Quelques grandes villes, seulement pour se repérer. */
+const villes = [
+  { nom: carte.villes.anvers, lon: 4.4, lat: 51.22, cote: 'droite' },
+  { nom: carte.villes.gand, lon: 3.72, lat: 51.05, cote: 'gauche' },
+  { nom: carte.villes.liege, lon: 5.57, lat: 50.63, cote: 'droite' },
+];
+
+const fiches = communes.map((c) => ({
+  ...c,
+  chantiers: CHANTIERS.filter((chantier) => chantier.commune === c.commune),
+}));
+const identifiant = 'carte';
+---
+
+<figure class:list={['carte', classe]} data-carte data-anime>
+  <div class="carte__dessin">
+    <svg viewBox={`0 0 ${LARGEUR} ${HAUTEUR}`} role="img" aria-label={carte.aria}>
+      <defs>
+        <linearGradient id={`${identifiant}-fond`} x1="0" y1="0" x2="0" y2="1">
+          <stop offset="0" stop-color="#ffffff" />
+          <stop offset="1" stop-color="#f1f1ee" />
+        </linearGradient>
+      </defs>
+      <path class="carte__ombre" d={trace}></path>
+      <path d={trace} fill={`url(#${identifiant}-fond)`}></path>
+      <path class="carte__pays" d={trace}></path>
+    </svg>
+
+    <div class="carte__reperes" aria-hidden="true">
+      {
+        villes.map((ville) => (
+          <span class={`ville ville--${ville.cote}`} style={place(ville.lon, ville.lat)}>
+            <i></i>
+            <span>{ville.nom}</span>
+          </span>
+        ))
+      }
+    </div>
+
+    <!-- Le bureau de Halle : une petite maison dessinée au trait, avec la brique rouge du logo. -->
+    <div class="bureau" style={place(bureau.lon, bureau.lat)}>
+      <MaisonBureau class="bureau__maison" />
+      <span class="bureau__nom">{carte.bureau}</span>
+    </div>
+
+    <!-- Une petite flèche qui montre un point, puis le suivant : on peut les toucher. Elle disparaît au premier toucher. -->
+    <span class="carte__fleche" style={place(communes[0].lon, communes[0].lat)} aria-hidden="true">
+      <svg viewBox="0 0 40 46" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round">
+        <path d="M30 42C30 26 22 14 9 8" />
+        <path d="M8 18L8 7L19 6" />
+      </svg>
+    </span>
+
+    <div class="carte__points">
+      {
+        fiches.map((fiche, i) => (
+          <button
+            type="button"
+            class:list={['point', `point--${fiche.cote}`]}
+            style={`${place(fiche.lon, fiche.lat)}; --i: ${i}; --dx: ${fiche.dx ?? 0}px; --dy: ${fiche.dy ?? 0}px`}
+            aria-expanded="false"
+            aria-controls={`${identifiant}-${fiche.commune}`}
+            data-point={fiche.commune}
+          >
+            <span class="point__rond" aria-hidden="true"></span>
+            <span class="point__nom">{textes.communes[fiche.commune]}</span>
+          </button>
+        ))
+      }
+    </div>
+  </div>
+
+  <ul class="carte__legende" aria-hidden="true">
+    <li><MaisonBureau class="legende__maison" />{carte.bureauHalle}</li>
+    <li><span class="legende__rond"></span>{carte.chantier}</li>
+  </ul>
+
+  <!-- Téléphone : les communes se choisissent aussi ici, plus faciles à toucher que les points serrés de la carte. -->
+  <div class="carte__choix" role="group" aria-label={textes.accueil.realisations.pastille}>
+    {
+      fiches.map((fiche) => (
+        <button type="button" class="choix" aria-expanded="false" aria-controls={`${identifiant}-${fiche.commune}`} data-point={fiche.commune}>
+          {textes.communes[fiche.commune]}
+        </button>
+      ))
+    }
+  </div>
+
+  <!-- Les fenêtres des communes : déplacées en fin de page par le script (elles s'affichent par-dessus tout). -->
+  <div data-popups>
+    <div class="popups__fond" data-fond hidden></div>
+    {
+      fiches.map((fiche) => (
+        <div class="popup" id={`${identifiant}-${fiche.commune}`} role="dialog" aria-label={textes.communes[fiche.commune]} tabindex="-1" hidden data-fiche={fiche.commune} data-lenis-prevent>
+          <span class="popup__poignee" aria-hidden="true"></span>
+          <div class="popup__tete">
+            <h3 class="popup__titre">{textes.communes[fiche.commune]}</h3>
+            <button type="button" class="popup__fermer" data-fermer aria-label={textes.realisationsPage.fermer}>
+              <Icon nom="croix" taille={20} epaisseur={2.2} />
+            </button>
+          </div>
+
+          {fiche.chantiers.length > 1 && (
+            <div class="popup__onglets" role="group" aria-label={textes.communes[fiche.commune]}>
+              {fiche.chantiers.map((c, k) => (
+                <button type="button" class:list={['onglet', { 'est-actif': k === 0 }]} aria-pressed={k === 0 ? 'true' : 'false'} data-onglet={k}>
+                  {textes.chantiers[c.cle].titre}
+                </button>
+              ))}
+            </div>
+          )}
+
+          {fiche.chantiers.map((c, k) => {
+            const infos = textes.chantiers[c.cle];
+            const paire = c.paires[0];
+            return (
+              <div class:list={['cas', { 'est-actif': k === 0 }]} data-cas={k}>
+                <p class="cas__titre">{infos.titre}</p>
+                {paire ? (
+                  <Comparateur langue={langue} paire={paire} sizes="340px" />
+                ) : (
+                  <Image class="cas__photo" src={photo(c.couverture)} alt={textes.photos[c.couverture]} widths={[340, 680]} sizes="340px" format="webp" quality={74} loading="lazy" />
+                )}
+                {c.slug && (
+                  <a class="cas__lien" href={lienChantier(c.cle, langue)}>
+                    {textes.accueil.realisations.voir}
+                    <Icon nom="fleche" taille={18} epaisseur={2.2} />
+                  </a>
+                )}
+              </div>
+            );
+          })}
+        </div>
+      ))
+    }
+  </div>
+</figure>
+
+<script>
+  import '~/scripts/carte';
+</script>
+
+<style>
+  .carte {
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+    margin: 0;
+  }
+
+  .carte__dessin {
+    position: relative;
+    aspect-ratio: 560 / 460;
+  }
+
+  .carte svg {
+    display: block;
+    width: 100%;
+    height: 100%;
+    overflow: visible;
+  }
+
+  /* Une ombre toute simple (sans flou : plus léger pour le téléphone). */
+  .carte__ombre {
+    fill: rgba(31, 36, 41, 0.09);
+    transform: translateY(9px);
+  }
+
+  .carte__pays {
+    fill: none;
+    stroke: var(--color-ink);
+    stroke-width: 1.8;
+    stroke-linejoin: round;
+  }
+
+  /* --- Repères : grandes villes, discrètes --- */
+  .carte__reperes {
+    position: absolute;
+    inset: 0;
+    pointer-events: none;
+  }
+
+  .ville {
+    position: absolute;
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    font-size: 12.5px;
+    font-weight: 600;
+    letter-spacing: 0.01em;
+    color: var(--color-muted);
+    transform: translate(-3px, -50%);
+    white-space: nowrap;
+  }
+
+  .ville i {
+    flex-shrink: 0;
+    width: 7px;
+    height: 7px;
+    border: 1.5px solid var(--color-muted);
+    border-radius: 50%;
+    background: #fff;
+  }
+
+  .ville--gauche {
+    flex-direction: row-reverse;
+    transform: translate(calc(-100% + 3px), -50%);
+  }
+
+  /* --- Le bureau : une petite maison dessinée, le nom en rouge --- */
+  .bureau {
+    position: absolute;
+    width: 54px;
+    /* Le pied de la maison est posé sur Halle, la maison part vers le haut et la gauche. */
+    transform: translate(-100%, calc(-100% + 3px));
+    pointer-events: none;
+  }
+
+  .bureau__nom {
+    position: absolute;
+    top: 100%;
+    right: 0;
+    margin-top: 1px;
+    font-size: 12px;
+    font-weight: 750;
+    line-height: 1;
+    color: var(--color-accent);
+    white-space: nowrap;
+    paint-order: stroke;
+    stroke: #fff;
+    -webkit-text-stroke: 3px #fff;
+  }
+
+  /* La flèche : sous un point, pointée vers lui, en rouge. Elle passe d'une commune à l'autre (script). */
+  .carte__fleche {
+    position: absolute;
+    z-index: 2;
+    width: 34px;
+    color: var(--color-accent);
+    transform: translate(calc(2px + var(--dx, 0px)), calc(8px + var(--dy, 0px)));
+    pointer-events: none;
+    transition: opacity 300ms var(--ease);
+  }
+
+  .carte__fleche svg {
+    display: block;
+    width: 100%;
+    height: auto;
+    transition: opacity 280ms var(--ease);
+  }
+
+  .carte__fleche.est-cachee svg {
+    opacity: 0;
+  }
+
+  .carte--touchee .carte__fleche {
+    opacity: 0;
+  }
+
+  /* --- Les communes de chantiers : de vrais boutons, zone tactile de 44 px --- */
+  .carte__points {
+    position: absolute;
+    inset: 0;
+  }
+
+  .point {
+    position: absolute;
+    display: flex;
+    align-items: center;
+    gap: 2px;
+    min-width: 44px;
+    min-height: 44px;
+    padding: 0;
+    border: 0;
+    background: none;
+    color: var(--color-ink);
+    font: inherit;
+    cursor: pointer;
+    transform: translate(calc(-22px + var(--dx)), calc(-50% + var(--dy)));
+  }
+
+  .point--gauche {
+    flex-direction: row-reverse;
+    transform: translate(calc(-100% + 22px + var(--dx)), calc(-50% + var(--dy)));
+  }
+
+  /* Le nom sous le point (communes trop proches pour écrire à côté). */
+  .point--bas {
+    flex-direction: column;
+    align-items: center;
+    gap: 0;
+    transform: translate(calc(-50% + var(--dx)), calc(-22px + var(--dy)));
+  }
+
+  .point--bas .point__nom {
+    margin-top: -6px;
+  }
+
+  .point__rond {
+    position: relative;
+    flex-shrink: 0;
+    width: 44px;
+    height: 44px;
+  }
+
+  .point__rond::before {
+    content: '';
+    position: absolute;
+    inset: 12px;
+    border: 3px solid #fff;
+    border-radius: 50%;
+    background: var(--color-ink);
+    box-shadow: 0 4px 12px -2px rgba(31, 36, 41, 0.5);
+    transition:
+      transform var(--speed) var(--ease),
+      background-color var(--speed) var(--ease);
+  }
+
+  .point__nom {
+    padding: 5px 11px;
+    border-radius: var(--radius-pill);
+    background: rgba(255, 255, 255, 0.92);
+    box-shadow: 0 1px 2px rgba(31, 36, 41, 0.1);
+    font-family: var(--font-display);
+    font-size: 15px;
+    font-weight: 750;
+    line-height: 1.1;
+    letter-spacing: -0.01em;
+    white-space: nowrap;
+    transition:
+      background-color var(--speed) var(--ease),
+      color var(--speed) var(--ease);
+  }
+
+  .point:hover .point__rond::before {
+    transform: scale(1.18);
+  }
+
+  .point.est-actif .point__rond::before {
+    background: var(--color-accent);
+    transform: scale(1.3);
+  }
+
+  .point.est-actif .point__nom {
+    background: var(--color-ink);
+    color: #fff;
+  }
+
+  .point:focus-visible {
+    outline: 3px solid var(--color-accent);
+    outline-offset: 2px;
+    border-radius: 12px;
+  }
+
+  /* --- Légende --- */
+  .carte__legende {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 6px 22px;
+    margin: 0;
+    padding: 0;
+    list-style: none;
+    font-size: var(--size-tiny);
+    font-weight: 600;
+    color: var(--color-text);
+  }
+
+  .carte__legende li {
+    display: inline-flex;
+    align-items: center;
+    gap: 9px;
+  }
+
+  .carte__legende :global(.legende__maison) {
+    width: 24px;
+    flex-shrink: 0;
+  }
+
+  .legende__rond {
+    width: 13px;
+    height: 13px;
+    border: 2.5px solid #fff;
+    border-radius: 50%;
+    background: var(--color-ink);
+    box-shadow: 0 0 0 1px var(--color-border);
+  }
+
+  /* --- Choix de la commune (téléphone) --- */
+  .carte__choix {
+    display: none;
+    flex-wrap: wrap;
+    gap: 8px;
+  }
+
+  .choix {
+    min-height: 44px;
+    padding: 0 18px;
+    border: 1.5px solid var(--color-border);
+    border-radius: var(--radius-pill);
+    background: var(--color-card);
+    color: var(--color-ink);
+    font: 650 15px/1 var(--font-text);
+    cursor: pointer;
+    transition:
+      background-color var(--speed) var(--ease),
+      color var(--speed) var(--ease),
+      border-color var(--speed) var(--ease);
+  }
+
+  .choix.est-actif {
+    border-color: var(--color-ink);
+    background: var(--color-ink);
+    color: #fff;
+  }
+
+  .choix:focus-visible {
+    outline: 3px solid var(--color-accent);
+    outline-offset: 2px;
+  }
+
+  @media (max-width: 699px) {
+    :global(.js) .carte__choix {
+      display: flex;
+    }
+  }
+
+  /* --- Les fenêtres des communes (ordinateur : près du point ; téléphone : feuille qui monte du bas) --- */
+  .popup {
+    position: absolute;
+    z-index: 120;
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+    width: min(348px, calc(100vw - 24px));
+    max-height: calc(100dvh - 24px);
+    padding: 16px;
+    overflow-y: auto;
+    border-radius: 24px;
+    background: #fff;
+    box-shadow:
+      0 0 0 1px var(--color-border),
+      0 30px 60px -20px rgba(31, 36, 41, 0.45);
+    opacity: 0;
+    transform: translateY(8px) scale(0.98);
+    transition:
+      opacity 220ms var(--ease-out),
+      transform 220ms var(--ease-out);
+  }
+
+  .popup[hidden] {
+    display: none;
+  }
+
+  .popup.est-ouvert {
+    opacity: 1;
+    transform: none;
+  }
+
+  .popup:focus {
+    outline: none;
+  }
+
+  .popup__poignee {
+    display: none;
+  }
+
+  .popup__tete {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 12px;
+  }
+
+  .popup__titre {
+    font-family: var(--font-display);
+    font-size: 28px;
+    font-weight: 800;
+    line-height: 1;
+    letter-spacing: var(--tracking-display);
+    text-transform: uppercase;
+    color: var(--color-ink);
+  }
+
+  .popup__fermer {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    flex-shrink: 0;
+    width: 44px;
+    height: 44px;
+    margin-right: -6px;
+    border: 0;
+    border-radius: 50%;
+    background: var(--color-surface);
+    color: var(--color-ink);
+    cursor: pointer;
+    transition: background-color var(--speed) var(--ease);
+  }
+
+  .popup__fermer:hover {
+    background: var(--color-border);
+  }
+
+  .popup__fermer:focus-visible,
+  .onglet:focus-visible,
+  .cas__lien:focus-visible {
+    outline: 3px solid var(--color-accent);
+    outline-offset: 2px;
+  }
+
+  .popup__onglets {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 6px;
+  }
+
+  .onglet {
+    min-height: 40px;
+    padding: 0 14px;
+    border: 1.5px solid var(--color-border);
+    border-radius: var(--radius-pill);
+    background: var(--color-card);
+    color: var(--color-ink);
+    font: 650 13.5px/1.1 var(--font-text);
+    cursor: pointer;
+    transition:
+      background-color var(--speed) var(--ease),
+      color var(--speed) var(--ease),
+      border-color var(--speed) var(--ease);
+  }
+
+  .onglet.est-actif {
+    border-color: var(--color-ink);
+    background: var(--color-ink);
+    color: #fff;
+  }
+
+  .cas {
+    display: none;
+    flex-direction: column;
+    gap: 12px;
+  }
+
+  .cas.est-actif {
+    display: flex;
+  }
+
+  .cas__titre {
+    font-size: var(--size-small);
+    font-weight: 650;
+    color: var(--color-ink);
+  }
+
+  .cas :global(.comparateur) {
+    border-radius: 16px;
+  }
+
+  .cas__photo {
+    display: block;
+    width: 100%;
+    height: auto;
+    aspect-ratio: 4 / 3;
+    object-fit: cover;
+    border-radius: 16px;
+  }
+
+  .cas__lien {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 10px;
+    min-height: 50px;
+    padding: 0 22px;
+    border-radius: var(--radius-pill);
+    background: var(--color-accent);
+    box-shadow: var(--shadow-accent);
+    color: #fff;
+    font-size: var(--size-small);
+    font-weight: 700;
+    text-decoration: none;
+    transition: background-color var(--speed) var(--ease);
+  }
+
+  .cas__lien:hover {
+    background: var(--color-accent-dark);
+  }
+
+  .popups__fond {
+    position: fixed;
+    inset: 0;
+    z-index: 110;
+    background: rgba(14, 26, 40, 0.55);
+    opacity: 0;
+    transition: opacity 320ms var(--ease);
+  }
+
+  .popups__fond[hidden] {
+    display: none;
+  }
+
+  .popups__fond.est-ouvert {
+    opacity: 1;
+  }
+
+  @media (max-width: 699px) {
+    .popup {
+      position: fixed;
+      inset: auto 0 0 0;
+      z-index: 120;
+      width: auto;
+      max-height: min(88dvh, 700px);
+      gap: 14px;
+      padding: 10px 18px calc(22px + env(safe-area-inset-bottom, 0px));
+      border-radius: 28px 28px 0 0;
+      opacity: 1;
+      transform: translateY(105%);
+      transition: transform 380ms var(--ease-out);
+    }
+
+    .popup.est-ouvert {
+      transform: none;
+    }
+
+    .popup__poignee {
+      display: block;
+      align-self: center;
+      width: 40px;
+      height: 5px;
+      border-radius: 3px;
+      background: var(--color-border);
+    }
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .popup,
+    .popups__fond {
+      transition: none;
+    }
+  }
+
+  @media (prefers-reduced-motion: no-preference) {
+    :global(.js) .point,
+    :global(.js) .bureau,
+    :global(.js) .ville,
+    :global(.js) .carte__fleche {
+      opacity: 0;
+      transition: opacity 450ms var(--ease-out);
+      transition-delay: calc(120ms + var(--i, 0) * 90ms);
+    }
+
+    :global(.js) .carte.est-visible .point,
+    :global(.js) .carte.est-visible .bureau,
+    :global(.js) .carte.est-visible .ville,
+    :global(.js) .carte.est-visible .carte__fleche {
+      opacity: 1;
+    }
+
+    :global(.js) .carte--touchee .carte__fleche {
+      opacity: 0;
+    }
+
+    /* La flèche fait de petits allers-retours vers le point, jusqu'au premier toucher. */
+    :global(.js) .carte.est-visible:not(.carte--touchee) .carte__fleche svg {
+      animation: fleche 1100ms var(--ease-out) infinite alternate;
+    }
+
+    @keyframes fleche {
+      from {
+        transform: translate(0, 0);
+      }
+      to {
+        transform: translate(-5px, -7px);
+      }
+    }
+
+    /* Un anneau qui bat trois fois sur chaque point, pour dire « touchez-moi », puis le calme. */
+    :global(.js) .carte.est-visible:not(.carte--touchee) .point__rond::after {
+      content: '';
+      position: absolute;
+      inset: 11px;
+      border-radius: 50%;
+      border: 2px solid var(--color-ink);
+      opacity: 0;
+      animation: anneau 1600ms var(--ease-out) 3;
+      animation-delay: calc(700ms + var(--i, 0) * 200ms);
+    }
+
+    @keyframes anneau {
+      from {
+        opacity: 0.55;
+        transform: scale(0.8);
+      }
+      to {
+        opacity: 0;
+        transform: scale(2.3);
+      }
+    }
+  }
+
+  /* Téléphone : des points plus petits (la zone à toucher reste de 40 px) et les noms en petit à côté. */
+  @media (max-width: 699px) {
+    .bureau__nom {
+      display: none;
+    }
+
+    .bureau {
+      width: 38px;
+    }
+
+    .point,
+    .point--bas {
+      min-width: 40px;
+      min-height: 40px;
+      transform: translate(calc(-20px + var(--dx)), calc(-50% + var(--dy)));
+    }
+
+    .point--gauche {
+      transform: translate(calc(-100% + 20px + var(--dx)), calc(-50% + var(--dy)));
+    }
+
+    .point--bas {
+      transform: translate(calc(-50% + var(--dx)), calc(-20px + var(--dy)));
+    }
+
+    .point__rond {
+      width: 40px;
+      height: 40px;
+    }
+
+    .point__rond::before {
+      inset: 13px;
+      border-width: 2.5px;
+    }
+
+    .point__nom {
+      padding: 2px 6px;
+      font-size: 12px;
+    }
+
+    .point--bas .point__nom {
+      margin-top: -10px;
+    }
+
+    .carte__fleche {
+      width: 28px;
+      transform: translate(var(--dx, 0px), calc(6px + var(--dy, 0px)));
+    }
+  }
+</style>

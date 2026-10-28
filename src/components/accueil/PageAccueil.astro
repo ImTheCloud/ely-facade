@@ -1,0 +1,40 @@
+---
+/** L'accueil complet, partagé par / et /nl/. */
+import AvantApres from './AvantApres.astro';
+import Chiffres from './Chiffres.astro';
+import Devis from './Devis.astro';
+import Equipe from './Equipe.astro';
+import Etapes from './Etapes.astro';
+import Faq from './Faq.astro';
+import Hero from './Hero.astro';
+import Methode from './Methode.astro';
+import Metiers from './Metiers.astro';
+import Phrase from './Phrase.astro';
+import Realisations from './Realisations.astro';
+import BaseLayout from '~/layouts/BaseLayout.astro';
+import { t, type Langue } from '~/i18n';
+
+interface Props {
+  langue: Langue;
+}
+
+const { langue } = Astro.props;
+const textes = t(langue);
+const page = textes.pages.accueil;
+const emotions = textes.accueil.emotions;
+---
+
+<BaseLayout langue={langue} titre={page.titre} description={page.description} surPhoto>
+  <Hero langue={langue} />
+  <Equipe langue={langue} />
+  <Methode langue={langue} />
+  <Chiffres langue={langue} />
+  <AvantApres langue={langue} />
+  <Phrase phrase={emotions.durer.phrase} />
+  <Realisations langue={langue} />
+  <Etapes langue={langue} />
+  <Metiers langue={langue} />
+  <Faq langue={langue} />
+  <Devis langue={langue} />
+</BaseLayout>
+

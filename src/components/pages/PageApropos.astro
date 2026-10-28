@@ -1,0 +1,418 @@
+---
+/** « À propos » : les deux frères, l'équipe, nos engagements, le bureau de Halle. Seulement des faits confirmés. */
+import { Image } from 'astro:assets';
+import AppelDevis from '../AppelDevis.astro';
+import CarteBelgique from '../CarteBelgique.astro';
+import IntroPage from '../IntroPage.astro';
+import Souligne from '../Souligne.astro';
+import BaseLayout from '~/layouts/BaseLayout.astro';
+import { portraits } from '~/data/equipe';
+import { entreprise } from '~/data/entreprise';
+import { chemin, t, type Langue } from '~/i18n';
+
+interface Props {
+  langue: Langue;
+}
+
+const { langue } = Astro.props;
+const textes = t(langue);
+const page = textes.pages.apropos;
+const a = textes.apropos;
+---
+
+<BaseLayout langue={langue} titre={page.titre} description={page.description}>
+  <IntroPage langue={langue} fil={[{ libelle: textes.nav.apropos, href: chemin('apropos', langue) }]} titre={a.titre} texte={a.texte}>
+    <Fragment slot="visuel">
+      <!-- Dès l'arrivée sur la page : Elisei et Simion, détourés, posés sur la ligne noire à la brique rouge. -->
+      <figure class="duo">
+        <div class="duo__freres">
+          {
+            textes.accueil.equipe.personnes.map((personne) => (
+              <Image
+                src={portraits[personne.prenom as 'Elisei' | 'Simion']}
+                alt={`${textes.accueil.equipe.portrait} ${personne.prenom} Ungureanu`}
+                widths={[300, 500, 750]}
+                sizes="(min-width: 960px) 260px, 45vw"
+                format="webp"
+                quality={84}
+                loading="eager"
+              />
+            ))
+          }
+          <span class="duo__brique" aria-hidden="true"></span>
+        </div>
+        <figcaption class="duo__noms">
+          {
+            textes.accueil.equipe.personnes.map((personne) => (
+              <span>
+                <strong>{personne.prenom}</strong>
+                {personne.roleCourt}
+              </span>
+            ))
+          }
+        </figcaption>
+      </figure>
+    </Fragment>
+  </IntroPage>
+
+  <section class="section freres">
+    <div class="wrap freres__grille">
+      <div class="nom">
+        <p class="nom__lettres" aria-hidden="true">ELY<span class="brique"></span></p>
+        <h2>{a.nom.titre}</h2>
+        <p>{a.nom.texte}</p>
+      </div>
+      <ul class="personnes">
+        {
+          a.personnes.map((personne) => (
+            <li>
+              <h3>{personne.prenom}</h3>
+              <p class="personnes__role">{personne.role}</p>
+              <p class="personnes__phrase">
+                <Souligne texte={personne.phrase} />
+              </p>
+              <p>{personne.texte}</p>
+            </li>
+          ))
+        }
+      </ul>
+    </div>
+  </section>
+
+  <section class="section equipe">
+    <div class="wrap">
+      <div class="tete">
+        <h2>{a.equipe.titre}</h2>
+        <p>{a.equipe.texte}</p>
+      </div>
+    </div>
+  </section>
+
+  <section class="section engagements">
+    <div class="wrap">
+      <div class="tete">
+        <h2>{a.engagementsTitre}</h2>
+      </div>
+      <ul class="engagements__liste">
+        {
+          a.engagements.map((engagement, i) => (
+            <li>
+              <span class="engagements__num" aria-hidden="true">0{i + 1}</span>
+              <h3>{engagement.titre}</h3>
+              <p>{engagement.texte}</p>
+            </li>
+          ))
+        }
+      </ul>
+      <div class="materiaux">
+        <h3>{textes.services.materiaux.titre}</h3>
+        <p>{textes.services.materiaux.texte}</p>
+      </div>
+    </div>
+  </section>
+
+  <section class="section bureau">
+    <div class="wrap bureau__grille">
+      <div class="bureau__texte">
+        <h2>{a.bureau.titre}</h2>
+        <address>{entreprise.rue}<br />{entreprise.codePostal} {entreprise.ville}</address>
+        <p>{a.bureau.texte}</p>
+      </div>
+      <CarteBelgique langue={langue} />
+    </div>
+  </section>
+
+  <AppelDevis langue={langue} titre={textes.services.devis.titre} texte={textes.services.devis.texte} />
+</BaseLayout>
+
+<style>
+  /* --- Les deux frères, en haut de la page --- */
+  .duo {
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+    max-width: 520px;
+    margin: 0 auto;
+  }
+
+  /*
+   * Les deux frères posés sur une ligne noire, la brique rouge du logo entre eux deux.
+   * Les PNG sont recadrés au bord des silhouettes : chaque photo garde l'échelle de son ancien cadre (moitié de la
+   * largeur, Elisei 490 px et Simion 810 px à l'origine), donc les têtes gardent la même taille et la même hauteur.
+   * La paire est centrée : la ligne dépasse de la même longueur des deux côtés.
+   */
+  .duo__freres {
+    --elisei: calc(50% * 420 / 490);
+    --simi: calc(50% * 792 / 810);
+    --ecart: 3.6%;
+    --depasse: 14px;
+    --bord: calc((100% - var(--elisei) - var(--simi) - var(--ecart)) / 2 - var(--depasse));
+    position: relative;
+    display: flex;
+    justify-content: center;
+    align-items: flex-end;
+    gap: var(--ecart);
+  }
+
+  .duo__freres::after {
+    content: '';
+    position: absolute;
+    top: 100%;
+    right: var(--bord);
+    left: var(--bord);
+    height: 2px;
+    background: var(--color-ink);
+  }
+
+  /* La brique, au milieu de l'écart entre les deux silhouettes. */
+  .duo__brique {
+    position: absolute;
+    z-index: 1;
+    top: calc(100% + 1px);
+    left: calc(50% + (var(--elisei) - var(--simi)) / 2);
+    width: 26px;
+    height: 8px;
+    border-radius: 2px;
+    background: var(--color-accent);
+    transform: translate(-50%, -50%);
+  }
+
+  .duo__freres :global(img) {
+    display: block;
+    flex: none;
+    height: auto;
+  }
+
+  .duo__freres :global(img:first-child) {
+    width: var(--elisei);
+  }
+
+  .duo__freres :global(img:nth-child(2)) {
+    width: var(--simi);
+  }
+
+  .duo__noms {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    margin-top: 16px;
+    text-align: center;
+    font-size: var(--size-small);
+    font-weight: 700;
+    color: var(--color-accent);
+  }
+
+  .duo__noms span {
+    display: flex;
+    flex-direction: column;
+    gap: 2px;
+  }
+
+  /* Petit téléphone : un rôle un peu plus petit, pour qu'il tienne sur une ligne. */
+  @media (max-width: 380px) {
+    .duo__noms {
+      font-size: 14px;
+    }
+  }
+
+  .duo__noms strong {
+    font-family: var(--font-display);
+    font-size: clamp(24px, 3vw, 32px);
+    font-weight: 800;
+    line-height: 1;
+    letter-spacing: -0.02em;
+    text-transform: uppercase;
+    color: var(--color-ink);
+  }
+
+  /* --- Les frères --- */
+  .freres {
+    border-top: 1px solid var(--color-border);
+  }
+
+  .freres__grille {
+    display: grid;
+    gap: 40px;
+    align-items: center;
+  }
+
+  .nom {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 18px;
+  }
+
+  .nom__lettres {
+    display: inline-flex;
+    align-items: flex-end;
+    gap: 0.06em;
+    font-family: var(--font-display);
+    font-size: clamp(90px, 14vw, 200px);
+    font-weight: 800;
+    line-height: 0.8;
+    letter-spacing: -0.04em;
+    color: var(--color-ink);
+  }
+
+  .nom__lettres .brique {
+    width: 0.34em;
+    height: 0.17em;
+    border-radius: 0.035em;
+    margin-bottom: 0.02em;
+  }
+
+  .nom p:last-child {
+    max-width: 44ch;
+    font-size: var(--size-lead);
+  }
+
+  .personnes {
+    display: grid;
+    gap: var(--tile-gap);
+    margin: 0;
+    padding: 0;
+    list-style: none;
+  }
+
+  .personnes li {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+    padding: 28px;
+    border: 1px solid var(--color-border);
+    border-radius: var(--radius-tile);
+    background: var(--color-card);
+    box-shadow: var(--shadow-tile);
+  }
+
+  .personnes h3 {
+    font-size: 30px;
+    font-weight: 800;
+    text-transform: uppercase;
+    letter-spacing: -0.02em;
+  }
+
+  .personnes__phrase {
+    font-family: var(--font-display);
+    font-size: clamp(22px, 2vw, 28px);
+    font-weight: 750;
+    line-height: 1.15;
+    letter-spacing: var(--tracking-phrase);
+    text-wrap: balance;
+    color: var(--color-ink);
+  }
+
+  .personnes__role {
+    font-size: clamp(16px, 4.6vw, 19px);
+    font-weight: 800;
+    color: var(--color-accent);
+  }
+
+  @media (min-width: 700px) {
+    .personnes {
+      grid-template-columns: repeat(2, 1fr);
+    }
+  }
+
+  @media (min-width: 1000px) {
+    .freres__grille {
+      grid-template-columns: minmax(0, 0.9fr) minmax(0, 1.1fr);
+      gap: 64px;
+    }
+  }
+
+  /* --- Équipe --- */
+  .equipe {
+    border-top: 1px solid var(--color-border);
+  }
+
+  .equipe .tete {
+    margin-bottom: 0;
+  }
+
+  /* --- Engagements --- */
+  .engagements__liste {
+    display: grid;
+    gap: var(--tile-gap);
+    margin: 0 0 var(--tile-gap);
+    padding: 0;
+    list-style: none;
+  }
+
+  .engagements__liste li {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+    padding: 26px;
+    border-radius: var(--radius-tile);
+    background: var(--color-ink);
+    color: rgba(255, 255, 255, 0.8);
+  }
+
+  .engagements__liste h3 {
+    color: #fff;
+    font-size: 24px;
+    font-weight: 800;
+  }
+
+  .engagements__num {
+    font-family: var(--font-display);
+    font-weight: 700;
+    color: var(--color-accent-clair);
+  }
+
+  .materiaux {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+    padding: 26px;
+    border: 1px solid var(--color-border);
+    border-radius: var(--radius-tile);
+    background: var(--color-card);
+  }
+
+  .materiaux p {
+    max-width: 70ch;
+  }
+
+  @media (min-width: 700px) {
+    .engagements__liste {
+      grid-template-columns: repeat(2, 1fr);
+    }
+  }
+
+  @media (min-width: 1100px) {
+    .engagements__liste {
+      grid-template-columns: repeat(4, 1fr);
+    }
+  }
+
+  /* --- Bureau --- */
+  .bureau__grille {
+    display: grid;
+    gap: 40px;
+    align-items: center;
+  }
+
+  .bureau__texte {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 18px;
+  }
+
+  .bureau address {
+    font-style: normal;
+    font-size: var(--size-lead);
+    font-weight: 600;
+    line-height: 1.5;
+    color: var(--color-ink);
+  }
+
+  @media (min-width: 960px) {
+    .bureau__grille {
+      grid-template-columns: minmax(0, 0.8fr) minmax(0, 1.2fr);
+      gap: 64px;
+    }
+  }
+</style>

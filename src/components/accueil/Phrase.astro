@@ -1,0 +1,44 @@
+---
+/**
+ * Une phrase d'émotion entre deux sections : très grand titre, sur fond clair.
+ * Les mots s'éclaircissent un à un quand la phrase arrive à l'écran, puis le mot clé se souligne en rouge.
+ */
+import Souligne from '../Souligne.astro';
+
+interface Props {
+  phrase: string;
+}
+
+const { phrase } = Astro.props;
+---
+
+<section class="phrase">
+  <div class="wrap">
+    <p class="phrase__texte" data-mots>
+      <Souligne texte={phrase} mots />
+    </p>
+  </div>
+</section>
+
+<style>
+  .phrase {
+    padding-block: clamp(40px, 6vw, 88px) clamp(8px, 2vw, 24px);
+  }
+
+  .phrase .wrap {
+    display: flex;
+    justify-content: center;
+    text-align: center;
+  }
+
+  .phrase__texte {
+    max-width: 16ch;
+    font-family: var(--font-display);
+    font-size: clamp(40px, 7.4vw, 116px);
+    font-weight: 750;
+    line-height: 1.02;
+    letter-spacing: var(--tracking-phrase);
+    text-wrap: balance;
+    color: var(--color-ink);
+  }
+</style>

@@ -1,0 +1,66 @@
+---
+/** Mentions légales : la raison sociale exacte de la BCE (ELY FAÇADE BV), le siège, l'hébergeur. */
+import PageTexte from './PageTexte.astro';
+import { entreprise, lienWhatsApp } from '~/data/entreprise';
+import { chemin, t, type Langue } from '~/i18n';
+
+interface Props {
+  langue: Langue;
+}
+
+const { langue } = Astro.props;
+const textes = t(langue);
+const l = textes.legal;
+const page = textes.pages.mentionsLegales;
+---
+
+<PageTexte
+  langue={langue}
+  titre={page.titre}
+  description={page.description}
+  h1={l.titre}
+  intro={l.intro}
+  fil={[{ libelle: l.titre, href: chemin('mentionsLegales', langue) }]}
+>
+  <section>
+    <h2>{l.editeurTitre}</h2>
+    <dl>
+      <dt>{entreprise.raisonSociale}</dt>
+      <dd>{l.forme}</dd>
+      <dt>{l.siege}</dt>
+      <dd>{entreprise.rue}, {entreprise.codePostal} {entreprise.ville}</dd>
+      <dt>{l.bce}</dt>
+      <dd>{entreprise.numeroEntreprise}</dd>
+      <dt>{l.tva}</dt>
+      <dd>BE {entreprise.numeroEntreprise}</dd>
+      <dt>{l.gerant}</dt>
+      <dd>{entreprise.gerant}</dd>
+      <dt>{l.contact}</dt>
+      <dd>
+        <a href={`tel:${entreprise.telephoneLien}`}>{entreprise.telephoneAffiche}</a> ·{' '}
+        <a href={lienWhatsApp(textes.whatsappMessage)} target="_blank" rel="noopener">WhatsApp</a> ·{' '}
+        <a href={`mailto:${entreprise.email}`}>{entreprise.email}</a>
+      </dd>
+    </dl>
+  </section>
+
+  <section>
+    <h2>{l.hebergeurTitre}</h2>
+    <p>{l.hebergeur} · <a href="https://www.cloudflare.com" rel="noopener">cloudflare.com</a></p>
+  </section>
+
+  <section>
+    <h2>{l.proprieteTitre}</h2>
+    <p>{l.propriete}</p>
+  </section>
+
+  <section>
+    <h2>{l.creditsTitre}</h2>
+    <p>{l.credits}</p>
+  </section>
+
+  <section>
+    <h2>{l.responsabiliteTitre}</h2>
+    <p>{l.responsabilite}</p>
+  </section>
+</PageTexte>

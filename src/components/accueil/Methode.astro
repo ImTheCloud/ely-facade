@@ -1,0 +1,182 @@
+---
+/**
+ * La méthode Ely Facade, juste après l'équipe : quatre étapes, de l'appel à la façade terminée.
+ * Ordinateur : quatre colonnes reliées par un trait qui finit sur la brique rouge.
+ * Téléphone : une frise verticale compacte. Tout tient sur un écran ; la première étape a son bouton de devis.
+ */
+import Bouton from '../Bouton.astro';
+import Souligne from '../Souligne.astro';
+import { lienDevis } from '../../data/entreprise';
+import { chemin, t, type Langue } from '../../i18n';
+
+interface Props {
+  langue: Langue;
+}
+
+const { langue } = Astro.props;
+const textes = t(langue);
+const methode = textes.accueil.methode;
+---
+
+<section class="section methode" id="methode">
+  <div class="wrap">
+    <div class="tete">
+      <h2 data-trait><Souligne texte={methode.titre} /></h2>
+      <p>{methode.texte}</p>
+    </div>
+
+    <!-- Une vraie liste ordonnée : les numéros sont aussi lus par les lecteurs d'écran. -->
+    <ol class="methode__etapes">
+      {
+        methode.etapes.map((etape, i) => (
+          <li class="pas">
+            <span class="pas__num" aria-hidden="true">
+              0{i + 1}
+            </span>
+            <div class="pas__texte">
+              <h3>{etape.titre}</h3>
+              <p>{etape.texte}</p>
+              {i === 0 && (
+                <Bouton href={lienDevis(langue)} variante="accent" iconeApres="fleche-diag" class="pas__devis">
+                  {textes.actions.devis}
+                </Bouton>
+              )}
+              {i === methode.etapes.length - 1 && (
+                <Bouton href={chemin('realisations', langue)} variante="secondaire" iconeApres="fleche" class="pas__devis">
+                  {methode.realisations}
+                </Bouton>
+              )}
+            </div>
+          </li>
+        ))
+      }
+    </ol>
+  </div>
+</section>
+
+<style>
+  .methode .tete {
+    margin-bottom: 20px;
+  }
+
+  /* Ordinateur : le titre et sa phrase tiennent chacun sur une ligne. */
+  @media (min-width: 1000px) {
+    .methode .tete,
+    .methode .tete > p:last-child {
+      max-width: none;
+    }
+  }
+
+  .methode__etapes {
+    position: relative;
+    display: grid;
+    gap: 18px;
+    margin: 0;
+    padding: 0;
+    list-style: none;
+  }
+
+  /* Téléphone : le numéro dans un rond, le texte à côté, un trait vertical relie les étapes. */
+  /* Tout part du haut : un bouton dans une étape ne décale jamais le texte des autres. */
+  .pas {
+    position: relative;
+    display: grid;
+    grid-template-columns: 48px minmax(0, 1fr);
+    gap: 16px;
+    align-items: start;
+    align-content: start;
+  }
+
+  .pas__num {
+    position: relative;
+    z-index: 1;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 48px;
+    height: 48px;
+    border-radius: 50%;
+    background: var(--color-ink);
+    color: #fff;
+    font-family: var(--font-display);
+    font-size: 18px;
+    font-weight: 800;
+    font-variant-numeric: tabular-nums;
+  }
+
+  .pas:last-child .pas__num {
+    background: var(--color-accent);
+  }
+
+  .pas:not(:last-child)::before {
+    content: '';
+    position: absolute;
+    left: 23px;
+    top: 48px;
+    bottom: -18px;
+    width: 2px;
+    background: var(--color-ink);
+    opacity: 0.18;
+  }
+
+  .pas__texte {
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+    padding-top: 2px;
+  }
+
+  .pas h3 {
+    font-size: clamp(19px, 5.2vw, 22px);
+    font-weight: 750;
+    letter-spacing: var(--tracking-phrase);
+  }
+
+  .pas p {
+    max-width: 38ch;
+    font-size: var(--size-small);
+    line-height: 1.5;
+  }
+
+  /* La demande de devis à la première étape, nos réalisations à la dernière. */
+  .pas__texte :global(.pas__devis) {
+    align-self: flex-start;
+    margin-top: 8px;
+  }
+
+  /* Ordinateur : quatre colonnes, le grand numéro au-dessus, un trait horizontal qui relie tout. */
+  @media (min-width: 1000px) {
+    .methode .tete {
+      margin-bottom: 44px;
+    }
+
+    .methode__etapes {
+      grid-template-columns: repeat(4, minmax(0, 1fr));
+      gap: 32px;
+    }
+
+    .pas {
+      grid-template-columns: 1fr;
+      gap: 22px;
+    }
+
+    .pas__num {
+      width: 64px;
+      height: 64px;
+      font-size: 22px;
+    }
+
+    .pas:not(:last-child)::before {
+      left: 76px;
+      right: -20px;
+      top: 31px;
+      bottom: auto;
+      width: auto;
+      height: 2px;
+    }
+
+    .pas h3 {
+      font-size: clamp(20px, 1.7vw, 24px);
+    }
+  }
+</style>

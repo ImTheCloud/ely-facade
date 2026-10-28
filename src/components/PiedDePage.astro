@@ -1,0 +1,163 @@
+---
+/**
+ * Pied de page : un grand bloc gris perle aux coins du haut arrondis, avec
+ * les coordonnées, la navigation, le sélecteur de langue et les mentions légales.
+ */
+import Logo from './Logo.astro';
+import SelecteurLangue from './SelecteurLangue.astro';
+import { entreprise, lienItineraire, lienWhatsApp } from '../data/entreprise';
+import { chemin, liensNavigation, t, type Langue } from '../i18n';
+
+interface Props {
+  langue: Langue;
+  cheminActuel: string;
+}
+
+const { langue, cheminActuel } = Astro.props;
+const textes = t(langue);
+const pied = textes.piedDePage;
+const liens = liensNavigation(langue);
+---
+
+<footer class="pied">
+  <div class="wrap">
+    <div class="pied__haut">
+      <a href={chemin('accueil', langue)} class="pied__logo" aria-label={textes.entete.accueilAria}>
+        <Logo />
+      </a>
+      <SelecteurLangue langue={langue} cheminActuel={cheminActuel} etiquette={textes.piedDePage.languesAria} />
+    </div>
+
+    <div class="pied__colonnes">
+      <nav class="pied__col" aria-label={textes.piedDePage.menuAria}>
+        <span class="pied__titre">{textes.entete.menu}</span>
+        {liens.map((lien) => <a href={lien.href}>{lien.libelle}</a>)}
+      </nav>
+
+      <div class="pied__col">
+        <span class="pied__titre">{textes.entete.contactDirect}</span>
+        <a href={`tel:${entreprise.telephoneLien}`}>{entreprise.telephoneAffiche}</a>
+        <a href={lienWhatsApp(textes.whatsappMessage)} target="_blank" rel="noopener">WhatsApp</a>
+        <a href={`mailto:${entreprise.email}`} class="pied__email">{entreprise.email}</a>
+      </div>
+
+      <div class="pied__col">
+        <span class="pied__titre">{pied.entreprise}</span>
+        <span>{entreprise.nomCourt}</span>
+        <a href={lienItineraire} target="_blank" rel="noopener">{entreprise.rue}<br />{entreprise.codePostal} {entreprise.ville}</a>
+      </div>
+    </div>
+
+    <div class="pied__bas">
+      <p>© 2026 {entreprise.nomCourt}. {pied.droits}</p>
+      <nav class="pied__legal" aria-label={pied.mentionsLegales}>
+        <a href={chemin('mentionsLegales', langue)}>{pied.mentionsLegales}</a>
+        <a href={chemin('viePrivee', langue)}>{pied.viePrivee}</a>
+      </nav>
+    </div>
+  </div>
+</footer>
+
+<style>
+  .pied {
+    margin-top: var(--section-gap);
+    padding: 48px 0 calc(110px + env(safe-area-inset-bottom, 0px));
+    border-top: 1px solid var(--color-border);
+  }
+
+  .pied__haut {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    justify-content: space-between;
+    gap: 20px;
+    padding-bottom: 36px;
+    border-bottom: 1px solid var(--color-border);
+  }
+
+  .pied__logo {
+    display: inline-flex;
+  }
+
+  .pied__logo :global(.logo) {
+    height: 40px;
+  }
+
+  .pied__colonnes {
+    display: grid;
+    gap: 32px;
+    padding-block: 36px;
+  }
+
+  .pied__col {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 0;
+    font-size: var(--size-small);
+    color: var(--color-text);
+  }
+
+  .pied__titre {
+    margin-bottom: 8px;
+    font-size: 13px;
+    font-weight: 700;
+    color: var(--color-muted);
+  }
+
+  .pied__col a {
+    display: inline-flex;
+    align-items: center;
+    min-height: 44px;
+    color: var(--color-ink);
+    font-weight: 550;
+    text-decoration: none;
+  }
+
+  .pied__col a:hover {
+    color: var(--color-accent);
+  }
+
+  .pied__email {
+    overflow-wrap: anywhere;
+  }
+
+  .pied__bas {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    justify-content: space-between;
+    gap: 8px 32px;
+    padding-top: 24px;
+    border-top: 1px solid var(--color-border);
+    font-size: var(--size-tiny);
+    color: var(--color-muted);
+  }
+
+  .pied__legal {
+    display: flex;
+    gap: 20px;
+  }
+
+  .pied__legal a {
+    display: inline-flex;
+    align-items: center;
+    min-height: 44px;
+    color: var(--color-muted);
+  }
+
+  .pied__legal a:hover {
+    color: var(--color-ink);
+  }
+
+  @media (min-width: 900px) {
+    .pied {
+      padding-top: 64px;
+      border-radius: 48px 48px 0 0;
+    }
+
+    .pied__colonnes {
+      grid-template-columns: repeat(3, 1fr);
+    }
+  }
+</style>

@@ -1,0 +1,342 @@
+---
+/**
+ * Qui vient chez vous : les deux frères, détourés sur le fond du site, sous « ELY FACADE » écrit en très grand (avec l'icône du logo).
+ * Ordinateur : chaque frère a son repère sur le côté, comme une annotation sur un plan de façade (prénom, rôle,
+ * une phrase), relié à lui par un trait. Téléphone : les repères passent sous la photo, côte à côte.
+ * La scène ne bouge pas.
+ */
+import { Image } from 'astro:assets';
+import icone from '../../assets/marque/icone.svg';
+import { portraits } from '../../data/equipe';
+import { t, type Langue } from '../../i18n';
+
+interface Props {
+  langue: Langue;
+}
+
+const { langue } = Astro.props;
+const equipe = t(langue).accueil.equipe;
+---
+
+<section class="section equipe" id="equipe">
+  <div class="wrap">
+    <h2 class="equipe__titre">{equipe.titre}</h2>
+
+    <div class="scene">
+      <!-- Le nom de l'entreprise, en très grand au-dessus des deux frères, avec la maison en briques du logo. -->
+      <p class="scene__nom" aria-hidden="true">
+        <img class="scene__icone" src={icone.src} alt="" width={icone.width} height={icone.height} />Ely <span>Facade</span>
+      </p>
+      <div class="scene__freres">
+        {
+          equipe.personnes.map((personne) => (
+            <figure class="portrait">
+              <Image
+                src={portraits[personne.prenom as 'Elisei' | 'Simion']}
+                alt={`${equipe.portrait} ${personne.prenom} Ungureanu`}
+                widths={[300, 500, 750]}
+                sizes="(min-width: 1000px) 400px, 50vw"
+                format="webp"
+                quality={84}
+                loading="lazy"
+              />
+            </figure>
+          ))
+        }
+        <span class="scene__brique" aria-hidden="true"></span>
+      </div>
+
+      <div class="reperes">
+        {
+          equipe.personnes.map((personne, i) => (
+            <article class:list={['repere', i === 0 ? 'repere--gauche' : 'repere--droite']}>
+              <!-- Une flèche dessinée à la main vers le frère : sur le côté (ordinateur), au-dessus (téléphone). -->
+              <svg class="fleche fleche--cote" viewBox="0 0 130 70" aria-hidden="true">
+                <path d="M4 58C34 66 78 60 110 20" />
+                <path d="M96 18L112 17L110 33" />
+              </svg>
+              <svg class="fleche fleche--haut" viewBox="0 0 44 72" aria-hidden="true">
+                <path d="M24 68C10 54 32 34 22 8" />
+                <path d="M13 17L22 6L31 16" />
+              </svg>
+              <h3 class="repere__nom">{personne.prenom}</h3>
+              <p class="repere__role">
+                <span class="repere__role-long">{personne.role}</span>
+                <span class="repere__role-court">{personne.roleCourt}</span>
+              </p>
+              <p class="repere__texte">{personne.texte}</p>
+            </article>
+          ))
+        }
+      </div>
+    </div>
+  </div>
+</section>
+
+<style>
+  /* Le titre tient sur une seule ligne, du téléphone à l'ordinateur. */
+  .equipe__titre {
+    margin-bottom: clamp(20px, 3vw, 40px);
+    text-align: center;
+    font-size: min(var(--size-h2), 5.6vw);
+    white-space: nowrap;
+  }
+
+  /* --- La scène : le nom en très grand, les deux frères posés devant. --- */
+  .scene {
+    position: relative;
+    container-type: inline-size;
+  }
+
+  .scene__nom {
+    margin: 0;
+    font-family: var(--font-display);
+    /* « ELY FACADE » remplit toute la largeur, du téléphone à l'ordinateur. */
+    font-size: 13.4cqi;
+    font-weight: 800;
+    line-height: 0.8;
+    letter-spacing: -0.045em;
+    text-align: center;
+    text-transform: uppercase;
+    white-space: nowrap;
+    color: var(--color-ink);
+    user-select: none;
+  }
+
+  .scene__nom span {
+    color: var(--color-accent);
+  }
+
+  .scene__icone {
+    display: inline-block;
+    width: auto;
+    height: 0.8em;
+    margin-right: 0.12em;
+    vertical-align: -0.02em;
+  }
+
+  /*
+   * Les deux frères posés sur une ligne noire, la brique rouge du logo entre eux deux.
+   * Les PNG sont recadrés au bord des silhouettes : chaque photo garde l'échelle de son ancien cadre (moitié de la
+   * largeur, Elisei 490 px et Simion 810 px à l'origine), donc les têtes gardent la même taille et la même hauteur.
+   * La paire est centrée : la ligne dépasse de la même longueur des deux côtés.
+   */
+  .scene__freres {
+    --elisei: calc(50% * 420 / 490);
+    --simi: calc(50% * 792 / 810);
+    --ecart: 3.6%;
+    --depasse: 4cqi;
+    --bord: calc((100% - var(--elisei) - var(--simi) - var(--ecart)) / 2 - var(--depasse));
+    position: relative;
+    z-index: 1;
+    display: flex;
+    justify-content: center;
+    align-items: flex-end;
+    gap: var(--ecart);
+    /* Un peu d'air entre le nom et les têtes : rien ne se touche. */
+    margin-top: 2.5cqi;
+  }
+
+  .scene__freres::after {
+    content: '';
+    position: absolute;
+    top: 100%;
+    right: var(--bord);
+    left: var(--bord);
+    height: 2px;
+    background: var(--color-ink);
+  }
+
+  /* La brique, au milieu de l'écart entre les deux silhouettes. */
+  .scene__brique {
+    position: absolute;
+    z-index: 1;
+    top: calc(100% + 1px);
+    left: calc(50% + (var(--elisei) - var(--simi)) / 2);
+    width: 26px;
+    height: 8px;
+    border-radius: 2px;
+    background: var(--color-accent);
+    transform: translate(-50%, -50%);
+  }
+
+  .portrait:first-child {
+    flex: none;
+    width: var(--elisei);
+  }
+
+  .portrait:last-of-type {
+    flex: none;
+    width: var(--simi);
+  }
+
+  .portrait {
+    margin: 0;
+  }
+
+  .portrait :global(img) {
+    display: block;
+    width: 100%;
+    height: auto;
+  }
+
+  /* --- Les repères : prénom, rôle, une phrase. Téléphone : sous la photo, côte à côte. --- */
+  .reperes {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 18px;
+    margin-top: 28px;
+  }
+
+  .repere {
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+  }
+
+  /* Les flèches : un trait rouge à main levée, terminé par une pointe. */
+  .fleche {
+    position: absolute;
+    overflow: visible;
+    fill: none;
+    stroke: var(--color-accent);
+    stroke-width: 3.2;
+    stroke-linecap: round;
+    stroke-linejoin: round;
+    pointer-events: none;
+  }
+
+  .fleche--cote {
+    display: none;
+  }
+
+  /* Téléphone : chaque repère centré sous son frère, la flèche monte vers lui. */
+  @media (max-width: 999px) {
+    .reperes {
+      margin-top: 66px;
+    }
+
+    .repere {
+      align-items: center;
+      text-align: center;
+    }
+
+    .fleche--haut {
+      bottom: calc(100% + 2px);
+      left: 50%;
+      width: 34px;
+      height: 56px;
+      transform: translateX(-50%);
+    }
+
+    .repere--droite .fleche--haut {
+      transform: translateX(-50%) scaleX(-1);
+    }
+  }
+
+  .repere__nom {
+    font-family: var(--font-display);
+    font-size: clamp(30px, 4.6vw, 60px);
+    font-weight: 800;
+    line-height: 0.9;
+    letter-spacing: var(--tracking-display);
+    text-transform: uppercase;
+    color: var(--color-ink);
+  }
+
+  .repere__role {
+    font-size: clamp(16px, 4.8vw, 20px);
+    font-weight: 800;
+    line-height: 1.2;
+    text-wrap: balance;
+    color: var(--color-accent);
+  }
+
+  .repere__role-long {
+    display: none;
+  }
+
+  .repere__texte {
+    max-width: 30ch;
+    font-size: clamp(15.5px, 1.3vw, 18px);
+    line-height: 1.5;
+    color: var(--color-ink);
+  }
+
+  /*
+   * Ordinateur : les frères au centre, un repère de chaque côté à hauteur d'épaule,
+   * relié à eux par un trait fin qui finit par un point, comme une cote sur un plan.
+   */
+  @media (min-width: 1000px) {
+    .scene__freres {
+      width: 58cqi;
+      margin-inline: auto;
+      --depasse: 6cqi;
+    }
+
+    .reperes {
+      position: absolute;
+      inset: 0;
+      z-index: 3;
+      display: block;
+      margin: 0;
+      pointer-events: none;
+    }
+
+    .repere {
+      position: absolute;
+      top: 48%;
+      width: 19.5cqi;
+      pointer-events: auto;
+    }
+
+    .repere--gauche {
+      left: 0;
+      align-items: flex-end;
+      text-align: right;
+    }
+
+    .repere--droite {
+      right: 0;
+    }
+
+    .repere__role {
+      font-size: clamp(17px, 1.45vw, 21px);
+      letter-spacing: 0.06em;
+      text-transform: uppercase;
+    }
+
+    .repere__role-long {
+      display: inline;
+    }
+
+    .repere__role-court {
+      display: none;
+    }
+
+    .fleche--haut {
+      display: none;
+    }
+
+    /* La flèche part du prénom et monte vers le frère. */
+    .fleche--cote {
+      display: block;
+      top: -4.4cqi;
+      width: 12cqi;
+      height: auto;
+    }
+
+    .repere--gauche .fleche--cote {
+      left: calc(100% + 0.6cqi);
+    }
+
+    /* Plus courte côté Simion : sa photo est plus large, la pointe s'arrête avant son oreille. */
+    .repere--droite .fleche--cote {
+      top: -3.2cqi;
+      right: calc(100% + 0.6cqi);
+      width: 9cqi;
+      transform: scaleX(-1);
+    }
+  }
+</style>

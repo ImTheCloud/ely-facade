@@ -1,0 +1,215 @@
+---
+/**
+ * « Les étapes d'une façade » : le chantier de l'immeuble de quatre étages de l'Université de Mons, en 4 étapes,
+ * l'une sous l'autre : le texte, puis ses photos (chacune dans son propre cadre).
+ * Sur grand écran, le texte est à gauche et reste en vue pendant qu'on regarde les photos à droite.
+ * L'ordre des étapes est celui confirmé par Elisei ; les légendes ne disent que ce qu'on voit.
+ */
+import { Image } from 'astro:assets';
+import Icon from '../Icon.astro';
+import Souligne from '../Souligne.astro';
+import { ETAPES_FACADE, lienChantier, photo } from '../../data/chantiers';
+import { t, type Langue } from '../../i18n';
+
+interface Props {
+  langue: Langue;
+}
+
+const { langue } = Astro.props;
+const textes = t(langue);
+const section = textes.accueil.etapes;
+
+const etapes = ETAPES_FACADE.map((etape, i) => ({
+  ...etape,
+  numero: i + 1,
+  texte: section.liste[etape.cle],
+  plans: etape.photos.map((chemin, j) => ({ chemin, legende: section.liste[etape.cle].legendes[j] })),
+}));
+const image = { widths: [480, 768, 1080, 1440], sizes: '(min-width: 900px) 640px, 100vw', format: 'webp' as const, quality: 74, loading: 'lazy' as const };
+---
+
+<section class="section etapes" id="etapes">
+  <div class="wrap">
+    <div class="tete">
+      <h2 data-trait><Souligne texte={section.titre} /></h2>
+      <!-- Le lieu, en grand : un vrai chantier, à l'Université de Mons. -->
+      <a class="etapes__chantier" href={lienChantier('umons', langue)}>
+        {section.chantier}
+        <span class="etapes__voir">
+          {section.voir}
+          <Icon nom="fleche" taille={18} />
+        </span>
+      </a>
+      <p>{section.texte}</p>
+    </div>
+
+    <ol class="etapes__liste">
+      {
+        etapes.map((etape) => (
+          <li class="etape">
+            <div class="etape__texte">
+              <span class="etape__num">
+                {section.etape} {etape.numero}
+              </span>
+              <h3>{etape.texte.titre}</h3>
+              <p>{etape.texte.texte}</p>
+            </div>
+            <div class="etape__photos">
+              {etape.plans.map((plan) => (
+                <figure class="etape__photo">
+                  <Image src={photo(plan.chemin)} alt={textes.photos[plan.chemin]} {...image} />
+                  <figcaption>
+                    {plan.legende} · {section.lieu}
+                  </figcaption>
+                </figure>
+              ))}
+            </div>
+          </li>
+        ))
+      }
+    </ol>
+  </div>
+</section>
+
+<style>
+  .etapes__chantier {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: baseline;
+    gap: 6px 16px;
+    font-family: var(--font-display);
+    font-size: clamp(26px, 3vw, 40px);
+    font-weight: 800;
+    line-height: 1.05;
+    letter-spacing: var(--tracking-phrase);
+    color: var(--color-accent);
+    text-decoration: none;
+  }
+
+  .etapes__voir {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    font-family: var(--font-text);
+    font-size: var(--size-small);
+    font-weight: 700;
+    letter-spacing: 0;
+    color: var(--color-ink);
+  }
+
+  .etapes__chantier:hover .etapes__voir {
+    text-decoration: underline;
+  }
+
+  .etapes__chantier:focus-visible {
+    outline: 3px solid var(--color-accent);
+    outline-offset: 4px;
+    border-radius: 8px;
+  }
+
+  .etapes__liste {
+    display: grid;
+    gap: 44px;
+    margin: 0;
+    padding: 0;
+    list-style: none;
+  }
+
+  .etape {
+    display: grid;
+    gap: 18px;
+  }
+
+  .etape__texte {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+  }
+
+  .etape__num {
+    display: inline-flex;
+    align-items: center;
+    gap: 10px;
+    font-size: var(--size-tiny);
+    font-weight: 700;
+    letter-spacing: 0.06em;
+    text-transform: uppercase;
+    color: var(--color-accent);
+  }
+
+  .etape__num::before {
+    content: '';
+    width: 13px;
+    height: 7px;
+    border-radius: 2px;
+    background: var(--color-accent);
+  }
+
+  .etape h3 {
+    font-size: clamp(24px, 2.4vw, 34px);
+    font-weight: 800;
+    letter-spacing: -0.02em;
+  }
+
+  .etape__texte p {
+    max-width: 46ch;
+    font-size: var(--size-lead);
+    line-height: 1.55;
+  }
+
+  .etape__photos {
+    display: grid;
+    gap: 18px;
+  }
+
+  .etape__photo {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    margin: 0;
+  }
+
+  .etape__photo :global(img) {
+    display: block;
+    width: 100%;
+    height: auto;
+    aspect-ratio: 4 / 3;
+    object-fit: cover;
+    border-radius: var(--radius-md);
+  }
+
+  .etape__photo figcaption {
+    font-size: var(--size-tiny);
+    color: var(--color-muted);
+  }
+
+  @media (min-width: 900px) {
+    .etapes__liste {
+      gap: 72px;
+    }
+
+    .etape {
+      grid-template-columns: minmax(0, 0.8fr) minmax(0, 1.2fr);
+      gap: 64px;
+      align-items: start;
+      padding-top: 40px;
+      border-top: 1px solid var(--color-border);
+    }
+
+    /* Le texte reste en vue pendant qu'on regarde les photos de l'étape. */
+    .etape__texte {
+      position: sticky;
+      top: calc(var(--header-h) + 32px);
+      gap: 14px;
+    }
+
+    .etape__photos {
+      gap: 24px;
+    }
+
+    .etape__photo :global(img) {
+      aspect-ratio: 16 / 10;
+      border-radius: var(--radius-tile);
+    }
+  }
+</style>

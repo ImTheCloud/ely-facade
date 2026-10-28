@@ -1,0 +1,81 @@
+---
+/**
+ * La fin de l'accueil (#devis) : le titre, puis le formulaire de devis (le simulateur de surface est dans son étape 2).
+ * Tous les boutons « visite gratuite » mènent ici.
+ */
+import FormulaireDevis from '../FormulaireDevis.astro';
+import Souligne from '../Souligne.astro';
+import { t, type Langue } from '../../i18n';
+
+interface Props {
+  langue: Langue;
+}
+
+const { langue } = Astro.props;
+const textes = t(langue);
+const devis = textes.accueil.devis;
+---
+
+<section class="section devis" id="devis" aria-labelledby="devis-titre">
+  <div class="wrap devis__grille">
+    <div class="devis__tete">
+      <h2 id="devis-titre" data-trait><Souligne texte={devis.titre} /></h2>
+      <p>{devis.texte}</p>
+    </div>
+
+    <div class="devis__formulaire">
+      <FormulaireDevis langue={langue} />
+    </div>
+  </div>
+</section>
+
+<style>
+  .devis {
+    background: linear-gradient(180deg, var(--color-bg) 0%, var(--color-accent-soft) 100%);
+  }
+
+  .devis__grille {
+    display: grid;
+    gap: 32px;
+    grid-template-areas:
+      'tete'
+      'formulaire';
+  }
+
+  .devis__tete {
+    grid-area: tete;
+    display: flex;
+    flex-direction: column;
+    gap: 22px;
+  }
+
+  .devis__tete h2 {
+    max-width: 22ch;
+    font-size: clamp(34px, 4.4vw, 64px);
+  }
+
+  .devis__tete p {
+    max-width: 48ch;
+    font-size: var(--size-lead);
+    line-height: 1.55;
+  }
+
+  .devis__formulaire {
+    grid-area: formulaire;
+  }
+
+  @media (min-width: 1000px) {
+    /* Le titre à gauche, qui reste en vue ; le formulaire à droite. */
+    .devis__grille {
+      grid-template-columns: minmax(0, 0.9fr) minmax(0, 1.1fr);
+      grid-template-areas: 'tete formulaire';
+      column-gap: 64px;
+      align-items: start;
+    }
+
+    .devis__tete {
+      position: sticky;
+      top: calc(var(--header-h) + 24px);
+    }
+  }
+</style>

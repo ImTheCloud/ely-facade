@@ -1,0 +1,269 @@
+---
+/** Les métiers de la façade, chacun mène à son détail sur la page Services. */
+import Icon from '../Icon.astro';
+import { METIERS } from '../../data/metiers';
+import { chemin, t, type Langue } from '../../i18n';
+
+interface Props {
+  langue: Langue;
+}
+
+const { langue } = Astro.props;
+const textes = t(langue);
+const section = textes.accueil.metiers;
+---
+
+<section class="section section--ardoise metiers" id="metiers">
+  <div class="wrap">
+    <div class="tete">
+      <h2>{section.titre}</h2>
+      <p>{section.texte}</p>
+    </div>
+
+    <ul class="metiers__liste">
+      {
+        METIERS.map((metier, i) => (
+          <li>
+            <a class="metier" href={`${chemin('services', langue)}#${metier.cle}`}>
+              <span class="metier__icone">
+                <Icon nom={metier.icone} taille={28} />
+              </span>
+              <span class="metier__num" aria-hidden="true">0{i + 1}</span>
+              <h3>{textes.metiers[metier.cle].titre}</h3>
+              <p>{textes.metiers[metier.cle].court}</p>
+              <span class="metier__voir">
+                <span class="metier__voir-texte">{section.voir}</span>
+                <Icon nom="fleche" taille={16} />
+              </span>
+            </a>
+          </li>
+        ))
+      }
+    </ul>
+  </div>
+</section>
+
+<style>
+  .metiers {
+    border-radius: 36px;
+    margin-inline: clamp(0px, 1.2vw, 16px);
+  }
+
+  .metiers__liste {
+    display: grid;
+    gap: var(--tile-gap);
+    margin: 0;
+    padding: 0;
+    list-style: none;
+  }
+
+  .metier {
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+    height: 100%;
+    padding: 28px;
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    border-radius: var(--radius-tile);
+    background: rgba(255, 255, 255, 0.04);
+    color: rgba(255, 255, 255, 0.78);
+    text-decoration: none;
+    transition:
+      background-color var(--speed) var(--ease),
+      border-color var(--speed) var(--ease),
+      transform var(--speed) var(--ease);
+  }
+
+  .metier:hover {
+    background: rgba(255, 255, 255, 0.08);
+    border-color: rgba(255, 255, 255, 0.22);
+    transform: translateY(-4px);
+  }
+
+  .metier:focus-visible {
+    outline: 3px solid #fff;
+    outline-offset: 3px;
+  }
+
+  .metier__icone {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 56px;
+    height: 56px;
+    margin-bottom: 10px;
+    border-radius: 18px;
+    background: var(--color-accent);
+    color: #fff;
+  }
+
+  .metier__num {
+    position: absolute;
+    top: 26px;
+    right: 28px;
+    font-family: var(--font-display);
+    font-size: 15px;
+    font-weight: 700;
+    color: rgba(255, 255, 255, 0.6);
+  }
+
+  .metier h3 {
+    color: #fff;
+    font-size: clamp(22px, 1.9vw, 28px);
+    font-weight: 800;
+  }
+
+  .metier p {
+    flex: 1;
+  }
+
+  .metier__voir {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    margin-top: 6px;
+    font-weight: 700;
+    color: #fff;
+  }
+
+  .metier__voir :global(svg) {
+    transition: transform var(--speed) var(--ease);
+  }
+
+  .metier:hover .metier__voir :global(svg) {
+    transform: translateX(4px);
+  }
+
+  /* Téléphone : une ligne par métier (icône, nom, flèche), la description est sur la page du métier. */
+  @media (max-width: 699px) {
+    .metiers__liste {
+      gap: 0;
+      border-top: 1px solid rgba(255, 255, 255, 0.12);
+    }
+
+    .metier {
+      flex-direction: row;
+      align-items: center;
+      gap: 14px;
+      min-height: 64px;
+      padding: 10px 2px;
+      border: 0;
+      border-bottom: 1px solid rgba(255, 255, 255, 0.12);
+      border-radius: 0;
+      background: none;
+    }
+
+    .metier:hover {
+      background: none;
+      transform: none;
+    }
+
+    .metier__icone {
+      flex-shrink: 0;
+      width: 40px;
+      height: 40px;
+      margin: 0;
+      border-radius: 12px;
+    }
+
+    .metier__icone :global(svg) {
+      width: 20px;
+      height: 20px;
+    }
+
+    .metier h3 {
+      flex: 1;
+      font-size: 18px;
+    }
+
+    .metier__num,
+    .metier p,
+    .metier__voir-texte {
+      display: none;
+    }
+
+    .metier__voir {
+      margin: 0;
+    }
+  }
+
+  @media (min-width: 700px) {
+    .metiers__liste {
+      grid-template-columns: repeat(2, 1fr);
+    }
+  }
+
+  /* Ordinateur : des cartes compactes, les huit métiers tiennent sur un écran. */
+  @media (min-width: 700px) {
+    .metier {
+      gap: 8px;
+      padding: 22px;
+    }
+
+    .metier__icone {
+      width: 44px;
+      height: 44px;
+      margin-bottom: 6px;
+      border-radius: 14px;
+    }
+
+    .metier__icone :global(svg) {
+      width: 22px;
+      height: 22px;
+    }
+
+    /* Le numéro laisse la place à une flèche, en haut à droite : toute la carte est un lien. */
+    .metier__num,
+    .metier__voir-texte {
+      display: none;
+    }
+
+    .metier__voir {
+      position: absolute;
+      top: 22px;
+      right: 22px;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      width: 40px;
+      height: 40px;
+      margin: 0;
+      border-radius: 50%;
+      background: rgba(255, 255, 255, 0.08);
+    }
+
+    .metier h3 {
+      font-size: clamp(19px, 1.5vw, 22px);
+    }
+
+    /* Trois lignes au plus : toutes les cartes ont la même hauteur, le détail est sur la page du métier. */
+    .metier p {
+      display: -webkit-box;
+      overflow: hidden;
+      -webkit-box-orient: vertical;
+      -webkit-line-clamp: 3;
+      font-size: var(--size-small);
+      line-height: 1.5;
+    }
+  }
+
+  /* Grand écran : cinq colonnes, les dix métiers sur deux rangées. */
+  @media (min-width: 1100px) {
+    .metiers__liste {
+      grid-template-columns: repeat(5, minmax(0, 1fr));
+      gap: 14px;
+    }
+
+    .metier {
+      padding: 20px 18px;
+    }
+
+    .metier__voir {
+      top: 18px;
+      right: 16px;
+      width: 34px;
+      height: 34px;
+    }
+  }
+</style>

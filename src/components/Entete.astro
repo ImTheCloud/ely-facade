@@ -1,0 +1,595 @@
+---
+/**
+ * En-tête flottant.
+ * - Sur une page qui commence par une grande photo (surPhoto) : posé dans la photo,
+ *   sans fond, logo et liens blancs, bouton clair ; il devient blanc flouté dès qu'on défile.
+ * - Ailleurs : transparent en haut de page, puis blanc flouté dès qu'on défile.
+ * - Se cache quand on descend, revient dès qu'on remonte.
+ * - Sur mobile : bouton « Menu » qui ouvre un panneau plein écran.
+ */
+import Bouton from './Bouton.astro';
+import Logo from './Logo.astro';
+import SelecteurLangue from './SelecteurLangue.astro';
+import { entreprise, lienDevis, lienWhatsApp } from '../data/entreprise';
+import { chemin, liensNavigation, t, type Langue } from '../i18n';
+
+interface Props {
+  langue: Langue;
+  cheminActuel: string;
+  surPhoto?: boolean;
+}
+
+const { langue, cheminActuel, surPhoto = false } = Astro.props;
+const textes = t(langue);
+const liens = liensNavigation(langue);
+const devis = lienDevis(langue);
+const estActif = (href: string) => cheminActuel.startsWith(href);
+---
+
+<header class:list={['entete', { 'entete--photo': surPhoto }]} data-entete>
+  <div class="entete__barre">
+    <a href={chemin('accueil', langue)} class="entete__logo" aria-label={textes.entete.accueilAria}>
+      <Logo class="entete__logo-couleur" />
+      {surPhoto && <Logo blanc class="entete__logo-blanc" />}
+    </a>
+
+    <nav class="entete__nav" aria-label={textes.entete.menuAria}>
+      {
+        liens.map((lien) => (
+          <a href={lien.href} aria-current={estActif(lien.href) ? 'page' : undefined}>
+            {lien.libelle}
+          </a>
+        ))
+      }
+    </nav>
+
+    <div class="entete__actions">
+      <SelecteurLangue langue={langue} cheminActuel={cheminActuel} />
+      <Bouton href={devis} variante="accent" iconeApres="fleche-diag">{textes.actions.devis}</Bouton>
+    </div>
+
+    <!-- Téléphone : FR / NL toujours à portée de main, à côté du menu. -->
+    <div class="entete__langue-mobile">
+      <SelecteurLangue langue={langue} cheminActuel={cheminActuel} compact />
+    </div>
+
+    <button
+      type="button"
+      class="entete__burger"
+      id="bouton-menu"
+      aria-expanded="false"
+      aria-controls="menu-mobile"
+      data-ouvrir={textes.entete.ouvrirMenu}
+      data-fermer={textes.entete.fermerMenu}
+    >
+      <span data-texte-menu={textes.entete.menu} data-texte-fermer={textes.entete.fermer}>{textes.entete.menu}</span>
+      <span class="entete__burger-traits" aria-hidden="true"><span></span><span></span></span>
+      <span class="sr-only" data-libelle>{textes.entete.ouvrirMenu}</span>
+    </button>
+  </div>
+
+  <div class="panneau" id="menu-mobile" data-panneau hidden data-lenis-prevent>
+    <nav class="panneau__nav" aria-label={textes.entete.menuAria}>
+      {
+        liens.map((lien, i) => (
+          <a href={lien.href} style={`--i: ${i}`}>
+            <span class="panneau__num">0{i + 1}</span>
+            <span class="panneau__lien">{lien.libelle}</span>
+          </a>
+        ))
+      }
+    </nav>
+
+    <div class="panneau__bas">
+      <Bouton href={devis} variante="accent" iconeApres="fleche-diag" large>{textes.actions.devis}</Bouton>
+      <div class="panneau__contact">
+        <span class="panneau__label">{textes.entete.contactDirect}</span>
+        <a href={`tel:${entreprise.telephoneLien}`}>{entreprise.telephoneAffiche}</a>
+        <a href={lienWhatsApp(textes.whatsappMessage)} target="_blank" rel="noopener">WhatsApp</a>
+        <a href={`mailto:${entreprise.email}`}>{entreprise.email}</a>
+      </div>
+    </div>
+  </div>
+</header>
+
+<script>
+  import { bloquerDefilement } from '~/scripts/site';
+
+  const entete = document.querySelector<HTMLElement>('[data-entete]');
+  const bouton = document.getElementById('bouton-menu');
+  const panneau = document.querySelector<HTMLElement>('[data-panneau]');
+  const libelle = bouton?.querySelector<HTMLElement>('[data-libelle]');
+  const texteVisible = bouton?.querySelector<HTMLElement>('[data-texte-menu]');
+
+  /* --- Apparence selon le défilement --- */
+  if (entete) {
+    let dernier = window.scrollY;
+    const mettreAJour = () => {
+      const y = window.scrollY;
+      entete.classList.toggle('entete--defile', y > 8);
+      if (!document.body.classList.contains('menu-ouvert')) {
+        entete.classList.toggle('entete--cache', y > dernier && y > 320);
+      }
+      dernier = y;
+    };
+    window.addEventListener('scroll', mettreAJour, { passive: true });
+    mettreAJour();
+  }
+
+  /* --- Menu mobile --- */
+  if (bouton && panneau) {
+    const basculer = (ouvert: boolean) => {
+      bouton.setAttribute('aria-expanded', String(ouvert));
+      if (libelle) libelle.textContent = (ouvert ? bouton.dataset.fermer : bouton.dataset.ouvrir) ?? '';
+      if (texteVisible) texteVisible.textContent = (ouvert ? texteVisible.dataset.texteFermer : texteVisible.dataset.texteMenu) ?? '';
+      panneau.hidden = !ouvert;
+      if (ouvert) entete?.classList.remove('entete--cache');
+      document.body.classList.toggle('menu-ouvert', ouvert);
+      bloquerDefilement(ouvert);
+      // Deux images d'attente : le panneau doit d'abord exister fermé pour que l'ouverture s'anime.
+      if (ouvert) requestAnimationFrame(() => requestAnimationFrame(() => panneau.classList.add('panneau--ouvert')));
+      else panneau.classList.remove('panneau--ouvert');
+    };
+
+    bouton.addEventListener('click', () => basculer(bouton.getAttribute('aria-expanded') !== 'true'));
+
+    document.addEventListener('keydown', (evenement) => {
+      if (evenement.key === 'Escape' && bouton.getAttribute('aria-expanded') === 'true') {
+        basculer(false);
+        bouton.focus();
+      }
+    });
+
+    // Un lien d'ancre sur la même page referme le menu.
+    panneau.querySelectorAll('a').forEach((lien) => lien.addEventListener('click', () => basculer(false)));
+
+    window.matchMedia('(min-width: 1024px)').addEventListener('change', (evenement) => {
+      if (evenement.matches) basculer(false);
+    });
+  }
+</script>
+
+<style is:global>
+  /* Menu ouvert : la page dessous ne bouge plus (iPhone compris), l'en-tête reste affiché. */
+  html:has(body.menu-ouvert),
+  body.menu-ouvert {
+    overflow: hidden;
+    overscroll-behavior: none;
+  }
+
+  body.menu-ouvert .entete {
+    transform: none;
+  }
+</style>
+
+<style>
+  .entete {
+    position: fixed;
+    inset: 0 0 auto;
+    z-index: 60;
+    border-bottom: 1px solid transparent;
+    transition:
+      transform 400ms var(--ease-out),
+      background-color 300ms var(--ease),
+      border-color 300ms var(--ease);
+  }
+
+  /* Dès qu'on défile : un fond blanc. Le verre flouté seulement sur ordinateur (trop coûteux sur téléphone). */
+  .entete--defile {
+    background: rgba(251, 251, 250, 0.97);
+    border-bottom-color: var(--color-border);
+  }
+
+  @media (min-width: 1024px) {
+    .entete--defile {
+      background: rgba(251, 251, 250, 0.84);
+      backdrop-filter: blur(14px);
+      -webkit-backdrop-filter: blur(14px);
+    }
+  }
+
+  .entete--cache {
+    transform: translateY(-110%);
+  }
+
+  /* ---------------------------------------------------------------------
+     Posé sur la photo (en haut de l'accueil) : aucun fond, tout en blanc.
+     Dès qu'on défile ou qu'on ouvre le menu, il reprend son apparence claire.
+     --------------------------------------------------------------------- */
+  .entete__logo {
+    position: relative;
+  }
+
+  .entete :global(.entete__logo-blanc) {
+    position: absolute;
+    inset: 50% auto auto 0;
+    transform: translateY(-50%);
+    opacity: 0;
+    transition: opacity 300ms var(--ease);
+  }
+
+  .entete :global(.entete__logo-couleur) {
+    transition: opacity 300ms var(--ease);
+  }
+
+  .entete--photo:not(.entete--defile) :global(.entete__logo-blanc) {
+    opacity: 1;
+  }
+
+  .entete--photo:not(.entete--defile) :global(.entete__logo-couleur) {
+    opacity: 0;
+  }
+
+  :global(body.menu-ouvert) .entete--photo :global(.entete__logo-blanc) {
+    opacity: 0;
+  }
+
+  :global(body.menu-ouvert) .entete--photo :global(.entete__logo-couleur) {
+    opacity: 1;
+  }
+
+  /* Le sélecteur FR / NL en verre sur la photo. */
+  .entete--photo:not(.entete--defile) :global(.langues) {
+    background: rgba(255, 255, 255, 0.12);
+    border-color: rgba(255, 255, 255, 0.32);
+    backdrop-filter: blur(10px);
+    -webkit-backdrop-filter: blur(10px);
+  }
+
+  .entete--photo:not(.entete--defile) :global(.langues__lien) {
+    color: rgba(255, 255, 255, 0.86);
+  }
+
+  .entete--photo:not(.entete--defile) :global(.langues__lien--actif) {
+    background: #fff;
+    color: var(--color-ink);
+  }
+
+  :global(body.menu-ouvert) .entete--photo :global(.langues) {
+    background: var(--color-card);
+    border-color: var(--color-border);
+  }
+
+  :global(body.menu-ouvert) .entete--photo :global(.langues__lien) {
+    color: var(--color-muted);
+  }
+
+  :global(body.menu-ouvert) .entete--photo :global(.langues__lien--actif) {
+    background: var(--color-ink);
+    color: #fff;
+  }
+
+  :global(body.menu-ouvert) .entete.entete {
+    background: transparent;
+    border-bottom-color: transparent;
+    backdrop-filter: none;
+    -webkit-backdrop-filter: none;
+  }
+
+  /* Toujours au-dessus du panneau du menu (z-index 1). */
+  .entete__barre {
+    position: relative;
+    z-index: 3;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 10px;
+    max-width: calc(var(--content-max-large) + var(--gutter) * 2);
+    min-height: var(--header-h);
+    margin: 0 auto;
+    padding: 8px var(--gutter);
+  }
+
+  .entete__logo {
+    display: flex;
+    align-items: center;
+    min-height: var(--tap-min);
+    text-decoration: none;
+    /* Le logo se réduit avant que le bouton Menu ne sorte de l'écran. */
+    flex-shrink: 1;
+    min-width: 0;
+  }
+
+  .entete__logo :global(.logo) {
+    max-width: 100%;
+    object-fit: contain;
+    object-position: left center;
+  }
+
+  .entete__nav,
+  .entete__actions {
+    display: none;
+  }
+
+  .entete__langue-mobile {
+    margin-left: auto;
+  }
+
+  /* --- Bouton menu --- */
+  .entete__burger {
+    display: inline-flex;
+    align-items: center;
+    flex-shrink: 0;
+    gap: 10px;
+    height: 46px;
+    padding: 0 18px;
+    background: var(--color-ink);
+    border: 0;
+    border-radius: var(--radius-pill);
+    /* Un liseré clair : le bouton se détache aussi bien sur la photo que sur le fond blanc. */
+    box-shadow:
+      0 0 0 1.5px rgba(255, 255, 255, 0.55),
+      0 8px 20px -8px rgba(31, 36, 41, 0.55);
+    color: #fff;
+    font: 650 14px/1 var(--font-text);
+    white-space: nowrap;
+    cursor: pointer;
+  }
+
+  .entete__burger-traits {
+    position: relative;
+    display: inline-block;
+    width: 18px;
+    height: 12px;
+  }
+
+  .entete__burger-traits span {
+    position: absolute;
+    left: 0;
+    right: 0;
+    height: 2px;
+    border-radius: 2px;
+    background: #fff;
+    transition: transform 300ms var(--ease-out);
+  }
+
+  .entete__burger-traits span:first-child {
+    top: 2px;
+  }
+
+  .entete__burger-traits span:last-child {
+    top: 8px;
+  }
+
+  .entete__burger[aria-expanded='true'] .entete__burger-traits span:first-child {
+    transform: translateY(3px) rotate(45deg);
+  }
+
+  .entete__burger[aria-expanded='true'] .entete__burger-traits span:last-child {
+    transform: translateY(-3px) rotate(-45deg);
+  }
+
+  /* --- Panneau plein écran --- */
+  .panneau {
+    position: fixed;
+    inset: 0;
+    z-index: 1;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    gap: 32px;
+    padding: calc(var(--header-h) + 16px) var(--gutter) calc(28px + env(safe-area-inset-bottom, 0px));
+    overscroll-behavior: contain;
+    background: var(--color-bg);
+    color: var(--color-ink);
+    overflow-y: auto;
+    opacity: 0;
+    transform: translateY(-12px);
+    transition:
+      opacity 300ms var(--ease),
+      transform 400ms var(--ease-out);
+  }
+
+  .panneau--ouvert {
+    opacity: 1;
+    transform: none;
+  }
+
+  .panneau__nav {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+  }
+
+  .panneau__nav a {
+    display: flex;
+    align-items: center;
+    gap: 16px;
+    padding: 18px 20px;
+    background: var(--color-card);
+    border: 1px solid var(--color-border);
+    border-radius: var(--radius-md);
+    box-shadow: var(--shadow-tile);
+    color: var(--color-ink);
+    text-decoration: none;
+    opacity: 0;
+    transform: translateY(16px);
+    transition:
+      opacity 450ms var(--ease-out),
+      transform 450ms var(--ease-out);
+    transition-delay: calc(100ms + var(--i) * 50ms);
+  }
+
+  .panneau--ouvert .panneau__nav a {
+    opacity: 1;
+    transform: none;
+  }
+
+  .panneau__num {
+    font-size: 13px;
+    font-weight: 700;
+    color: var(--color-accent);
+  }
+
+  .panneau__lien {
+    font-size: 26px;
+    font-weight: 700;
+    letter-spacing: -0.03em;
+  }
+
+  .panneau__bas {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 24px;
+  }
+
+  .panneau__bas :global(.bouton) {
+    width: 100%;
+  }
+
+  .panneau__contact {
+    display: flex;
+    flex-direction: column;
+    gap: 2px;
+  }
+
+  .panneau__label {
+    margin-bottom: 4px;
+    font-size: 13px;
+    font-weight: 600;
+    color: var(--color-muted);
+  }
+
+  .panneau__contact a {
+    color: var(--color-ink);
+    font-size: 18px;
+    font-weight: 600;
+    text-decoration: none;
+    padding: 6px 0;
+  }
+
+  @media (max-width: 430px) {
+    .entete__barre {
+      gap: 6px;
+      padding-inline: max(14px, env(safe-area-inset-left, 0px)) max(14px, env(safe-area-inset-right, 0px));
+    }
+
+    .entete__logo :global(.logo) {
+      height: 28px;
+    }
+
+    .entete__burger {
+      padding: 0 14px;
+      gap: 8px;
+      font-size: 13px;
+    }
+
+    .entete__langue-mobile :global(.langues__lien) {
+      min-width: 40px;
+    }
+  }
+
+  /* Très petits écrans : le bouton menu garde seulement ses traits (son nom reste lu par les lecteurs d'écran). */
+  @media (max-width: 340px) {
+    .entete__burger {
+      justify-content: center;
+      width: 46px;
+      padding: 0;
+    }
+
+    .entete__burger > span:first-child {
+      display: none;
+    }
+  }
+
+  @media (min-width: 1024px) {
+    .entete__nav {
+      display: flex;
+      gap: 4px;
+    }
+
+    .entete__nav a {
+      position: relative;
+      padding: 10px 16px;
+      border-radius: var(--radius-pill);
+      font-size: 15px;
+      font-weight: 600;
+      color: var(--color-ink);
+      text-decoration: none;
+      white-space: nowrap;
+      transition: background-color var(--speed) var(--ease);
+    }
+
+    .entete__actions :global(.bouton) {
+      white-space: nowrap;
+    }
+
+    .entete__nav a:hover {
+      background: var(--color-surface);
+    }
+
+    .entete__nav a[aria-current='page'] {
+      background: var(--color-surface);
+    }
+
+    .entete--photo:not(.entete--defile) .entete__nav a {
+      color: rgba(255, 255, 255, 0.9);
+      text-shadow: 0 1px 12px rgba(var(--voile), 0.35);
+    }
+
+    .entete--photo:not(.entete--defile) .entete__nav a:hover,
+    .entete--photo:not(.entete--defile) .entete__nav a[aria-current='page'] {
+      background: rgba(255, 255, 255, 0.16);
+      color: #fff;
+    }
+
+    /* Le bouton devient clair sur la photo, comme une pastille de lumière. */
+    .entete--photo:not(.entete--defile) .entete__actions :global(.bouton--accent) {
+      background: #fff;
+      color: var(--color-ink);
+      box-shadow: 0 10px 30px -12px rgba(var(--voile), 0.6);
+    }
+
+    .entete--photo:not(.entete--defile) .entete__actions :global(.bouton--accent:hover) {
+      background: #f1f3f5;
+    }
+
+    .entete__actions {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+    }
+
+    .entete__burger,
+    .entete__langue-mobile,
+    .panneau {
+      display: none;
+    }
+  }
+
+  /* Petit ordinateur, tablette à l'horizontale : liens plus serrés pour que tout tienne sur une ligne. */
+  @media (min-width: 1024px) and (max-width: 1199px) {
+    .entete__nav a {
+      padding-inline: 11px;
+    }
+
+    .entete__actions {
+      gap: 8px;
+    }
+  }
+
+  /* « Moins d'animations » : l'en-tête et le menu apparaissent sans glisser, en fondu seulement. */
+  @media (prefers-reduced-motion: reduce) {
+    .entete,
+    .panneau,
+    .panneau__nav a {
+      transform: none !important;
+    }
+
+    .entete {
+      transition:
+        background-color 300ms var(--ease),
+        border-color 300ms var(--ease);
+    }
+
+    .entete--cache {
+      visibility: hidden;
+    }
+
+    .panneau__nav a {
+      transition: opacity 300ms var(--ease);
+      transition-delay: 0ms;
+    }
+  }
+</style>

@@ -1,0 +1,12 @@
+---
+import SectionContact from '~/components/SectionContact.astro';
+import BaseLayout from '~/layouts/BaseLayout.astro';
+import { t } from '~/i18n';
+
+const langue = 'nl' as const;
+const page = t(langue).pages.contact;
+---
+
+<BaseLayout langue={langue} titre={page.titre} description={page.description}>
+  <SectionContact langue={langue} />
+</BaseLayout>

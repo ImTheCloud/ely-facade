@@ -1,0 +1,53 @@
+---
+/** Vie privée : aucun cookie, ce que deviennent les données du formulaire de devis, vos droits. */
+import PageTexte from './PageTexte.astro';
+import { entreprise } from '~/data/entreprise';
+import { chemin, t, type Langue } from '~/i18n';
+
+interface Props {
+  langue: Langue;
+}
+
+const { langue } = Astro.props;
+const textes = t(langue);
+const v = textes.viePrivee;
+const page = textes.pages.viePrivee;
+
+/** Remplace {email} et {telephone} par des liens. */
+const morceaux = (texte: string) =>
+  texte.split(/(\{email\}|\{telephone\})/).map((bout) =>
+    bout === '{email}'
+      ? { lien: `mailto:${entreprise.email}`, texte: entreprise.email }
+      : bout === '{telephone}'
+        ? { lien: `tel:${entreprise.telephoneLien}`, texte: entreprise.telephoneAffiche }
+        : { texte: bout },
+  );
+---
+
+<PageTexte
+  langue={langue}
+  titre={page.titre}
+  description={page.description}
+  h1={v.titre}
+  intro={v.intro}
+  fil={[{ libelle: v.titre, href: chemin('viePrivee', langue) }]}
+>
+  {
+    v.sections.map((section) => (
+      <section>
+        <h2>{section.titre}</h2>
+        {section.textes.map((texte) => (
+          <p>{morceaux(texte).map((m) => (m.lien ? <a href={m.lien}>{m.texte}</a> : m.texte))}</p>
+        ))}
+      </section>
+    ))
+  }
+  <p class="maj">{v.miseAJour}</p>
+</PageTexte>
+
+<style>
+  .maj {
+    font-size: var(--size-small);
+    color: var(--color-muted);
+  }
+</style>

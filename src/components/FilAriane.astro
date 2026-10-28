@@ -1,0 +1,99 @@
+---
+/**
+ * Fil d'Ariane : Accueil › … › page actuelle. Aussi en données structurées (BreadcrumbList) pour Google.
+ * La dernière étape est la page actuelle (sans lien).
+ */
+import { chemin, t, type Langue } from '../i18n';
+
+interface Props {
+  langue: Langue;
+  /** Les étapes après « Accueil » : { libelle, href } ; la dernière est la page actuelle. */
+  etapes: { libelle: string; href: string }[];
+  clair?: boolean;
+}
+
+const { langue, etapes, clair = false } = Astro.props;
+const textes = t(langue);
+const tout = [{ libelle: textes.fil.accueil, href: chemin('accueil', langue) }, ...etapes];
+
+const donnees = {
+  '@context': 'https://schema.org',
+  '@type': 'BreadcrumbList',
+  itemListElement: tout.map((etape, i) => ({
+    '@type': 'ListItem',
+    position: i + 1,
+    name: etape.libelle,
+    item: new URL(etape.href, Astro.site).href,
+  })),
+};
+---
+
+<nav class:list={['fil', { 'fil--clair': clair }]} aria-label={textes.fil.aria}>
+  <ol>
+    {
+      tout.map((etape, i) =>
+        i < tout.length - 1 ? (
+          <li>
+            <a href={etape.href}>{etape.libelle}</a>
+          </li>
+        ) : (
+          <li aria-current="page">{etape.libelle}</li>
+        ),
+      )
+    }
+  </ol>
+</nav>
+<script type="application/ld+json" set:html={JSON.stringify(donnees)} />
+
+<style>
+  .fil ol {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: 4px 10px;
+    margin: 0;
+    padding: 0;
+    list-style: none;
+    font-size: var(--size-tiny);
+    font-weight: 600;
+    color: var(--color-muted);
+  }
+
+  .fil li {
+    display: inline-flex;
+    align-items: center;
+    gap: 10px;
+  }
+
+  .fil li + li::before {
+    content: '';
+    width: 6px;
+    height: 6px;
+    border-top: 1.5px solid currentColor;
+    border-right: 1.5px solid currentColor;
+    transform: rotate(45deg);
+    opacity: 0.6;
+  }
+
+  .fil a {
+    display: inline-flex;
+    align-items: center;
+    min-height: 44px;
+    color: var(--color-ink);
+    text-decoration: none;
+  }
+
+  .fil a:hover {
+    color: var(--color-accent);
+  }
+
+  /* Sur une photo : blanc, avec une ombre douce pour rester lisible sur une façade claire. */
+  .fil--clair ol {
+    color: rgba(255, 255, 255, 0.9);
+    text-shadow: 0 1px 10px rgba(var(--voile), 0.7);
+  }
+
+  .fil--clair a {
+    color: #fff;
+  }
+</style>

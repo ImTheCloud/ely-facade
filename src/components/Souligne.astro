@@ -1,0 +1,34 @@
+---
+/**
+ * Affiche un texte dont la partie entre crochets est mise en valeur : ex. « Une façade refaite pour [durer]. »
+ * La partie mise en valeur reçoit un soulignement rouge qui se trace à l'apparition (voir global.css, .souligne).
+ * mots : chaque mot dans son propre élément, pour les apparitions mot par mot.
+ */
+interface Props {
+  texte: string;
+  mots?: boolean;
+}
+
+const { texte, mots = false } = Astro.props;
+
+// [« avant », « mis en valeur », « après »]
+const morceaux = texte.split(/\[|\]/);
+// On ne coupe que sur les espaces ordinaires : l'espace insécable (« université : ») reste collé.
+const decoupe = (bout: string) => bout.split(/([ \t\n]+)/).filter((m) => m.length > 0);
+let i = 0;
+const mot = () => i++;
+---
+
+{
+  morceaux.map((bout, n) =>
+    n % 2 === 1 ? (
+      <span class="souligne">
+        {mots ? decoupe(bout).map((m) => (/^[ \t\n]+$/.test(m) ? m : <span class="mot" style={`--i: ${mot()}`}>{m}</span>)) : bout}
+      </span>
+    ) : mots ? (
+      decoupe(bout).map((m) => (/^[ \t\n]+$/.test(m) ? m : <span class="mot" style={`--i: ${mot()}`}>{m}</span>))
+    ) : (
+      bout
+    ),
+  )
+}
