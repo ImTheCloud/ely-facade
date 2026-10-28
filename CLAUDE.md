@@ -25,7 +25,7 @@ Site vitrine d'ELY FAÇADE BV, entreprise de rénovation de façades, bureau à 
 ## Technique
 
 - **Astro** (sortie statique, TypeScript), hébergé sur **Cloudflare Workers** avec fichiers statiques : `wrangler.jsonc`, en-têtes dans `public/_headers`, script serveur dans `worker/`. Chaque push sur `main` met le site à jour. Domaine `elyfacade.be` chez Infomaniak, DNS chez Cloudflare, email pro `info@elyfacade.be`.
-- **Pas de base de données, pas de backend** : deux exceptions : `worker/devis.ts` (envoi du devis et des photos jointes par Resend, clé `RESEND_API_KEY` dans Cloudflare, destinataire modifiable avec `DEVIS_DESTINATAIRE`) et `worker/avis.ts` (lecture des avis Google, clé `GOOGLE_PLACES_API_KEY` dans Cloudflare, six heures de cache).
+- **Pas de base de données, pas de backend** : deux exceptions : `worker/devis.ts` (envoi du devis et des photos jointes par Resend, clé `RESEND_API_KEY` dans Cloudflare, destinataire modifiable avec `DEVIS_DESTINATAIRE`) et `worker/avis.ts` (lecture des avis Google, clé `GOOGLE_PLACES_API_KEY` dans Cloudflare, 24 heures de cache).
 - **Pas de cookies de suivi**, pas de Google Fonts (polices Fontsource hébergées). Google Maps : un simple lien, aucune carte intégrée ; le navigateur du visiteur ne parle jamais à Google (les avis passent par notre serveur).
 - **CSS** : variables dans `src/styles/tokens.css` + styles scoped, pas de framework. **JavaScript** vanilla (+ Lenis).
 - **Référencement** : titre et description propres à chaque page, JSON-LD (`GeneralContractor` avec les deux dirigeants, `Service`, fil d'Ariane), sitemap avec hreflang.

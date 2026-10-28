@@ -1,6 +1,6 @@
 /**
  * Les avis Google : lus chez Google par ce serveur (jamais par le navigateur du visiteur, qui ne parle qu'à elyfacade.be),
- * gardés 6 h en cache, puis affichés par la section « avis » de l'accueil.
+ * gardés 24 h en cache (peu d'appels : on reste dans le quota gratuit de Google), puis affichés par la section « avis » de l'accueil.
  *
  * Réglage dans Cloudflare → Workers & Pages → ely-facade → Settings → Variables and Secrets :
  * - GOOGLE_PLACES_API_KEY (secret) : une clé Google Cloud limitée à « Places API (New) ».
@@ -37,7 +37,7 @@ interface LieuGoogle {
 }
 
 const VIDE: ReponseAvis = { note: 0, total: 0, avis: [] };
-const CACHE_HEURES = 6;
+const CACHE_HEURES = 24;
 const AVIS_MAX = 5;
 const TEXTE_MAX = 600;
 
