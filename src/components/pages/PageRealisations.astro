@@ -39,8 +39,8 @@ const base = chemin('realisations', langue);
             const fiche = textes.chantiers[c.cle];
             const nombre = c.photos.length;
             const sizes = i === 0 ? '(min-width: 1360px) 1280px, 100vw' : '(min-width: 900px) 640px, 100vw';
-            // Le premier en grand (16/9), les autres dans le même cadre (4/3) pour que les lignes s'alignent.
-            const paire = c.paires[0] && { ...c.paires[0], ratio: i === 0 ? 16 / 9 : 4 / 3 };
+            // Le premier en grand (16/9), les autres dans le même cadre (4/3) pour que les lignes s'alignent ; une photo verticale garde son cadre 4/5.
+            const paire = c.paires[0] && { ...c.paires[0], ratio: i === 0 ? 16 / 9 : c.paires[0].ratio < 1 ? c.paires[0].ratio : 4 / 3 };
             const texte = (
               <>
                 <span class="chantier__commune">

@@ -59,11 +59,12 @@ export interface Chantier {
   photos: string[];
   /**
    * Les avant/après du chantier (même endroit, angle proche). Le cadre (ratio) suit la forme des photos :
-   * deux photos horizontales → 4/3 ou 16/9 ; une horizontale et une verticale → carré, pour n'en abîmer aucune.
+   * deux photos horizontales → 4/3 ou 16/9 ; une horizontale et une verticale → 4/5, pour que la verticale ne soit presque pas rognée.
    */
   paires: Paire[];
 }
 
+/** L'ordre des réalisations (liste et accueil) : Namur d'abord, puis Mons, puis Charleroi ; les deux pairs à photo verticale (cadre 4/5) côte à côte. */
 export const CHANTIERS: Chantier[] = [
   {
     cle: 'namur-immeuble',
@@ -83,32 +84,6 @@ export const CHANTIERS: Chantier[] = [
         apres: 'namur-immeuble-3-etages/apres-rue',
         ratio: 4 / 3,
         cadreApres: { zoom: 1.08, tx: -1, ty: -8 },
-      },
-    ],
-  },
-  {
-    cle: 'namur-balcons',
-    commune: 'namur',
-    slug: SLUGS_CHANTIERS['namur-balcons'],
-    couverture: 'namur-immeuble-balcons/apres-cote-gauche',
-    photos: [
-      'namur-immeuble-balcons/pendant-debut-1',
-      'namur-immeuble-balcons/pendant-debut-2',
-      'namur-immeuble-balcons/pendant-loin-1',
-      'namur-immeuble-balcons/pendant-loin-2',
-      'namur-immeuble-balcons/pendant-loin-3',
-      'namur-immeuble-balcons/pendant-grue',
-      'namur-immeuble-balcons/pendant-cote-gauche',
-      'namur-immeuble-balcons/apres-cote-gauche',
-      'namur-immeuble-balcons/apres-coin',
-    ],
-    paires: [
-      {
-        avant: 'namur-immeuble-balcons/pendant-cote-gauche',
-        apres: 'namur-immeuble-balcons/apres-cote-gauche',
-        ratio: 1,
-        cadreAvant: { py: 45 },
-        cadreApres: { px: 38 },
       },
     ],
   },
@@ -142,28 +117,6 @@ export const CHANTIERS: Chantier[] = [
         apres: 'mons-umons-longue-facade/apres',
         ratio: 16 / 9,
         cadreAvant: { zoom: 1.12, tx: -11.8, ty: -5.6 },
-      },
-    ],
-  },
-  {
-    cle: 'halle',
-    commune: 'halle',
-    slug: SLUGS_CHANTIERS.halle,
-    couverture: 'halle-maison/final-baie-vitree',
-    photos: [
-      'halle-maison/pendant-pignon',
-      'halle-maison/apres-pignon',
-      'halle-maison/final-entree',
-      'halle-maison/final-angle',
-      'halle-maison/final-baie-vitree',
-    ],
-    paires: [
-      {
-        avant: 'halle-maison/pendant-pignon',
-        apres: 'halle-maison/apres-pignon',
-        ratio: 1,
-        cadreAvant: { px: 48 },
-        cadreApres: { py: 38 },
       },
     ],
   },
@@ -274,6 +227,53 @@ export const CHANTIERS: Chantier[] = [
         apres: 'auderghem-maison/arriere-apres',
         ratio: 4 / 3,
         cadreAvant: { zoom: 1.2, tx: -10.6, ty: -19.5 },
+      },
+    ],
+  },
+  {
+    cle: 'namur-balcons',
+    commune: 'namur',
+    slug: SLUGS_CHANTIERS['namur-balcons'],
+    couverture: 'namur-immeuble-balcons/apres-cote-gauche',
+    photos: [
+      'namur-immeuble-balcons/pendant-debut-1',
+      'namur-immeuble-balcons/pendant-debut-2',
+      'namur-immeuble-balcons/pendant-loin-1',
+      'namur-immeuble-balcons/pendant-loin-2',
+      'namur-immeuble-balcons/pendant-loin-3',
+      'namur-immeuble-balcons/pendant-grue',
+      'namur-immeuble-balcons/pendant-cote-gauche',
+      'namur-immeuble-balcons/apres-cote-gauche',
+      'namur-immeuble-balcons/apres-coin',
+    ],
+    paires: [
+      {
+        avant: 'namur-immeuble-balcons/pendant-cote-gauche',
+        apres: 'namur-immeuble-balcons/apres-cote-gauche',
+        ratio: 4 / 5,
+        cadreApres: { px: 30 },
+      },
+    ],
+  },
+  {
+    cle: 'halle',
+    commune: 'halle',
+    slug: SLUGS_CHANTIERS.halle,
+    couverture: 'halle-maison/final-baie-vitree',
+    photos: [
+      'halle-maison/pendant-pignon',
+      'halle-maison/apres-pignon',
+      'halle-maison/final-entree',
+      'halle-maison/final-angle',
+      'halle-maison/final-baie-vitree',
+    ],
+    paires: [
+      {
+        avant: 'halle-maison/pendant-pignon',
+        apres: 'halle-maison/apres-pignon',
+        ratio: 4 / 5,
+        cadreAvant: { px: 48 },
+        cadreApres: { py: 38 },
       },
     ],
   },
