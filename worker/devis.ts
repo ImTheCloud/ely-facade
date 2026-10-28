@@ -6,10 +6,15 @@
  * - RESEND_API_KEY (secret) : la clé d'envoi Resend ;
  * - DEVIS_DESTINATAIRE (facultatif) : l'adresse qui reçoit les devis, info@elyfacade.be par défaut.
  *
- * Le champ « bot-field » est un piège à robots : un humain ne le remplit jamais.
+ * Le champ « bot-field » est un piège à robots : un humain ne le remplit jamais. Le limiteur (wrangler.jsonc) refuse
+ * plus de 5 envois par minute depuis la même adresse.
  */
 
-export type Env = { RESEND_API_KEY?: string; DEVIS_DESTINATAIRE?: string };
+export type Env = {
+  RESEND_API_KEY?: string;
+  DEVIS_DESTINATAIRE?: string;
+  LIMITEUR_DEVIS?: { limit: (options: { key: string }) => Promise<{ success: boolean }> };
+};
 
 const EXPEDITEUR = 'Ely Facade <devis@elyfacade.be>';
 const DESTINATAIRE = 'info@elyfacade.be';
@@ -53,6 +58,12 @@ const json = (corps: object, statut: number) =>
   new Response(JSON.stringify(corps), { status: statut, headers: { 'Content-Type': 'application/json' } });
 
 export async function envoyerDevis(request: Request, env: Env): Promise<Response> {
+  // Trop d'envois d'un coup depuis la même adresse : refusé avant toute lecture.
+  if (env.LIMITEUR_DEVIS) {
+    const { success } = await env.LIMITEUR_DEVIS.limit({ key: request.headers.get('CF-Connecting-IP') ?? 'inconnue' });
+    if (!success) return json({ ok: false }, 429);
+  }
+
   // Une demande plus lourde que 5 photos au maximum n'est pas lue du tout.
   if (Number(request.headers.get('Content-Length') ?? 0) > CORPS_MAX) return json({ ok: false }, 413);
   const formulaire = await request.formData();

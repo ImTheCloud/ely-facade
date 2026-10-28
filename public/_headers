@@ -2,8 +2,11 @@
 /_astro/*
   Cache-Control: public, max-age=31536000, immutable
 
-# Protections de base pour toutes les pages.
+# Protections pour toutes les pages : types de fichiers, référent, pas d'affichage dans un cadre étranger, pas d'accès aux capteurs,
+# et une politique qui n'autorise que les fichiers du site (aucun script, image ni police venus d'ailleurs).
 /*
   X-Content-Type-Options: nosniff
   Referrer-Policy: strict-origin-when-cross-origin
   X-Frame-Options: SAMEORIGIN
+  Permissions-Policy: camera=(), microphone=(), geolocation=(), payment=(), usb=(), interest-cohort=()
+  Content-Security-Policy: default-src 'self'; script-src 'self' 'unsafe-inline'; style-src 'self' 'unsafe-inline'; img-src 'self' data: blob:; font-src 'self'; connect-src 'self'; manifest-src 'self'; object-src 'none'; base-uri 'self'; form-action 'self'; frame-ancestors 'self'; upgrade-insecure-requests
