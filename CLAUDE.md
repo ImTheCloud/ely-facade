@@ -44,7 +44,7 @@ Thème clair (façades blanches une fois terminées) : blanc façade `#FBFBFA`, 
 
 - Le dépôt est **public** : aucun secret, aucune photo d'origine, aucune note privée dans les fichiers.
 - Tout se fait directement sur `main`. À la fin de chaque changement : `npm run build` sans erreur, puis commit avec un message clair, sans ligne `Co-Authored-By`.
-- Push seulement quand le propriétaire le demande. Un push en force ou la suppression d'une branche distante demande son accord explicite.
+- Push sur `main` après chaque changement, autorisé en permanence par le propriétaire (28 oct. 2026). Un push en force ou la suppression d'une branche distante demande son accord explicite.
 - Le README présente le site (ce qu'il offre, captures, design, crédits), jamais la façon dont il a été développé.
 
 ## Commandes
