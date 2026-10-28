@@ -710,7 +710,7 @@ export const fr = {
     etapes: ['Vos travaux', 'Votre bâtiment', 'Vos coordonnées'],
 
     q1: 'Quels travaux avez-vous en tête\u00a0?',
-    q1Aide: 'Plusieurs choix possibles',
+    q1Aide: 'plusieurs choix possibles',
     complet: 'Façade complète, de A à Z',
     autre: 'Autre chose',
     autrePrecision: 'Dites-nous de quoi il s’agit',

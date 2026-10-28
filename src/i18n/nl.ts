@@ -707,7 +707,7 @@ export const nl = {
     etapes: ['Uw werken', 'Uw gebouw', 'Uw gegevens'],
 
     q1: 'Welke werken hebt u in gedachten?',
-    q1Aide: 'Meerdere keuzes mogelijk',
+    q1Aide: 'meerdere keuzes mogelijk',
     complet: 'Volledige gevel, van A tot Z',
     autre: 'Iets anders',
     autrePrecision: 'Vertel ons waarover het gaat',
