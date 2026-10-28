@@ -23,11 +23,8 @@ npm-debug.log*
 !.vscode/extensions.json
 .idea/
 
-# --- Gardé sur le Mac, jamais publié : notes du projet, fichiers d'impression, photos d'origine ---
+# --- Gardé sur le Mac, jamais publié : notes du projet et photos d'origine (non masquées) ---
 CLAUDE.md
 docs/*.md
-design/
 photos-sources/
-scripts/*
-!scripts/generer-image-partage.mjs
 .claude/

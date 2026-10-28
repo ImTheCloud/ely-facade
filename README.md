@@ -126,6 +126,8 @@ Toutes les pages et tous les textes existent dans les deux langues. Le site s'ou
 
 **Polices :** Bricolage Grotesque pour les titres, DM Sans pour le texte.
 
+Le dossier [`design/`](design) rassemble le logo (SVG, PDF, PNG), la carte de visite, les t-shirts, les pulls à capuche, le QR code du site et les images de la fiche Google.
+
 ---
 
 ## Crédits
