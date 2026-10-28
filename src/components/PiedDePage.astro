@@ -17,6 +17,10 @@ const { langue, cheminActuel } = Astro.props;
 const textes = t(langue);
 const pied = textes.piedDePage;
 const liens = liensNavigation(langue);
+
+/** Le concepteur du site (crédit en bas de page). */
+const CONCEPTEUR = { nom: 'Claudiu Popadiuc', email: 'claudiu.dev@outlook.com' };
+const mailConcepteur = `mailto:${CONCEPTEUR.email}?subject=${encodeURIComponent(pied.creditSujet)}`;
 ---
 
 <footer class="pied">
@@ -55,6 +59,10 @@ const liens = liensNavigation(langue);
         <a href={chemin('viePrivee', langue)}>{pied.viePrivee}</a>
       </nav>
     </div>
+
+    <p class="pied__credit">
+      {pied.credit} <a href={mailConcepteur}>{CONCEPTEUR.nom}</a> · {pied.creditQuestion} <a href={mailConcepteur}>{CONCEPTEUR.email}</a>
+    </p>
   </div>
 </footer>
 
@@ -148,6 +156,25 @@ const liens = liensNavigation(langue);
 
   .pied__legal a:hover {
     color: var(--color-ink);
+  }
+
+  .pied__credit {
+    margin-top: 12px;
+    font-size: var(--size-tiny);
+    line-height: 1.6;
+    color: var(--color-muted);
+  }
+
+  .pied__credit a {
+    text-decoration: underline;
+    text-decoration-color: var(--color-border);
+    text-underline-offset: 3px;
+    transition: color var(--speed) var(--ease), text-decoration-color var(--speed) var(--ease);
+  }
+
+  .pied__credit a:hover {
+    color: var(--color-ink);
+    text-decoration-color: var(--color-accent);
   }
 
   @media (min-width: 900px) {
