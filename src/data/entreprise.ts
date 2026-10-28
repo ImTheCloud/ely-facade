@@ -16,6 +16,8 @@ export const entreprise = {
   /** Numéro d'entreprise (BCE) ; la TVA est le même numéro précédé de BE. */
   numeroEntreprise: '1030.283.223',
   gerant: 'Elisei Ungureanu',
+  /** Le nom de famille des deux frères. */
+  nomFamille: 'Ungureanu',
 
   /** Affiché à l'écran, format belge. */
   telephoneAffiche: '0492 43 96 17',

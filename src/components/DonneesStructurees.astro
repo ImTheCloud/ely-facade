@@ -34,6 +34,12 @@ const donnees = {
     addressCountry: 'BE',
   },
   hasMap: lienItineraire,
+  // Les deux frères et leur titre (ceux de la section équipe) : rien d'autre, ni date ni ancienneté.
+  founder: textes.accueil.equipe.personnes.map((personne) => ({
+    '@type': 'Person',
+    name: `${personne.prenom} ${entreprise.nomFamille}`,
+    jobTitle: personne.role,
+  })),
   areaServed: { '@type': 'Country', name: textes.pays },
   knowsLanguage: ['fr', 'nl'],
 };

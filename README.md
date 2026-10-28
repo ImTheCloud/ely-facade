@@ -54,7 +54,7 @@ Une carte de Belgique dessinée pour le site : le bureau de Halle et les commune
 <img src="docs/captures/carte.jpg" alt="La carte de Belgique et les chantiers" width="100%">
 
 **🧱 10 services, toute la façade de A à Z**
-Crépi et enduit, isolation par l'extérieur, peinture de façade, nettoyage de façade, traitement hydrofuge, rejointoiement, réparation de briques, plaquettes de parement, traitement des fissures, échafaudage. Chacun a **sa propre page** : ce qui est fait, les étapes, des photos ou une illustration, et un devis où il est déjà coché.
+Crépi et enduit, isolation par l'extérieur, peinture de façade, nettoyage de façade, traitement hydrofuge, rejointoiement, réparation de briques, plaquettes de parement, traitement des fissures, échafaudage. La page Services les présente tous : pour chacun, ce qui est fait, à déplier d'un geste, avec une icône dessinée pour le site.
 
 <img src="docs/captures/metiers.jpg" alt="Les services de façade" width="100%">
 
@@ -80,7 +80,6 @@ Toutes les pages et tous les textes existent dans les deux langues. Le site s'ou
 |---|---|---|
 | Accueil | Accueil | Startpagina |
 | Les services | Services | Diensten |
-| Un service (×10) | Services › Crépi et enduit… | Diensten › Gevelpleister… |
 | Les chantiers | Réalisations | Realisaties |
 | L'entreprise | À propos | Over ons |
 | Le devis | Contact | Contact |
@@ -92,7 +91,19 @@ Toutes les pages et tous les textes existent dans les deux langues. Le site s'ou
 
 **Rapide.** Un site statique, sans base de données. Les photos sont servies en WebP à la bonne taille pour chaque écran et ne se chargent qu'au moment où on s'en approche.
 
-**Facile à trouver.** Chaque page a son propre titre et sa propre description, chaque service a sa page en français et en néerlandais, et les moteurs de recherche reçoivent une fiche claire de l'entreprise, de ses services et de chaque page.
+| Lighthouse (mobile) | Performance | Accessibilité | Bonnes pratiques | SEO |
+|---|:---:|:---:|:---:|:---:|
+| Accueil | 97 | 100 | 100 | 100 |
+| Accueil (néerlandais) | 94 | 100 | 100 | 100 |
+| Services | 100 | 100 | 100 | 100 |
+| Réalisations | 99 | 96 | 100 | 100 |
+| Un chantier | 97 | 100 | 100 | 100 |
+| À propos | 100 | 100 | 100 | 100 |
+| Contact | 100 | 100 | 100 | 100 |
+
+<sub>Mesuré sur le site en ligne, en simulation téléphone, le 28 octobre 2026.</sub>
+
+**Facile à trouver.** Chaque page a son propre titre et sa propre description, et les moteurs de recherche reçoivent une fiche claire de l'entreprise, de ses services, de ses deux dirigeants et du chemin de chaque page, en français et en néerlandais.
 
 **Accessible.** Contrastes suffisants, navigation complète au clavier, texte alternatif sur chaque photo, curseurs avant/après utilisables sans souris. Tout reste lisible sans JavaScript, et les animations s'arrêtent pour ceux qui ont demandé à en voir moins.
 
