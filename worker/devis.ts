@@ -17,6 +17,7 @@ const SUJET = 'Nouvelle demande de devis · site Ely Facade';
 const LONGUEUR_MAX = 5000;
 const PHOTOS_MAX = 5;
 const PHOTO_TAILLE_MAX = 8 * 1024 * 1024;
+const CORPS_MAX = PHOTOS_MAX * PHOTO_TAILLE_MAX + 1024 * 1024;
 const EXTENSIONS: Record<string, string> = { 'image/jpeg': 'jpg', 'image/png': 'png', 'image/webp': 'webp', 'image/heic': 'heic', 'image/heif': 'heif' };
 
 /** Les champs du formulaire dans l'ordre de l'email, avec leur libellé. */
@@ -52,6 +53,8 @@ const json = (corps: object, statut: number) =>
   new Response(JSON.stringify(corps), { status: statut, headers: { 'Content-Type': 'application/json' } });
 
 export async function envoyerDevis(request: Request, env: Env): Promise<Response> {
+  // Une demande plus lourde que 5 photos au maximum n'est pas lue du tout.
+  if (Number(request.headers.get('Content-Length') ?? 0) > CORPS_MAX) return json({ ok: false }, 413);
   const formulaire = await request.formData();
   const lire = (nom: string) =>
     formulaire.getAll(nom).map((valeur) => String(valeur).trim().slice(0, LONGUEUR_MAX)).filter(Boolean).join(', ');
