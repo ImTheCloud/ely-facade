@@ -23,8 +23,6 @@ npm-debug.log*
 !.vscode/extensions.json
 .idea/
 
-# --- Gardé sur le Mac, jamais publié : notes du projet et photos d'origine (non masquées) ---
-CLAUDE.md
-docs/*.md
+# --- Jamais dans le dépôt : photos d'origine (non masquées, avec position GPS) ---
 photos-sources/
 .claude/
