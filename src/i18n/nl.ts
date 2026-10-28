@@ -50,6 +50,12 @@ export const nl = {
     entreprise: 'Het bedrijf',
     menuAria: 'Sitemap',
     languesAria: 'Taal van de website',
+    avis: {
+      titre: 'Is uw werf afgerond?',
+      texte: 'Uw beoordeling helpt ons enorm. Scan de code met de camera van uw telefoon: het duurt maar een minuutje.',
+      bouton: 'Laat een beoordeling achter op Google',
+      alt: 'QR-code naar de Google-beoordelingspagina van Ely Facade',
+    },
   },
 
   accessibilite: {
@@ -639,13 +645,6 @@ export const nl = {
           texte: 'Simion en het team nemen het over, van de steiger tot de afwerking. Minstens 10\u00a0jaar garantie.',
         },
       ],
-    },
-
-    avis: {
-      titre: 'Is uw werf afgerond?',
-      texte: 'Uw beoordeling helpt ons enorm. Scan de code met de camera van uw telefoon: het duurt maar een minuutje.',
-      bouton: 'Laat een beoordeling achter op Google',
-      alt: 'QR-code naar de Google-beoordelingspagina van Ely Facade',
     },
 
     faq: {

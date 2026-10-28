@@ -1,11 +1,14 @@
 ---
 /**
  * Pied de page : un grand bloc gris perle aux coins du haut arrondis, avec
- * les coordonnées, la navigation, le sélecteur de langue et les mentions légales.
+ * les coordonnées, la navigation, le sélecteur de langue, le QR code des avis Google (#avis) et les mentions légales.
  */
+import QRCode from 'qrcode';
+import Bouton from './Bouton.astro';
 import Logo from './Logo.astro';
 import SelecteurLangue from './SelecteurLangue.astro';
 import { entreprise, lienItineraire, lienWhatsApp } from '../data/entreprise';
+import { lienAvisGoogle } from '../data/google';
 import { chemin, liensNavigation, t, type Langue } from '../i18n';
 
 interface Props {
@@ -21,6 +24,15 @@ const liens = liensNavigation(langue);
 /** Le concepteur du site (crédit en bas de page). */
 const CONCEPTEUR = { nom: 'Claudiu Popadiuc', email: 'claudiu.dev@outlook.com' };
 const mailConcepteur = `mailto:${CONCEPTEUR.email}?subject=${encodeURIComponent(pied.creditSujet)}`;
+
+// Le QR code est dessiné à la construction du site : aucun service extérieur, il encode directement le lien d'avis.
+// Elisei ouvre n'importe quelle page, descend tout en bas, et le client scanne.
+const qr = QRCode.create(lienAvisGoogle, { errorCorrectionLevel: 'M' });
+const n = qr.modules.size;
+const marge = 2;
+let cases = '';
+for (let y = 0; y < n; y++) for (let x = 0; x < n; x++) if (qr.modules.get(x, y)) cases += `M${x + marge} ${y + marge}h1v1h-1z`;
+const cote = n + 2 * marge;
 ---
 
 <footer class="pied">
@@ -49,6 +61,25 @@ const mailConcepteur = `mailto:${CONCEPTEUR.email}?subject=${encodeURIComponent(
         <span class="pied__titre">{pied.entreprise}</span>
         <span>{entreprise.nomCourt}</span>
         <a href={lienItineraire} target="_blank" rel="noopener">{entreprise.rue}<br />{entreprise.codePostal} {entreprise.ville}</a>
+      </div>
+    </div>
+
+    <div class="pied__avis" id="avis">
+      <svg
+        class="pied__code"
+        viewBox={`0 0 ${cote} ${cote}`}
+        shape-rendering="crispEdges"
+        role="img"
+        aria-label={pied.avis.alt}
+        xmlns="http://www.w3.org/2000/svg"
+      >
+        <rect width={cote} height={cote} fill="#fff"></rect>
+        <path d={cases} fill="#1f2429"></path>
+      </svg>
+      <div class="pied__avis-texte">
+        <h2>{pied.avis.titre}</h2>
+        <p>{pied.avis.texte}</p>
+        <Bouton href={lienAvisGoogle} variante="secondaire" iconeApres="fleche-diag" target="_blank" rel="noopener">{pied.avis.bouton}</Bouton>
       </div>
     </div>
 
@@ -130,6 +161,40 @@ const mailConcepteur = `mailto:${CONCEPTEUR.email}?subject=${encodeURIComponent(
     overflow-wrap: anywhere;
   }
 
+  .pied__avis {
+    display: grid;
+    justify-items: center;
+    gap: 20px;
+    padding-block: 32px;
+    border-top: 1px solid var(--color-border);
+    text-align: center;
+    scroll-margin-top: 24px;
+  }
+
+  .pied__code {
+    width: min(190px, 60vw);
+    height: auto;
+    border: 1px solid var(--color-border);
+    border-radius: 14px;
+  }
+
+  .pied__avis-texte {
+    display: grid;
+    justify-items: center;
+    gap: 12px;
+    max-width: 44ch;
+  }
+
+  .pied__avis-texte h2 {
+    font-size: clamp(22px, 2.6vw, 30px);
+    line-height: 1.1;
+  }
+
+  .pied__avis-texte p {
+    margin: 0;
+    font-size: var(--size-small);
+  }
+
   .pied__bas {
     display: flex;
     flex-wrap: wrap;
@@ -185,6 +250,17 @@ const mailConcepteur = `mailto:${CONCEPTEUR.email}?subject=${encodeURIComponent(
 
     .pied__colonnes {
       grid-template-columns: repeat(3, 1fr);
+    }
+
+    .pied__avis {
+      grid-template-columns: auto minmax(0, 1fr);
+      justify-items: start;
+      gap: 40px;
+      text-align: left;
+    }
+
+    .pied__avis-texte {
+      justify-items: start;
     }
   }
 </style>

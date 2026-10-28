@@ -50,6 +50,13 @@ export const fr = {
     entreprise: 'L’entreprise',
     menuAria: 'Plan du site',
     languesAria: 'Langue du site',
+    /** Le QR code pour laisser un avis Google (#avis, en bas de chaque page). */
+    avis: {
+      titre: 'Votre chantier est terminé ?',
+      texte: 'Votre avis nous aide beaucoup. Scannez le code avec l’appareil photo de votre téléphone : cela prend une minute.',
+      bouton: 'Laisser un avis sur Google',
+      alt: 'QR code vers la page d’avis Google d’Ely Facade',
+    },
   },
 
   accessibilite: {
@@ -641,14 +648,6 @@ export const fr = {
           texte: 'Simion et l’équipe s’en chargent, de l’échafaudage à la finition. Garantie de 10\u00a0ans minimum.',
         },
       ],
-    },
-
-    /** La section « avis » (#avis) : le QR code pour laisser un avis Google. */
-    avis: {
-      titre: 'Votre chantier est terminé ?',
-      texte: 'Votre avis nous aide beaucoup. Scannez le code avec l’appareil photo de votre téléphone : cela prend une minute.',
-      bouton: 'Laisser un avis sur Google',
-      alt: 'QR code vers la page d’avis Google d’Ely Facade',
     },
 
     faq: {
