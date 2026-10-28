@@ -44,7 +44,6 @@ const choix = [
   data-deux-points={textes.deuxPoints}
   data-noms-etapes={JSON.stringify(f.etapes)}
   data-erreur-choix={f.erreurChoix}
-  data-erreur-champ={f.erreurChamp}
   data-erreur-email={f.erreurEmail}
   data-erreur-consentement={f.erreurConsentement}
   data-en-cours={f.envoiEnCours}
@@ -70,7 +69,7 @@ const choix = [
     <fieldset class="etape" data-etape="0" data-choix-requis="travaux">
       <legend tabindex="-1">
         <span class="etape__question">{f.q1}</span>
-        <span class="etape__aide">{f.q1Aide}</span>
+        <span class="etape__aide"><span class="champ__obligatoire">{f.obligatoire}</span> · {f.q1Aide}</span>
       </legend>
       <div class="tuiles">
         {
@@ -86,7 +85,7 @@ const choix = [
       </div>
       <!-- Quand « Autre chose » est coché : on dit de quoi il s'agit. -->
       <div class="champ champ--autre" data-autre-champ>
-        <label for={`${id}-autre`}>{f.autrePrecision}</label>
+        <label for={`${id}-autre`}>{f.autrePrecision} <span class="champ__obligatoire">({f.obligatoire})</span></label>
         <input type="text" id={`${id}-autre`} name="autre_precision" placeholder={f.autreExemple} data-erreur={f.erreurAutre} />
       </div>
     </fieldset>
@@ -98,7 +97,7 @@ const choix = [
       </legend>
 
       <fieldset class="question">
-        <legend class="question__label">{f.batiment}</legend>
+        <legend class="question__label">{f.batiment} <span class="champ__facultatif">({f.facultatif})</span></legend>
         <div class="pastilles">
           {
             f.batiments.map((batiment) => (
@@ -153,14 +152,14 @@ const choix = [
       </legend>
 
       <div class="champ">
-        <label for={`${id}-nom`}>{f.nom}</label>
-        <input type="text" id={`${id}-nom`} name="nom" required autocomplete="name" />
+        <label for={`${id}-nom`}>{f.nom} <span class="champ__facultatif">({f.facultatif})</span></label>
+        <input type="text" id={`${id}-nom`} name="nom" autocomplete="name" />
       </div>
 
       <div class="champ__paire">
         <div class="champ">
-          <label for={`${id}-tel`}>{f.telephone}</label>
-          <input type="tel" id={`${id}-tel`} name="telephone" required autocomplete="tel" inputmode="tel" />
+          <label for={`${id}-tel`}>{f.telephone} <span class="champ__obligatoire">({f.obligatoire})</span></label>
+          <input type="tel" id={`${id}-tel`} name="telephone" required autocomplete="tel" inputmode="tel" data-erreur={f.erreurTelephone} />
         </div>
         <div class="champ">
           <label for={`${id}-email`}>{f.email} <span class="champ__facultatif">({f.facultatif})</span></label>
@@ -189,7 +188,8 @@ const choix = [
         <span class="consentement__case" aria-hidden="true"><Icon nom="check" taille={14} epaisseur={3} /></span>
         <span>
           {f.consentement}{' '}
-          <a href={chemin('viePrivee', langue)}>{f.consentementLien}</a>
+          <a href={chemin('viePrivee', langue)}>{f.consentementLien}</a>{' '}
+          <span class="champ__obligatoire">({f.obligatoire})</span>
         </span>
       </label>
     </fieldset>

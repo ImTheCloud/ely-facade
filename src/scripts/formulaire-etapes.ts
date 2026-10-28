@@ -87,7 +87,7 @@ function initialiser(bloc: HTMLElement) {
     // Dans l'ordre de l'écran : les champs à remplir, l'email, puis la case à cocher.
     const requis = Array.from(etape.querySelectorAll<HTMLInputElement>('input[required], textarea[required]'));
     for (const champ of requis) {
-      if (champ.type !== 'checkbox' && !champ.value.trim()) return signaler(champ.dataset.erreur ?? d.erreurChamp ?? '', champ);
+      if (champ.type !== 'checkbox' && !champ.value.trim()) return signaler(champ.dataset.erreur ?? '', champ);
     }
 
     const email = etape.querySelector<HTMLInputElement>('input[type="email"]');

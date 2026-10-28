@@ -439,6 +439,11 @@
   color: var(--color-muted);
 }
 
+.formulaire .champ__obligatoire {
+  font-weight: 600;
+  color: var(--color-accent);
+}
+
 .formulaire .champ input,
 .formulaire .champ textarea {
   width: 100%;

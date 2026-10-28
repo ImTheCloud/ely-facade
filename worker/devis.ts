@@ -103,7 +103,7 @@ export async function envoyerDevis(request: Request, env: Env): Promise<Response
 
   if (robot) return reponseOk();
 
-  if (!lire('nom') || !lire('telephone') || !lire('travaux') || lire('consentement') !== 'oui') {
+  if (!lire('telephone') || !lire('travaux') || lire('consentement') !== 'oui') {
     return json({ ok: false }, 400);
   }
   if (!env.RESEND_API_KEY) return json({ ok: false }, 500);

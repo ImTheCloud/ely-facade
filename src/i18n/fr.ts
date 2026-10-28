@@ -418,7 +418,7 @@ export const fr = {
       {
         titre: 'Les données que nous recevons',
         textes: [
-          'Par le formulaire de devis\u00a0: les travaux souhaités, le type de bâtiment, la surface de façade si vous la donnez, votre nom, votre téléphone, votre email et votre message s’ils sont remplis, les photos de votre façade si vous en joignez, et la langue du site.',
+          'Par le formulaire de devis\u00a0: les travaux souhaités, le type de bâtiment, la surface de façade si vous la donnez, votre téléphone, et votre nom, votre email et votre message s’ils sont remplis, les photos de votre façade si vous en joignez, et la langue du site.',
           'Si vous nous contactez directement (téléphone, WhatsApp, email)\u00a0: ce que vous choisissez de nous envoyer, par exemple des photos de votre façade.',
         ],
       },
@@ -756,11 +756,12 @@ export const fr = {
     envoyer: 'Envoyer ma demande',
     envoiEnCours: 'Envoi…',
     facultatif: 'facultatif',
+    obligatoire: 'obligatoire',
 
     erreurChoix: 'Choisissez au moins un type de travaux.',
-    erreurChamp: 'Ce champ est obligatoire.',
+    erreurTelephone: 'Indiquez votre numéro de téléphone pour que nous puissions vous rappeler.',
     erreurEmail: 'Cette adresse email ne semble pas complète.',
-    erreurConsentement: 'Cochez la case pour que nous puissions vous répondre.',
+    erreurConsentement: 'Cochez la case d’accord ci-dessus pour envoyer votre demande.',
 
     merciTitre: 'C’est envoyé\u00a0!',
     merciTexte:

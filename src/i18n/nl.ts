@@ -416,7 +416,7 @@ export const nl = {
       {
         titre: 'Welke gegevens we ontvangen',
         textes: [
-          'Via het offerteformulier: de gewenste werken, het type gebouw, de geveloppervlakte als u die opgeeft, uw naam, uw telefoonnummer, uw e-mail en uw bericht als u ze invult, de foto’s van uw gevel als u er toevoegt, en de taal van de website.',
+          'Via het offerteformulier: de gewenste werken, het type gebouw, de geveloppervlakte als u die opgeeft, uw telefoonnummer, en uw naam, uw e-mail en uw bericht als u ze invult, de foto’s van uw gevel als u er toevoegt, en de taal van de website.',
           'Als u ons rechtstreeks contacteert (telefoon, WhatsApp, e-mail): wat u ons wilt sturen, bijvoorbeeld foto’s van uw gevel.',
         ],
       },
@@ -753,11 +753,12 @@ export const nl = {
     envoyer: 'Mijn aanvraag versturen',
     envoiEnCours: 'Bezig met verzenden…',
     facultatif: 'optioneel',
+    obligatoire: 'verplicht',
 
     erreurChoix: 'Kies minstens één soort werken.',
-    erreurChamp: 'Dit veld is verplicht.',
+    erreurTelephone: 'Vul uw telefoonnummer in zodat we u kunnen terugbellen.',
     erreurEmail: 'Dit e-mailadres lijkt niet volledig.',
-    erreurConsentement: 'Vink het vakje aan zodat we u kunnen antwoorden.',
+    erreurConsentement: 'Vink het vakje hierboven aan om uw aanvraag te versturen.',
 
     merciTitre: 'Verzonden!',
     merciTexte:
