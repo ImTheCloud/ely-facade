@@ -1,6 +1,5 @@
 /**
- * La fiche Google d'Ely Facade. Sans import, pour que le worker (worker/avis.ts) puisse le lire.
- * L'identifiant du lieu est public : il sert au lien d'avis (QR code) et à la lecture des avis.
+ * La fiche Google d'Ely Facade. L'identifiant du lieu est public : il sert au lien d'avis (QR code, et public/_redirects pour /avis).
  */
 export const googlePlaceId = 'ChIJPwMJyhrJw0cR-oC1k27c6Hg';
 

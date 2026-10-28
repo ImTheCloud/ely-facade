@@ -643,18 +643,12 @@ export const fr = {
       ],
     },
 
-    /** La section « avis » : les avis Google (affichés seulement s'il y en a) et le QR code pour en laisser un. */
+    /** La section « avis » (#avis) : le QR code pour laisser un avis Google. */
     avis: {
-      titre: 'Ils nous font [confiance].',
-      noteAria: 'Note moyenne : {note} sur 5',
-      total: '{n} avis Google',
-      totalUn: '1 avis Google',
-      qr: {
-        titre: 'Votre chantier est terminé ?',
-        texte: 'Votre avis nous aide beaucoup. Scannez le code avec l’appareil photo de votre téléphone : cela prend une minute.',
-        bouton: 'Laisser un avis sur Google',
-        alt: 'QR code vers la page d’avis Google d’Ely Facade',
-      },
+      titre: 'Votre chantier est terminé ?',
+      texte: 'Votre avis nous aide beaucoup. Scannez le code avec l’appareil photo de votre téléphone : cela prend une minute.',
+      bouton: 'Laisser un avis sur Google',
+      alt: 'QR code vers la page d’avis Google d’Ely Facade',
     },
 
     faq: {
