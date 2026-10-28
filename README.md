@@ -68,6 +68,9 @@ Crépi et enduit, isolation par l'extérieur, peinture de façade, nettoyage de 
 **📍 Joignable en un geste**
 La page Contact met le téléphone, WhatsApp, l'email et l'**itinéraire Google Maps** vers le bureau de Halle à un clic. Rien n'est chargé depuis Google tant qu'on ne clique pas : un simple lien, donc toujours aucun cookie.
 
+**⭐ Un avis Google en un scan**
+Dans le pied de page de chaque page, un QR code mène directement à la page pour laisser un avis sur Google : un client satisfait le scanne avec son téléphone, depuis le site ouvert sur celui d'Ely Facade. Aucun avis n'est recopié ni affiché automatiquement sur le site.
+
 **📱 Pensé d'abord pour le téléphone**
 Une barre toujours à portée de pouce (Appeler · WhatsApp · Email · Devis), un menu plein écran et le choix FR/NL en haut de l'écran.
 
@@ -126,7 +129,7 @@ Toutes les pages et tous les textes existent dans les deux langues. Le site s'ou
 
 **Polices :** Bricolage Grotesque pour les titres, DM Sans pour le texte.
 
-Le dossier [`design/`](design) rassemble le logo (SVG, PDF, PNG), la carte de visite, les t-shirts, les pulls à capuche, le QR code du site et les images de la fiche Google.
+Le dossier [`design/`](design) rassemble le logo (SVG, PDF, PNG), la carte de visite (recto-verso, avec le QR code du site), les t-shirts, les pulls à capuche, les QR codes du site et des avis Google, et les images de la fiche Google.
 
 ---
 
