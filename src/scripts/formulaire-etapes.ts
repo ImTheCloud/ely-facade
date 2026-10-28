@@ -9,8 +9,8 @@
  * - photos facultatives : [data-photos] (aperçus, retrait, 5 maximum, réduites avant l'envoi) ;
  * - envoi en arrière-plan à l'adresse du formulaire (worker/devis.ts),
  *   puis confirmation sur place ; en cas d'échec, les contacts directs ;
- * - après l'envoi, [data-suite-whatsapp] et [data-suite-email] ouvrent un
- *   message qui reprend toute la demande (pour envoyer des photos, un CV…) ;
+ * - après l'envoi, [data-suite-whatsapp] ouvre un message qui reprend
+ *   toute la demande (pour envoyer des photos) ;
  * - pré-sélection par l'adresse : ?<data-param>=valeur coche les cases dont
  *   data-cles contient cette valeur.
  *
@@ -207,8 +207,6 @@ function initialiser(bloc: HTMLElement) {
       const message = `${d.introSuite ?? ''}\n\n${resume()}`;
       const whatsapp = panneau.querySelector<HTMLAnchorElement>('[data-suite-whatsapp]');
       if (whatsapp) whatsapp.href = `https://wa.me/${d.whatsapp}?text=${encodeURIComponent(message)}`;
-      const email = panneau.querySelector<HTMLAnchorElement>('[data-suite-email]');
-      if (email) email.href = `mailto:${d.email}?subject=${encodeURIComponent(d.sujetSuite ?? '')}&body=${encodeURIComponent(message)}`;
     }
     panneau.hidden = false;
     panneau.focus({ preventScroll: true });

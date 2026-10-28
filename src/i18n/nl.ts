@@ -763,10 +763,8 @@ export const nl = {
     merciTexte:
       'Uw aanvraag is goed aangekomen. Om sneller te gaan, kunt u dezelfde aanvraag via WhatsApp sturen, met enkele foto’s van uw gevel: ze is al geschreven.',
     merciWhatsApp: 'Via WhatsApp sturen',
-    merciEmail: 'Per e-mail',
     recommencer: 'Nieuwe aanvraag',
     suiteIntro: 'Goedendag, hierbij mijn offerteaanvraag via de website:',
-    suiteSujet: 'Mijn offerteaanvraag',
 
     erreurTitre: 'Het verzenden is mislukt.',
     erreurTexte: 'U kunt het opnieuw proberen, of ons rechtstreeks bellen op',

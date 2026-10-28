@@ -38,10 +38,8 @@ const choix = [
   class="formulaire"
   data-formulaire
   data-param="travaux"
-  data-email={entreprise.email}
   data-whatsapp={entreprise.whatsappNumero}
   data-intro-suite={f.suiteIntro}
-  data-sujet-suite={f.suiteSujet}
   data-recap={JSON.stringify([['travaux', f.recap.travaux], ['autre_precision', f.recap.autre], ['batiment', f.recap.batiment], ['surface', f.recap.surface], ['message', f.recap.message], '', ['nom', f.recap.nom], ['telephone', f.recap.telephone], ['email', f.recap.email]])}
   data-deux-points={textes.deuxPoints}
   data-noms-etapes={JSON.stringify(f.etapes)}
@@ -223,9 +221,6 @@ const choix = [
     <div class="formulaire__fin-actions">
       <Bouton href={lienWhatsApp(textes.whatsappMessage)} variante="whatsapp" icone="whatsapp" target="_blank" rel="noopener" data-suite-whatsapp>
         {f.merciWhatsApp}
-      </Bouton>
-      <Bouton href={`mailto:${entreprise.email}`} variante="secondaire" icone="email" data-suite-email>
-        {f.merciEmail}
       </Bouton>
       <button type="button" class="formulaire__retour" data-recommencer>{f.recommencer}</button>
     </div>

@@ -766,10 +766,8 @@ export const fr = {
     merciTexte:
       'Votre demande nous est bien parvenue. Pour aller plus vite, vous pouvez nous envoyer la même demande sur WhatsApp, avec quelques photos de votre façade\u00a0: elle est déjà écrite.',
     merciWhatsApp: 'Envoyer sur WhatsApp',
-    merciEmail: 'Par email',
     recommencer: 'Nouvelle demande',
     suiteIntro: 'Bonjour, voici ma demande de devis envoyée sur le site\u00a0:',
-    suiteSujet: 'Ma demande de devis',
 
     erreurTitre: 'L’envoi n’a pas fonctionné.',
     erreurTexte: 'Vous pouvez réessayer, ou nous appeler directement au',
