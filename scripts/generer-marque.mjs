@@ -23,6 +23,26 @@ const icone = fs.readFileSync(`${source}/icone.svg`);
 fs.copyFileSync(`${source}/icone.svg`, 'public/favicon.svg');
 await sharp(icone, { density: 400 }).resize(48, 48, { fit: 'contain', background: '#ffffff00' }).png().toFile('public/favicon.png');
 
+// Google et les anciens navigateurs : une icône de 192 px et un fichier favicon.ico (16, 32 et 48 px) à la racine.
+await sharp(icone, { density: 400 }).resize(192, 192, { fit: 'contain', background: '#ffffff00' }).png().toFile('public/favicon-192.png');
+const tailles = [16, 32, 48];
+const images = await Promise.all(tailles.map((t) => sharp(icone, { density: 400 }).resize(t, t, { fit: 'contain', background: '#ffffff00' }).png().toBuffer()));
+const entete = Buffer.alloc(6 + 16 * images.length);
+entete.writeUInt16LE(1, 2);
+entete.writeUInt16LE(images.length, 4);
+let decalage = entete.length;
+images.forEach((image, i) => {
+  const o = 6 + 16 * i;
+  entete.writeUInt8(tailles[i], o);
+  entete.writeUInt8(tailles[i], o + 1);
+  entete.writeUInt16LE(1, o + 4);
+  entete.writeUInt16LE(32, o + 6);
+  entete.writeUInt32LE(image.length, o + 8);
+  entete.writeUInt32LE(decalage, o + 12);
+  decalage += image.length;
+});
+fs.writeFileSync('public/favicon.ico', Buffer.concat([entete, ...images]));
+
 // iPhone : carré blanc, maison au centre (iOS arrondit lui-même).
 const maison = await sharp(icone, { density: 400 }).resize(124, 124, { fit: 'contain', background: '#ffffff00' }).png().toBuffer();
 await sharp({ create: { width: 180, height: 180, channels: 3, background: '#ffffff' } })
