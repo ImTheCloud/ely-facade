@@ -404,7 +404,7 @@ export const nl = {
   viePrivee: {
     titre: 'Privacy',
     intro:
-      'Deze website volgt u niet: geen cookies, geen bezoekersstatistieken. Dit doen we met de gegevens die u ons stuurt.',
+      'Deze website volgt u niet: geen cookies, alleen anonieme bezoekersstatistieken. Dit doen we met de gegevens die u ons stuurt.',
     sections: [
       {
         titre: 'Wie is verantwoordelijk',
@@ -444,6 +444,12 @@ export const nl = {
         titre: 'Cookies',
         textes: [
           'Geen cookies. De website onthoudt alleen in uw browser de taal die u gekozen hebt (Frans of Nederlands). Die informatie wordt nooit naar ons gestuurd.',
+        ],
+      },
+      {
+        titre: 'Bezoekersstatistieken',
+        textes: [
+          'Om te weten welke pagina’s gelezen worden, gebruikt de website Cloudflare Web Analytics: het telt de bekeken pagina’s, de website waar u vandaan komt, uw land, uw soort toestel en de laadtijd. Het plaatst geen cookie, volgt u niet van website tot website en bewaart niets waarmee u herkend kunt worden.',
         ],
       },
       {
@@ -495,7 +501,7 @@ export const nl = {
     },
     viePrivee: {
       titre: 'Privacy | Ely Facade',
-      description: 'Geen cookies, geen bezoekersstatistieken: wat we doen met de gegevens uit het offerteformulier.',
+      description: 'Geen cookies, anonieme bezoekersstatistieken: wat we doen met de gegevens uit het offerteformulier.',
     },
     erreur: {
       titre: 'Pagina niet gevonden | Ely Facade',

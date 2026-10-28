@@ -406,7 +406,7 @@ export const fr = {
   viePrivee: {
     titre: 'Vie privée',
     intro:
-      'Ce site ne vous suit pas\u00a0: aucun cookie, aucune mesure d’audience. Voici ce que nous faisons des informations que vous nous envoyez.',
+      'Ce site ne vous suit pas\u00a0: aucun cookie, seulement des statistiques de visite anonymes. Voici ce que nous faisons des informations que vous nous envoyez.',
     sections: [
       {
         titre: 'Qui est responsable',
@@ -446,6 +446,12 @@ export const fr = {
         titre: 'Cookies',
         textes: [
           'Aucun cookie. Le site retient seulement, dans votre navigateur, la langue que vous avez choisie (français ou néerlandais). Cette information ne nous est jamais envoyée.',
+        ],
+      },
+      {
+        titre: 'Statistiques de visite',
+        textes: [
+          'Pour savoir quelles pages sont lues, le site utilise Cloudflare Web Analytics\u00a0: il compte les pages vues, le site d’où vous venez, votre pays, votre type d’appareil et le temps de chargement. Il ne pose aucun cookie, ne vous suit pas d’un site à l’autre et ne garde rien qui permette de vous reconnaître.',
         ],
       },
       {
@@ -498,7 +504,7 @@ export const fr = {
     },
     viePrivee: {
       titre: 'Vie privée | Ely Facade',
-      description: 'Aucun cookie, aucune mesure d’audience\u00a0: ce que nous faisons des informations envoyées par le formulaire de devis.',
+      description: 'Aucun cookie, des statistiques anonymes\u00a0: ce que nous faisons des informations envoyées par le formulaire de devis.',
     },
     erreur: {
       titre: 'Page introuvable | Ely Facade',
