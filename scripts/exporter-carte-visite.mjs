@@ -60,7 +60,7 @@ const sur = (style, contenu) => `<div class="sur" style="${style}">${contenu}</d
 const qrBloc = (t) => `<div style="width:${t}mm;height:${t}mm;border-radius:1.2mm;overflow:hidden">${qrSvg}</div>`;
 const ligne = (etiquette, valeur, premiere) => `<div style="${premiere ? '' : 'border-top:.25mm solid rgba(255,255,255,.2);padding-top:1.9mm;'}"><div style="font-size:1.5mm;font-weight:600;letter-spacing:.2em;text-transform:uppercase;opacity:.5;margin-bottom:.6mm">${etiquette}</div><div style="font-size:2.7mm;font-weight:600;line-height:1.25;white-space:nowrap">${valeur}</div></div>`;
 
-// Recto : mur de briques et logo centré. Verso : fond noir avec la maison en filigrane, nom à gauche, lignes étiquetées FR / NL à droite.
+// Recto : mur de briques et logo centré. Verso : fond noir avec la maison en filigrane, nom à gauche, QR code et adresse du site en dessous, lignes étiquetées FR / NL à droite.
 const recto = carte(NOIR, '#fff', `${briques('#1f1f1f', { rouge: [5, 6], masque: '-webkit-mask-image:radial-gradient(ellipse 62% 70% at 50% 50%,transparent 38%,#000 92%)' })}
 ${sur('display:flex;flex-direction:column;align-items:center;justify-content:center;gap:5.5mm', `${logoHorizontal('fond-sombre', 56)}
 <div style="width:9mm;height:.5mm;background:${ROUGE}"></div>
@@ -71,11 +71,11 @@ const verso = carte(NOIR, '#fff', `${sur('left:8mm;right:7mm;top:8mm;bottom:8mm;
 ${logoHorizontal('fond-sombre', 25)}
 <div><div style="font-size:5mm;font-weight:800;letter-spacing:-.02em;line-height:1.02">Elisei<br>Ungureanu</div>
 <div style="width:7mm;height:.45mm;background:${ROUGE};margin-top:2.8mm"></div></div>
-${qrBloc(16)}</div>
+<div>${qrBloc(16)}
+<div style="font-size:2.2mm;font-weight:600;white-space:nowrap;margin-top:1.4mm">www.${site.hostname}</div></div></div>
 <div style="display:flex;flex-direction:column;justify-content:space-between">
 ${ligne('Tel.', telephone, true)}
 ${ligne('Email', email)}
-${ligne('Website', `www.${site.hostname}`)}
 ${ligne('Bureau · Kantoor', 'Bergensesteenweg 745, 1502 Halle')}
 </div>`)}`);
 
