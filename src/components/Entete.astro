@@ -465,8 +465,13 @@ const estActif = (href: string) => cheminActuel.startsWith(href);
       padding-inline: max(14px, env(safe-area-inset-left, 0px)) max(14px, env(safe-area-inset-right, 0px));
     }
 
+    /* Le logo prend toute la place libre entre le bord et le sélecteur de langue (il s'ajuste, sans jamais déformer). */
+    .entete__logo {
+      flex: 1 1 0;
+    }
+
     .entete__logo :global(.logo) {
-      height: 28px;
+      height: 44px;
     }
 
     .entete__burger {
