@@ -57,27 +57,6 @@ function briques(fond, { rouge = [3, 2], masque = '' } = {}) {
 
 const carte = (fond, fg, contenu) => `<div class="carte" style="background:${fond};color:${fg}">${contenu}</div>`;
 const sur = (style, contenu) => `<div class="sur" style="${style}">${contenu}</div>`;
-const qrBloc = (t) => `<div style="width:${t}mm;height:${t}mm;border-radius:1.2mm;overflow:hidden">${qrSvg}</div>`;
-const ligne = (etiquette, valeur, premiere) => `<div style="${premiere ? '' : 'border-top:.25mm solid rgba(255,255,255,.2);padding-top:1.9mm;'}"><div style="font-size:1.5mm;font-weight:600;letter-spacing:.2em;text-transform:uppercase;opacity:.5;margin-bottom:.6mm">${etiquette}</div><div style="font-size:2.7mm;font-weight:600;line-height:1.25;white-space:nowrap">${valeur}</div></div>`;
-
-// Recto : mur de briques et logo centré. Verso : fond noir avec la maison en filigrane, nom à gauche, QR code et adresse du site en dessous, lignes étiquetées FR / NL à droite.
-const recto = carte(NOIR, '#fff', `${briques('#1f1f1f', { rouge: [5, 6], masque: '-webkit-mask-image:radial-gradient(ellipse 62% 70% at 50% 50%,transparent 38%,#000 92%)' })}
-${sur('display:flex;flex-direction:column;align-items:center;justify-content:center;gap:5.5mm', `${logoHorizontal('fond-sombre', 56)}
-<div style="width:9mm;height:.5mm;background:${ROUGE}"></div>
-<div style="font-size:2.1mm;font-weight:600;letter-spacing:.22em;text-transform:uppercase">${slogan}</div>`)}`);
-
-const verso = carte(NOIR, '#fff', `${sur('left:8mm;right:7mm;top:8mm;bottom:8mm;display:grid;grid-template-columns:25mm 1fr;column-gap:5mm', `
-<div style="display:flex;flex-direction:column;justify-content:space-between">
-${logoHorizontal('fond-sombre', 25)}
-<div><div style="font-size:5mm;font-weight:800;letter-spacing:-.02em;line-height:1.02">Elisei<br>Ungureanu</div>
-<div style="width:7mm;height:.45mm;background:${ROUGE};margin-top:2.8mm"></div></div>
-<div>${qrBloc(16)}
-<div style="font-size:2.2mm;font-weight:600;white-space:nowrap;margin-top:1.4mm">www.${site.hostname}</div></div></div>
-<div style="display:flex;flex-direction:column;justify-content:space-between">
-${ligne('Tel.', telephone, true)}
-${ligne('Email', email)}
-${ligne('Bureau · Kantoor', 'Bergensesteenweg 745, 1502 Halle')}
-</div>`)}`);
 
 const temp = fs.mkdtempSync(path.join(os.tmpdir(), 'ely-carte-'));
 const page = (corps, extra = '') => `<!doctype html><html><head><meta charset="utf-8"><style>${css}${extra}</style></head><body>${corps}</body></html>`;
@@ -86,6 +65,61 @@ function rendre(nom, html, args) {
   fs.writeFileSync(f, html);
   execFileSync(chrome, ['--headless=new', '--disable-gpu', '--hide-scrollbars', ...args, `file://${f}`], { stdio: 'ignore' });
 }
+
+/** Mesure des textes dans Chrome, polices chargées, pour un corps de 1 mm : encre (décalage à gauche, largeur, hauteur au-dessus
+ *  et en dessous de la ligne de base) et position de la ligne de base dans une ligne de hauteur 1. */
+function mesurer(textes) {
+  const f = path.join(temp, 'mesure.html');
+  fs.writeFileSync(f, page(`<script>
+Promise.all([document.fonts.load('600 100px "DM Sans"'), document.fonts.load('800 100px "DM Sans"')]).then(() => {
+  const ctx = document.createElement('canvas').getContext('2d');
+  document.title = JSON.stringify(${JSON.stringify(textes)}.map(([texte, poids, espacement = 0]) => {
+    ctx.font = poids + ' 100px "DM Sans"';
+    ctx.letterSpacing = espacement * 100 + 'px';
+    const m = ctx.measureText(texte), hauteur = m.fontBoundingBoxAscent + m.fontBoundingBoxDescent;
+    return { gauche: -m.actualBoundingBoxLeft / 100, largeur: (m.actualBoundingBoxLeft + m.actualBoundingBoxRight) / 100,
+      haut: m.actualBoundingBoxAscent / 100, bas: m.actualBoundingBoxDescent / 100, base: ((100 - hauteur) / 2 + m.fontBoundingBoxAscent) / 100 };
+  }));
+});
+</script>`));
+  const dom = execFileSync(chrome, ['--headless=new', '--disable-gpu', '--virtual-time-budget=5000', '--dump-dom', `file://${f}`], { encoding: 'utf8', stdio: ['ignore', 'pipe', 'ignore'] });
+  return JSON.parse(dom.match(/<title>(.*?)<\/title>/)[1]);
+}
+
+// Recto : mur de briques et logo centré.
+const recto = carte(NOIR, '#fff', `${briques('#1f1f1f', { rouge: [5, 6], masque: '-webkit-mask-image:radial-gradient(ellipse 62% 70% at 50% 50%,transparent 38%,#000 92%)' })}
+${sur('display:flex;flex-direction:column;align-items:center;justify-content:center;gap:5.5mm', `${logoHorizontal('fond-sombre', 56)}
+<div style="width:9mm;height:.5mm;background:${ROUGE}"></div>
+<div style="font-size:2.1mm;font-weight:600;letter-spacing:.22em;text-transform:uppercase">${slogan}</div>`)}`);
+
+// Verso : grille à deux colonnes, en mm sur la carte de 91 × 61 (contenu entre x 8 et 83, y 8 et 53, soit 5 mm du bord fini).
+// À gauche, logo, QR code et lien du site ont exactement la même largeur. À droite, le nom sur une ligne et les filets occupent
+// toute la colonne ; le nom et le trait rouge tiennent dans la hauteur de la maison du logo ; les infos commencent au haut du
+// QR code et finissent sur la ligne de base du lien, écrites dans le même corps que lui.
+const lien = `www.${site.hostname}`, nom = 'Elisei Ungureanu';
+const [mLien, mNom, mH] = mesurer([[lien, 600], [nom, 800, -0.02], ['H', 600]]);
+const gauche = 8, droite = 83, bas = 53;
+const colonne = 28, droiteX = gauche + colonne + 7;
+const hLogo = colonne * 274 / 1152, haut = 8;
+const maisonHaut = haut + hLogo * 6 / 274, maisonBas = haut + hLogo * 267 / 274;
+const corpsNom = (droite - droiteX) / mNom.largeur, corps = colonne / mLien.largeur, corpsEtiquette = 1.5;
+const baseLien = bas - mLien.bas * corps;
+const qrBas = baseLien - mLien.haut * corps - 1.8, qrHaut = qrBas - colonne;
+const mm = (v) => `${v.toFixed(3)}mm`;
+const place = (x, y, style, contenu) => `<div style="position:absolute;left:${mm(x)};top:${mm(y)};${style}">${contenu}</div>`;
+const texte = (taille, poids, style = '') => `font-size:${mm(taille)};font-weight:${poids};line-height:1;white-space:nowrap;${style}`;
+const filet = '<div style="height:.25mm;background:rgba(255,255,255,.2)"></div>';
+const info = (etiquette, valeur) => `<div><div style="${texte(corpsEtiquette, 600, 'letter-spacing:.2em;text-transform:uppercase;opacity:.5;margin-bottom:1.2mm')}">${etiquette}</div><div style="${texte(corps, 600, 'line-height:1.2')}">${valeur}</div></div>`;
+const infosHaut = qrHaut - (mH.base - mH.haut) * corpsEtiquette, infosBas = baseLien + (1.1 - mH.base) * corps;
+
+const verso = carte(NOIR, '#fff', `
+${place(gauche, haut, '', logoHorizontal('fond-sombre', colonne))}
+${place(droiteX - mNom.gauche * corpsNom, maisonHaut - (mNom.base - mNom.haut) * corpsNom, texte(corpsNom, 800, 'letter-spacing:-.02em'), nom)}
+${place(droiteX, maisonBas - 0.45, `width:7mm;height:.45mm;background:${ROUGE}`, '')}
+${place(gauche, qrHaut, `width:${mm(colonne)};height:${mm(colonne)};border-radius:1.2mm;overflow:hidden`, qrSvg)}
+${place(gauche - mLien.gauche * corps, baseLien - mLien.base * corps, texte(corps, 600), lien)}
+${place(droiteX, infosHaut, `width:${mm(droite - droiteX)};height:${mm(infosBas - infosHaut)};display:flex;flex-direction:column;justify-content:space-between`,
+  `${info('Tel.', telephone)}${filet}${info('Email', email)}${filet}${info('Bureau · Kantoor', 'Bergensesteenweg 745<br>1502 Halle')}`)}`);
 
 fs.rmSync(sortie, { recursive: true, force: true });
 fs.mkdirSync(sortie, { recursive: true });
