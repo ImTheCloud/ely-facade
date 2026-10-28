@@ -93,18 +93,21 @@ ${sur('display:flex;flex-direction:column;align-items:center;justify-content:cen
 <div style="font-size:2.1mm;font-weight:600;letter-spacing:.22em;text-transform:uppercase">${slogan}</div>`)}`);
 
 // Verso : grille à deux colonnes, en mm sur la carte de 91 × 61 (contenu entre x 8 et 83, y 8 et 53, soit 5 mm du bord fini).
-// À gauche, logo, QR code et lien du site ont exactement la même largeur. À droite, le nom sur une ligne et les filets occupent
-// toute la colonne ; le nom et le trait rouge tiennent dans la hauteur de la maison du logo ; les infos commencent au haut du
-// QR code et finissent sur la ligne de base du lien, écrites dans le même corps que lui.
+// Deux colonnes de même largeur : en haut, le logo à gauche et le nom sur une ligne à droite, aussi larges l'un que l'autre
+// (leurs lettres ont alors la même hauteur) et posés sur la même ligne de base ; le trait rouge finit au bas de la maison.
+// En bas, le QR code et le lien du site, exactement aussi large que lui ; les infos commencent au haut du QR code et finissent
+// sur la ligne de base du lien, écrites dans le même corps que lui ; les filets ont la largeur du nom.
 const lien = `www.${site.hostname}`, nom = 'Elisei Ungureanu';
 const [mLien, mNom, mH] = mesurer([[lien, 600], [nom, 800, -0.02], ['H', 600]]);
-const gauche = 8, droite = 83, bas = 53;
-const colonne = 28, droiteX = gauche + colonne + 7;
-const hLogo = colonne * 274 / 1152, haut = 8;
-const maisonHaut = haut + hLogo * 6 / 274, maisonBas = haut + hLogo * 267 / 274;
-const corpsNom = (droite - droiteX) / mNom.largeur, corps = colonne / mLien.largeur, corpsEtiquette = 1.5;
+const gauche = 8, droite = 83, haut = 8, bas = 53, gouttiere = 7;
+const colonne = (droite - gauche - gouttiere) / 2, droiteX = gauche + colonne + gouttiere;
+const hLogo = colonne * 274 / 1152;
+const baseLogo = haut + hLogo * 182 / 274, maisonBas = haut + hLogo * 267 / 274;
+const corpsNom = colonne / mNom.largeur, corpsEtiquette = 1.5;
+// Le QR code prend toute la hauteur libre sous le logo (6 mm d'écart) ; le corps du lien en découle.
+const tailleQr = (bas - maisonBas - 6 - 1.8) / (1 + (mLien.haut + mLien.bas) / mLien.largeur), corps = tailleQr / mLien.largeur;
 const baseLien = bas - mLien.bas * corps;
-const qrBas = baseLien - mLien.haut * corps - 1.8, qrHaut = qrBas - colonne;
+const qrHaut = baseLien - mLien.haut * corps - 1.8 - tailleQr;
 const mm = (v) => `${v.toFixed(3)}mm`;
 const place = (x, y, style, contenu) => `<div style="position:absolute;left:${mm(x)};top:${mm(y)};${style}">${contenu}</div>`;
 const texte = (taille, poids, style = '') => `font-size:${mm(taille)};font-weight:${poids};line-height:1;white-space:nowrap;${style}`;
@@ -114,9 +117,9 @@ const infosHaut = qrHaut - (mH.base - mH.haut) * corpsEtiquette, infosBas = base
 
 const verso = carte(NOIR, '#fff', `
 ${place(gauche, haut, '', logoHorizontal('fond-sombre', colonne))}
-${place(droiteX - mNom.gauche * corpsNom, maisonHaut - (mNom.base - mNom.haut) * corpsNom, texte(corpsNom, 800, 'letter-spacing:-.02em'), nom)}
+${place(droiteX - mNom.gauche * corpsNom, baseLogo - mNom.base * corpsNom, texte(corpsNom, 800, 'letter-spacing:-.02em'), nom)}
 ${place(droiteX, maisonBas - 0.45, `width:7mm;height:.45mm;background:${ROUGE}`, '')}
-${place(gauche, qrHaut, `width:${mm(colonne)};height:${mm(colonne)};border-radius:1.2mm;overflow:hidden`, qrSvg)}
+${place(gauche, qrHaut, `width:${mm(tailleQr)};height:${mm(tailleQr)};border-radius:1.2mm;overflow:hidden`, qrSvg)}
 ${place(gauche - mLien.gauche * corps, baseLien - mLien.base * corps, texte(corps, 600), lien)}
 ${place(droiteX, infosHaut, `width:${mm(droite - droiteX)};height:${mm(infosBas - infosHaut)};display:flex;flex-direction:column;justify-content:space-between`,
   `${info('Tel.', telephone)}${filet}${info('Email', email)}${filet}${info('Bureau · Kantoor', 'Bergensesteenweg 745<br>1502 Halle')}`)}`);
