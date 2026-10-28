@@ -9,6 +9,7 @@
  * - photos facultatives : [data-photos] (aperçus, retrait, 5 maximum, réduites avant l'envoi) ;
  * - envoi en arrière-plan à l'adresse du formulaire (worker/devis.ts),
  *   puis confirmation sur place ; en cas d'échec, les contacts directs ;
+ * - si le visiteur a donné son email, le worker lui envoie une confirmation et l'écran de fin l'indique ;
  * - après l'envoi, [data-suite-whatsapp] ouvre un message qui reprend
  *   toute la demande (pour envoyer des photos) ;
  * - pré-sélection par l'adresse : ?<data-param>=valeur coche les cases dont
@@ -200,13 +201,21 @@ function initialiser(bloc: HTMLElement) {
       .trim();
   };
 
-  const terminer = (panneau: HTMLElement | null) => {
+  let donneesEnvoyees: FormData | null = null;
+
+  const terminer = (panneau: HTMLElement | null, confirme = false) => {
     form.hidden = true;
     if (!panneau) return;
     if (panneau === merci) {
       const message = `${d.introSuite ?? ''}\n\n${resume()}`;
       const whatsapp = panneau.querySelector<HTMLAnchorElement>('[data-suite-whatsapp]');
       if (whatsapp) whatsapp.href = `https://wa.me/${d.whatsapp}?text=${encodeURIComponent(message)}`;
+      const confirmation = panneau.querySelector<HTMLElement>('[data-merci-confirmation]');
+      const adresse = panneau.querySelector<HTMLElement>('[data-confirmation-email]');
+      if (confirmation && adresse) {
+        adresse.textContent = (donneesEnvoyees?.get('email') as string | null)?.trim() ?? '';
+        confirmation.hidden = !confirme;
+      }
     }
     panneau.hidden = false;
     panneau.focus({ preventScroll: true });
@@ -224,6 +233,7 @@ function initialiser(bloc: HTMLElement) {
 
     // Le formulaire avec les photos réduites ; « Accept » demande une réponse JSON, pas une page.
     const donnees = new FormData(form);
+    donneesEnvoyees = donnees;
     donnees.delete('photos');
     photos.forEach((photo) => donnees.append('photos', photo, photo.name));
 
@@ -233,7 +243,8 @@ function initialiser(bloc: HTMLElement) {
         headers: { Accept: 'application/json' },
         body: donnees,
       });
-      terminer(reponse.ok ? merci : echec);
+      const retour = reponse.ok ? ((await reponse.json().catch(() => ({}))) as { confirmation?: boolean }) : null;
+      terminer(retour ? merci : echec, retour?.confirmation === true);
     } catch {
       terminer(echec);
     } finally {

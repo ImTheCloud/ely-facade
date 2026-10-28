@@ -218,6 +218,7 @@ const choix = [
     </svg>
     <h3 class="formulaire__fin-titre">{f.merciTitre}</h3>
     <p>{f.merciTexte}</p>
+    <p class="formulaire__confirmation" data-merci-confirmation hidden>{f.merciConfirmation} <strong data-confirmation-email></strong></p>
     <div class="formulaire__fin-actions">
       <Bouton href={lienWhatsApp(textes.whatsappMessage)} variante="whatsapp" icone="whatsapp" target="_blank" rel="noopener" data-suite-whatsapp>
         {f.merciWhatsApp}

@@ -1,6 +1,6 @@
 /**
  * Envoi de la demande de devis : reçoit le formulaire de la page contact et le
- * transmet par email à l'entreprise avec Resend.
+ * transmet par email à l'entreprise avec Resend ; si le visiteur a donné son email, il reçoit une confirmation.
  *
  * Réglages dans Cloudflare → Workers & Pages → ely-facade → Settings → Variables and Secrets :
  * - RESEND_API_KEY (secret) : la clé d'envoi Resend ;
@@ -37,6 +37,22 @@ const CHAMPS: [string, string][] = [
   ['email', 'Email'],
   ['langue', 'Langue du site'],
 ];
+
+/** L'email de confirmation envoyé au visiteur qui a donné son adresse (la demande est récapitulée sans les photos). */
+const CONFIRMATION = {
+  FR: {
+    sujet: 'Votre demande de devis · Ely Facade',
+    intro: 'Bonjour, nous avons bien reçu votre demande de devis. Nous vous recontactons très vite.',
+    recap: 'Votre demande :',
+    fin: 'Pour nous joindre : 0492 43 96 17 ou info@elyfacade.be.',
+  },
+  NL: {
+    sujet: 'Uw offerteaanvraag · Ely Facade',
+    intro: 'Goedendag, we hebben uw offerteaanvraag goed ontvangen. We nemen snel contact met u op.',
+    recap: 'Uw aanvraag:',
+    fin: 'Bereikbaar op 0492 43 96 17 of info@elyfacade.be.',
+  },
+};
 
 const REMERCIEMENT = {
   FR: { titre: 'Merci !', texte: 'Votre demande est bien envoyée. Nous vous recontactons très vite.', retour: 'Retour au site', adresse: '/' },
@@ -75,8 +91,8 @@ export async function envoyerDevis(request: Request, env: Env): Promise<Response
   const attendHtml = !(request.headers.get('Accept') ?? '').includes('application/json');
   const langue = lire('langue') === 'NL' ? 'NL' : 'FR';
 
-  const reponseOk = () => {
-    if (!attendHtml) return json({ ok: true }, 200);
+  const reponseOk = (confirmation = false) => {
+    if (!attendHtml) return json({ ok: true, confirmation }, 200);
     const r = REMERCIEMENT[langue];
     return new Response(
       `<!doctype html><html lang="${langue.toLowerCase()}"><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1"><title>${r.titre}</title>` +
@@ -104,6 +120,7 @@ export async function envoyerDevis(request: Request, env: Env): Promise<Response
   const lignes: (readonly [string, string])[] = CHAMPS.map(([nom, libelle]) => [libelle, lire(nom)] as const).filter(([, valeur]) => valeur);
   if (pieces.length) lignes.push(['Photos', `${pieces.length} jointe${pieces.length > 1 ? 's' : ''} à cet email`]);
   const email = lire('email');
+  const emailValide = /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email);
 
   const envoi = await fetch('https://api.resend.com/emails', {
     method: 'POST',
@@ -111,7 +128,7 @@ export async function envoyerDevis(request: Request, env: Env): Promise<Response
     body: JSON.stringify({
       from: EXPEDITEUR,
       to: [env.DEVIS_DESTINATAIRE || DESTINATAIRE],
-      ...(/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email) ? { reply_to: email } : {}),
+      ...(emailValide ? { reply_to: email } : {}),
       subject: SUJET,
       ...(pieces.length ? { attachments: pieces } : {}),
       text: lignes.map(([libelle, valeur]) => `${libelle} : ${valeur}`).join('\n'),
@@ -122,5 +139,29 @@ export async function envoyerDevis(request: Request, env: Env): Promise<Response
   });
 
   if (!envoi.ok) return json({ ok: false }, 502);
-  return reponseOk();
+  if (!emailValide) return reponseOk();
+
+  // La confirmation au visiteur : si elle échoue, la demande est quand même arrivée.
+  const c = CONFIRMATION[langue];
+  const recap = lignes.filter(([libelle]) => libelle !== 'Langue du site' && libelle !== 'Photos');
+  const texte = `${c.intro}\n\n${c.recap}\n${recap.map(([libelle, valeur]) => `${libelle} : ${valeur}`).join('\n')}\n\n${c.fin}`;
+  const confirmation = await fetch('https://api.resend.com/emails', {
+    method: 'POST',
+    headers: { Authorization: `Bearer ${env.RESEND_API_KEY}`, 'Content-Type': 'application/json' },
+    body: JSON.stringify({
+      from: EXPEDITEUR,
+      to: [email],
+      reply_to: env.DEVIS_DESTINATAIRE || DESTINATAIRE,
+      subject: c.sujet,
+      text: texte,
+      html:
+        `<div style="font-family:system-ui,sans-serif"><p>${echapper(c.intro)}</p><p><strong>${echapper(c.recap)}</strong></p>` +
+        `<table cellpadding="6">${recap
+          .map(([libelle, valeur]) => `<tr><td><strong>${echapper(libelle)}</strong></td><td>${echapper(valeur).replace(/\n/g, '<br>')}</td></tr>`)
+          .join('')}</table><p>${echapper(c.fin)}</p></div>`,
+    }),
+  })
+    .then((r) => r.ok)
+    .catch(() => false);
+  return reponseOk(confirmation);
 }

@@ -423,7 +423,7 @@ export const nl = {
       {
         titre: 'Waarom',
         textes: [
-          'Alleen om uw aanvraag te beantwoorden: u contacteren, het bezoek regelen en u de offerte sturen. We verkopen of geven uw gegevens niet door en sturen u geen reclame.',
+          'Alleen om uw aanvraag te beantwoorden: u per e-mail de ontvangst bevestigen als u uw adres opgeeft, u contacteren, het bezoek regelen en u de offerte sturen. We verkopen of geven uw gegevens niet door en sturen u geen reclame.',
           'Rechtsgrond: uw offerteaanvraag (precontractuele maatregelen) en uw toestemming, gegeven door het vakje in het formulier aan te vinken.',
         ],
       },
@@ -762,6 +762,7 @@ export const nl = {
     merciTitre: 'Verzonden!',
     merciTexte:
       'Uw aanvraag is goed aangekomen. Om sneller te gaan, kunt u dezelfde aanvraag via WhatsApp sturen, met enkele foto’s van uw gevel: ze is al geschreven.',
+    merciConfirmation: 'Een bevestiging is per e-mail verstuurd naar',
     merciWhatsApp: 'Via WhatsApp sturen',
     recommencer: 'Nieuwe aanvraag',
     suiteIntro: 'Goedendag, hierbij mijn offerteaanvraag via de website:',

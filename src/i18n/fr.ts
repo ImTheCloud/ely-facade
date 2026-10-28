@@ -425,7 +425,7 @@ export const fr = {
       {
         titre: 'Pourquoi',
         textes: [
-          'Uniquement pour répondre à votre demande\u00a0: vous contacter, organiser la visite et vous envoyer le devis. Nous ne vendons ni ne cédons vos données, et nous ne vous envoyons pas de publicité.',
+          'Uniquement pour répondre à votre demande\u00a0: vous confirmer la réception de votre demande par email si vous donnez votre adresse, vous contacter, organiser la visite et vous envoyer le devis. Nous ne vendons ni ne cédons vos données, et nous ne vous envoyons pas de publicité.',
           'Base légale\u00a0: votre demande de devis (mesures précontractuelles) et votre accord, donné en cochant la case du formulaire.',
         ],
       },
@@ -765,6 +765,7 @@ export const fr = {
     merciTitre: 'C’est envoyé\u00a0!',
     merciTexte:
       'Votre demande nous est bien parvenue. Pour aller plus vite, vous pouvez nous envoyer la même demande sur WhatsApp, avec quelques photos de votre façade\u00a0: elle est déjà écrite.',
+    merciConfirmation: 'Un email de confirmation vous a été envoyé à',
     merciWhatsApp: 'Envoyer sur WhatsApp',
     recommencer: 'Nouvelle demande',
     suiteIntro: 'Bonjour, voici ma demande de devis envoyée sur le site\u00a0:',
