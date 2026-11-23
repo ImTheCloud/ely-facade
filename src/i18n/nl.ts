@@ -226,7 +226,6 @@ export const nl = {
     'wilsele/angle-isolation': 'Grijze isolatieplaten op de hoek en rond de afgedekte ramen',
     'wilsele/baie-sous-enduit': 'Grondlaag op de puntgevel en groene beschermfolie op het glas',
     'wilsele/baie-crepi': 'Licht pleisterwerk rond de glaspartij die de dakhelling volgt',
-    'wilsele/maison-terminee': 'Overzicht van de afgewerkte voorgevel in Wilsele',
     'accueil/hero-namur': 'Gebouw met drie verdiepingen in Namen, afgewerkte witte en grijze gevel, van bovenaf gezien',
     'namur-immeuble-3-etages/pendant-face': 'Gebouw met drie verdiepingen in de steiger, van voren gezien, in Namen',
     'namur-immeuble-3-etages/pendant-rue': 'Hetzelfde gebouw in de steiger, met een werfcontainer ervoor, in Namen',

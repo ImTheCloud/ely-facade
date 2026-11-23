@@ -71,7 +71,7 @@ export const CHANTIERS: Chantier[] = [
     cle: 'wilsele',
     commune: 'wilsele',
     slug: SLUGS_CHANTIERS.wilsele,
-    couverture: 'wilsele/maison-terminee',
+    couverture: 'wilsele/baie-crepi',
     photos: ['wilsele/baie-brique', 'wilsele/angle-isolation', 'wilsele/baie-sous-enduit', 'wilsele/baie-crepi'],
     paires: [
       { avant: 'wilsele/pignon-reconstitue', apres: 'wilsele/baie-crepi', ratio: 4 / 3, avantRetouche: true },

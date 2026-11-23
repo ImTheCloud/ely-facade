@@ -227,7 +227,6 @@ export const fr = {
     'wilsele/angle-isolation': 'Panneaux isolants gris posés autour de l’angle et des baies protégées',
     'wilsele/baie-sous-enduit': 'Sous-enduit du pignon et film de protection vert sur les vitrages',
     'wilsele/baie-crepi': 'Crépi clair autour du vitrage qui suit la pente du pignon',
-    'wilsele/maison-terminee': 'Vue d’ensemble de la façade d’entrée en crépi clair à Wilsele',
     'accueil/hero-namur': 'Immeuble de trois étages à Namur, façade blanche et grise terminée, vu d’en haut',
     'namur-immeuble-3-etages/pendant-face': 'Immeuble de trois étages sous échafaudage, vu de face, à Namur',
     'namur-immeuble-3-etages/pendant-rue': 'Le même immeuble sous échafaudage, une benne de chantier devant, à Namur',
