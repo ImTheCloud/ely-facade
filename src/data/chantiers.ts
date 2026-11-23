@@ -21,9 +21,9 @@ export const heroPhoto = {
   mobile: photo('accueil/hero-namur-mobile'),
 } as const;
 
-export type Commune = 'mons' | 'namur' | 'halle' | 'charleroi' | 'auderghem' | 'evere' | 'wilsele';
+export type Commune = 'mons' | 'namur' | 'halle' | 'charleroi' | 'auderghem' | 'evere';
 
-export type CleChantier = 'umons' | 'namur-immeuble' | 'namur-balcons' | 'halle' | 'charleroi' | 'charleroi-deux-couleurs' | 'auderghem' | 'evere' | 'halle-pignon-vitre' | 'wilsele';
+export type CleChantier = 'umons' | 'namur-immeuble' | 'namur-balcons' | 'halle' | 'charleroi' | 'charleroi-deux-couleurs' | 'auderghem' | 'evere' | 'halle-pignon-vitre';
 
 /**
  * Cadrage d'une photo dans un avant/après :
@@ -76,14 +76,6 @@ export const CHANTIERS: Chantier[] = [
     paires: [
       { avant: 'halle-pignon-vitre/pignon-reconstitue', apres: 'halle-pignon-vitre/baie-crepi', ratio: 4 / 3, avantRetouche: true },
     ],
-  },
-  {
-    cle: 'wilsele',
-    commune: 'wilsele',
-    slug: SLUGS_CHANTIERS.wilsele,
-    couverture: 'wilsele/jardin',
-    photos: ['wilsele/jardin', 'wilsele/baies', 'wilsele/terrasse', 'wilsele/entree', 'wilsele/garage'],
-    paires: [],
   },
   {
     cle: 'namur-immeuble',

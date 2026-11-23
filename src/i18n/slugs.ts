@@ -8,7 +8,6 @@ import type { Langue } from '.';
 
 /** Seuls les chantiers qui ont plusieurs photos ont une page. */
 export const SLUGS_CHANTIERS = {
-  wilsele: { fr: 'louvain-wilsele-maison-cote-jardin', nl: 'leuven-wilsele-woning-aan-de-tuinzijde' },
   'halle-pignon-vitre': { fr: 'halle-pignon-vitre', nl: 'halle-woning-met-glaspartij' },
   umons: { fr: 'universite-de-mons', nl: 'universiteit-van-bergen' },
   'namur-immeuble': { fr: 'namur-immeuble-trois-etages', nl: 'namen-gebouw-drie-verdiepingen' },
