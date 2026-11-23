@@ -63,7 +63,7 @@ export const fr = {
     allerAuContenu: 'Aller au contenu',
   },
 
-  communes: { mons: 'Mons', namur: 'Namur', halle: 'Halle', charleroi: 'Charleroi', auderghem: 'Auderghem', evere: 'Evere' },
+  communes: { wilsele: 'Louvain-Wilsele', mons: 'Mons', namur: 'Namur', halle: 'Halle', charleroi: 'Charleroi', auderghem: 'Auderghem', evere: 'Evere' },
 
   /** Les métiers de la façade, de A à Z. */
   metiers: {
@@ -168,6 +168,11 @@ export const fr = {
 
   /** Les chantiers : faits visibles sur les photos ou confirmés par Elisei, rien d'autre. */
   chantiers: {
+    wilsele: {
+      titre: 'Maison côté jardin',
+      accroche: 'Les façades sous échafaudage',
+      texte: 'À Wilsele, de grandes baies vitrées ouvrent la maison sur le jardin. Les photos montrent les panneaux gris autour des baies, dans le renfoncement de l’entrée et au-dessus des deux portes de garage.',
+    },
     'halle-pignon-vitre': {
       titre: 'Maison au pignon vitré',
       accroche: 'De la brique apparente au crépi clair',
@@ -222,6 +227,11 @@ export const fr = {
 
   /** Le texte alternatif de chaque photo (la commune, jamais l'adresse). */
   photos: {
+    'wilsele/jardin': 'La maison sous échafaudage vue depuis le jardin',
+    'wilsele/baies': 'La rangée de baies vitrées entourées de panneaux gris',
+    'wilsele/terrasse': 'Deux façades se rejoignent à angle droit sur la terrasse',
+    'wilsele/entree': 'L’échafaudage encadre l’entrée en retrait',
+    'wilsele/garage': 'Les deux portes de garage sous la façade habillée de panneaux gris',
     'halle-pignon-vitre/pignon-reconstitue': 'Reconstitution de la vue du pignon en briques, avec les personnes et l’échafaudage retirés par retouche',
     'halle-pignon-vitre/baie-brique': 'Grande baie sous le pignon encore en briques',
     'halle-pignon-vitre/angle-isolation': 'Panneaux isolants gris posés autour de l’angle et des baies protégées',

@@ -62,7 +62,7 @@ export const nl = {
     allerAuContenu: 'Naar de inhoud',
   },
 
-  communes: { mons: 'Bergen', namur: 'Namen', halle: 'Halle', charleroi: 'Charleroi', auderghem: 'Oudergem', evere: 'Evere' },
+  communes: { wilsele: 'Leuven-Wilsele', mons: 'Bergen', namur: 'Namen', halle: 'Halle', charleroi: 'Charleroi', auderghem: 'Oudergem', evere: 'Evere' },
 
   /** De vakgebieden van de gevel, van A tot Z. */
   metiers: {
@@ -167,6 +167,11 @@ export const nl = {
 
   /** De werven: feiten die op de foto's te zien zijn of door Elisei bevestigd, niets anders. */
   chantiers: {
+    wilsele: {
+      titre: 'Woning aan de tuinzijde',
+      accroche: 'De gevels in de steigers',
+      texte: 'In Wilsele kijken grote ramen uit op de tuin. Op de foto’s zie je de grijze platen rond de ramen, bij de terugliggende ingang en boven de twee garagepoorten.',
+    },
     'halle-pignon-vitre': {
       titre: 'Woning met glaspartij in de puntgevel',
       accroche: 'Van baksteen tot licht gevelpleisterwerk',
@@ -221,6 +226,11 @@ export const nl = {
 
   /** De alternatieve tekst van elke foto (de gemeente, nooit het adres). */
   photos: {
+    'wilsele/jardin': 'De woning in de steigers gezien vanuit de tuin',
+    'wilsele/baies': 'De rij grote ramen met grijze platen rondom',
+    'wilsele/terrasse': 'Twee gevels komen op het terras in een rechte hoek samen',
+    'wilsele/entree': 'Steigers rond de terugliggende ingang',
+    'wilsele/garage': 'Twee garagepoorten onder de gevel met grijze platen',
     'halle-pignon-vitre/pignon-reconstitue': 'Reconstructie van de bakstenen puntgevel waarbij de personen en de steiger digitaal zijn verwijderd',
     'halle-pignon-vitre/baie-brique': 'Grote glaspartij in de nog ongepleisterde puntgevel',
     'halle-pignon-vitre/angle-isolation': 'Grijze isolatieplaten op de hoek en rond de afgedekte ramen',
