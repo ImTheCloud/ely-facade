@@ -22,7 +22,7 @@ const { langue, cle } = Astro.props;
 const textes = t(langue);
 const r = textes.realisationsPage;
 const c = trouver(cle);
-const paireIntro = cle === 'wilsele' ? c.paires[0] : undefined;
+const paireIntro = cle === 'halle-pignon-vitre' ? c.paires[0] : undefined;
 const autresPaires = paireIntro ? c.paires.slice(1) : c.paires;
 const fiche = textes.chantiers[cle];
 const commune = textes.communes[c.commune];
@@ -34,9 +34,9 @@ const groupesUmons: Record<string, number> = { 'mons-umons-cour': 0, 'mons-umons
 const groupes =
   cle === 'umons'
     ? [0, 1, 2].map((n) => ({ titre: textes.chantiers.umons.batiments[n], photos: c.photos.filter((p) => groupesUmons[p.split('/')[0]] === n) }))
-    : cle === 'wilsele'
+    : cle === 'halle-pignon-vitre'
       ? c.photos.map((photo, i) => ({
-          titre: textes.chantiers.wilsele.etapes[i], photos: [photo],
+          titre: textes.chantiers['halle-pignon-vitre'].etapes[i], photos: [photo],
         }))
       : [{ titre: '', photos: c.photos }];
 
@@ -98,10 +98,10 @@ let index = 0;
     )
   }
 
-  <section class:list={['section galerie', { parcours: cle === 'wilsele' }]} data-galerie>
+  <section class:list={['section galerie', { parcours: cle === 'halle-pignon-vitre' }]} data-galerie>
     <div class="wrap">
       <div class="tete">
-        <h2>{cle === 'wilsele' ? textes.chantiers.wilsele.galerie : r.photos}</h2>
+        <h2>{cle === 'halle-pignon-vitre' ? textes.chantiers['halle-pignon-vitre'].galerie : r.photos}</h2>
       </div>
       {
         groupes.map((groupe) => (
@@ -123,8 +123,8 @@ let index = 0;
                       <Image
                         src={photo(chemin)}
                         alt={textes.photos[chemin]}
-                        widths={cle === 'wilsele' ? [480, 800, 1280, 1600] : [400, 640, 900]}
-                        sizes={cle === 'wilsele' ? '(min-width: 900px) 800px, 90vw' : '(min-width: 1100px) 420px, (min-width: 640px) 50vw, 100vw'}
+                        widths={cle === 'halle-pignon-vitre' ? [480, 800, 1280, 1600] : [400, 640, 900]}
+                        sizes={cle === 'halle-pignon-vitre' ? '(min-width: 900px) 800px, 90vw' : '(min-width: 1100px) 420px, (min-width: 640px) 50vw, 100vw'}
                         format="webp"
                         quality={74}
                       />

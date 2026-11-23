@@ -63,7 +63,7 @@ export const fr = {
     allerAuContenu: 'Aller au contenu',
   },
 
-  communes: { wilsele: 'Louvain-Wilsele', mons: 'Mons', namur: 'Namur', halle: 'Halle', charleroi: 'Charleroi', auderghem: 'Auderghem', evere: 'Evere' },
+  communes: { mons: 'Mons', namur: 'Namur', halle: 'Halle', charleroi: 'Charleroi', auderghem: 'Auderghem', evere: 'Evere' },
 
   /** Les métiers de la façade, de A à Z. */
   metiers: {
@@ -168,10 +168,10 @@ export const fr = {
 
   /** Les chantiers : faits visibles sur les photos ou confirmés par Elisei, rien d'autre. */
   chantiers: {
-    wilsele: {
+    'halle-pignon-vitre': {
       titre: 'Maison au pignon vitré',
       accroche: 'De la brique apparente au crépi clair',
-      texte: 'À Wilsele, la grande baie vitrée épouse la pointe du pignon. Les quatre étapes du chantier montrent comment cette façade en briques a reçu son crépi clair.',
+      texte: 'À Halle, la grande baie vitrée épouse la pointe du pignon. Les quatre étapes du chantier montrent comment cette façade en briques a reçu son crépi clair.',
       galerie: 'Les travaux en quatre étapes',
       etapes: ['La brique apparente', 'La pose des panneaux isolants', 'Le sous-enduit', 'Les façades en crépi clair'],
     },
@@ -222,11 +222,11 @@ export const fr = {
 
   /** Le texte alternatif de chaque photo (la commune, jamais l'adresse). */
   photos: {
-    'wilsele/pignon-reconstitue': 'Reconstitution de la vue du pignon en briques, avec les personnes et l’échafaudage retirés par retouche',
-    'wilsele/baie-brique': 'Grande baie sous le pignon encore en briques',
-    'wilsele/angle-isolation': 'Panneaux isolants gris posés autour de l’angle et des baies protégées',
-    'wilsele/baie-sous-enduit': 'Sous-enduit du pignon et film de protection vert sur les vitrages',
-    'wilsele/baie-crepi': 'Crépi clair autour du vitrage qui suit la pente du pignon',
+    'halle-pignon-vitre/pignon-reconstitue': 'Reconstitution de la vue du pignon en briques, avec les personnes et l’échafaudage retirés par retouche',
+    'halle-pignon-vitre/baie-brique': 'Grande baie sous le pignon encore en briques',
+    'halle-pignon-vitre/angle-isolation': 'Panneaux isolants gris posés autour de l’angle et des baies protégées',
+    'halle-pignon-vitre/baie-sous-enduit': 'Sous-enduit du pignon et film de protection vert sur les vitrages',
+    'halle-pignon-vitre/baie-crepi': 'Crépi clair autour du vitrage qui suit la pente du pignon',
     'accueil/hero-namur': 'Immeuble de trois étages à Namur, façade blanche et grise terminée, vu d’en haut',
     'namur-immeuble-3-etages/pendant-face': 'Immeuble de trois étages sous échafaudage, vu de face, à Namur',
     'namur-immeuble-3-etages/pendant-rue': 'Le même immeuble sous échafaudage, une benne de chantier devant, à Namur',

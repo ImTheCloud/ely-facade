@@ -62,7 +62,7 @@ export const nl = {
     allerAuContenu: 'Naar de inhoud',
   },
 
-  communes: { wilsele: 'Leuven-Wilsele', mons: 'Bergen', namur: 'Namen', halle: 'Halle', charleroi: 'Charleroi', auderghem: 'Oudergem', evere: 'Evere' },
+  communes: { mons: 'Bergen', namur: 'Namen', halle: 'Halle', charleroi: 'Charleroi', auderghem: 'Oudergem', evere: 'Evere' },
 
   /** De vakgebieden van de gevel, van A tot Z. */
   metiers: {
@@ -167,10 +167,10 @@ export const nl = {
 
   /** De werven: feiten die op de foto's te zien zijn of door Elisei bevestigd, niets anders. */
   chantiers: {
-    wilsele: {
+    'halle-pignon-vitre': {
       titre: 'Woning met glaspartij in de puntgevel',
       accroche: 'Van baksteen tot licht gevelpleisterwerk',
-      texte: 'In Wilsele volgt de grote glaspartij de punt van het dak. Volg in vier stappen hoe de bakstenen gevel zijn lichte pleisterlaag kreeg.',
+      texte: 'In Halle volgt de grote glaspartij de punt van het dak. Volg in vier stappen hoe de bakstenen gevel zijn lichte pleisterlaag kreeg.',
       galerie: 'De werken in vier stappen',
       etapes: ['Het zichtbare metselwerk', 'De plaatsing van de isolatieplaten', 'De grondlaag', 'De afgewerkte gevels'],
     },
@@ -221,11 +221,11 @@ export const nl = {
 
   /** De alternatieve tekst van elke foto (de gemeente, nooit het adres). */
   photos: {
-    'wilsele/pignon-reconstitue': 'Reconstructie van de bakstenen puntgevel waarbij de personen en de steiger digitaal zijn verwijderd',
-    'wilsele/baie-brique': 'Grote glaspartij in de nog ongepleisterde puntgevel',
-    'wilsele/angle-isolation': 'Grijze isolatieplaten op de hoek en rond de afgedekte ramen',
-    'wilsele/baie-sous-enduit': 'Grondlaag op de puntgevel en groene beschermfolie op het glas',
-    'wilsele/baie-crepi': 'Licht pleisterwerk rond de glaspartij die de dakhelling volgt',
+    'halle-pignon-vitre/pignon-reconstitue': 'Reconstructie van de bakstenen puntgevel waarbij de personen en de steiger digitaal zijn verwijderd',
+    'halle-pignon-vitre/baie-brique': 'Grote glaspartij in de nog ongepleisterde puntgevel',
+    'halle-pignon-vitre/angle-isolation': 'Grijze isolatieplaten op de hoek en rond de afgedekte ramen',
+    'halle-pignon-vitre/baie-sous-enduit': 'Grondlaag op de puntgevel en groene beschermfolie op het glas',
+    'halle-pignon-vitre/baie-crepi': 'Licht pleisterwerk rond de glaspartij die de dakhelling volgt',
     'accueil/hero-namur': 'Gebouw met drie verdiepingen in Namen, afgewerkte witte en grijze gevel, van bovenaf gezien',
     'namur-immeuble-3-etages/pendant-face': 'Gebouw met drie verdiepingen in de steiger, van voren gezien, in Namen',
     'namur-immeuble-3-etages/pendant-rue': 'Hetzelfde gebouw in de steiger, met een werfcontainer ervoor, in Namen',

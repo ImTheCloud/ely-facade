@@ -21,9 +21,9 @@ export const heroPhoto = {
   mobile: photo('accueil/hero-namur-mobile'),
 } as const;
 
-export type Commune = 'mons' | 'namur' | 'halle' | 'charleroi' | 'auderghem' | 'evere' | 'wilsele';
+export type Commune = 'mons' | 'namur' | 'halle' | 'charleroi' | 'auderghem' | 'evere';
 
-export type CleChantier = 'umons' | 'namur-immeuble' | 'namur-balcons' | 'halle' | 'charleroi' | 'charleroi-deux-couleurs' | 'auderghem' | 'evere' | 'wilsele';
+export type CleChantier = 'umons' | 'namur-immeuble' | 'namur-balcons' | 'halle' | 'charleroi' | 'charleroi-deux-couleurs' | 'auderghem' | 'evere' | 'halle-pignon-vitre';
 
 /**
  * Cadrage d'une photo dans un avant/après :
@@ -68,13 +68,13 @@ export interface Chantier {
 /** L'ordre des réalisations (liste et accueil) : les vues horizontales précèdent les comparaisons verticales. */
 export const CHANTIERS: Chantier[] = [
   {
-    cle: 'wilsele',
-    commune: 'wilsele',
-    slug: SLUGS_CHANTIERS.wilsele,
-    couverture: 'wilsele/baie-crepi',
-    photos: ['wilsele/baie-brique', 'wilsele/angle-isolation', 'wilsele/baie-sous-enduit', 'wilsele/baie-crepi'],
+    cle: 'halle-pignon-vitre',
+    commune: 'halle',
+    slug: SLUGS_CHANTIERS['halle-pignon-vitre'],
+    couverture: 'halle-pignon-vitre/baie-crepi',
+    photos: ['halle-pignon-vitre/baie-brique', 'halle-pignon-vitre/angle-isolation', 'halle-pignon-vitre/baie-sous-enduit', 'halle-pignon-vitre/baie-crepi'],
     paires: [
-      { avant: 'wilsele/pignon-reconstitue', apres: 'wilsele/baie-crepi', ratio: 4 / 3, avantRetouche: true },
+      { avant: 'halle-pignon-vitre/pignon-reconstitue', apres: 'halle-pignon-vitre/baie-crepi', ratio: 4 / 3, avantRetouche: true },
     ],
   },
   {

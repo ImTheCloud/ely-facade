@@ -1,3 +1,8 @@
 # Lien court pour les avis : elyfacade.be/avis ouvre la page « écrire un avis » de la fiche Google (même lien que le QR code, src/data/google.ts).
 /avis https://search.google.com/local/writereview?placeid=ChIJPwMJyhrJw0cR-oC1k27c6Hg 302
 /avis/ https://search.google.com/local/writereview?placeid=ChIJPwMJyhrJw0cR-oC1k27c6Hg 302
+
+/realisations/louvain-wilsele /realisations/halle-pignon-vitre/ 301
+/realisations/louvain-wilsele/ /realisations/halle-pignon-vitre/ 301
+/nl/realisaties/leuven-wilsele /nl/realisaties/halle-woning-met-glaspartij/ 301
+/nl/realisaties/leuven-wilsele/ /nl/realisaties/halle-woning-met-glaspartij/ 301

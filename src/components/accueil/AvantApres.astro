@@ -1,6 +1,6 @@
 ---
 /**
- * Avant / après : un grand curseur pour le pignon vitré de Wilsele, puis un curseur par chantier (Mons, Charleroi, …), la commune en légende.
+ * Avant / après : un grand curseur pour le pignon vitré de Halle, puis un curseur par chantier (Mons, Charleroi, …), la commune en légende.
  * Chaque photo est cadrée pour que les deux façades se superposent au mieux.
  */
 import Comparateur from '../Comparateur.astro';
@@ -16,7 +16,7 @@ const { langue } = Astro.props;
 const textes = t(langue);
 const section = textes.accueil.avantApres;
 
-const vedette = chantier('wilsele');
+const vedette = chantier('halle-pignon-vitre');
 // Deux par ligne, de même forme : les cadres horizontaux d'abord, puis les deux immeubles et maisons dont une photo est verticale (cadre 4/5).
 const autres = (['namur-immeuble', 'umons', 'charleroi', 'charleroi-deux-couleurs', 'auderghem', 'namur-balcons', 'halle'] as const).map((cle) => {
   const paire = chantier(cle).paires[0];
