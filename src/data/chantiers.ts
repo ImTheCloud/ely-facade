@@ -44,6 +44,7 @@ export interface Paire {
   apres: string;
   /** Rapport largeur / hauteur du cadre du curseur. */
   ratio: number;
+  avantRetouche?: boolean;
   cadreAvant?: Cadrage;
   cadreApres?: Cadrage;
 }
@@ -64,13 +65,6 @@ export interface Chantier {
   paires: Paire[];
 }
 
-export const ETAPES_WILSELE = [
-  ['wilsele/entree-brique', 'wilsele/baie-brique'],
-  ['wilsele/angle-isolation', 'wilsele/cote-panneaux'],
-  ['wilsele/entree-sous-enduit', 'wilsele/baie-sous-enduit'],
-  ['wilsele/entree-crepi', 'wilsele/cote-crepi', 'wilsele/baie-crepi'],
-];
-
 /** L'ordre des réalisations (liste et accueil) : les vues horizontales précèdent les comparaisons verticales. */
 export const CHANTIERS: Chantier[] = [
   {
@@ -78,10 +72,10 @@ export const CHANTIERS: Chantier[] = [
     commune: 'wilsele',
     slug: SLUGS_CHANTIERS.wilsele,
     couverture: 'wilsele/maison-terminee',
-    photos: ETAPES_WILSELE.flat(),
+    photos: ['wilsele/baie-brique', 'wilsele/angle-isolation', 'wilsele/baie-sous-enduit', 'wilsele/baie-crepi'],
     paires: [
+      { avant: 'wilsele/pignon-reconstitue', apres: 'wilsele/baie-crepi', ratio: 4 / 3, avantRetouche: true },
       { avant: 'wilsele/entree-brique', apres: 'wilsele/entree-crepi', ratio: 825 / 510 },
-      { avant: 'wilsele/baie-brique', apres: 'wilsele/baie-crepi', ratio: 752 / 570 },
       { avant: 'wilsele/cote-panneaux', apres: 'wilsele/cote-crepi', ratio: 415 / 311 },
     ],
   },

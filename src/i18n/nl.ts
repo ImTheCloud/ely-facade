@@ -221,11 +221,11 @@ export const nl = {
 
   /** De alternatieve tekst van elke foto (de gemeente, nooit het adres). */
   photos: {
+    'wilsele/pignon-reconstitue': 'Reconstructie van de bakstenen puntgevel waarbij de personen en de steiger digitaal zijn verwijderd',
     'wilsele/entree-brique': 'Metselwerk rond de voordeur achter de steiger',
     'wilsele/baie-brique': 'Grote glaspartij in de nog ongepleisterde puntgevel',
     'wilsele/angle-isolation': 'Grijze isolatieplaten op de hoek en rond de afgedekte ramen',
     'wilsele/cote-panneaux': 'Grijze platen tussen de drie hoge ramen van de zijgevel',
-    'wilsele/entree-sous-enduit': 'Grondlaag rond de voordeur en de vijf afgedekte ramen',
     'wilsele/baie-sous-enduit': 'Grondlaag op de puntgevel en groene beschermfolie op het glas',
     'wilsele/entree-crepi': 'Licht pleisterwerk rond de houten voordeur en de vijf ramen',
     'wilsele/cote-crepi': 'Drie hoge ramen met zwarte profielen in de lichte zijgevel',
@@ -549,6 +549,7 @@ export const nl = {
     },
 
     avantApres: {
+      avantRetouche: 'Voor · AI-bewerking',
       titre: 'Het verschil is zichtbaar.',
       texte: 'Schuif met de cursor: dezelfde gevel tijdens de werken en daarna afgewerkt.',
       avant: 'Tijdens de werken',

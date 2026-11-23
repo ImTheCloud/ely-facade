@@ -222,11 +222,11 @@ export const fr = {
 
   /** Le texte alternatif de chaque photo (la commune, jamais l'adresse). */
   photos: {
+    'wilsele/pignon-reconstitue': 'Reconstitution de la vue du pignon en briques, avec les personnes et l’échafaudage retirés par retouche',
     'wilsele/entree-brique': 'Briques apparentes autour de la porte d’entrée, derrière l’échafaudage',
     'wilsele/baie-brique': 'Grande baie sous le pignon encore en briques',
     'wilsele/angle-isolation': 'Panneaux isolants gris posés autour de l’angle et des baies protégées',
     'wilsele/cote-panneaux': 'Panneaux gris entre les trois fenêtres hautes de la façade latérale',
-    'wilsele/entree-sous-enduit': 'Sous-enduit autour de la porte et des cinq fenêtres protégées',
     'wilsele/baie-sous-enduit': 'Sous-enduit du pignon et film de protection vert sur les vitrages',
     'wilsele/entree-crepi': 'Crépi clair autour de la porte en bois et des cinq fenêtres',
     'wilsele/cote-crepi': 'Trois baies verticales aux cadres noirs dans la façade claire',
@@ -552,6 +552,7 @@ export const fr = {
     },
 
     avantApres: {
+      avantRetouche: 'Avant · retouche IA',
       titre: 'La différence se voit.',
       texte: 'Faites glisser le curseur\u00a0: la même façade pendant les travaux, puis une fois terminée.',
       avant: 'Pendant les travaux',

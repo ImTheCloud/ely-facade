@@ -41,7 +41,7 @@ const image = {
     <Image src={photo(paire.apres)} alt={textes.photos[paire.apres]} {...image} />
   </div>
 
-  <span class="comparateur__etiquette comparateur__etiquette--avant" aria-hidden="true">{libelles.avant}</span>
+  <span class="comparateur__etiquette comparateur__etiquette--avant" aria-hidden="true">{paire.avantRetouche ? libelles.avantRetouche : libelles.avant}</span>
   <span class="comparateur__etiquette comparateur__etiquette--apres" aria-hidden="true">{libelles.apres}</span>
 
   <div class="comparateur__poignee" aria-hidden="true">
