@@ -21,9 +21,9 @@ export const heroPhoto = {
   mobile: photo('accueil/hero-namur-mobile'),
 } as const;
 
-export type Commune = 'mons' | 'namur' | 'halle' | 'charleroi' | 'auderghem' | 'evere';
+export type Commune = 'mons' | 'namur' | 'halle' | 'charleroi' | 'auderghem' | 'evere' | 'wilsele';
 
-export type CleChantier = 'umons' | 'namur-immeuble' | 'namur-balcons' | 'halle' | 'charleroi' | 'charleroi-deux-couleurs' | 'auderghem' | 'evere';
+export type CleChantier = 'umons' | 'namur-immeuble' | 'namur-balcons' | 'halle' | 'charleroi' | 'charleroi-deux-couleurs' | 'auderghem' | 'evere' | 'wilsele';
 
 /**
  * Cadrage d'une photo dans un avant/après :
@@ -64,8 +64,27 @@ export interface Chantier {
   paires: Paire[];
 }
 
-/** L'ordre des réalisations (liste et accueil) : Namur d'abord, puis Mons, puis Charleroi ; les deux pairs à photo verticale (cadre 4/5) côte à côte. */
+export const ETAPES_WILSELE = [
+  ['wilsele/entree-brique', 'wilsele/baie-brique'],
+  ['wilsele/angle-isolation', 'wilsele/cote-panneaux'],
+  ['wilsele/entree-sous-enduit', 'wilsele/baie-sous-enduit'],
+  ['wilsele/entree-crepi', 'wilsele/cote-crepi', 'wilsele/baie-crepi'],
+];
+
+/** L'ordre des réalisations (liste et accueil) : les vues horizontales précèdent les comparaisons verticales. */
 export const CHANTIERS: Chantier[] = [
+  {
+    cle: 'wilsele',
+    commune: 'wilsele',
+    slug: SLUGS_CHANTIERS.wilsele,
+    couverture: 'wilsele/maison-terminee',
+    photos: ETAPES_WILSELE.flat(),
+    paires: [
+      { avant: 'wilsele/entree-brique', apres: 'wilsele/entree-crepi', ratio: 825 / 510 },
+      { avant: 'wilsele/baie-brique', apres: 'wilsele/baie-crepi', ratio: 752 / 570 },
+      { avant: 'wilsele/cote-panneaux', apres: 'wilsele/cote-crepi', ratio: 415 / 311 },
+    ],
+  },
   {
     cle: 'namur-immeuble',
     commune: 'namur',

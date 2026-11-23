@@ -9,7 +9,7 @@ import Comparateur from '../Comparateur.astro';
 import Icon from '../Icon.astro';
 import IntroPage from '../IntroPage.astro';
 import BaseLayout from '~/layouts/BaseLayout.astro';
-import { CHANTIERS, chantier as trouver, lienChantier, photo } from '~/data/chantiers';
+import { CHANTIERS, ETAPES_WILSELE, chantier as trouver, lienChantier, photo } from '~/data/chantiers';
 import { chemin, t, type Langue } from '~/i18n';
 import type { CleChantierAvecPage } from '~/i18n/slugs';
 
@@ -32,7 +32,11 @@ const groupesUmons: Record<string, number> = { 'mons-umons-cour': 0, 'mons-umons
 const groupes =
   cle === 'umons'
     ? [0, 1, 2].map((n) => ({ titre: textes.chantiers.umons.batiments[n], photos: c.photos.filter((p) => groupesUmons[p.split('/')[0]] === n) }))
-    : [{ titre: '', photos: c.photos }];
+    : cle === 'wilsele'
+      ? ETAPES_WILSELE.map((photos, i) => ({
+          titre: textes.chantiers.wilsele.etapes[i], photos,
+        }))
+      : [{ titre: '', photos: c.photos }];
 
 const grandes = Object.fromEntries(
   await Promise.all(
@@ -91,7 +95,7 @@ let index = 0;
   <section class="section galerie" data-galerie>
     <div class="wrap">
       <div class="tete">
-        <h2>{r.photos}</h2>
+        <h2>{cle === 'wilsele' ? textes.chantiers.wilsele.galerie : r.photos}</h2>
       </div>
       {
         groupes.map((groupe) => (

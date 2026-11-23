@@ -8,6 +8,7 @@ import type { Langue } from '.';
 
 /** Seuls les chantiers qui ont plusieurs photos ont une page. */
 export const SLUGS_CHANTIERS = {
+  wilsele: { fr: 'louvain-wilsele', nl: 'leuven-wilsele' },
   umons: { fr: 'universite-de-mons', nl: 'universiteit-van-bergen' },
   'namur-immeuble': { fr: 'namur-immeuble-trois-etages', nl: 'namen-gebouw-drie-verdiepingen' },
   'namur-balcons': { fr: 'namur-immeuble-a-balcons', nl: 'namen-gebouw-met-balkons' },

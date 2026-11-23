@@ -62,7 +62,7 @@ export const nl = {
     allerAuContenu: 'Naar de inhoud',
   },
 
-  communes: { mons: 'Bergen', namur: 'Namen', halle: 'Halle', charleroi: 'Charleroi', auderghem: 'Oudergem', evere: 'Evere' },
+  communes: { wilsele: 'Leuven-Wilsele', mons: 'Bergen', namur: 'Namen', halle: 'Halle', charleroi: 'Charleroi', auderghem: 'Oudergem', evere: 'Evere' },
 
   /** De vakgebieden van de gevel, van A tot Z. */
   metiers: {
@@ -167,6 +167,13 @@ export const nl = {
 
   /** De werven: feiten die op de foto's te zien zijn of door Elisei bevestigd, niets anders. */
   chantiers: {
+    wilsele: {
+      titre: 'Woning met glaspartij in de puntgevel',
+      accroche: 'Dezelfde woning vanuit drie hoeken',
+      texte: 'In Wilsele volgt de grote glaspartij de punt van het dak. Bekijk hoe de drie gevels veranderden, van zichtbaar metselwerk tot licht gevelpleisterwerk.',
+      galerie: 'De werken in vier stappen',
+      etapes: ['Het zichtbare metselwerk', 'De plaatsing van de isolatieplaten', 'De grondlaag', 'De afgewerkte gevels'],
+    },
     umons: {
       titre: 'Universiteit van Bergen',
       accroche: 'Gevels van gebouwen van de Universiteit van Bergen (UMONS)',
@@ -214,6 +221,16 @@ export const nl = {
 
   /** De alternatieve tekst van elke foto (de gemeente, nooit het adres). */
   photos: {
+    'wilsele/entree-brique': 'Metselwerk rond de voordeur achter de steiger',
+    'wilsele/baie-brique': 'Grote glaspartij in de nog ongepleisterde puntgevel',
+    'wilsele/angle-isolation': 'Grijze isolatieplaten op de hoek en rond de afgedekte ramen',
+    'wilsele/cote-panneaux': 'Grijze platen tussen de drie hoge ramen van de zijgevel',
+    'wilsele/entree-sous-enduit': 'Grondlaag rond de voordeur en de vijf afgedekte ramen',
+    'wilsele/baie-sous-enduit': 'Grondlaag op de puntgevel en groene beschermfolie op het glas',
+    'wilsele/entree-crepi': 'Licht pleisterwerk rond de houten voordeur en de vijf ramen',
+    'wilsele/cote-crepi': 'Drie hoge ramen met zwarte profielen in de lichte zijgevel',
+    'wilsele/baie-crepi': 'Licht pleisterwerk rond de glaspartij die de dakhelling volgt',
+    'wilsele/maison-terminee': 'Overzicht van de afgewerkte voorgevel in Wilsele',
     'accueil/hero-namur': 'Gebouw met drie verdiepingen in Namen, afgewerkte witte en grijze gevel, van bovenaf gezien',
     'namur-immeuble-3-etages/pendant-face': 'Gebouw met drie verdiepingen in de steiger, van voren gezien, in Namen',
     'namur-immeuble-3-etages/pendant-rue': 'Hetzelfde gebouw in de steiger, met een werfcontainer ervoor, in Namen',
