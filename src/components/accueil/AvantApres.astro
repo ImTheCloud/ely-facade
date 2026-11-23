@@ -1,6 +1,6 @@
 ---
 /**
- * Avant / après : un grand curseur pour l'immeuble de Namur (toujours en premier), puis un curseur par chantier (Mons, Charleroi, …), la commune en légende.
+ * Avant / après : un grand curseur pour le pignon vitré de Wilsele, puis un curseur par chantier (Mons, Charleroi, …), la commune en légende.
  * Chaque photo est cadrée pour que les deux façades se superposent au mieux.
  */
 import Comparateur from '../Comparateur.astro';
@@ -16,9 +16,9 @@ const { langue } = Astro.props;
 const textes = t(langue);
 const section = textes.accueil.avantApres;
 
-const vedette = { cle: 'namur-immeuble' as const, paire: { ...chantier('namur-immeuble').paires[0], ratio: 16 / 9 } };
+const vedette = chantier('wilsele');
 // Deux par ligne, de même forme : les cadres horizontaux d'abord, puis les deux immeubles et maisons dont une photo est verticale (cadre 4/5).
-const autres = (['wilsele', 'umons', 'charleroi', 'charleroi-deux-couleurs', 'auderghem', 'namur-balcons', 'halle'] as const).map((cle) => {
+const autres = (['namur-immeuble', 'umons', 'charleroi', 'charleroi-deux-couleurs', 'auderghem', 'namur-balcons', 'halle'] as const).map((cle) => {
   const paire = chantier(cle).paires[0];
   return { cle, paire: { ...paire, ratio: paire.ratio < 1 ? paire.ratio : 4 / 3 } };
 });
@@ -32,10 +32,10 @@ const autres = (['wilsele', 'umons', 'charleroi', 'charleroi-deux-couleurs', 'au
     </div>
 
     <figure class="cas cas--vedette">
-      <Comparateur langue={langue} paire={vedette.paire} sizes="(min-width: 1360px) 1280px, 100vw" />
+      <Comparateur langue={langue} paire={vedette.paires[0]} sizes="(min-width: 1360px) 1280px, 100vw" />
       <figcaption class="cas__legende">
         <span>
-          <strong>{textes.communes[chantier(vedette.cle).commune]}</strong> · {textes.chantiers[vedette.cle].titre}
+          <strong>{textes.communes[vedette.commune]}</strong> · {textes.chantiers[vedette.cle].titre}
         </span>
         <a href={lienChantier(vedette.cle, langue)}>{section.voir}<Icon nom="fleche" taille={16} /></a>
       </figcaption>

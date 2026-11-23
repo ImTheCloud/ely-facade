@@ -75,8 +75,6 @@ export const CHANTIERS: Chantier[] = [
     photos: ['wilsele/baie-brique', 'wilsele/angle-isolation', 'wilsele/baie-sous-enduit', 'wilsele/baie-crepi'],
     paires: [
       { avant: 'wilsele/pignon-reconstitue', apres: 'wilsele/baie-crepi', ratio: 4 / 3, avantRetouche: true },
-      { avant: 'wilsele/entree-brique', apres: 'wilsele/entree-crepi', ratio: 825 / 510 },
-      { avant: 'wilsele/cote-panneaux', apres: 'wilsele/cote-crepi', ratio: 415 / 311 },
     ],
   },
   {

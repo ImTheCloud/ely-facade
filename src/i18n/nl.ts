@@ -169,8 +169,8 @@ export const nl = {
   chantiers: {
     wilsele: {
       titre: 'Woning met glaspartij in de puntgevel',
-      accroche: 'Dezelfde woning vanuit drie hoeken',
-      texte: 'In Wilsele volgt de grote glaspartij de punt van het dak. Bekijk hoe de drie gevels veranderden, van zichtbaar metselwerk tot licht gevelpleisterwerk.',
+      accroche: 'Van baksteen tot licht gevelpleisterwerk',
+      texte: 'In Wilsele volgt de grote glaspartij de punt van het dak. Volg in vier stappen hoe de bakstenen gevel zijn lichte pleisterlaag kreeg.',
       galerie: 'De werken in vier stappen',
       etapes: ['Het zichtbare metselwerk', 'De plaatsing van de isolatieplaten', 'De grondlaag', 'De afgewerkte gevels'],
     },
@@ -222,13 +222,9 @@ export const nl = {
   /** De alternatieve tekst van elke foto (de gemeente, nooit het adres). */
   photos: {
     'wilsele/pignon-reconstitue': 'Reconstructie van de bakstenen puntgevel waarbij de personen en de steiger digitaal zijn verwijderd',
-    'wilsele/entree-brique': 'Metselwerk rond de voordeur achter de steiger',
     'wilsele/baie-brique': 'Grote glaspartij in de nog ongepleisterde puntgevel',
     'wilsele/angle-isolation': 'Grijze isolatieplaten op de hoek en rond de afgedekte ramen',
-    'wilsele/cote-panneaux': 'Grijze platen tussen de drie hoge ramen van de zijgevel',
     'wilsele/baie-sous-enduit': 'Grondlaag op de puntgevel en groene beschermfolie op het glas',
-    'wilsele/entree-crepi': 'Licht pleisterwerk rond de houten voordeur en de vijf ramen',
-    'wilsele/cote-crepi': 'Drie hoge ramen met zwarte profielen in de lichte zijgevel',
     'wilsele/baie-crepi': 'Licht pleisterwerk rond de glaspartij die de dakhelling volgt',
     'wilsele/maison-terminee': 'Overzicht van de afgewerkte voorgevel in Wilsele',
     'accueil/hero-namur': 'Gebouw met drie verdiepingen in Namen, afgewerkte witte en grijze gevel, van bovenaf gezien',
@@ -549,7 +545,7 @@ export const nl = {
     },
 
     avantApres: {
-      avantRetouche: 'Voor · AI-bewerking',
+      avantRetouche: 'Voor · reconstructie',
       titre: 'Het verschil is zichtbaar.',
       texte: 'Schuif met de cursor: dezelfde gevel tijdens de werken en daarna afgewerkt.',
       avant: 'Tijdens de werken',

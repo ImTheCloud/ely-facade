@@ -170,8 +170,8 @@ export const fr = {
   chantiers: {
     wilsele: {
       titre: 'Maison au pignon vitré',
-      accroche: 'La même maison sous trois angles',
-      texte: 'À Wilsele, la grande baie vitrée épouse la pointe du pignon. Suivez la transformation des trois façades, des briques apparentes au crépi clair.',
+      accroche: 'De la brique apparente au crépi clair',
+      texte: 'À Wilsele, la grande baie vitrée épouse la pointe du pignon. Les quatre étapes du chantier montrent comment cette façade en briques a reçu son crépi clair.',
       galerie: 'Les travaux en quatre étapes',
       etapes: ['La brique apparente', 'La pose des panneaux isolants', 'Le sous-enduit', 'Les façades en crépi clair'],
     },
@@ -223,13 +223,9 @@ export const fr = {
   /** Le texte alternatif de chaque photo (la commune, jamais l'adresse). */
   photos: {
     'wilsele/pignon-reconstitue': 'Reconstitution de la vue du pignon en briques, avec les personnes et l’échafaudage retirés par retouche',
-    'wilsele/entree-brique': 'Briques apparentes autour de la porte d’entrée, derrière l’échafaudage',
     'wilsele/baie-brique': 'Grande baie sous le pignon encore en briques',
     'wilsele/angle-isolation': 'Panneaux isolants gris posés autour de l’angle et des baies protégées',
-    'wilsele/cote-panneaux': 'Panneaux gris entre les trois fenêtres hautes de la façade latérale',
     'wilsele/baie-sous-enduit': 'Sous-enduit du pignon et film de protection vert sur les vitrages',
-    'wilsele/entree-crepi': 'Crépi clair autour de la porte en bois et des cinq fenêtres',
-    'wilsele/cote-crepi': 'Trois baies verticales aux cadres noirs dans la façade claire',
     'wilsele/baie-crepi': 'Crépi clair autour du vitrage qui suit la pente du pignon',
     'wilsele/maison-terminee': 'Vue d’ensemble de la façade d’entrée en crépi clair à Wilsele',
     'accueil/hero-namur': 'Immeuble de trois étages à Namur, façade blanche et grise terminée, vu d’en haut',
@@ -552,7 +548,7 @@ export const fr = {
     },
 
     avantApres: {
-      avantRetouche: 'Avant · retouche IA',
+      avantRetouche: 'Avant · vue reconstituée',
       titre: 'La différence se voit.',
       texte: 'Faites glisser le curseur\u00a0: la même façade pendant les travaux, puis une fois terminée.',
       avant: 'Pendant les travaux',
