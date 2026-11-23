@@ -164,6 +164,11 @@ img {
   line-height: 1.55;
 }
 
+.tete--large,
+.tete--large > p:last-child {
+  max-width: none;
+}
+
 .tete--centre {
   align-items: center;
   margin-inline: auto;

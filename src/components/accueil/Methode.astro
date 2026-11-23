@@ -20,7 +20,7 @@ const methode = textes.accueil.methode;
 
 <section class="section methode" id="methode">
   <div class="wrap">
-    <div class="tete">
+    <div class="tete tete--large">
       <h2 data-trait><Souligne texte={methode.titre} /></h2>
       <p>{methode.texte}</p>
     </div>
@@ -57,14 +57,6 @@ const methode = textes.accueil.methode;
 <style>
   .methode .tete {
     margin-bottom: 20px;
-  }
-
-  /* Ordinateur : le titre et sa phrase tiennent chacun sur une ligne. */
-  @media (min-width: 1000px) {
-    .methode .tete,
-    .methode .tete > p:last-child {
-      max-width: none;
-    }
   }
 
   .methode__etapes {
