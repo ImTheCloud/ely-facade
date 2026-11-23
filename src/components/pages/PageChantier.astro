@@ -22,6 +22,8 @@ const { langue, cle } = Astro.props;
 const textes = t(langue);
 const r = textes.realisationsPage;
 const c = trouver(cle);
+const paireIntro = cle === 'wilsele' ? c.paires[0] : undefined;
+const autresPaires = paireIntro ? c.paires.slice(1) : c.paires;
 const fiche = textes.chantiers[cle];
 const commune = textes.communes[c.commune];
 const base = chemin('realisations', langue);
@@ -58,30 +60,34 @@ let index = 0;
     titre={fiche.titre}
     texte={fiche.texte}
   >
-    <!-- La photo du chantier en entier, à sa forme (jamais rognée en bandeau). -->
-    <Image
-      slot="visuel"
-      class="couverture"
-      src={photo(c.couverture)}
-      alt={textes.photos[c.couverture]}
-      widths={[480, 800, 1200]}
-      sizes="(min-width: 960px) 45vw, 100vw"
-      format="webp"
-      quality={78}
-      loading="eager"
-      fetchpriority="high"
-    />
+    <Fragment slot="visuel">
+      {paireIntro ? (
+        <Comparateur langue={langue} paire={paireIntro} sizes="(min-width: 960px) 45vw, 100vw" prioritaire />
+      ) : (
+        <Image
+          class="couverture"
+          src={photo(c.couverture)}
+          alt={textes.photos[c.couverture]}
+          widths={[480, 800, 1200]}
+          sizes="(min-width: 960px) 45vw, 100vw"
+          format="webp"
+          quality={78}
+          loading="eager"
+          fetchpriority="high"
+        />
+      )}
+    </Fragment>
   </IntroPage>
 
   {
-    c.paires.length > 0 && (
+    autresPaires.length > 0 && (
       <section class="section">
         <div class="wrap">
           <div class="tete">
             <h2>{fiche.accroche}</h2>
           </div>
           <div class="paires">
-            {c.paires.map((paire) => (
+            {autresPaires.map((paire) => (
               <div class="paire">
                 <Comparateur langue={langue} paire={paire} sizes="(min-width: 1360px) 1280px, 100vw" />
               </div>
