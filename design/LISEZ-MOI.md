@@ -13,6 +13,9 @@
 | `t-shirt/` | Devant et dos, blanc et noir, et fiches techniques pour l'imprimeur |
 | `depuis-session-cloud/` | Versions plus récentes des t-shirts (dos refait) |
 | `pull/` | Pulls à capuche pour la broderie, devant et dos, noir et blanc |
+| `flyer/` | Flyer A5 recto verso, PDF avec fonds perdus et aperçus |
+| `panneau/` | Panneau de chantier 120 × 80 cm, PDF et aperçu |
+| `presentation/` | Tous les supports présentés sur un même fond (cartes, vêtements, flyer, panneau) |
 | `qr-code/` | QR code du site (il encode directement `https://elyfacade.be/`) et QR code des avis Google (il ouvre la page « écrire un avis » de la fiche), en SVG, PNG 4000 px et PDF |
 | `google/` | Images pour la fiche Google : paires « Pendant les travaux / Après » et photos de façades terminées |
 
@@ -20,7 +23,7 @@ Les photos de t-shirts vierges (`t-shirt/photo/sources/`) sont générées par I
 
 ## Refaire les fichiers
 
-Les scripts sont dans `scripts/` et utilisent Google Chrome sur Mac : `exporter-logo-impression.mjs`, `exporter-carte-visite.mjs`, `exporter-t-shirt.mjs`, `exporter-pull-broderie.mjs`, `exporter-qr-code.mjs`, `exporter-fiche-google.mjs`, `generer-marque.mjs` (logo du site). `generer-image-partage.mjs` fabrique l'image affichée quand on partage le site.
+Les scripts sont dans `scripts/` et utilisent Google Chrome sur Mac : `exporter-logo-impression.mjs`, `exporter-carte-visite.mjs`, `exporter-t-shirt.mjs`, `exporter-flyer.mjs`, `exporter-pull-broderie.mjs`, `exporter-qr-code.mjs`, `exporter-fiche-google.mjs`, `generer-marque.mjs` (logo du site). `generer-image-partage.mjs` fabrique l'image affichée quand on partage le site.
 
 ## Imprimeur (Vistaprint)
 
