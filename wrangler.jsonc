@@ -2,6 +2,9 @@
   "name": "ely-facade",
   "main": "worker/index.ts",
   "compatibility_date": "2026-10-01",
+  // Le site n'est servi que par son domaine (elyfacade.be) : ni l'adresse workers.dev ni les adresses d'aperçu, pour qu'il n'existe pas de copie du site ailleurs.
+  "workers_dev": false,
+  "preview_urls": false,
   "assets": {
     "directory": "./dist",
     "binding": "ASSETS"
